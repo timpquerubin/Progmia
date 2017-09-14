@@ -1,0 +1,85 @@
+<?php
+	class User_model extends CI_Model
+	{
+		public function __construct()
+		{
+			$this->load->database();
+		}
+		
+		public function register($id)
+		{
+			$data = array(
+				'user_id' => $id,
+				'user_username' => $this->input->post('username'),
+				'user_password' => $this->input->post('password'),
+				'user_fname' => $this->input->post('firstname'),
+				'user_mname' => $this->input->post('mname'),
+				'user_lname' => $this->input->post('lastname'),
+				'user_bday' => $this->input->post('bday'),
+				'user_gender' => $this->input->post('gender'),
+				'user_address' => $this->input->post('address'),
+				'user_email' => $this->input->post('email')
+			);
+			
+			return $this->db->insert('user', $data);
+		}
+		
+		public function login($uname, $pass)
+		{
+			$query = $this->db->query('SELECT USER_ID FROM USER WHERE USER_USERNAME=\''.$uname.'\' AND USER_PASSWORD=\''.$pass.'\';');
+			
+			if(empty($query->row_array()))
+			{
+				return FALSE;
+			} 
+			else
+			{
+				return $query->row(0)->USER_ID;	
+			}
+		}
+		
+		public function gen_id()
+		{
+			$query = $this->db->get('user');
+			
+			if($query->num_rows() == 0)
+			{
+				return 1;
+			}
+			else 
+			{
+				$rs = $this->db->query('SELECT MAX(USER_ID) AS MAXID FROM USER');
+				$row = $rs->row(0)->MAXID;
+				
+				return ($row[0] + 1);
+			}
+		}
+		
+		public function check_username_exists($username)
+		{
+			$query = $this->db->get_where('user', array('user_username' => $username));
+			
+			if(empty($query->row_array()))
+			{
+				return TRUE;
+			}
+			else 
+			{
+				return FALSE;	
+			}
+		}
+	
+	public function check_email_exists($email)
+		{
+			$query = $this->db->get_where('user', array('user_email' => $email));
+			
+			if(empty($query->row_array()))
+			{
+				return TRUE;
+			}
+			else 
+			{
+				return FALSE;	
+			}
+		}
+	}

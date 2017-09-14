@@ -1,0 +1,29 @@
+@font-face {
+	font-family: AdventPro;
+	src: url("fonts/AdventPro-Regular.ttf");
+}
+
+@font-face {
+	font-family: AdventPro;
+	src: url("fonts/AdventPro-Bold.ttf");
+	font-weight: bold;
+}
+
+div.home-bg {
+	background-image: url("../images/home_bg.jpg");
+	background-size: cover;
+	width: 100%;
+	height: 500px;
+	margin: 0;
+	padding: 0;
+	background-repeat: no-repeat;
+}
+div.login-panel {
+	background: rgba(0, 0, 0, 0.5);
+	height: 100%;
+	position: relative;
+}
+div.login-form {
+	margin: 0px auto;
+	font-family: AdventPro;
+}
