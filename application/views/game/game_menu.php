@@ -1,3 +1,12 @@
+<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css" />
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js""></script>
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-modal.js""></script> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="<?php //echo base_url(); ?>assets/css/main.css"> -->
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js""></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/create_character.css">
+
 <style type="text/css">
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
@@ -104,7 +113,8 @@
 			<?php $rowCtr = 0; ?>
 		<?php } else { $rowCtr++; } ?>
 	<?php } ?>
-	</div>
+	<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#avatar-modal">open</button> -->
+</div>
 
 	<!-- <fieldset class="rating">
 		<input type="radio" name="rating" id="star5" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -118,4 +128,6 @@
 	    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 	    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 	</fieldset> -->
-</div>
+
+
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/avatar_preview.js" ></script> -->

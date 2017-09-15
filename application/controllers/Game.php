@@ -4,6 +4,7 @@
 		public function _init()
 		{
 			$this->load->model('Game_model');
+			$this->load->model('Character_model');
 		}
 
 		public function menu()
@@ -11,7 +12,6 @@
 			$this->_init();
 
 			$maps = $this->Game_model->get_all_maps();
-
 			$data['map_list'] = $maps;
 
 			$this->load->view('templates/header');

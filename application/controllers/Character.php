@@ -1,15 +1,31 @@
 <?php
 	class Character extends CI_Controller
 	{
+		public function _init()
+		{
+			$this->load->model('Character_model');
+		}
+
 		public function create()
 		{
 			$this->_init();
 
-			
+			$avatars = $this->Character_model->get_all_avatar();
 
-			// $this->load->view('templates/header');
-			$this->load->view('character/create');
-			// $this->load->view('templates/footer');
+			$data['avatars'] = $avatars;
+
+			$this->load->view('character/create', $data);
+		}
+
+		public function get_avatar_list() {
+
+			$this->_init();
+
+			$avatars = $this->Character_model->get_all_avatar();
+
+			$data['avatars'] = json_encode($avatars);
+
+			echo json_encode($avatars);
 		}
 	}
 ?>
