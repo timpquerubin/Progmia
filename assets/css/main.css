@@ -19,6 +19,10 @@ nav.navbar ul {
 	overflow-x:hidden;
 }
 
+nav.navbar ul:last-child{
+	overflow-y: hidden;
+}
+
 nav.navbar-default {
 	transition: .3s;
 	position:absolute;
@@ -72,15 +76,6 @@ nav.navbar-default ul:not(:first-child) a:hover{
 	border-bottom:solid 2px #fff;border-radius: 10px;
 }
 
-div.home-bg {
-	background-image: url("../images/home_bg.jpg");
-	background-size: cover;
-	width: 100%;
-	height: 500px;
-	margin: 0;
-	padding: 0;
-	background-repeat: no-repeat;
-}
 div.banner{
 	position: relative;
 	background-image: url("../images/home_bg.jpg");
@@ -90,12 +85,62 @@ div.banner{
 	margin: 0px 0px 0px 0px;
 	overflow-y: hidden;
 }
+
+div.banner h1 {
+	color:white;
+	font-weight: 700;
+	margin-top:200px;
+	font-size:50px; 
+	text-shadow:2px 2px 5px #000;
+}
+
 div.login-panel {
+	margin-top:80px;
+	padding:20px 40px;
+	max-height:320px;
+	border-radius: 10px;
 	background: rgba(0, 0, 0, 0.5);
 	height: 100%;
 	position: relative;
 }
+div.login-panel label, div.login-panel input, div.login-panel h2{
+	font-family: AdventPro;
+}
+
+div.login-panel h2{
+	text-align: center !important;
+	color:#fff !important;
+	margin:10px auto !important;
+}
+
 div.login-form {
 	margin: 0px auto;
 	font-family: AdventPro;
+	z-index:2;
+}
+
+h3.learn-more a{
+	font-family:calibri;
+	font-weight:800;
+	font-size:30px;
+	color: #fff; 
+	text-shadow:1px 1px 3px #000;
+	margin-top:20px;
+	cursor: hand;
+	text-decoration: none;
+}
+h3.learn-more i{
+	font-size:25px;
+}
+
+h3.learn-more:hover a{
+	color:#ffce12;
+	font-size:33px;
+	transition: .5s;
+}
+
+h3.learn-more:hover i{
+	color:#ffce12;
+	font-size: 28px;
+	transition: .5s;
 }
