@@ -228,3 +228,12 @@ h3.learn-more:hover i{
 	font-size: 28px;
 	transition: .3s;
 }
+
+div.navbar-game {
+	background: #333;
+	height:100px;
+	padding:5px;
+}
+div.navbar-game ul {
+	list-style: none;
+}

@@ -32,6 +32,7 @@
     						<a class="dropbtn dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
     						<ul class="dropdown-menu">
     							<li><a href="#">Profile</a></li>
+    							<hr style="width:90%">
     							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
     						</ul>
     					</li>
