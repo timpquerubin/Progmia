@@ -81,6 +81,15 @@ div.home-bg {
 	padding: 0;
 	background-repeat: no-repeat;
 }
+div.banner{
+	position: relative;
+	background-image: url("../images/home_bg.jpg");
+	padding: 90px 70px;
+	max-height: 900px;
+	background-size: cover;
+	margin: 0px 0px 0px 0px;
+	overflow-y: hidden;
+}
 div.login-panel {
 	background: rgba(0, 0, 0, 0.5);
 	height: 100%;
