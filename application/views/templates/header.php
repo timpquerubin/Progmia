@@ -28,7 +28,7 @@
 
     				<?php if($this->session->userdata('logged_in')): ?>
     					<li class="dropdown">
-    						<a class="dropdown-toggle" data-toggle="dropdown">My Account <?php echo $this->session->userdata('username') ?><span class="caret"></span></a>
+    						<a class="dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
     						<ul class="dropdown-menu">
     							<li><a href="#">Profile</a></li>
     							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
