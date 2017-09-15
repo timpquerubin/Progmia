@@ -22,6 +22,11 @@
 			return $this->db->insert('AVATAR', $params);
 		}
 
-		public function get_avatar_list
+		public function get_all_avatar()
+		{
+			$avatars = $this->db->get('AVATAR');
+
+			return $avatars->result_array();
+		}
 	} 
 ?>
