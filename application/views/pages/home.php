@@ -3,10 +3,10 @@
 <div class="home-bg">
 	<div class="container-fluid" style="margin: 0px; padding: 0px;">
 		<div class="row">
-			<div class="col-md-8" >
+			<div class="col-sm-8 col-md-8 col-lg-9 col-xs-12" >
 				<h1>Learn Programming<br> while you play.</h1>
 			</div>
-			<div class="login-panel col-sm-4 col-sm-offset-7 col-lg-3 col-lg-offset-7 col-xs-8 col-xs-offset-2">
+			<div class="login-panel col-sm-4 col-md-4 col-lg-3 col-xs-12">
 				<div class="login-form" style="margin: 100px auto;">
 					<!-- <?php echo validation_errors(); ?> -->
 					<form action="<?php echo base_url(); ?>Users/login" method="post">
