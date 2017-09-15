@@ -64,6 +64,10 @@
 		</div>
 
 		<script type="text/javascript">
+			$('.alert').delay(2500).fadeOut();
+		</script>
+		
+		<script type="text/javascript">
 
 			$(document).ready(function(){
 
