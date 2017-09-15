@@ -43,9 +43,11 @@
 
 		public function create_character()
 		{
-			$this->init();
+			$this->_init();
 
+			$this->load->view('templates/header');
 			$this->load->view('character/create');
+			$this->load->view('templates/footer');
 		}
 	}
 ?>
