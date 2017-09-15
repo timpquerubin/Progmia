@@ -14,14 +14,82 @@
 }
 
 nav.navbar ul {
-	font-family: BebasNeue; 
+	font-family: BebasNeue;
 	font-size:30px !important;
 	overflow-x:hidden;
 }
-
-nav.navbar ul:last-child{
-	overflow-y: hidden;
+nav.navbar li.dropdown button ul.dropdown-menu{
+	display:none;
 }
+
+nav.navbar ul.dropdown-menu a {
+	background: rgba(0, 0, 0, 0.9);
+}
+nav.navbar ul.dropdown-menu{
+	background: none !important;
+
+	background-color: none !important;
+	border-radius: 0;
+	border:none;
+
+}
+nav.navbar ul.dropdown-menu li a:hover nav.navbar ul:last-child{
+	background: #333 !important;
+	background-color: #333 !important;
+}
+nav.navbar ul.dropdown-menu {
+	background-color: none !important;
+	color:#fff;
+	margin:0 !important;
+}
+nav.navbar ul.dropdown-menu li a:hover {
+	background-color:#ffce12 !important;
+	margin:0 !important;
+	border-radius: 0;
+	padding:0;
+	text-align: center;
+	color:#000;
+
+}
+nav.navbar ul.dropdown-menu li a{
+
+	color:#fff;
+}
+
+li.dropdown button:hover ~ li.dropdown{
+	background: #000 !important;
+	background-color: #000 !important
+}
+
+nav.navbar li.dropdown a:hover ~ ul.dropdown-menu, nav.navbar li.dropdown ul.dropdown-menu:hover{
+	position:static;
+	display:block;
+	overflow-y: auto;
+	margin-top:0px;
+	background: #1c4649;
+	border-radius: 5px;
+	width: 100%;
+}
+ul.dropdown-menu {
+	margin:0px !important;
+}
+ul.dropdown-menu li{
+	margin:0px !important;
+}
+ul.dropdown-menu li a{
+	margin:0px !important;
+}
+nav.navbar li.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+/*nav.navbar ul:last-child{display: block;max-height: 500px;height: 100%;}
+nav.navbar ul:last-child ul{display: block;height: 100%;}*/
 
 nav.navbar-default {
 	transition: .3s;
@@ -38,6 +106,15 @@ nav.navbar-default {
 	height:100px !important; 
 	padding:5px 0;
 	border-bottom:solid 3px white;
+}
+
+.alert {
+	position:absolute;
+	z-index: 1; 
+	top:110px; 
+	left:0;
+	width:90%;
+	margin:0 5%;
 }
 
 nav.navbar-default a.navbar-brand {
@@ -68,7 +145,7 @@ nav.navbar-default:hover {
 nav.navbar-default ul:not(:first-child){
 	font-size:20px; 
 	margin-top:18px;}
-nav.navbar-default ul:not(:first-child) a:hover{
+nav.navbar-default ul:not(:first-child):not(:last-child) a:hover{
 	font-size:35px; 
 	margin-top:5px;
 	transition: .3s;
@@ -136,11 +213,11 @@ h3.learn-more i{
 h3.learn-more:hover a{
 	color:#ffce12;
 	font-size:33px;
-	transition: .5s;
+	transition: .3s;
 }
 
 h3.learn-more:hover i{
 	color:#ffce12;
 	font-size: 28px;
-	transition: .5s;
+	transition: .3s;
 }
