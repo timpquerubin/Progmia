@@ -10,7 +10,11 @@
 		{
 			$this->_init();
 
-			$this->load->view('character/create');
+			$avatars = $this->Character_model->get_all_avatar();
+
+			$data['avatars'] = $avatars;
+
+			$this->load->view('character/create', $data);
 		}
 
 		public function get_avatar_list() {
