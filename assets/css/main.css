@@ -19,6 +19,59 @@ nav.navbar ul {
 	overflow-x:hidden;
 }
 
+nav.navbar-default {
+	transition: .3s;
+	position:absolute;
+	top:0;
+	right:0;
+	width:100%;
+	background-color: rgba(17, 186, 174, .9) !important;
+	background-image:none;
+	box-shadow:1px 1px 50px #222;
+	border:none;
+	border-radius:0;
+	z-index:2 !important;
+	height:100px !important; 
+	padding:5px 0;
+	border-bottom:solid 3px white;
+}
+
+nav.navbar-default a.navbar-brand {
+	padding:5px !important;
+	width:100px; 
+	max-width:120px;px;
+	transition:.5s;
+	margin-right: 30px;
+}
+
+#navbar:hover a.navbar-brand {
+	width:120px; 
+	transition:.6s;
+}
+
+nav.navbar-default ul {
+	font-family: BebasNeue; 
+	font-size:30px !important;
+	overflow-x:hidden;}
+
+nav.navbar-default:hover {
+	transition: .3s;
+	padding-top:10px;
+	padding-bottom:15px; 
+	height:120px !important;
+}
+
+nav.navbar-default ul:not(:first-child){
+	font-size:20px; 
+	margin-top:18px;}
+nav.navbar-default ul:not(:first-child) a:hover{
+	font-size:35px; 
+	margin-top:5px;
+	transition: .3s;
+	background-color: rgba(28,70,73,.9) !important;/*background-color: rgba(17, 186, 174, .7);*/
+	border-bottom:solid 2px #fff;border-radius: 10px;
+}
+
 div.home-bg {
 	background-image: url("../images/home_bg.jpg");
 	background-size: cover;

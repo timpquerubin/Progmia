@@ -8,12 +8,13 @@
 		<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js""></script>
 		<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-modal.js""></script> -->
 		<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap_superhero.min.css"> -->
+		<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
 	</head>
 	<body>
-		<nav class="navbar navbar-default">
+		<nav id="navbar" class="navbar navbar-default">
   			<div class="container">
     			<div class="navbar-header">
-      				<a class="navbar-brand" href="<?php echo base_url(); ?>">Progmia</a>
+      				<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
     			</div>
     			<ul class="nav navbar-nav">
       				<li><a href="<?php echo base_url(); ?>home">Home</a></li>
