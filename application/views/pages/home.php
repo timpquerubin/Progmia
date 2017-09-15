@@ -1,7 +1,7 @@
 
 
 <div class="home-bg">
-	<div class="container-fluid" style="margin: 0px; padding: 0px;">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-8 col-md-8 col-lg-9 col-xs-12" >
 				<h1>Learn Programming<br> while you play.</h1>
