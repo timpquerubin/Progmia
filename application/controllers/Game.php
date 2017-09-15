@@ -40,14 +40,5 @@
 			$this->load->view('pages/game2', $data);
 			$this->load->view('templates/footer');
 		}
-
-		public function create_character()
-		{
-			$this->_init();
-
-			$this->load->view('templates/header');
-			$this->load->view('character/create');
-			$this->load->view('templates/footer');
-		}
 	}
 ?>
