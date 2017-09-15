@@ -8,6 +8,16 @@
 	src: url("fonts/AdventPro-Bold.ttf");
 	font-weight: bold;
 }
+@font-face {
+	font-family:BebasNeue;
+	src: url("../fonts/BebasNeue.otf");
+}
+
+nav.navbar ul {
+	font-family: BebasNeue; 
+	font-size:30px !important;
+	overflow-x:hidden;
+}
 
 div.home-bg {
 	background-image: url("../images/home_bg.jpg");
