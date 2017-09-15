@@ -7,7 +7,7 @@
 			$this->load->model('Character_model');
 		}
 
-		public function menu()
+		public function stages()
 		{
 			$this->_init();
 
@@ -15,7 +15,19 @@
 			$data['map_list'] = $maps;
 
 			$this->load->view('templates/header');
-			$this->load->view('game/game_menu', $data);
+			$this->load->view('game/menu/menu_stages', $data);
+			$this->load->view('templates/footer');
+		}
+
+		public function levels()
+		{
+			$this->_init();
+
+			$maps = $this->Game_model->get_all_maps();
+			$data['map_list'] = $maps;
+
+			$this->load->view('templates/header');
+			$this->load->view('game/menu/menu_levels', $data);
 			$this->load->view('templates/footer');
 		}
 

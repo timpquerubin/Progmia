@@ -19,7 +19,7 @@
     			<ul class="nav navbar-nav">
       				<li><a href="<?php echo base_url(); ?>home">Home</a></li>
       				<li><a href="<?php echo base_url(); ?>about">About</a></li>
-      				<li><a href="<?php echo base_url(); ?>Game/menu">Game</a></li>
+      				<li><a href="<?php echo base_url(); ?>Game/stages">Game</a></li>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
     				<?php if(!$this->session->userdata('logged_in')): ?>
