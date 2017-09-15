@@ -40,5 +40,12 @@
 			$this->load->view('pages/game2', $data);
 			$this->load->view('templates/footer');
 		}
+
+		public function create_character()
+		{
+			$this->init();
+
+			$this->load->view('character/create');
+		}
 	}
 ?>
