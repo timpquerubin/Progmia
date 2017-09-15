@@ -25,8 +25,15 @@
     					<!-- <li><a href="<?php echo base_url(); ?>users/login">Login</a></li> -->
     					<!-- <li><a href="<?php echo base_url(); ?>users/register">Register</a></li> -->
     				<?php  endif; ?>
+    				<p class="navbar-text">Hello, <?php echo $this->session->userdata('username') ?></p>
     				<?php if($this->session->userdata('logged_in')): ?>
-    					<li><a href="<?php echo base_url(); ?>users/logout">Hello, <?php echo $this->session->userdata('username') ?></a></li>
+    					<li class="dropdown">
+    						<a class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+    						<ul class="dropdown-menu">
+    							<li><a href="#">Profile</a></li>
+    							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
+    						</ul>
+    					</li>
     				<?php endif; ?>
     			</ul>
   			</div>

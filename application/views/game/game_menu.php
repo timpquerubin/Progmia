@@ -20,26 +20,44 @@
 	/*input#test {display: none;}
 	label.rate:before { margin: 5px; font-size: 3em; font-family: FontAwesome; color: #FFD700; display: inline-block; content: "\f005";}*/
 
-	div.level {
-		background-color: #f2f2f2;
-		margin : 20px;
-		padding: 0px;
+	div.game-level-menu-container {background-color: #8c8c8c; padding-top: 20px;}
+
+	div.level-row {
+		max-width: 1000px;
+		margin: 0px auto;
 	}
 
-	div.level:hover {
-		background-color: #d9d9d9;
+	/*div.level-row:last-of-type {
+		padding-bottom: 20px;
+	}*/
+
+	div.level {
+		display: block; 
+		height: 200px;
+		padding: 0px;
+		margin-bottom: 20px;
 	}
 
 	div.level-info h2 {
+		margin: 0px;
 		padding: 0px;
-		margin: auto;
 	}
 
 	div.level-info {
+		background-color: #f2f2f2;
 		display: block;
+		height: 100%;
+		margin: 0px 10%;
+	}
+
+	div.level-info:hover {
+		background-color: #d9d9d9;
+	}
+
+	div.level-link {
+		height: 100%;
+		margin: 0px;
 		padding: 0px;
-		/*background-color: #000;*/
-		/*color: blue;*/
 	}
 
 	fieldset label { margin: 0; padding: 0;}
@@ -51,7 +69,7 @@
 
 </style>
 
-<div class="container">
+<div class="game-level-menu-container">
 	<!-- <ul>
 		<?php foreach ($map_list as $m) { ?>
 
@@ -60,23 +78,32 @@
 		<?php } ?>
 	</ul> -->
 
-	<div class="row">
-		<?php $i = 0; ?>
-		<?php foreach ($map_list as $m) { ?>
-			<a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $m['MAP_ID']; ?>">
-				<div class="col-md-2 level"	 style="display: block; height: 200px">
+	<?php $i = 0; ?>
+	<?php $rowCtr = 0; ?>
+	<?php foreach ($map_list as $m) { ?>
+		<?php if($rowCtr == 0) { ?>
+			<div class="row level-row text-center">
+		<?php } ?>
+				<div class="col-md-3 level">
 					<div class="level-info text-center">
-						<h2>Level <?php echo $i+1; ?></h2>
-						<fieldset class="stage-rating">
-							<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
-							<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
-							<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-						</fieldset>
+						<a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $m['MAP_ID']; ?>">
+							<div class="level-link">
+								<h2>Level <?php echo $i+1; ?></h2>
+								<fieldset class="stage-rating">
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
+								</fieldset>
+							</div>
+						</a>
 					</div>
 				</div>
-			</a>
-			<?php $i++; ?>
-		<?php } ?>
+		<?php $i++; ?>
+		<?php if($rowCtr == 3) { ?>
+			</div>
+			<?php $rowCtr = 0; ?>
+		<?php } else { $rowCtr++; } ?>
+	<?php } ?>
 	</div>
 
 	<!-- <fieldset class="rating">
