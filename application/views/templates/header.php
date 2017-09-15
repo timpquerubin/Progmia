@@ -26,6 +26,8 @@
     					<!-- <li><a href="<?php echo base_url(); ?>users/register">Register</a></li> -->
     				<?php  endif; ?>
     				<p class="navbar-text">Hello, <?php echo $this->session->userdata('username') ?></p>
+
+    				
     				<?php if($this->session->userdata('logged_in')): ?>
     					<li class="dropdown">
     						<a class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
