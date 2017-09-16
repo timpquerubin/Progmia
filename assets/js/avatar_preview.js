@@ -21,10 +21,11 @@ $(document).ready(function() {
 		},
 	});
 
+	document.getElementById("avtr_" + avatars[0]["CHAR_NAME"]).setAttribute("checked", "true");
+
 	changeAvtImg = function(radio) {
 		Avatar.list[currAvt].dirMod = 0;
 		currAvt = radio.value;
-		console.log(currAvt);
 	}
 
 	Avatar = function(avtId, name, height, width, imgSrc) {
