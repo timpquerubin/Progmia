@@ -113,7 +113,7 @@
 			<?php $rowCtr = 0; ?>
 		<?php } else { $rowCtr++; } ?>
 	<?php } ?>
-	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#avatar-modal">open</button>
+	<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#avatar-modal">open</button> -->
 </div>
 
 	<!-- <fieldset class="rating">
