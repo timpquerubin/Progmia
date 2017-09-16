@@ -12,12 +12,12 @@ $(document).ready(function() {
 	$.ajax({
 		async: false,
 		type: 'json',
-		url: "get_avatar_list",
+		url: base_url + "/Character/get_avatar_list",
 		data: { 'request': "", 'target': 'arrange_url', 'method': 'method_target' },
 		success: function(res) {
 			var avatars_json = res;
 			avatars = JSON.parse(avatars_json);
-			// console.log(avatars);
+			console.log(avatars);
 		},
 	});
 

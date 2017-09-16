@@ -1,3 +1,12 @@
+<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css" />
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js""></script>
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-modal.js""></script> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="<?php //echo base_url(); ?>assets/css/main.css"> -->
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js""></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/create_character.css">
+
 <style type="text/css">
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
@@ -104,7 +113,8 @@
 			<?php $rowCtr = 0; ?>
 		<?php } else { $rowCtr++; } ?>
 	<?php } ?>
-	</div>
+	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#avatar-modal">open</button>
+</div>
 
 	<!-- <fieldset class="rating">
 		<input type="radio" name="rating" id="star5" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -118,4 +128,32 @@
 	    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 	    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 	</fieldset> -->
+
+<div id="modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Avatar Selection</h4>
+			</div>
+			<div class="modal-body">
+				<!-- <div class="character-info">
+					<div class="avatar-image-preview">
+						<canvas class="avatar-ctx" id="ctx-avatar-prev"></canvas>
+					</div>
+				</div>
+				<div> -->
+					<!-- <?php if(count($avatars) > 0) { ?>
+						<?php foreach ($avatars as $a) { ?>
+							<input type="radio" id="avtr_<?php echo $a['CHAR_NAME']; ?>" name="avatars" onclick="changeAvtImg(this);" value="<?php echo $a['CHAR_ID']; ?>">
+							<label for="avtr_<?php echo $a['CHAR_NAME']; ?>"><?php echo $a['CHAR_NAME']; ?></label>
+						<?php } ?>
+					<?php } ?> -->
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/avatar_preview.js" ></script> -->
