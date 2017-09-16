@@ -129,31 +129,5 @@
 	    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 	</fieldset> -->
 
-<div id="modal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">Avatar Selection</h4>
-			</div>
-			<div class="modal-body">
-				<!-- <div class="character-info">
-					<div class="avatar-image-preview">
-						<canvas class="avatar-ctx" id="ctx-avatar-prev"></canvas>
-					</div>
-				</div>
-				<div> -->
-					<!-- <?php if(count($avatars) > 0) { ?>
-						<?php foreach ($avatars as $a) { ?>
-							<input type="radio" id="avtr_<?php echo $a['CHAR_NAME']; ?>" name="avatars" onclick="changeAvtImg(this);" value="<?php echo $a['CHAR_ID']; ?>">
-							<label for="avtr_<?php echo $a['CHAR_NAME']; ?>"><?php echo $a['CHAR_NAME']; ?></label>
-						<?php } ?>
-					<?php } ?> -->
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 
 <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/avatar_preview.js" ></script> -->
