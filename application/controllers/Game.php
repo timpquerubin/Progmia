@@ -27,6 +27,7 @@
 			$data['map_list'] = $maps;
 
 			$this->load->view('templates/header');
+			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_levels', $data);
 			$this->load->view('templates/footer');
 		}
