@@ -9,6 +9,7 @@
 		<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-modal.js""></script> -->
 		<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap_superhero.min.css"> -->
 		<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
 	</head>
 	<body>
 		<nav id="navbar" class="navbar navbar-default">

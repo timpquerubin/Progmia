@@ -23,7 +23,7 @@ nav.navbar li.dropdown button ul.dropdown-menu{
 }
 
 nav.navbar ul.dropdown-menu a {
-	background: rgba(0, 0, 0, 0.9);
+	background-color:#1c4649 !important;
 }
 nav.navbar ul.dropdown-menu{
 	background: none !important;
@@ -43,16 +43,16 @@ nav.navbar ul.dropdown-menu {
 	margin:0 !important;
 }
 nav.navbar ul.dropdown-menu li a:hover {
-	background-color:#ffce12 !important;
+	background-color:#1c4649 !important;
+	border-bottom:solid 2px #fff;
 	margin:0 !important;
 	border-radius: 0;
 	padding:0;
 	text-align: center;
-	color:#000;
-
+	color:#fff;
+	transition: .3s;
 }
 nav.navbar ul.dropdown-menu li a{
-
 	color:#fff;
 }
 
@@ -171,7 +171,7 @@ div.banner{
 div.banner h1 {
 	color:white;
 	font-weight: 700;
-	margin-top:200px;
+	margin-top:180px;
 	font-size:50px; 
 	text-shadow:2px 2px 5px #000;
 }
