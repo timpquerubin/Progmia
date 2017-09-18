@@ -1,0 +1,17 @@
+.bg-stages {
+	position: relative;
+	background: url("../images/global-no-stages-updated.png");
+	display: block;
+    max-width: 100%;
+    height: auto;
+background-repeat:no-repeat;
+background-size:contain;
+background-position:center;
+	/*background-size: cover;
+	padding: 20%;*/
+	max-height: 570px;
+	height: 100%;
+}
+@media only screen and (max-width: 320px) {
+    /* styles for narrow screens */
+}
