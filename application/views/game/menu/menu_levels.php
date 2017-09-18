@@ -1,10 +1,3 @@
-<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css" />
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js""></script>
-<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap-modal.js""></script> -->
-
-<!-- <link rel="stylesheet" type="text/css" href="<?php //echo base_url(); ?>assets/css/main.css"> -->
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js""></script>
-
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/create_character.css">
 
 <style type="text/css">
@@ -35,10 +28,6 @@
 		max-width: 1000px;
 		margin: 0px auto;
 	}
-
-	/*div.level-row:last-of-type {
-		padding-bottom: 20px;
-	}*/
 
 	div.level {
 		display: block; 
@@ -79,13 +68,6 @@
 </style>
 
 <div class="game-level-menu-container">
-	<!-- <ul>
-		<?php foreach ($map_list as $m) { ?>
-
-			<li><a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $m['MAP_ID']; ?>"><?php echo $m['MAP_FILENAME']; ?></a><input type="radio" name="test" id="test" value="5" /><label class="rate" title="Sample" for="test">Sample</label></li>
-			
-		<?php } ?>
-	</ul> -->
 
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
@@ -113,7 +95,6 @@
 			<?php $rowCtr = 0; ?>
 		<?php } else { $rowCtr++; } ?>
 	<?php } ?>
-	<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#avatar-modal">open</button> -->
 </div>
 
 	<!-- <fieldset class="rating">
@@ -128,6 +109,3 @@
 	    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 	    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 	</fieldset> -->
-
-
-<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/avatar_preview.js" ></script> -->
