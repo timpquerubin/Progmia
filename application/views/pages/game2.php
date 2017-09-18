@@ -70,6 +70,8 @@
 	img.key.src = "<?php echo base_url(); ?>assets/images/key.png";
 	img.coin = new Image();
 	img.coin.src = "<?php echo base_url(); ?>assets/images/coin_spritesheet.png";
+	img.projectile = new Image();
+	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.jpg";
 
 	$("#code_area").keyup(function(event) {
 	    // if (event.which == 13 || event.which == 8) {
@@ -396,6 +398,7 @@
 			img: new Image(),
 			width: width,
 			height: height,
+			type: "player",
 		};
 
 		self.isPressingUp = false;
@@ -593,6 +596,10 @@
 			}
 		};
 
+		self.throwProjectile = function() {
+			Projectile.generate(self);
+		}
+
 		self.testCollision = function(entity2){	//return if colliding (true/false)
 			var rect1 = {
 				x:self.x-self.width/2,
@@ -611,6 +618,82 @@
 		}
 
 		return self;
+	}
+
+	Projectile = function(id, imgSrc, type, x, y, dir) {
+		var self = {
+			id: id,
+			img: new Image(),
+			type: type,
+			x: x,
+			y: y,
+			direction: dir,
+			timer: 0,
+			toRemove: false,
+			height: 20,
+			width: 20,
+		}
+
+		img.src = imgSrc;
+
+		self.update = function() {
+
+			self.updatePosition();
+			self.draw();
+
+
+			self.timer++;
+
+			if(self.timer > 97)
+				self.toRemove = true;
+			if(Maps.current.isPossitionWall(self) === 5)
+				self.toRemove = true;
+
+		}
+
+		self.draw = function() {
+			
+			var x = self.x - self.width/2;
+			var y = self.y - self.height/2;
+
+			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, x, y, self.width, self.height)
+		}
+
+		self.updatePosition = function() {
+			if(self.direction === "up")
+				self.y -= 5;
+			if(self.direction === "down")
+				self.y += 5;
+			if(self.direction === "left")
+				self.x -= 5;
+			if(self.direction === "right")
+				self.x += 5;
+		}
+
+		Projectile.list[id] = self;
+	}
+
+	Projectile.list = {};
+
+	Projectile.update = function() {
+
+		for(var key in Projectile.list)
+		{
+			Projectile.list[key].update();
+			
+			if(Projectile.list[key] == true)
+				delete Projectile.list[key];
+		}
+	}
+
+	Projectile.generate = function(actor, direction) {
+		var x = actor.x;
+		var y = actor.y;
+
+		var id = Math.random();
+		var type = actor.type;
+
+		Projectile(id, img.projectile.src, type, x, y, direction);
 	}
 
 	startNewGame = function()
