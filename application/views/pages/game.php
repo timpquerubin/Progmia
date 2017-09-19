@@ -25,7 +25,7 @@
 <div id="inventory">
 </div>
 
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/Entities.js" ></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/Entities2.js" ></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/Inventory.js" ></script>
 <script>
 	var ctx = document.getElementById("ctx").getContext("2d");
