@@ -14,9 +14,9 @@
 			$maps = $this->Game_model->get_all_maps();
 			$data['map_list'] = $maps;
 
-			$this->load->view('templates/header');
+			$this->load->view('templates/game_header');
 			$this->load->view('game/menu/menu_stages', $data);
-			$this->load->view('templates/footer');
+			$this->load->view('templates/game_footer');
 		}
 
 		public function levels()
