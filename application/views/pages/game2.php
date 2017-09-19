@@ -16,7 +16,7 @@
 	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($map[0]['MAP_FILENAME']) ? $map[0]['MAP_FILENAME'] : '' ?>">
 	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($map[0]['MAP_NUMCOLS']) ? $map[0]['MAP_NUMCOLS'] : '' ?>">
 
-	<div style="width: 100%; background-color: #000000;">
+	<div style="width: 100%; background-color: #000;">
 		<center><div class="">
 			<canvas id="ctx" width="<?php echo $map[0]['MAP_IMGWIDTH']; ?>" height="<?php echo $map[0]['MAP_IMGHEIGHT']; ?>" style="border:1px solid #000000;"></canvas>
 		</div></center>
@@ -71,7 +71,7 @@
 	img.coin = new Image();
 	img.coin.src = "<?php echo base_url(); ?>assets/images/coin_spritesheet.png";
 	img.projectile = new Image();
-	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.jpg";
+	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
 
 	$("#code_area").keyup(function(event) {
 	    // if (event.which == 13 || event.which == 8) {
@@ -121,6 +121,10 @@
 	{
 		var code_whole = code_area.value;
 		var code = code_area.value.split("\n");
+		var toNextCmd = true;
+		var cmdLine = "";
+
+		cmdLine = code[commandNum].trim();
 
 		if(commandNum == 0 && isloop == false)
 		{
@@ -129,19 +133,31 @@
 		
 		if(commandNum < code.length)
 		{
-			if(code[commandNum].trim() === 'student.moveRight();') {
+			if(/^student.moveRight()/g.test(cmdLine)) {
 				player.isPressingRight = true;
-			} else if(code[commandNum].trim() === 'student.moveUp();') {
+			} else if(/^student.moveUp()/g.test(cmdLine)) {
 				player.isPressingUp = true;
-			} else if(code[commandNum].trim() === 'student.moveDown();') {
+			} else if(/^student.moveDown()/g.test(cmdLine)) {
 				player.isPressingDown = true;
-			} else if(code[commandNum].trim() === 'student.moveLeft();') {
+			} else if(/^student.moveLeft()/g.test(cmdLine)) {
 				player.isPressingLeft = true;
-			} else if(code[commandNum].trim() === 'while(true) {') {
+			} else if(/^student.throw/g.test(cmdLine)) {
+				if(player.atkCtr == 100) {
+
+					var dir =  cmdLine.substring(cmdLine.indexOf("(") + 1, cmdLine.indexOf(")"));
+					dir = dir.split("\"");
+
+					player.throwProjectile(dir[1]);
+					player.atkCtr = 0;
+					moveCtr = 97;
+				} else {
+					toNextCmd = false;
+				}
+			} else if(/^while(true) {/g.test(cmdLine)) {
 				isloop = true;
 				startloop = commandNum;
 				moveCtr = 97;
-			} else if(code[commandNum].trim() === '}') {
+			} else if(cmdLine === '}') {
 				// cmdNum = startloop;
 				cmdNum = startloop;
 				moveCtr = 97;
@@ -152,7 +168,11 @@
 
 			console.log('execute line '+ commandNum +':' + code[commandNum]);
 
-			cmdNum++;
+			if(!toNextCmd) {
+				moveCtr = 97;
+			} else {
+				cmdNum++;
+			}
 
 		} else {
 			alert('end of code');
@@ -399,6 +419,8 @@
 			width: width,
 			height: height,
 			type: "player",
+			atkSpd: 5,
+			atkCtr: 100,
 		};
 
 		self.isPressingUp = false;
@@ -413,6 +435,9 @@
 
 		self.update = function()
 		{
+			if(self.atkCtr != 100)
+				self.atkCtr += self.atkSpd;
+
 			if (self.isPressingRight || self.isPressingLeft || self.isPressingDown || self.isPressingUp) 
 			{
 				self.spriteAnimCounter += 0.25;
@@ -596,8 +621,8 @@
 			}
 		};
 
-		self.throwProjectile = function() {
-			Projectile.generate(self);
+		self.throwProjectile = function(direction) {
+			Projectile.generate(self, direction);
 		}
 
 		self.testCollision = function(entity2){	//return if colliding (true/false)
@@ -634,7 +659,7 @@
 			width: 20,
 		}
 
-		img.src = imgSrc;
+		self.img.src = imgSrc;
 
 		self.update = function() {
 
@@ -644,10 +669,10 @@
 
 			self.timer++;
 
-			if(self.timer > 97)
-				self.toRemove = true;
-			if(Maps.current.isPossitionWall(self) === 5)
-				self.toRemove = true;
+			// if(self.timer > 97)
+			// 	self.toRemove = true;
+			// if(Maps.current.isPossitionWall(self) === 5)
+			// 	self.toRemove = true;
 
 		}
 
@@ -656,7 +681,7 @@
 			var x = self.x - self.width/2;
 			var y = self.y - self.height/2;
 
-			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, x, y, self.width, self.height)
+			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, x, y, self.width, self.height);
 		}
 
 		self.updatePosition = function() {
@@ -681,8 +706,8 @@
 		{
 			Projectile.list[key].update();
 			
-			if(Projectile.list[key] == true)
-				delete Projectile.list[key];
+			// if(Projectile.list[key] == true)
+			// 	delete Projectile.list[key];
 		}
 	}
 
@@ -698,6 +723,8 @@
 
 	startNewGame = function()
 	{
+		Projectile.list = {};
+
 		player = new Player('plyr1', Maps.current.startPt.x, Maps.current.startPt.y, img.player.width/5, img.player.height/5, img.player);
 		key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
 		key.locate();
@@ -722,10 +749,12 @@
 
 	update = function()
 	{
+
 		ctx.clearRect(0,0,canvas.width,canvas.height);
 		Maps.current.draw();
 		key.update();
 		Coin.update();
+		Projectile.update();
 		player.update();
 	}
 

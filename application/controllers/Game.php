@@ -26,7 +26,7 @@
 			$maps = $this->Game_model->get_all_maps();
 			$data['map_list'] = $maps;
 
-			$this->load->view('templates/header');
+			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_levels', $data);
 			$this->load->view('templates/footer');
@@ -49,7 +49,8 @@
 
 			$data['map'] = $mdetails;
 
-			$this->load->view('templates/header');
+			$this->load->view('templates/game_header');
+			$this->load->view('templates/load_init_links');
 			$this->load->view('pages/game2', $data);
 			$this->load->view('templates/footer');
 		}
