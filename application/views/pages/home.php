@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8 col-md-8 col-lg-9 col-xs-12" >
-				<h1>Learn Programming<br> while you play.</h1>
+				<h1 style="font-family:'Open Sans'; font-weight: 600;">Learn Programming<br> while you play.</h1>
 			</div>
 			<?php if(!$this->session->userdata('logged_in')) { ?>
 				<div class="col-sm-4 col-md-4 col-lg-3 col-xs-12">
