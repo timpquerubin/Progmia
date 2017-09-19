@@ -1,15 +1,44 @@
 <style type="text/css">
+
+	div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
+
 	div.code_area {
+		/*background-color: #595959;*/
 		font-family: "Courier New";
+		margin: 0px;
+		padding: 0px;
 	}
+
 	textarea.code_area {
+		background-color: inherit;
+		border: none; 
 		resize:none; 
 		width:100%; 
 		margin: 0; 
 		padding: 0;
+		color: #fff;
 	}
+
+	textarea.code_area:focus {outline: none;}
+	div.line-number { /*border-right: 2px solid #000;*/ margin: 0px; padding: 0px; padding-right: 20px;}
+
+	div.line-number textarea {
+		margin: 0px; 
+		padding: 0px;
+		overflow:hidden; 
+		resize: none; 
+		width: 100%; 
+		background-color: inherit; 
+		color: b0b0b0; 
+		text-align: right;
+		border: none;
+	}
+
+	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
+	div.button-run-container div.button-run {padding: 20px 0px; }
+
 </style>
-<div class="container">
+<div class="container-fluid">
 	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($map[0]['MAP_ID']) ? $map[0]['MAP_ID'] : '' ?>" />
 	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($map[0]['MAP_GRID']) ? $map[0]['MAP_GRID'] : '' ?>" />
 	<input type="hidden" name="startPt" id="startPt" value="<?php echo $map[0]['MAP_STARTPOINT']?>">
@@ -21,26 +50,29 @@
 			<canvas id="ctx" width="<?php echo $map[0]['MAP_IMGWIDTH']; ?>" height="<?php echo $map[0]['MAP_IMGHEIGHT']; ?>" style="border:1px solid #000000;"></canvas>
 		</div></center>
 	</div>
-	<div id="test" class="col-sm-2"></div>
-	<div>
-		<center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center>
+	<!-- <div id="test" class="col-sm-2"></div> -->
+	<div class="code-area-container">
+		<!-- <center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center> -->
 		<div class="row code_area">
-			<div class="col-sm-1" style="width: 40px;">
-				<textarea style="overflow:hidden; resize: none; width: 40px; background-color: inherit; color: b0b0b0; text-align: right; margin: 0; padding: 0;" rows="20" id="textarea1" disabled></textarea>
+			<div class="line-number col-md-1 col-sm-1 col-xs-1">
+				<textarea rows="20" id="textarea1" disabled></textarea>
 			</div>
-			<div class="col-sm-6" style="">
-				<textarea class="code_area col-sm-6" id="code_area" name="code_area" rows="20" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
-			</div>	
+			<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
+				<textarea class="code_area" id="code_area" name="code_area" rows="20" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+			</div>
+		</div>
+		<div class="row button-run-container">
+			<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+				<button class="btn btn-basic btn-block" onclick="executeCommand(0);">RUN</button>
+			</div>
 		</div>
 		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 	</div>
 </div>
-<!-- <script async src="//jsfiddle.net/2wAzx/13/embed/"></script> -->
+
 <script type="text/javascript">
 
 	$(document).ready(function(){
-
-
 	
 	var ctx = document.getElementById("ctx").getContext("2d");
 	var canvas = document.getElementById("ctx");
@@ -64,8 +96,8 @@
 	var img = {};
 	img.player = new Image();
 	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/cfcd208495d565ef66e7dff9f98764da.png";
-	// img.map = new Image();
-	// img.map.src = "<?php echo base_url(); ?>assets/images/" + "<?php echo isset($map[0]['MAP_FILENAME']) ? $map[0]['MAP_FILENAME'] : '' ?>";
+	img.map = new Image();
+	img.map.src = "<?php echo base_url(); ?>assets/images/" + map_filename;
 	img.key = new Image();
 	img.key.src = "<?php echo base_url(); ?>assets/images/key.png";
 	img.coin = new Image();
@@ -124,8 +156,6 @@
 		var toNextCmd = true;
 		var cmdLine = "";
 
-		cmdLine = code[commandNum].trim();
-
 		if(commandNum == 0 && isloop == false)
 		{
 			startNewGame();
@@ -133,6 +163,8 @@
 		
 		if(commandNum < code.length)
 		{
+			cmdLine = code[commandNum].trim();
+
 			if(/^student.moveRight()/g.test(cmdLine)) {
 				player.isPressingRight = true;
 			} else if(/^student.moveUp()/g.test(cmdLine)) {
@@ -204,134 +236,7 @@
 	// 		player.isPressingUp = false;
 	// }
 
-	Coin = function(id, imgSrc, height, width, x, y)
-	{
-		var self = {
-			id: id,
-			img: new Image(),
-			x: x,
-			y: y,
-			height: height,
-			width: width,
-		};
 
-		self.img.src = imgSrc;
-		self.spriteAnimCounter = 0;
-
-		self.draw = function()
-		{
-			var x = self.x - self.width/2;
-			var y = self.y - self.height/2;
-
-			var spinningMod = 0;
-			var frameWidth = self.img.width/6;
-
-			spinningMod = Math.floor(self.spriteAnimCounter) % 6;
-
-			ctx.drawImage(self.img, spinningMod * frameWidth, 0, self.img.width/6, self.img.height, x, y, self.width, self.height);
-		}
-
-		Coin.list[id] = self;
-	}
-
-	Coin.Init = function()
-	{
-		var coinX = 0;
-		var coinY = 0;
-		var coinId = "";
-
-		for(var i = 0; i < Maps.current.grid.length; i++)
-		{
-			if(Maps.current.grid[i].indexOf(6) != -1)
-			{
-				coinX = (Maps.current.grid[i].indexOf(6) * TILE_SIZE) + TILE_SIZE/2;
-				coinY = (i  * TILE_SIZE) + TILE_SIZE/2;
-				coinId = "coin" + i;
-				
-				Coin(coinId, img.coin.src, 50, 25, coinX, coinY);
-			}
-		}
-	}
-
-	Coin.update = function()
-	{
-		for(var key in Coin.list)
-		{
-			Coin.list[key].spriteAnimCounter += 0.25;
-			Coin.list[key].draw();
-
-			if(player.testCollision(Coin.list[key]))
-			{
-				console.log('coins + 1');
-				delete Coin.list[key];
-			}
-		}
-	}
-
-	Coin.list = {};
-
-	Key = function(id, status, imgSrc, height, width)
-	{
-		var self = {
-			id: id,
-			status: status,
-			img: new Image(),
-			x: 0,
-			y: 0,
-			height: height,
-			width: width,
-		};
-
-		self.img.src = imgSrc;
-
-		self.locate = function()
-		{
-			for(var i = 0; i < Maps.current.grid.length; i++)
-			{
-				if(Maps.current.grid[i].indexOf(3) != -1)
-				{
-					self.x = (Maps.current.grid[i].indexOf(3) * TILE_SIZE) + TILE_SIZE/2;
-					self.y = (i  * TILE_SIZE) + TILE_SIZE/2;
-					return;
-				}
-			}
-		}
-
-		self.update = function()
-		{
-			if(self.status != true)
-			{
-				if(player.testCollision(self) || (self.x == 0 && self.y == 0))
-				{
-					self.status = true;
-					console.log('aquired key');
-				} else {
-					self.draw();
-				}
-			}
-		}
-
-		self.draw = function()
-		{
-			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, self.x - self.width/2, self.y - self.height/2, self.width, self.height);
-		}
-
-		return self;
-	}
-
-	Objective = function(id, status, desc, checkPt)
-	{
-		var self = {
-			id: id,
-			status: status,
-			description: desc,
-			checkPt: checkPt,
-		};
-
-		Objective.list[id] = self;
-	}
-
-	Objective.list = {};
 
 	Maps = function(id, imgSrc, grid, startPt)
 	{
@@ -349,6 +254,10 @@
 		self.height = self.image.height;
 		self.width = self.image.width;
 
+		self.update = function()
+		{
+			self.draw();
+		}
 		
 		self.draw = function()
 		{
@@ -375,24 +284,17 @@
 		return self;
 	}
 
-	Maps.init = function(id, fileName, rowTiles, collArray, startPt)
+	Maps.current = {};
+
+	Maps.init = function(id, imgSrc, rowTiles, collArray, startPt)
 	{
 		var mapGrid2d = [];
-
-		// for(var i = 0 ; i < rowTiles; i++){
-		// 	mapGrid2d[i] = [];
-		// 	for(var j = 0 ; j < rowTiles; j++){
-		// 		mapGrid2d[i][j] = collArray[i * rowTiles + j];
-		// 	}
-		// }
 
 		var ctr = 0;
 		var ctr2D = 0;
 		mapGrid2d[ctr2D] = [];
 		while(collArray[ctr] != null)
 		{
-			// console.log(ctr%(rowTiles));
-
 			mapGrid2d[ctr2D][(ctr%rowTiles)] = collArray[ctr];
 
 			ctr++;
@@ -404,10 +306,22 @@
 			}
 		}
 
-		Maps.current = Maps(id, "<?php echo base_url(); ?>assets/images/"+ fileName, mapGrid2d, startPt);
+		Maps.current = Maps(id, imgSrc, mapGrid2d, startPt);
 	}
 
-	// Maps.list = {};
+	Objective = function(id, status, desc, checkPt)
+	{
+		var self = {
+			id: id,
+			status: status,
+			description: desc,
+			checkPt: checkPt,
+		};
+
+		Objective.list[id] = self;
+	}
+
+	Objective.list = {};
 
 	Player = function(id, x, y, width, height, image)
 	{
@@ -435,14 +349,14 @@
 
 		self.update = function()
 		{
-			if(self.atkCtr != 100)
+			if(self.atkCtr < 100)
 				self.atkCtr += self.atkSpd;
 
 			if (self.isPressingRight || self.isPressingLeft || self.isPressingDown || self.isPressingUp) 
 			{
 				self.spriteAnimCounter += 0.25;
 				moveCtr += 6;
-				document.getElementById('test').innerHTML = "moveCtr: " + moveCtr;
+				// document.getElementById('test').innerHTML = "moveCtr: " + moveCtr;
 			} else {
 				// executeCommand(cmdNum);
 			}
@@ -645,6 +559,192 @@
 		return self;
 	}
 
+	Bully = function(id, x, y, height, width, imgSrc) 
+	{
+		var self = {
+			id: id,
+			x: x,
+			y: y,
+			atkSpd: 2,
+			atkCtr: 100,
+			height: height,
+			width: width,
+			img: new Image(),
+		};
+
+		img.src = imgSrc;
+
+		self.update = function() {
+
+			if(atkCtr < 100)
+				atkCtr += atkSpd;
+
+			self.aim();
+			self.draw();
+		}
+
+		self.draw = function() {}
+
+		self.updatePosition = function() {}
+
+		self.aim = function() {}
+
+		self.throw = function() {}
+
+		Bully.list[id] = self;
+	}
+
+	Bully.init = function() {
+		var bullyX = 0;
+		var bullyY = 0;
+		var bullyId = "";
+		var startPoint = 0;
+
+		for(var i = 0; i < Maps.current.grid.length; i++)
+		{
+			startPoint = 0;
+			
+			do{
+				if(Maps.current.grid[i].indexOf(6, startPoint) != -1)
+				{
+					coinX = (Maps.current.grid[i].indexOf(6, startPoint) * TILE_SIZE) + TILE_SIZE/2;
+					coinY = (i  * TILE_SIZE) + TILE_SIZE/2;
+					coinId = "coin_" + Math.random();
+				
+					Coin(coinId, img.coin.src, 50, 25, coinX, coinY);
+				}
+
+				startPoint = Maps.current.grid[i].indexOf(6, startPoint) + 1;
+
+			} while(startPoint != 0);
+		}
+	}
+
+	Bully.list = {};
+
+	Key = function(id, status, imgSrc, height, width)
+	{
+		var self = {
+			id: id,
+			status: status,
+			img: new Image(),
+			x: 0,
+			y: 0,
+			height: height,
+			width: width,
+		};
+
+		self.img.src = imgSrc;
+
+		self.locate = function()
+		{
+			for(var i = 0; i < Maps.current.grid.length; i++)
+			{
+				if(Maps.current.grid[i].indexOf(3) != -1)
+				{
+					self.x = (Maps.current.grid[i].indexOf(3) * TILE_SIZE) + TILE_SIZE/2;
+					self.y = (i  * TILE_SIZE) + TILE_SIZE/2;
+					return;
+				}
+			}
+		}
+
+		self.update = function()
+		{
+			if(self.status != true)
+			{
+				if(player.testCollision(self) || (self.x == 0 && self.y == 0))
+				{
+					self.status = true;
+					console.log('aquired key');
+				} else {
+					self.draw();
+				}
+			}
+		}
+
+		self.draw = function()
+		{
+			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, self.x - self.width/2, self.y - self.height/2, self.width, self.height);
+		}
+
+		return self;
+	}
+
+	Coin = function(id, imgSrc, height, width, x, y)
+	{
+		var self = {
+			id: id,
+			img: new Image(),
+			x: x,
+			y: y,
+			height: height,
+			width: width,
+		};
+
+		self.img.src = imgSrc;
+		self.spriteAnimCounter = 0;
+
+		self.draw = function()
+		{
+			var x = self.x - self.width/2;
+			var y = self.y - self.height/2;
+
+			var spinningMod = 0;
+			var frameWidth = self.img.width/6;
+
+			spinningMod = Math.floor(self.spriteAnimCounter) % 6;
+
+			ctx.drawImage(self.img, spinningMod * frameWidth, 0, self.img.width/6, self.img.height, x, y, self.width, self.height);
+		}
+
+		Coin.list[id] = self;
+	}
+
+	Coin.Init = function()
+	{
+		var coinX = 0;
+		var coinY = 0;
+		var coinId = "";
+		var startPoint = 0;
+
+		for(var i = 0; i < Maps.current.grid.length; i++)
+		{
+			startPoint = 0;
+			
+			do{
+				if(Maps.current.grid[i].indexOf(6, startPoint) != -1)
+				{
+					coinX = (Maps.current.grid[i].indexOf(6, startPoint) * TILE_SIZE) + TILE_SIZE/2;
+					coinY = (i  * TILE_SIZE) + TILE_SIZE/2;
+					coinId = "coin_" + Math.random();
+				
+					Coin(coinId, img.coin.src, 50, 25, coinX, coinY);
+				}
+
+				startPoint = Maps.current.grid[i].indexOf(6, startPoint) + 1;
+
+			} while(startPoint != 0);
+		}
+	}
+
+	Coin.update = function()
+	{
+		for(var key in Coin.list)
+		{
+			Coin.list[key].spriteAnimCounter += 0.25;
+			Coin.list[key].draw();
+
+			if(player.testCollision(Coin.list[key]))
+			{
+				console.log('coins + 1');
+				delete Coin.list[key];
+			}
+		}
+	}
+
+	Coin.list = {};
+
 	Projectile = function(id, imgSrc, type, x, y, dir) {
 		var self = {
 			id: id,
@@ -669,10 +769,10 @@
 
 			self.timer++;
 
-			// if(self.timer > 97)
-			// 	self.toRemove = true;
-			// if(Maps.current.isPossitionWall(self) === 5)
-			// 	self.toRemove = true;
+			if(self.timer > 20)
+				self.toRemove = true;
+			if(Maps.current.isPossitionWall(self) === 5)
+				self.toRemove = true;
 
 		}
 
@@ -706,8 +806,8 @@
 		{
 			Projectile.list[key].update();
 			
-			// if(Projectile.list[key] == true)
-			// 	delete Projectile.list[key];
+			if(Projectile.list[key].toRemove == true)
+				delete Projectile.list[key];
 		}
 	}
 
@@ -720,6 +820,8 @@
 
 		Projectile(id, img.projectile.src, type, x, y, direction);
 	}
+
+
 
 	startNewGame = function()
 	{
@@ -749,32 +851,18 @@
 
 	update = function()
 	{
-
 		ctx.clearRect(0,0,canvas.width,canvas.height);
-		Maps.current.draw();
+		Maps.current.update();
 		key.update();
 		Coin.update();
 		Projectile.update();
-		player.update();
+		player.update()
 	}
 
 	start_point = JSON.parse(start_point);
 	var mapGrid2d = [];
 
-	Maps.init('cMap', map_filename, map_numcols, JSON.parse(map_grid), {x: start_point[0], y: start_point[1]});
-	// key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
-	// console.log(key.locate());
-	// Maps.init('level_2', 'leve_2_temp_new', 31, mapGrid_level2_temp, {x: TILE_SIZE*4, y: img.map.height - img.map.height/4});
-
-	// Maps.current = Maps.list[document.getElementById('mapId').value];
-	
-
-	// for(var i = 0 ; i < 31; i++){
-	// 	mapGrid2d[i] = [];
-	// 	for(var j = 0 ; j < 31; j++){
-	// 		mapGrid2d[i][j] = mapGrid_level2_temp[i * 31 + j];
-	// 	}
-	// }
+	Maps.init('cMap', img.map.src, map_numcols, JSON.parse(map_grid), {x: start_point[0], y: start_point[1]});
 
 	// Objective('obj_1', false, 'Reach Checkpoint 1', {x: 155, y: 72});
 	// Objective('start_point', false, 'Level 1 start point', {x: 50, y: 72});
@@ -785,3 +873,4 @@
 	});
 
 </script>
+<!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/Entities.js" ></script> -->
