@@ -1,57 +1,175 @@
-.bg-stages {
-	position: relative;
-	background: url("../images/global-no-stages-updated.png");
-	display: block;
-    max-width: 100%;
-    height: auto;
-	background-repeat:no-repeat;
-	background-size:contain;
-	background-position:center;
-	/*background-size: cover;
-	padding: 20%;*/
-	max-height: 570px;
-	height: 100%;
-}
-@media only screen and (max-width: 319px) {
-    /* styles for narrow screens */
-    .stages-01{
-    }
-}
 
-@media only screen and (min-width: 320px) {
+
+@media only screen and (min-width: 1600px) {
     /* styles for narrow screens */
-}
-@media only screen and (min-width: 360px) {
-    /* styles for narrow screens */    
     .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
 	    max-width: 100%;
-	    height: auto;
 		background-repeat:no-repeat;
 		background-size:contain;
 		background-position:center;
-		/*background-size: cover;
-		padding: 20%;*/
+		max-height: 570px;
+		height: 100%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
+}
+
+@media only screen and (min-width: 1200px) and (max-width:1600px) {
+    /* styles for narrow screens */
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 90%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
+}
+@media only screen and (min-width: 801px) and (max-width: 1199px) {
+    /* styles for narrow screens */
+
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 85%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:25% !important;
+    }
+}
+@media only screen and (min-width: 769px) and (max-width: 800px) {
+    /* styles for narrow screens */
+
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 85%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    /* styles for narrow screens */
+
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 85%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
+}
+
+@media only screen and (min-width: 541px) and (max-width: 600px) {
+    /* styles for narrow screens */
+
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 95%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 540px) {
+    /* styles for narrow screens */
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 85%;
+		margin:0 auto;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
+}
+@media only screen and (min-width: 321px) and (max-width: 360px) {
+    /* styles for narrow screens */    
+    .bg-stages {
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
 		max-height: 570px;
 		height: 45%;
 		margin:0 !important;
 	}
     .stages-01, .stages-02, .stages-03, .stages-04{
-    	height:5% !important;
+    	position: absolute;
+    	height:35% !important;
     }
 }
-
-@media only screen and (min-width: 540px) {
+@media only screen and (max-width: 320px)) {
     /* styles for narrow screens */
-}
-
-@media only screen and (min-width: 600px) {
-    /* styles for narrow screens */
-}
-
-@media only screen and (min-width: 800px) {
-    /* styles for narrow screens */
-}
-
-@media only screen and (min-width: 1200px) {
-    /* styles for narrow screens */
+    .bg-stages {
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 40%;
+		margin:0 !important;
+	}
+    .stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    	height:35% !important;
+    }
 }
