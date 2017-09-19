@@ -1,5 +1,20 @@
 
+    .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 100%;
+		margin:0 auto;
+	}
 
+.stages-01, .stages-02, .stages-03, .stages-04{
+    	position: absolute;
+    }
 @media only screen and (min-width: 1600px) {
     /* styles for narrow screens */
     .bg-stages {
@@ -16,11 +31,104 @@
 	}
     .stages-01, .stages-02, .stages-03, .stages-04{
     	position: absolute;
-    	height:35% !important;
+    	/*height:35% !important;*/
+    }
+    .stages-01{
+    	position: absolute;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:32% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
 
-@media only screen and (min-width: 1200px) and (max-width:1600px) {
+@media only screen and (min-width: 1200px) and (max-width:1599px) {
+    /* styles for narrow screens */
+    .bg-stages {
+		position: relative !important;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
+	    max-width: 100%;
+		background-repeat:no-repeat;
+		background-size:contain;
+		background-position:center;
+		max-height: 570px;
+		height: 100%;
+		margin:0 auto;
+	}
+    .stages-01{
+    	position: absolute;
+    	top:28.5%; 
+    	left:21.7%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:47% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:30.5%; 
+    	left:34.5%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:48% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:55.5%;
+    	left:49.5%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:50% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:37.5%; 
+    	left:56.5%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:60% !important;
+    }
+}
+@media only screen and (min-width: 991px) and (max-width: 1199px) {
     /* styles for narrow screens */
     .bg-stages {
 		position: relative;
@@ -31,17 +139,51 @@
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 90%;
+		height: 100%;
 		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:35% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:30% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
-@media only screen and (min-width: 801px) and (max-width: 1199px) {
+@media only screen and (min-width: 801px) and (max-width: 990px) {
     /* styles for narrow screens */
-
     .bg-stages {
 		position: relative;
 		background: url("../images/global-no-stages-updated.png");
@@ -51,17 +193,51 @@
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 85%;
+		height: 100%;
 		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:25% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:30% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
 @media only screen and (min-width: 769px) and (max-width: 800px) {
     /* styles for narrow screens */
-
     .bg-stages {
 		position: relative;
 		background: url("../images/global-no-stages-updated.png");
@@ -71,18 +247,52 @@
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 85%;
+		height: 100%;
 		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:35% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:32% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
 
 @media only screen and (min-width: 601px) and (max-width: 768px) {
     /* styles for narrow screens */
-
     .bg-stages {
 		position: relative;
 		background: url("../images/global-no-stages-updated.png");
@@ -92,18 +302,52 @@
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 85%;
+		height: 100%;
 		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:35% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:32% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
 
 @media only screen and (min-width: 541px) and (max-width: 600px) {
     /* styles for narrow screens */
-
     .bg-stages {
 		position: relative;
 		background: url("../images/global-no-stages-updated.png");
@@ -113,12 +357,47 @@
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 95%;
+		height: 100%;
 		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:35% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:32% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
 
@@ -133,43 +412,153 @@
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 85%;
+		height: 100%;
 		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:35% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:32% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:30% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:31% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:39% !important;
     }
 }
 @media only screen and (min-width: 321px) and (max-width: 360px) {
     /* styles for narrow screens */    
     .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
 	    max-width: 100%;
 		background-repeat:no-repeat;
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 45%;
-		margin:0 !important;
+		height: 100%;
+		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
+    	top:36%; 
+    	left:11%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
     	height:35% !important;
     }
+    .stages-02{
+    	position: absolute;
+    	top:36%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:35% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:58%;
+    	left:51%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:35% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:43%; 
+    	left:60%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:43% !important;
+    }
 }
-@media only screen and (max-width: 320px)) {
+@media only screen and (max-width: 319px)) {
     /* styles for narrow screens */
     .bg-stages {
+		position: relative;
+		background: url("../images/global-no-stages-updated.png");
+		display: block;
 	    max-width: 100%;
-		background-repeat:no-repeat;
 		background-size:contain;
 		background-position:center;
 		max-height: 570px;
-		height: 40%;
-		margin:0 !important;
+		height: 100%;
+		margin:0 auto;
 	}
-    .stages-01, .stages-02, .stages-03, .stages-04{
+    .stages-01{
     	position: absolute;
-    	height:35% !important;
+    	top:37%; 
+    	left:10%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 5;
+    	height:3% !important;
+    }
+    .stages-02{
+    	position: absolute;
+    	top:38%; 
+    	left:29%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 3;
+    	height:3% !important;
+    }
+    .stages-03{
+    	position: absolute;
+    	top:53%;
+    	left:50%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	z-index: 4;
+    	height:3% !important;
+    }
+    .stages-04{
+    	position: absolute;
+    	top:40%; 
+    	left:58%;
+    	margin:0 auto;
+    	height:auto;
+    	background-color:transparent;
+    	height:3% !important;
     }
 }
