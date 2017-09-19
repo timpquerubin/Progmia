@@ -349,7 +349,7 @@
 
 		self.update = function()
 		{
-			if(self.atkCtr != 100)
+			if(self.atkCtr < 100)
 				self.atkCtr += self.atkSpd;
 
 			if (self.isPressingRight || self.isPressingLeft || self.isPressingDown || self.isPressingUp) 
@@ -565,12 +565,59 @@
 			id: id,
 			x: x,
 			y: y,
+			atkSpd: 2,
+			atkCtr: 100,
 			height: height,
 			width: width,
 			img: new Image(),
 		};
 
 		img.src = imgSrc;
+
+		self.update = function() {
+
+			if(atkCtr < 100)
+				atkCtr += atkSpd;
+
+			self.aim();
+			self.draw();
+		}
+
+		self.draw = function() {}
+
+		self.updatePosition = function() {}
+
+		self.aim = function() {}
+
+		self.throw = function() {}
+
+		Bully.list[id] = self;
+	}
+
+	Bully.init = function() {
+		var bullyX = 0;
+		var bullyY = 0;
+		var bullyId = "";
+		var startPoint = 0;
+
+		for(var i = 0; i < Maps.current.grid.length; i++)
+		{
+			startPoint = 0;
+			
+			do{
+				if(Maps.current.grid[i].indexOf(6, startPoint) != -1)
+				{
+					coinX = (Maps.current.grid[i].indexOf(6, startPoint) * TILE_SIZE) + TILE_SIZE/2;
+					coinY = (i  * TILE_SIZE) + TILE_SIZE/2;
+					coinId = "coin_" + Math.random();
+				
+					Coin(coinId, img.coin.src, 50, 25, coinX, coinY);
+				}
+
+				startPoint = Maps.current.grid[i].indexOf(6, startPoint) + 1;
+
+			} while(startPoint != 0);
+		}
 	}
 
 	Bully.list = {};
