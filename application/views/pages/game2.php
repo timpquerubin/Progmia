@@ -408,6 +408,22 @@
 			// ctx.fillRect(bottomBumper.x, bottomBumper.y, 5,5);
 			// ctx.fillRect(leftBumper.x, leftBumper.y, 5,5);
 			// ctx.fillRect(rightBumper.x, rightBumper.y, 5,5);
+
+			if( (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4))
+			{
+				if(key.status != true)
+				{
+					alert('error: door locked');
+					startNewGame();
+
+				} else
+				{
+					alert('goal');
+					startNewGame();
+					console.log('goal');
+				}
+			}
+
 			if(moveCtr <= 96)
 			{
 				if(Maps.current.isPossitionWall(topBumper) === 5)
@@ -519,20 +535,6 @@
 			// 		}
 			// 	}
 			// }
-
-			if( (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4))
-			{
-				if(key.status != true)
-				{
-					alert('error: door locked');
-					startNewGame();
-
-				} else
-				{
-					alert('goal');
-					startNewGame();
-				}
-			}
 		};
 
 		self.throwProjectile = function(direction) {
@@ -826,6 +828,7 @@
 	startNewGame = function()
 	{
 		Projectile.list = {};
+		Coin.list = {};
 
 		player = new Player('plyr1', Maps.current.startPt.x, Maps.current.startPt.y, img.player.width/5, img.player.height/5, img.player);
 		key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
