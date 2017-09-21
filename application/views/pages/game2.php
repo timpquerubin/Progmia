@@ -1,6 +1,6 @@
 <style type="text/css">
 
-	div.game-menu {position: absolute; border: 2px solid #ff0000; width: 50%;}
+	div.game-menu {position: absolute; /*border: 2px solid #ff0000;*/ width: 50%;}
 	div.player-hp {margin-top: 10px;}
 
 	div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
@@ -53,7 +53,7 @@
 			<div class="player-hp">
 				<label class="col-sm-1 col-xs-1" style="color: #FFF;">HP:</label>
 				<div class="progress col-sm-4 col-xs-5" style="padding: 0px;">
-				 	<div class="progress-bar progress-bar-danger" role="progressbar" style="width: 50%"></div>
+				 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
 				</div>
 			</div>
 		</div>
@@ -220,7 +220,7 @@
 			}
 
 		} else {
-			alert('end of code');
+			console.log("end of code");
 		}
 	}
 
@@ -366,6 +366,11 @@
 		{
 			if(self.atkCtr < 100)
 				self.atkCtr += self.atkSpd;
+
+			if(player.hp <= 0) {
+				alert("error: player is dead");
+				startNewGame();
+			}
 
 			if (self.isPressingRight || self.isPressingLeft || self.isPressingDown || self.isPressingUp) 
 			{
@@ -582,6 +587,7 @@
 			x: x,
 			y: y,
 			hp: 2,
+			hpMax: 2,
 			atkSpd: 2,
 			atkCtr: 100,
 			type: "bully",
@@ -597,6 +603,10 @@
 
 			if(self.atkCtr < 100)
 				self.atkCtr += self.atkSpd;
+
+			if(self.hp <= 0) {
+				self.toRemove = true;
+			}
 
 			self.updatePosition();
 			self.draw();
@@ -631,6 +641,25 @@
 				directionMod = 3;
 
 			ctx.drawImage(self.img, 0, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width, self.height);
+
+			ctx.save();
+
+			var x = self.x;
+			var y = self.y - self.height/2;
+
+			ctx.fillStyle = 'red';
+			var width = 50 * (self.hp / self.hpMax);
+
+			if(width < 0)
+			{
+				width = 0;
+			}
+
+			ctx.fillRect(x-25, y, width, 8);
+			ctx.strokeStyle = 'black';
+			ctx.strokeRect(x-25, y, 50, 8);
+
+			ctx.restore();
 		}
 
 		self.updatePosition = function() {}
@@ -851,6 +880,30 @@
 			self.updatePosition();
 			self.draw();
 
+			if(self.type === "bully")
+			{
+				if(self.testCollision(player))
+				{
+					self.toRemove = true;
+					player.hp -= 1;
+
+					var hpPercent = (player.hp/player.hpMax)*100;
+
+					$(".player-hp-bar").css("width", hpPercent + "%");
+				}
+			}
+
+			if(self.type === "player")
+			{
+				for(var key in Bully.list)
+				{
+					if(self.testCollision(Bully.list[key]))
+					{
+						self.toRemove = true;
+						Bully.list[key].hp -= 1;
+					}
+				}
+			}
 
 			self.timer++;
 
@@ -878,6 +931,22 @@
 				self.x -= 5;
 			if(self.direction === "right")
 				self.x += 5;
+		}
+
+		self.testCollision = function(entity2){	//return if colliding (true/false)
+			var rect1 = {
+				x:self.x-self.width/2,
+				y:self.y-self.height/2,
+				width:self.width,
+				height:self.height,
+			}
+			var rect2 = {
+				x:entity2.x-entity2.width/2,
+				y:entity2.y-entity2.height/2,
+				width:entity2.width,
+				height:entity2.height,
+			}
+			return testCollisionRectRect(rect1,rect2);
 		}
 
 		Projectile.list[id] = self;
@@ -910,6 +979,8 @@
 
 	startNewGame = function()
 	{
+		$(".player-hp-bar").css("width", "100%");
+
 		Projectile.list = {};
 		Coin.list = {};
 		Bully.list = {};
