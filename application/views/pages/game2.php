@@ -1,5 +1,8 @@
 <style type="text/css">
 
+	div.game-menu {position: absolute; border: 2px solid #ff0000; width: 50%;}
+	div.player-hp {margin-top: 10px;}
+
 	div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
 
 	div.code_area {
@@ -46,6 +49,14 @@
 	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($map[0]['MAP_NUMCOLS']) ? $map[0]['MAP_NUMCOLS'] : '' ?>">
 
 	<div style="width: 100%; background-color: #000;">
+		<div class="game-menu" style="height: <?php echo $map[0]['MAP_IMGHEIGHT']/2; ?>;">
+			<div class="player-hp">
+				<label class="col-sm-1 col-xs-1" style="color: #FFF;">HP:</label>
+				<div class="progress col-sm-4 col-xs-5" style="padding: 0px;">
+				 	<div class="progress-bar progress-bar-danger" role="progressbar" style="width: 50%"></div>
+				</div>
+			</div>
+		</div>
 		<center><div class="">
 			<canvas id="ctx" width="<?php echo $map[0]['MAP_IMGWIDTH']; ?>" height="<?php echo $map[0]['MAP_IMGHEIGHT']; ?>" style="border:1px solid #000000;"></canvas>
 		</div></center>
@@ -337,6 +348,8 @@
 			type: "player",
 			atkSpd: 5,
 			atkCtr: 100,
+			hp: 10,
+			hpMax: 10,
 		};
 
 		self.isPressingUp = false;
@@ -568,8 +581,10 @@
 			id: id,
 			x: x,
 			y: y,
+			hp: 2,
 			atkSpd: 2,
 			atkCtr: 100,
+			type: "bully",
 			height: height,
 			width: width,
 			img: new Image(),
@@ -585,7 +600,7 @@
 
 			self.updatePosition();
 			self.draw();
-			self.aim();
+			self.throw();
 		}
 
 		self.draw = function() {
@@ -598,14 +613,55 @@
 
 			var directionMod = 0;
 
-			ctx.drawImage(self.img, 0, 0, self.img.width/4, self.img.height/4, x, y, self.width, self.height);
+			var diffX = player.x - self.x;
+			var diffY = player.y - self.y;
+			
+			var angleToUser = Math.atan2(diffY,diffX) / Math.PI * 180
+
+			if(angleToUser < 0)
+				angleToUser = 360 + angleToUser;
+
+			var directionMod = 2; // right
+
+			if(angleToUser >= 45 && angleToUser < 135) // down
+				directionMod = 0;
+			if(angleToUser >= 135 && angleToUser < 225) // left
+				directionMod = 1;
+			if(angleToUser >= 225 && angleToUser < 315) // up
+				directionMod = 3;
+
+			ctx.drawImage(self.img, 0, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width, self.height);
 		}
 
 		self.updatePosition = function() {}
 
-		self.aim = function() {}
+		self.throw = function() {
+			if(self.atkCtr >= 100) {
 
-		self.throw = function() {}
+				var direction = "";
+
+				if(player.x === self.x) {
+					if(player.y > self.y) {
+						direction = "down";
+					} else {
+						direction = "up";
+					}
+				}
+
+				if(player.y === self.y) {
+					if(player.x > self.x) {
+						direction = "right";
+					} else {
+						direction = "left"
+					}
+				}
+
+				if(direction != "") {
+					Projectile.generate(self, direction);
+					self.atkCtr = 0;
+				}
+			}
+		}
 
 		Bully.list[id] = self;
 	}
@@ -627,7 +683,7 @@
 					bullyY = (i  * TILE_SIZE) + TILE_SIZE/2;
 					bullyId = "bully_" + Math.random();
 				
-					Bully(bullyId, bullyX, bullyY, 43.6, 31.8, img.bully.src);
+					Bully(bullyId, bullyX, bullyY, img.bully.height/4, img.bully.width/4, img.bully.src);
 				}
 
 				startPoint = Maps.current.grid[i].indexOf(7, startPoint) + 1;
@@ -887,9 +943,9 @@
 		Maps.current.update();
 		key.update();
 		Coin.update();
-		Projectile.update();
-		player.update()
+		player.update();
 		Bully.update();
+		Projectile.update();
 	}
 
 	start_point = JSON.parse(start_point);
