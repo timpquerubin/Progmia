@@ -96,6 +96,8 @@
 	var img = {};
 	img.player = new Image();
 	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/cfcd208495d565ef66e7dff9f98764da.png";
+	img.bully = new Image();
+	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
 	img.map = new Image();
 	img.map.src = "<?php echo base_url(); ?>assets/images/" + map_filename;
 	img.key = new Image();
@@ -409,7 +411,7 @@
 			// ctx.fillRect(leftBumper.x, leftBumper.y, 5,5);
 			// ctx.fillRect(rightBumper.x, rightBumper.y, 5,5);
 
-			if( (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4))
+			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4))
 			{
 				if(key.status != true)
 				{
@@ -420,7 +422,6 @@
 				{
 					alert('goal');
 					startNewGame();
-					console.log('goal');
 				}
 			}
 
@@ -430,7 +431,7 @@
 				{
 					self.y += 6;
 					isError = true;
-					// self.y = oldY;
+
 				} else {
 					if(self.isPressingUp)
 						self.y -= 6;
@@ -439,14 +440,14 @@
 				{
 					self.y -= 6;
 					isError = true;
-					// self.y = oldY;
+					
 				} else {
 					if(self.isPressingDown)
 						self.y += 6;
 				}
 				if(Maps.current.isPossitionWall(leftBumper) === 5)
 				{
-					// self.x = oldX;
+					
 					self.x += 6;
 					isError = true;
 				} else {
@@ -455,7 +456,7 @@
 				}
 				if(Maps.current.isPossitionWall(rightBumper) === 5)
 				{
-					// self.x = oldX;
+						
 					self.x -= 6;
 					isError = true;
 				} else {
@@ -572,20 +573,33 @@
 			height: height,
 			width: width,
 			img: new Image(),
+			toRemove: false,
 		};
 
-		img.src = imgSrc;
+		self.img.src = imgSrc;
 
 		self.update = function() {
 
-			if(atkCtr < 100)
-				atkCtr += atkSpd;
+			if(self.atkCtr < 100)
+				self.atkCtr += self.atkSpd;
 
-			self.aim();
+			self.updatePosition();
 			self.draw();
+			self.aim();
 		}
 
-		self.draw = function() {}
+		self.draw = function() {
+
+			var x = self.x - self.width/2;
+			var y = self.y - self.height/2;
+
+			var frameWidth = self.img.width/4;
+			var frameHeight = self.img.height/4;
+
+			var directionMod = 0;
+
+			ctx.drawImage(self.img, 0, 0, self.img.width/4, self.img.height/4, x, y, self.width, self.height);
+		}
 
 		self.updatePosition = function() {}
 
@@ -607,18 +621,31 @@
 			startPoint = 0;
 			
 			do{
-				if(Maps.current.grid[i].indexOf(6, startPoint) != -1)
+				if(Maps.current.grid[i].indexOf(7, startPoint) != -1)
 				{
-					coinX = (Maps.current.grid[i].indexOf(6, startPoint) * TILE_SIZE) + TILE_SIZE/2;
-					coinY = (i  * TILE_SIZE) + TILE_SIZE/2;
-					coinId = "coin_" + Math.random();
+					bullyX = (Maps.current.grid[i].indexOf(7, startPoint) * TILE_SIZE) + TILE_SIZE/2;
+					bullyY = (i  * TILE_SIZE) + TILE_SIZE/2;
+					bullyId = "bully_" + Math.random();
 				
-					Coin(coinId, img.coin.src, 50, 25, coinX, coinY);
+					Bully(bullyId, bullyX, bullyY, 43.6, 31.8, img.bully.src);
 				}
 
-				startPoint = Maps.current.grid[i].indexOf(6, startPoint) + 1;
+				startPoint = Maps.current.grid[i].indexOf(7, startPoint) + 1;
 
 			} while(startPoint != 0);
+		}
+	}
+
+	Bully.update = function() {
+		for(var key in Bully.list) {
+			Bully.list[key].update();
+		}
+
+		for(var key in Bully.list) {
+			if(Bully.list[key].toRemove === true)
+			{
+				delete Bully.list[key];
+			}
 		}
 	}
 
@@ -829,11 +856,13 @@
 	{
 		Projectile.list = {};
 		Coin.list = {};
+		Bully.list = {};
 
 		player = new Player('plyr1', Maps.current.startPt.x, Maps.current.startPt.y, img.player.width/5, img.player.height/5, img.player);
 		key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
 		key.locate();
 		Coin.Init();
+		Bully.init();
 
 		// do{
 		// 	canvas.width = Maps.current.width;
@@ -860,6 +889,7 @@
 		Coin.update();
 		Projectile.update();
 		player.update()
+		Bully.update();
 	}
 
 	start_point = JSON.parse(start_point);
