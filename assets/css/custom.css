@@ -1,6 +1,24 @@
 
     .bg-stage{
         overflow-x: hidden;
-        padding:20px 28%;
+        padding:0 15%;
+        background-color: #fff;
     }
+    .bg-stage-3{position: relative;background:#66b9bf;z-index:1; margin:0;}
+    .bg-stage-3:after{position:absolute;border:40px solid #333;bottom:0;left:-15%;height:400px;;overflow-x:hidden;content:'';transform:skew(60deg, 0deg);background-color: #777;}
+    .bg-stage-3:before{position:absolute;border:40px solid #333;bottom:0;right:-20%;height:400px;overflow-x:hidden;content:'';transform:skew(-60deg, 0deg);background-color: #777;}
     .bg-stage img{margin:0 auto;}
+    div.stage-3{position: absolute;height:0px;}
+    .bg-stage-3 a{z-index: 999999999;}
+
+    .bg-stage-2{position: relative;padding:0;z-index:1;}
+    .bg-stage-2:after{position:absolute;border:40px solid #333;top:0;left:-35%;z-index:1;height:400px;overflow-x:hidden;content:'';transform:skew(-60deg, 0deg);background-color: #777;}
+    .bg-stage-2:before{position:absolute;border:40px solid #333;top:0;right:-30%;z-index:1;height:400px;overflow-x:hidden;content:'';transform:skew(60deg, 0deg);background-color: #777;}
+    div.stage{position: absolute;top:0;height:0px;transition:.7s ease-in-out;}
+    div.stage:hover {transition:.7s ease-in-out;height:360px;background-color: #66b9bf;z-index: 3;border-radius: 10px;}
+    .wrapper {margin:20px auto 0px auto;z-index: 99999;}
+    .wrapper div.stage{height:300px;}/*
+    div.stage:before{transition:.5s;position:absolute;content: ''; border-right: solid 40px #fff;height: 0px !important;border-top:solid 40px #fff;left:10px;top:0;z-index:-1;transform:skew(60deg, 0deg);}
+    div.stage:after{transition:.5s;position:absolute;content: ''; border-right: solid 40px #fff;height: 0px !important;border-top:solid 40px #fff;right:10px;top:0;z-index:-1;transform:skew(60deg, 0deg);}
+    div.stage:hover:before{transition:.5s;position:absolute;content: ''; border-right: solid 40px #333;border-top:solid 40px #333;height: 200px !important;left:10px;top:0;z-index:-1;transform:skew(60deg, 0deg);}
+    div.stage:hover:after{transition:.5s;position:absolute;content: ''; border-right: solid 40px #333;border-top:solid 40px #333;height: 200px !important;right:10px;top:0;z-index:-1;transform:skew(60deg, 0deg);}
