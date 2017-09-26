@@ -8,7 +8,7 @@
 
 		public function add_map($params)
 		{
-			return $this->db->insert('MAP', $params);
+			return $this->db->insert('LEVEL', $params);
 		}
 
 		public function get_all_maps()
@@ -20,7 +20,7 @@
 
 		public function get_map_details($params)
 		{
-			$map_details = $this->db->get_where('MAP', $params);
+			$map_details = $this->db->get_where('level', $params);
 
 			return $map_details->result_array();
 		}
