@@ -20,33 +20,51 @@
 
 			$data['maps'] = $maps;
 
-			$this->load->view('templates/header');
+			$this->load->view('templates/dashboard_header');
 			$this->load->view('game/game_list', $data);
-			$this->load->view('templates/footer');
+			$this->load->view('templates/dashboard_footer');
 		}
 
 		public function add_level()
 		{
 			$this->__init();
 
-			$data['title'] = 'Create Map';
+			$data['title'] = 'Add New Level';
 
 			$stages = $this->Game_model->get_stages();
 
 			$data['stage_list'] = $stages;
 
-			$this->load->view('templates/header');
+			$this->load->view('templates/dashboard_header');
+			$this->load->view('templates/load_init_links');
 			$this->load->view('game/add_level',$data);
-			$this->load->view('templates/footer');
+			$this->load->view('templates/dashboard_footer');
 		}
 
 		public function save_add_level()
 		{
 			$this->__init();
 
+			$count_levels_params['STAGE'] = $_POST['stage'];
+
+			$level_count = count($this->Game_model->get_levels($count_levels_params));
+			$level_count++;
+
 			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
 
 			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
+
+			$level_params = array(
+				'LVL_ID' => md5($_POST['stage'] + $level_count + $_POST['level-name']),
+				'LVL_GRID' => $_POST['mapCol'],
+				'LVL_NAME' => $_POST['level-name'],
+				'LVL_SPOINT' => json_encode($startPt),
+				'LVL_COLS' => (int)$_POST['numCols'],
+				'LVL_MAP_HEIGHT' => $map_size[1],
+				'LVL_MAP_WIDTH' => $map_size[0],
+				'STAGE' => $_POST['stage'],
+				'LVL_NUM' => $level_count,
+			);
 			
 			$params['MAP_ID'] = md5($_FILES['imgMap']['name']);
 			$params['MAP_NUMCOLS'] = (int)$_POST['numCols'];

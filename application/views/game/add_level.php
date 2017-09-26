@@ -1,47 +1,75 @@
-<form class="form-horizontal" method="post" action="save_add_level" enctype="multipart/form-data">
-		<h2><?php echo $title ?></h2>
-		<hr/>
-		<input type="hidden" name="mapCol" id="mapCol">
-		<!-- <textarea name="mapCol" id="mapCol"></textarea> -->
-		<div class="">
-			
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2">Map Photo:</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="file" name="imgMap" id="imgMap">
-				<div id="imgPrev" name="imgPrev" style="height: 500px; width: 500px; border-style: solid; border-width: 1px; background-size: contain; background-position: center center; background-repeat: no-repeat;"></div>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2">Collision Grid:</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="file" name="collGrid" id="collGrid">
-			</div>
-			<div class="col-sm-6">
-				<label class="control-label col-sm-2">Columns:</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="numCols" name="numCols">
+<div class="container">
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><h4><?php echo $title ?></h4></div>
+		<div class="panel-body">
+			<form class="form-horizontal" method="post" action="save_add_level" enctype="multipart/form-data">
+				<input type="hidden" name="mapCol" id="mapCol">
+				<!-- <textarea name="mapCol" id="mapCol"></textarea> -->
+				<!-- <div class="">
+					
+				</div> -->
+				<div class="form-group">
+					<label class="control-label col-sm-2">Stage:</label>
+					<div class="col-sm-4">
+						<select class="form-control" id="stage" name="stage">
+							<option selected="true">N.A.</option>
+							<?php foreach($stage_list as $s) { ?>
+								<option class="stage-option" value="<?php echo $s['STG_ID']; ?>"><?php echo $s['STG_NAME']; ?></option>
+							<?php } ?>
+						</select>
+					</div>
 				</div>
-			</div>
-		</div>
 
-		<div class="form-group">
-			<label class="control-label col-sm-2">Start Point x:</label>
-			<div class="col-sm-2">
-				<input type="text" class="form-control" id="startPtX" name="startPtX">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2">Start Point y:</label>
-			<div class="col-sm-2">
-				<input type="text" class="form-control" id="startPtY" name="startPtY">
-			</div>
-		</div>
-		<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
-</form>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Level Name:</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="level-name" id="level-name" placeholder="Level Name">
+					</div>
+				</div>
 
-<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js""></script>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Map Photo:</label>
+					<div class="col-sm-4">
+						<input class="form-control" type="file" name="imgMap" id="imgMap">
+					</div>
+					<div class="col-sm-12">
+						<div class="level-img-prev" id="imgPrev" name="imgPrev"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Collision Grid:</label>
+					<div class="col-sm-4">
+						<input class="form-control" type="file" name="collGrid" id="collGrid">
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label col-sm-2">Columns:</label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="numCols" name="numCols">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2">Start Point x:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="startPtX" name="startPtX">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2">Start Point y:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="startPtY" name="startPtY">
+					</div>
+				</div>
+				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
+			</form>
+		</div>
+	</div>
+
+	
+</div>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 	    $("#imgMap").change(function(){
@@ -56,8 +84,8 @@
 	        		console.log(img.height + "," + img.width);
 
 	        		$("#imgPrev").css("background-image", "url("+ e.target.result +")");
-	        		$("#imgPrev").css("height", img.height);
-	        		$("#imgPrev").css("width", img.width);
+	        		// $("#imgPrev").css("height", img.height);
+	        		// $("#imgPrev").css("width", img.width);
 	        		$("#imgPrev").show();
 	        		// var img = $('<img>').attr('src', e.target.result);
            //  		$('#imgPrev').html(img);

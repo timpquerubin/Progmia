@@ -11,11 +11,16 @@
 			return $this->db->insert('LEVEL', $params);
 		}
 
-		public function get_levels()
+		public function get_levels($params = null)
 		{
-			$maps = $this->db->query('SELECT * FROM LEVEL;');
 
-			return $maps->result_array();
+			if($params === null) {
+				$levels = $this->db->query('SELECT * FROM LEVEL;');
+			} else {
+				$levels = $this->db->get_where('LEVEL', $params);
+			}
+
+			return $levels->result_array();
 		}
 
 		public function get_level_details($params)
@@ -27,7 +32,7 @@
 
 		public function get_stages($params = null)
 		{
-			if(isset($params['STG_ID']))
+			if($params != null)
 			{
 				$stages = $this->db->get_where('STAGE', $params);
 			} else {
