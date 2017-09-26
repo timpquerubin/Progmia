@@ -11,7 +11,7 @@
 		{
 			$this->_init();
 
-			$maps = $this->Game_model->get_all_maps();
+			$maps = $this->Game_model->get_levels();
 			$data['map_list'] = $maps;
 
 			$this->load->view('templates/game_header');
@@ -23,7 +23,7 @@
 		{
 			$this->_init();
 
-			$maps = $this->Game_model->get_all_maps();
+			$maps = $this->Game_model->get_levels();
 			$data['map_list'] = $maps;
 
 			$this->load->view('templates/game_header');
@@ -32,15 +32,15 @@
 			$this->load->view('templates/footer');
 		}
 
-		public function play($mapId)
+		public function play($lvlId)
 		{
 			$this->_init();
 
 			$map_params = array(
-				'MAP_ID' => $mapId,
+				'LVL_ID' => $lvlId,
 			);
 
-			$mdetails = $this->Game_model->get_map_details($map_params);
+			$mdetails = $this->Game_model->get_level_details($map_params);
 
 			
 			

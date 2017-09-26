@@ -1,8 +1,11 @@
-<form class="form-horizontal" method="post" action="save_add_map" enctype="multipart/form-data">
+<form class="form-horizontal" method="post" action="save_add_level" enctype="multipart/form-data">
 		<h2><?php echo $title ?></h2>
 		<hr/>
 		<input type="hidden" name="mapCol" id="mapCol">
 		<!-- <textarea name="mapCol" id="mapCol"></textarea> -->
+		<div class="">
+			
+		</div>
 		<div class="form-group">
 			<label class="control-label col-sm-2">Map Photo:</label>
 			<div class="col-sm-4">

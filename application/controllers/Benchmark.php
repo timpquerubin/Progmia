@@ -12,9 +12,6 @@
 
 			$maps = $this->Game_model->get_all_maps();
 
-			// echo "<pre>";
-			// var_dump($res);
-			// echo "</pre>";
 			$ctr = 1;
 
 			foreach ($maps as $m) {

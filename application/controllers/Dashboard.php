@@ -7,11 +7,11 @@
 			$this->load->model('Game_model');
 		}
 
-		public function map_list()
+		public function level_list()
 		{
 			$this->__init();
 
-			$maps = $this->Game_model->get_all_maps();
+			$maps = $this->Game_model->get_levels();
 
 			// echo '<pre>';
 			// var_dump($maps);
@@ -25,25 +25,26 @@
 			$this->load->view('templates/footer');
 		}
 
-		public function add_Map()
+		public function add_level()
 		{
+			$this->__init();
+
 			$data['title'] = 'Create Map';
 
+			$stages = $this->Game_model->get_stages();
+
+			$data['stage_list'] = $stages;
+
 			$this->load->view('templates/header');
-			$this->load->view('game/add_game',$data);
+			$this->load->view('game/add_level',$data);
 			$this->load->view('templates/footer');
 		}
 
-		public function save_add_map()
+		public function save_add_level()
 		{
 			$this->__init();
 
 			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
-
-			// echo "<pre>";
-			// var_dump(getimagesize($_FILES['imgMap']['tmp_name']));
-			// echo "</pre>";
-			// exit();
 
 			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
 			
@@ -77,7 +78,7 @@
 				}
 			}
 
-			$this->Game_model->add_map($params);
+			$this->Game_model->add_level($params);
 			redirect('Pages/view/home');
 
 		}
