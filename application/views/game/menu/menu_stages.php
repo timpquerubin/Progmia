@@ -13,27 +13,27 @@
 	</div>
 	-->
 	<div class="dragon">
-		<div class="container">	<div class="bg-stage">
-			<h1 style="position:absolute;top:0; left:0; right:0; text-align:center;color:#e7d921;font-family:ArcadeClassic;background-color:#525353;border: solid 5px #e9ea72;">Select Level</h1>
-		<div class="row">
-			<!--<img style="position:absolute; height: 970px !important;width:1570px !important;z-index: -1;"; src="<?php echo base_url(); ?>assets/images/map-no-stages.png">-->
-			<ul style="list-style: none;display: inline-flex;margin:0 auto;">
-<!--
-				<li><div class="popup" onclick="myFunction()" href="#"><img class="" src="<?php echo base_url(); ?>assets/images/stages-01.png"/><span class="popuptext" id="myPopup"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/stages-01.png"/><h2>Title</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla. Integer mollis laoreet vehicula. Vivamus sed fermentum nulla.</p><p><a href="#">testing</a></p></span></a></li>-->
+		<div class="container-fluid">	
+			<div class="bg-stage">
+				<div class="row">
+					<ul style="list-style: none;display: inline-flex;vertical-align:middle;margin:0 auto;">
+						<li><div class="popup-1 unlocked-stage" onclick="myFunction1()" href="#"><span style="position:absolute;top:0;right:0;margin:30px 50px;font-size:40px;color:#ebea70 !important;text-shadow:1px 1px #242423;text-align:center;color:#ffce12;"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span><img class="" src="<?php echo base_url(); ?>assets/images/stages-01.png"/><span class="popuptext-1" id="myPopup-1"><h2>Stage-1</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Enter</a></p></span></a></li>
 
-				<li><div class="popup-1" onclick="myFunction1()" href="#"><img class="" src="<?php echo base_url(); ?>assets/images/stages-01.png"/><span class="popuptext-1" id="myPopup-1"><h2>Stage-1</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Start!</a></p></span></a></li>
+						<li><div class="popup-2 unlocked-stage" onclick="myFunction2()" href="#"><span style="position:absolute;top:0;right:0;margin:30px 50px;font-size:40px;color:#ebea70 !important;text-shadow:1px 1px #242423;text-align:center;color:#ffce12;"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span><img class="" src="<?php echo base_url(); ?>assets/images/stages-02.png"/><span class="popuptext-2" id="myPopup-2"><h2>Stage-2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Enter</a></p></span></a></li>
 
-				<li><div class="popup-2" onclick="myFunction2()" href="#"><img class="" src="<?php echo base_url(); ?>assets/images/stages-02.png"/><span class="popuptext-2" id="myPopup-2"><h2>Stage-2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Start!</a></p></span></a></li>
+						<li><div class="popup-3 locked-stage" onclick="myFunction3()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span><img class="" src="<?php echo base_url(); ?>assets/images/stages-03.png"/><span class="popuptext-3" id="myPopup-3"><h2>Stage-3</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Enter</a></p></span></a></li>
 
-				<li><div class="popup-3" onclick="myFunction3()" href="#"><img class="" src="<?php echo base_url(); ?>assets/images/stages-03.png"/><span class="popuptext-3" id="myPopup-3"><h2>Stage-3</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Start!</a></p></span></a></li>
+						<li><div class="popup-4 locked-stage" onclick="myFunction4()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span><img class="" src="<?php echo base_url(); ?>assets/images/stages-04.png"/><span class="popuptext-4" id="myPopup-4"><h2>Stage-4</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Enter</a></p></span></a></li>
 
-				<li><div class="popup-4" onclick="myFunction4()" href="#"><img class="" src="<?php echo base_url(); ?>assets/images/stages-04.png"/><span class="popuptext-4" id="myPopup-4"><h2>Stage-4</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Start!</a></p></span></a></li>
-
-				<li><div class="popup-5" onclick="myFunction5()" href="#"><img class="" src="<?php echo base_url(); ?>assets/images/stages-05.png"/><span class="popuptext-5" id="myPopup-5"><h2>Stage-5</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Start!</a></p></span></a></li>
-			
-			</ul>
+						<li><div class="popup-5 locked-stage" onclick="myFunction5()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span><img class="" src="<?php echo base_url(); ?>assets/images/stages-05.png"/><span class="popuptext-5" id="myPopup-5"><h2>Stage-5</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ipsum nunc, sagittis nec enim id, viverra placerat nibh. Nam cursus metus at imperdiet fringilla.</p><p><a href="#">Enter</a></p></span></a></li>
+					
+					</ul>
+				</div>
 			</div>
 		</div>
+	</div>
+
+
 			<!--<div class="bg-stage-2">
 			</div>--><!--
 				<div class="wrapper-1">
@@ -62,5 +62,3 @@
 				</div>-->
 			<!--<div class="bg-stage-3">
 			</div>-->
-		</div>
-	</div>
