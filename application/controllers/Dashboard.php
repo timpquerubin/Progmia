@@ -11,16 +11,12 @@
 		{
 			$this->__init();
 
-			$maps = $this->Game_model->get_levels();
+			$levels = $this->Game_model->get_levels();
 
-			// echo '<pre>';
-			// var_dump($maps);
-			// echo '</pre>';
-			// exit();
-
-			$data['maps'] = $maps;
+			$data['levels'] = $levels;
 
 			$this->load->view('templates/dashboard_header');
+			$this->load->view('templates/load_init_links');
 			$this->load->view('game/game_list', $data);
 			$this->load->view('templates/dashboard_footer');
 		}
@@ -66,12 +62,12 @@
 				'LVL_NUM' => $level_count,
 			);
 			
-			$params['MAP_ID'] = md5($_FILES['imgMap']['name']);
-			$params['MAP_NUMCOLS'] = (int)$_POST['numCols'];
-			$params['MAP_GRID'] = $_POST['mapCol'];
-			$params['MAP_STARTPOINT'] = json_encode($startPt);
-			$params['MAP_IMGHEIGHT'] = $map_size[1];
-			$params['MAP_IMGWIDTH'] = $map_size[0];
+			// $params['MAP_ID'] = md5($_FILES['imgMap']['name']);
+			// $params['MAP_NUMCOLS'] = (int)$_POST['numCols'];
+			// $params['MAP_GRID'] = $_POST['mapCol'];
+			// $params['MAP_STARTPOINT'] = json_encode($startPt);
+			// $params['MAP_IMGHEIGHT'] = $map_size[1];
+			// $params['MAP_IMGWIDTH'] = $map_size[0];
 
 			// $test = json_decode($mapCol, true);
 			
@@ -88,16 +84,14 @@
 				if(!$this->upload->do_upload('imgMap'))
 				{
 					$errors = array('error' => $this->upload->display_errors());
-					$params['MAP_FILENAME'] = 'noimage.jpg';
 				}
 				else {
 					$data = array('upload_data' => $this->upload->data());
-					$params['MAP_FILENAME'] = $_FILES['imgMap']['name'];
 				}
 			}
 
 			$this->Game_model->add_level($params);
-			redirect('Pages/view/home');
+			redirect('Dashboard/level_list');
 
 		}
 

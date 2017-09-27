@@ -1,35 +1,46 @@
-<div class="panel panel-default">
-	<div class="panel-heading">Map List</div>
-	<div class="panel-body">
-		<table class="table table-striped">
-			<thead>
-				<th><strong>#</strong></th>
-				<th><strong>File Name</strong></th>
-				<th><strong>Start Point</strong></th>
-				<th><strong>Columns</strong></th>
-				<th><strong>Created At</strong></th>
-				<th><strong>Updated At</strong></th>
-			</thead>
-			<tbody>
-				<?php if(sizeof($maps) > 0) { ?>
-					<?php $ctr = 1; ?>
-					<?php foreach($maps as $m) { ?>
-						<tr>
-							<td><?php echo $ctr; ?></td>
-							<td><?php echo $m['MAP_FILENAME'] ?></td>
-							<td><?php echo $m['MAP_STARTPOINT'] ?></td>
-							<td><?php echo $m['MAP_NUMCOLS'] ?></td>
-							<td><?php echo $m['MAP_CREATEDAT'] ?></td>
-							<td><?php echo $m['MAP_UPDATEDAT'] ?></td>
-						</tr>
-						<?php $ctr++; ?>
-					<?php } ?>
-				<?php } ?>
-			</tbody>
-		</table>
+<div class="container">
 
+	<div class="levels-button-container" style="margin-bottom: 20px;">
+		<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a>
 	</div>
 
+	<div class="panel panel-default">
+		<div class="panel-heading">Map List</div>
+		<div class="panel-body">
+			<table class="table table-striped">
+				<thead>
+					<th><strong>#</strong></th>
+					<th><strong>Stage</strong></th>
+					<th><strong>Level</strong></th>
+					<th><strong>Level Name</strong></th>
+					<th><strong>Start Point</strong></th>
+					<th><strong>Columns</strong></th>
+					<th><strong>Created At</strong></th>
+					<th><strong>Updated At</strong></th>
+				</thead>
+				<tbody>
+					<?php if(sizeof($levels) > 0) { ?>
+						<?php $ctr = 1; ?>
+						<?php foreach($levels as $lvl) { ?>
+							<tr>
+								<td><?php echo $ctr; ?></td>
+								<td><?php echo $lvl['STAGE'] ?></td>
+								<td><?php echo $lvl['LVL_NUM'] ?></td>
+								<td><?php echo $lvl['LVL_NAME'] ?></td>
+								<td><?php echo $lvl['LVL_SPOINT'] ?></td>
+								<td><?php echo $lvl['LVL_COLS'] ?></td>
+								<td><?php echo $lvl['LVL_CREATEDAT'] ?></td>
+								<td><?php echo $lvl['LVL_UPDATEDAT'] ?></td>
+							</tr>
+							<?php $ctr++; ?>
+						<?php } ?>
+					<?php } ?>
+				</tbody>
+			</table>
+
+		</div>
+
+	</div>
 </div>
 
 <div class="modal">
