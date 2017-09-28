@@ -71,13 +71,13 @@
 
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
-	<?php foreach ($map_list as $m) { ?>
+	<?php foreach ($level_list as $level) { ?>
 		<?php if($rowCtr == 0) { ?>
 			<div class="row level-row text-center">
 		<?php } ?>
 				<div class="col-md-3 level">
 					<div class="level-info text-center">
-						<a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $m['MAP_ID']; ?>">
+						<a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $level['LVL_ID']; ?>">
 							<div class="level-link">
 								<h2>Level <?php echo $i+1; ?></h2>
 								<fieldset class="stage-rating">

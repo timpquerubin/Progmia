@@ -1,5 +1,6 @@
 <style type="text/css">
 
+	div.game-canvas-container{margin-top: 100px;}
 	div.game-menu {position: absolute; /*border: 2px solid #ff0000;*/ width: 50%;}
 	div.player-hp {margin-top: 10px;}
 
@@ -42,14 +43,14 @@
 
 </style>
 <div class="container-fluid">
-	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($map[0]['MAP_ID']) ? $map[0]['MAP_ID'] : '' ?>" />
-	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($map[0]['MAP_GRID']) ? $map[0]['MAP_GRID'] : '' ?>" />
-	<input type="hidden" name="startPt" id="startPt" value="<?php echo $map[0]['MAP_STARTPOINT']?>">
-	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($map[0]['MAP_FILENAME']) ? $map[0]['MAP_FILENAME'] : '' ?>">
-	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($map[0]['MAP_NUMCOLS']) ? $map[0]['MAP_NUMCOLS'] : '' ?>">
+	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($level[0]['LVL_ID']) ? $level[0]['LVL_ID'] : '' ?>" />
+	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($level[0]['LVL_GRID']) ? $level[0]['LVL_GRID'] : '' ?>" />
+	<input type="hidden" name="startPt" id="startPt" value="<?php echo $level[0]['LVL_SPOINT']?>">
+	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($level[0]['LVL_NAME']) ? $level[0]['LVL_NAME'] : '' ?>">
+	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($level[0]['LVL_COLS']) ? $level[0]['LVL_COLS'] : '' ?>">
 
-	<div style="width: 100%; background-color: #000;">
-		<div class="game-menu" style="height: <?php echo $map[0]['MAP_IMGHEIGHT']/2; ?>;">
+	<div class="game-canvas-container" style="width: 100%; background-color: #000;">
+		<div class="game-menu" style="height: <?php echo $level[0]['LVL_MAP_HEIGHT']/2; ?>;">
 			<div class="player-hp">
 				<label class="col-sm-1 col-xs-1" style="color: #FFF;">HP:</label>
 				<div class="progress col-sm-4 col-xs-5" style="padding: 0px;">
@@ -58,7 +59,7 @@
 			</div>
 		</div>
 		<center><div class="">
-			<canvas id="ctx" width="<?php echo $map[0]['MAP_IMGWIDTH']; ?>" height="<?php echo $map[0]['MAP_IMGHEIGHT']; ?>" style="border:1px solid #000000;"></canvas>
+			<canvas id="ctx" width="<?php echo $level[0]['LVL_MAP_WIDTH']; ?>" height="<?php echo $level[0]['LVL_MAP_HEIGHT']; ?>" style="border:1px solid #000000;"></canvas>
 		</div></center>
 	</div>
 	<!-- <div id="test" class="col-sm-2"></div> -->

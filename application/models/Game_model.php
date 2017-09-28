@@ -17,6 +17,8 @@
 			if($params === null) {
 				$levels = $this->db->query('SELECT * FROM LEVEL ORDER BY STAGE, LVL_NUM;');
 			} else {
+				$this->db->order_by("STAGE", "asc");
+				$this->db->order_by("LVL_ID", "asc");
 				$levels = $this->db->get_where('LEVEL', $params);
 			}
 

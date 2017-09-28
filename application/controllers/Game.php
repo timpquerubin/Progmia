@@ -19,12 +19,17 @@
 			$this->load->view('templates/game_footer');
 		}
 
-		public function levels()
+		public function levels($stageId = null)
 		{
 			$this->_init();
 
-			$maps = $this->Game_model->get_levels();
-			$data['map_list'] = $maps;
+			if($stageId == null) {
+				$levels = $this->Game_model->get_levels();
+			} else {
+				$levels = $this->Game_model->get_levels(array('STAGE' => $stageId));
+			}
+
+			$data['level_list'] = $levels;
 
 			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');
@@ -36,18 +41,21 @@
 		{
 			$this->_init();
 
-			$map_params = array(
+			$level_params = array(
 				'LVL_ID' => $lvlId,
 			);
 
-			$mdetails = $this->Game_model->get_level_details($map_params);
+			$level_details = $this->Game_model->get_level_details($level_params);
 
-			
+			// echo "<pre>";
+			// var_dump($level_details);
+			// echo "</pre>";
+			// exit();
 			
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);
 
-			$data['map'] = $mdetails;
+			$data['level'] = $level_details;
 
 			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');
