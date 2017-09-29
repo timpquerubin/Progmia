@@ -187,7 +187,22 @@
 				redirect('home');
 			}
 		}
-
+		/* TESTING
+		public function account()
+		{
+			$this->load->model('User_model');
+			
+			$id = $this->User_model->account($user);
+			
+			$user_data = array(
+				'PROG_ID' => $id,
+				'USER_ID' => 1
+			);
+			
+			$this->session->set_userdata($user_data);
+			redirect('home');
+		}
+		*/
 		public function logout()
 		{
 			$this->session->unset_userdata('user_id');

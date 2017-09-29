@@ -21,7 +21,12 @@ nav.navbar ul {
 nav.navbar li.dropdown button ul.dropdown-menu{
 	display:none;
 }
-
+.img-circle{
+	border: #F2BE19 8px solid;
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+}
 nav.navbar ul.dropdown-menu a {
 	background-color:#1c4649 !important;
 }

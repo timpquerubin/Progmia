@@ -4,8 +4,17 @@
 			$(div).dragOn()
 		});
 	</script>
+	
 	<script>
 // When the user clicks on div, open the popup
+/*
+for ($i=1;$i<10;$i++) {
+  $funcName = 'myFunction'.$i;
+  $$funcName = function ($something) {
+    var popup = document.getElementById("myPopup-1");
+    popup.classList.toggle("show");
+  }
+}
 function myFunction1() {
     var popup = document.getElementById("myPopup-1");
     popup.classList.toggle("show");
@@ -25,7 +34,7 @@ function myFunction4() {
 function myFunction5() {
     var popup = document.getElementById("myPopup-5");
     popup.classList.toggle("show");
-}
+}*/
 </script>
 	<footer>
 		<div class="footer"><p>Copyright Progmia &copy; 2017</p></div>

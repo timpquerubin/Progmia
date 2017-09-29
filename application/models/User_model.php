@@ -37,7 +37,21 @@
 				return $query->row(0)->USER_ID;	
 			}
 		}
-		
+		/* TESTING
+		public function account($USER_ID = 1)
+		{
+			$query = $this->db->query('SELECT PROG_ID FROM PROGRESS WHERE USER_ID=\''.$USER_ID.'\';');
+			
+			if(empty($query->row_array()))
+			{
+				return FALSE;
+			} 
+			else
+			{
+				return $query->row(0)->PROG_ID;
+			}
+		}
+		*/
 		public function gen_id()
 		{
 			$query = $this->db->get('user');

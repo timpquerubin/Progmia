@@ -68,7 +68,7 @@
 </style>
 
 <div class="game-level-menu-container">
-
+	<!--<?php $stage = $_GET["link"];?>--> 
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
 	<?php foreach ($level_list as $level) { ?>

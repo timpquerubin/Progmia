@@ -34,7 +34,16 @@
     						<a class="dropbtn dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
     						<ul class="dropdown-menu">
     							<li class="text-center"><span class="user-level">1</span><a href="#"><img src="" class="img-circle"></a><h5><?php echo $this->session->userdata('username'); ?></h5></li>
-    							<li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
+    							<li>
+    							<form action="<?php echo base_url(); ?>users/account" method="post">
+									   <input type='hidden' id='account' name='account' value='<?php echo $this->session->userdata('username'); ?>' />
+									   <button onClick='submit();'>
+									      Enter
+									   </button>
+									</form>
+
+    							<a href="<?php echo base_url(); ?>account/profile">Profile</a></li>
+
     							<li><a href="#">Settings</a></li>
     							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
     						</ul>
@@ -43,20 +52,15 @@
     			</ul>
   			</div>
 		</nav>
+
+		<section class="">
+			<div class="container">
+				
+			</div>
+		</section>
+
+	</body>
+	<footer>
 		
-		<div class="container-fluid" style="margin: 0px; padding: 0px;">
-			<?php if($this->session->flashdata('user_registered')) : ?>
-				<?php echo '<p class="alert alert-success" >'.$this->session->flashdata('user_registered').'</p>'; ?>
-			<?php endif; ?>
-			
-			<?php if($this->session->flashdata('user_loggedin')) : ?>
-				<?php echo '<p class="alert alert-success" >'.$this->session->flashdata('user_loggedin').'</p>'; ?>
-			<?php endif; ?>
-			
-			<?php if($this->session->flashdata('user_loggedout')) : ?>
-				<?php echo '<p class="alert alert-success" >'.$this->session->flashdata('user_loggedout').'</p>'; ?>
-			<?php endif; ?>
-			
-			<?php if($this->session->flashdata('user_loggedfailed')) : ?>
-				<?php echo '<p class="alert alert-success alert-danger" >'.$this->session->flashdata('user_loggedfailed').'</p>'; ?>
-			<?php endif; ?>
+	</footer>
+</html>

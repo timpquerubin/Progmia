@@ -11,14 +11,32 @@
 		{
 			$this->_init();
 
-			$maps = $this->Game_model->get_levels();
-			$data['map_list'] = $maps;
+			$stages = $this->Game_model->get_stages();
+			$data['stage_list'] = $stages;
 
 			$this->load->view('templates/game_header');
 			$this->load->view('game/menu/menu_stages', $data);
 			$this->load->view('templates/game_footer');
 		}
+		public function levels()
+		{
+			$this->_init();
 
+			$stage = $this->input->post('stage');
+			if($stage == null) {
+				$levels = $this->Game_model->get_levels($stage);
+			} else {
+				$levels = $this->Game_model->get_levels(array('STAGE' => $stage));
+			}
+
+			$data['level_list'] = $levels;
+
+			$this->load->view('templates/game_header');
+			$this->load->view('templates/load_init_links');
+			$this->load->view('game/menu/menu_levels', $data);
+			$this->load->view('templates/footer');
+		}
+		/*
 		public function levels($stageId = null)
 		{
 			$this->_init();
@@ -36,7 +54,7 @@
 			$this->load->view('game/menu/menu_levels', $data);
 			$this->load->view('templates/footer');
 		}
-
+*/
 		public function play($lvlId)
 		{
 			$this->_init();
