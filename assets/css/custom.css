@@ -28,7 +28,7 @@
     max-width: 120px;
     transition: .5s;
     margin-left:40px;}
-    button.level-btn {box-shadow:1px 1px 5px #000;border-bottom:solid 5px #aaa;border-top:solid 5px #ccc;border-radius:10px;border-width:5px;width:80%;margin:0 auto;padding:0;background:#333;}
+    button.level-btn {box-shadow:1px 1px 5px #000;border-bottom:solid 5px #aaa;border-top:solid 5px #ccc;border-radius:0px;border-width:5px;width:80%;margin:0 auto;padding:0;background:#333;}
     button.level-btn h3{font-family: ArcadeClassic !important;color:#fff;cursor:pointer; margin:5px;}
     button.level-btn:hover{cursor:pointer;}
 img {
@@ -169,7 +169,10 @@ color:#252524;
     left: 38%;
     margin-left: -80px;
     padding:5px;
-    border:solid 3px #252524;
+    border-right:solid 8px #333;
+    border-left:solid 8px #333;
+    border-top:solid 8px #444;
+    border-bottom:solid 5px #252524;
     box-shadow: 3px 3px 10px #000;
 }
 .show h2{margin:7px !important;
@@ -184,6 +187,7 @@ color:#252524;
     border-width: 20px;
     border-style: solid;
     border-color: transparent  transparent #242423 transparent;
+    border-color: transparent  transparent #ebea70 transparent;
 }
 
 /* Toggle this class - hide and show the popup */
