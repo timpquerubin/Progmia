@@ -23,7 +23,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/Progmia';
+$protocol = is_https() ? "https://" : "http://";
+$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "";
+
+// if(stristr($host, "localhost") !== FALSE || (stristr($host, '192.168.') !== FALSE) || (stristr($host, '127.0.0') !== FALSE) {
+$config['base_url'] = $protocol.$host."/Progmia/";
+// }
+
+// $config['base_url'] = 'http://localhost/Progmia';
 
 /*
 |--------------------------------------------------------------------------
