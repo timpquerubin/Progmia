@@ -14,7 +14,7 @@
 	-->
 	<div class="dragon">
 		<div class="" style="max-height: 400px !important;">
-	<h3><?php echo $this->session->userdata('username'); ?></h3>
+	<!--<span><?php echo $this->session->userdata('username'); ?></span>-->
 		<div class="container-fluid">	
 			<div class="bg-stage">
 				<div class="row">

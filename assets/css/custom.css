@@ -7,12 +7,13 @@
     .bg-stage{
         overflow-x: hidden;
         overflow-y: hidden;
-        padding:7% 0 20% 0;
-        margin:5% 5% 0 5%;
+        padding:10% 0 20% 0;
+        margin:0 10px;
         background-image: url("../images/stages.png");
         background-size:80%;
         background-position:center center;
         background-color: #a0d169;
+        max-height: 970px;
         height: auto;
         background-repeat: no-repeat;
     }
@@ -79,7 +80,7 @@ span.locked:hover, .locked-stage:hover span.locked{animation: shake 0.82s cubic-
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;}
-span.unlocked {position:absolute;top:80px;bottom:0;left:0;right: 0;font-size:120px;color:#ffce12 !important;text-shadow:1px 1px #242423;text-align:center;color:#ffce12;}  
+span.unlocked {position:absolute;top:80px;bottom:0;left:0;right: 0;font-size:120px;text-shadow:1px 1px #242423;text-align:center;color:#fff100;}  
 @keyframes shake {
   10%, 90% {
     transform: translate3d(-1px, 0, 0);
