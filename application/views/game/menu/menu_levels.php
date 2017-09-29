@@ -22,7 +22,7 @@
 	/*input#test {display: none;}
 	label.rate:before { margin: 5px; font-size: 3em; font-family: FontAwesome; color: #FFD700; display: inline-block; content: "\f005";}*/
 
-	div.game-level-menu-container {background-color: #8c8c8c; padding-top: 20px;}
+	div.game-level-menu-container {background-color: #a0d169; margin-top: 100px;padding-top:20px;}
 
 	div.level-row {
 		max-width: 1000px;
@@ -39,29 +39,41 @@
 	div.level-info h2 {
 		margin: 0px;
 		padding: 0px;
+		font-family: ArcadeClassic;
+		font-size:42px;
+		color:#ffff10;
+	}
+	div.level-info a{
+		text-decoration: none;
 	}
 
 	div.level-info {
-		background-color: #f2f2f2;
+		background-color: #444;
 		display: block;
 		height: 100%;
 		margin: 0px 10%;
 	}
 
-	div.level-info:hover {
-		background-color: #d9d9d9;
+	div.level-info:hover ,div.level-info:hover h2{
+		background-color: #aaa;
+		color:#333;
 	}
 
 	div.level-link {
 		height: 100%;
 		margin: 0px;
 		padding: 0px;
+		border-top:solid 10px #777;
+		border-left:solid 10px #555;
+		border-right:solid 10px #555;
+		border-bottom:solid 10px #333;
+
 	}
 
 	fieldset label { margin: 0; padding: 0;}
 	.stage-rating { border: none;}
 	.stage-rating input {display: none;}
-	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome; display: inline-block; content: "\f005"; color: #FFD700};
+	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;}
 
 
 

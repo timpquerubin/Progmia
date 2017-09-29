@@ -22,7 +22,7 @@
 						<a href="#">Menu 2</a>
 					</li>
 					<li>
-						<a href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
+						<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 					</li>
 				</ul>
 			</nav>
