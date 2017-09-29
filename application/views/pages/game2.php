@@ -52,14 +52,14 @@
 	<div class="game-canvas-container" style="width: 100%; background-color: #000;">
 		<div class="game-menu" style="height: <?php echo $level[0]['LVL_MAP_HEIGHT']/2; ?>;">
 			<div class="player-hp">
-				<label class="col-sm-1 col-xs-1" style="color: #FFF;">HP:</label>
+				<label class="col-sm-1 col-xs-2" style="color: #FFF;">HP:</label>
 				<div class="progress col-sm-4 col-xs-5" style="padding: 0px;">
 				 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
 				</div>
 			</div>
 		</div>
 		<center><div class="">
-			<canvas id="ctx" width="<?php echo $level[0]['LVL_MAP_WIDTH']; ?>" height="<?php echo $level[0]['LVL_MAP_HEIGHT']; ?>" style="border:1px solid #000000;"></canvas>
+			<canvas id="ctx" width="<?php echo $level[0]['LVL_MAP_WIDTH']*1.25; ?>" height="<?php echo $level[0]['LVL_MAP_HEIGHT']*1.25; ?>" style="border:1px solid #000000;"></canvas>
 		</div></center>
 	</div>
 	<!-- <div id="test" class="col-sm-2"></div> -->
@@ -98,7 +98,7 @@
 
 	ctx.font = '30px Arial';
 	
-	var TILE_SIZE = 16;
+	var TILE_SIZE = 20;
 	var cmdNum = 0;
 	var bumpWallCtr = 0;
 	var moveCtr = 0;
@@ -195,27 +195,27 @@
 
 					player.throwProjectile(dir[1]);
 					player.atkCtr = 0;
-					moveCtr = 97;
+					moveCtr = 97*1.25;
 				} else {
 					toNextCmd = false;
 				}
 			} else if(/^while(true) {/g.test(cmdLine)) {
 				isloop = true;
 				startloop = commandNum;
-				moveCtr = 97;
+				moveCtr = 97*1.25;
 			} else if(cmdLine === '}') {
 				// cmdNum = startloop;
 				cmdNum = startloop;
-				moveCtr = 97;
+				moveCtr = 97*1.25;
 			}else {
 				console.log('error: invalid command');
-				moveCtr = 97;
+				moveCtr = 97*1.25;
 			}
 
 			console.log('execute line '+ commandNum +':' + code[commandNum]);
 
 			if(!toNextCmd) {
-				moveCtr = 97;
+				moveCtr = 97*1.25;
 			} else {
 				cmdNum++;
 			}
@@ -275,7 +275,7 @@
 		
 		self.draw = function()
 		{
-			ctx.drawImage(self.image, 0, 0, self.image.width, self.image.height, 0, 0, self.image.width, self.image.height);
+			ctx.drawImage(self.image, 0, 0, self.image.width, self.image.height, 0, 0, self.image.width*1.25, self.image.height*1.25);
 		};
 
 		self.isPossitionWall = function(pt)
@@ -444,7 +444,7 @@
 				}
 			}
 
-			if(moveCtr <= 96)
+			if(moveCtr <= 96*1.25)
 			{
 				if(Maps.current.isPossitionWall(topBumper) === 5)
 				{
@@ -656,9 +656,9 @@
 				width = 0;
 			}
 
-			ctx.fillRect(x-25, y, width, 8);
+			ctx.fillRect(x-25, y-10, width, 8);
 			ctx.strokeStyle = 'black';
-			ctx.strokeRect(x-25, y, 50, 8);
+			ctx.strokeRect(x-25, y-10, 50, 8);
 
 			ctx.restore();
 		}
@@ -986,7 +986,7 @@
 		Coin.list = {};
 		Bully.list = {};
 
-		player = new Player('plyr1', Maps.current.startPt.x, Maps.current.startPt.y, img.player.width/5, img.player.height/5, img.player);
+		player = new Player('plyr1', Maps.current.startPt.x*1.25, Maps.current.startPt.y*1.25, img.player.width/5, img.player.height/5, img.player);
 		key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
 		key.locate();
 		Coin.Init();
