@@ -69,15 +69,12 @@
 		border-bottom:solid 10px #333;
 
 	}
-
+	.bottom-stars{position: absolute;left: 0;bottom: 0;right: 0;max-width:180px;margin:0 auto 10px auto;background:#5d4f3b;border:solid #bbb 3px;}
 	fieldset label { margin: 0; padding: 0;}
 	.stage-rating { border: none;}
 	.stage-rating input {display: none;}
 	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;}
 	.stage-rating label.not:before { color: #aaa;}
-
-
-
 </style>
 
 <div class="game-level-menu-container">
@@ -101,6 +98,7 @@
 											<?php $score = $progress['POINTS_SCORED']; ?>
 										<?php } ?>
 									<?php } ?>
+								<div class="bottom-stars">
 								<fieldset class="stage-rating">
 								<?php if($score == 0 || $score == null){ ?>
 									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label class="not" for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
@@ -120,6 +118,7 @@
 									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
 								<?php } ?>
 								</fieldset>
+								</div>
 							</div>
 						</a>
 					</div>
