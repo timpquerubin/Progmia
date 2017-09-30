@@ -96,7 +96,7 @@
 							<div class="level-link">
 								<h2>Level <?php echo $i+1; ?></h2>
 									<?php foreach ($progress_list as $progress) { ?>
-										<?php if($progress['LVL_ID'] == $level['LVL_ID']) { ?>
+										<?php if($progress['LVL_ID'] == $level['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID ) { ?>
 											<?php echo $progress['POINTS_SCORED']; ?>
 											<?php $score = $progress['POINTS_SCORED']; ?>
 										<?php } ?>
