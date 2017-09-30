@@ -74,6 +74,7 @@
 	.stage-rating { border: none;}
 	.stage-rating input {display: none;}
 	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;}
+	.stage-rating label.not:before { color: #aaa;}
 
 
 
@@ -81,10 +82,8 @@
 
 <div class="game-level-menu-container">
 	<!--<?php $stage = $_GET["link"];?>-->
-	<?php echo $h->USER_ID; ?>
-	<?php foreach ($progress_list as $progress) { ?>
-		<h2><?php echo $progress['POINTS_SCORED']; ?></h2>
-	<?php } ?>
+	<!--<?php echo $h->USER_ID; ?>-->
+	<?php $score = 0; ?>
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
 	<?php foreach ($level_list as $level) { ?>
@@ -96,10 +95,30 @@
 						<a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $level['LVL_ID']; ?>">
 							<div class="level-link">
 								<h2>Level <?php echo $i+1; ?></h2>
+									<?php foreach ($progress_list as $progress) { ?>
+										<?php if($progress['LVL_ID'] == $level['LVL_ID']) { ?>
+											<?php echo $progress['POINTS_SCORED']; ?>
+											<?php $score = $progress['POINTS_SCORED']; ?>
+										<?php } ?>
+									<?php } ?>
 								<fieldset class="stage-rating">
+								<?php if($score == 0 || $score == null){ ?>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label class="not" for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label class="not" for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label class="not" for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
+								<?php } elseif ($score == 1000) { ?>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label class="not" for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label class="not" for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
+								<?php } elseif ($score== 2000) { ?>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label class="not" for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
+								<?php } else {?>
 									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
 									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
 									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
+								<?php } ?>
 								</fieldset>
 							</div>
 						</a>
