@@ -24,6 +24,25 @@
 			return $levels->result_array();
 		}
 
+		public function get_user($user)
+		{
+			$this->db->select('column_name');
+			$query = $this->db->query('SELECT USER_ID FROM USER WHERE USER_USERNAME=\''.$user.'\';');
+	        //return $query;
+	        return $result=$query->row(0);	
+		}
+
+		public function get_progress($user)
+		{
+			if($user === null) {
+
+				$progress = $this->db->query('SELECT * FROM PROGRESS WHERE USER_ID=\''.$user.'\';');
+			} else {
+				$progress = $this->db->get_where('PROGRESS', $user);
+			}
+			return $progress->result_array();
+		}
+
 		/*
 		public function get_levels($params = null)
 		{
