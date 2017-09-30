@@ -82,6 +82,9 @@
 <div class="game-level-menu-container">
 	<!--<?php $stage = $_GET["link"];?>-->
 	<?php echo $h->USER_ID; ?>
+	<?php foreach ($progress_list as $progress) { ?>
+		<h2><?php echo $progress['POINTS_SCORED']; ?></h2>
+	<?php } ?>
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
 	<?php foreach ($level_list as $level) { ?>

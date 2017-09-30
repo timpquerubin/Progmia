@@ -11,7 +11,10 @@
 		{
 			$this->_init();
 
+			$userID = $this->input->post('USER_ID');
+			$user = $this->session->userdata('username');
 			$stages = $this->Game_model->get_stages();
+	        $data['h']=$this->Game_model->get_user($user);
 			$data['stage_list'] = $stages;
 
 			$this->load->view('templates/game_header');
@@ -23,15 +26,15 @@
 			$this->_init();
 
 			$stage = $this->input->post('stage');
+			$userID = $this->input->post('USER_ID');
 			$user = $this->session->userdata('username');
 
 			if($stage == null) {
 				$levels = $this->Game_model->get_levels($stage);
 			} else {
-				$levels = $this->Game_model->get_levels(array('STAGE' => $stage, ));
-				$progress = $this->Game_model->get_progress(array('USER_ID' => $user, ));
+				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
+				$progress = $this->Game_model->get_progress(array('USER_ID' => $user ));
 			}
-			
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
 			$data['progress_list'] = $progress;
