@@ -89,7 +89,10 @@ a.level-btn {
 a.level-btn:hover {
     transition: .3s;
     color:#ffce12;
-    border-color:#ffce12;
+    border-top-color:#ffce12;
+    border-bottom-color:#ffce12;
+    border-right-color:#dd7900;
+    border-left-color:#dd7900;
     background-color: #333 !important;
 }
 div.stage:before {
