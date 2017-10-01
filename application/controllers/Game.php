@@ -11,7 +11,7 @@
 		{
 			$this->_init();
 
-			$userID = $this->input->post('USER_ID');
+			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
 			$progress = $this->Game_model->get_progress(array('USER_ID' => $userID));
 			$stages = $this->Game_model->get_stages($user);
