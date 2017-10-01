@@ -45,7 +45,6 @@
 							<?php } else { ?>
 							<li style="position:relative;" attribute="dis"><div class="popup locked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
 							<img class="" src="<?php echo base_url(); ?>assets/images/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
-							<a class="level-btn btn btn-default" href="<?php echo base_url(); ?>game/levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
 							<?php } ?>
 							<?php $exist = false; ?>
 							<?php foreach ($maxlevel_list as $maxlevel) { ?>
