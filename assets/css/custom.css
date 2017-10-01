@@ -19,7 +19,7 @@ div.bg-stage{
     overflow-x: hidden;
     overflow-y: hidden;
     padding:10% 0 20% 0;
-    margin:-120px 10px 0 10px;
+    margin:-120px 0px 0 0px;
     background-image: url("../images/stages.png");
     background-size:100%;
     background-position:center center;
@@ -67,24 +67,30 @@ nav a.navbar-brand{
     transition: .5s;
     margin-left:40px;
 }
-button.level-btn {
+a.level-btn {
+    font-family: ArcadeClassic !important;
+    background-color:#555 !important;
     box-shadow:1px 1px 5px #000;
-    border-bottom:solid 5px #aaa;
-    border-top:solid 5px #ccc;
+    border-top:solid 5px #aaa;
+    border-left:solid 5px #ccc;
+    border-right:solid 5px #ccc;
+    border-bottom:solid 5px #777;
     border-radius:0px;
     border-width:5px;
-    width:80%;
+    width:40%;
     margin:0 auto;
     padding:0;
     background:#333;
+    color:#fff;cursor: 
+    margin:5px;
+    font-size:25px;
+    text-align: center;
 }
-button.level-btn h3 {
-    font-family: ArcadeClassic !important;
-    color:#fff;cursor:
-    pointer; margin:5px;
-}
-button.level-btn:hover {
-    cursor:pointer;
+a.level-btn:hover {
+    transition: .3s;
+    color:#ffce12;
+    border-color:#ffce12;
+    background-color: #333 !important;
 }
 div.stage:before {
     content: '';
