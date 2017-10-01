@@ -21,12 +21,12 @@
 			$this->load->view('game/menu/menu_stages', $data);
 			$this->load->view('templates/game_footer');
 		}
-		public function levels()
+		public function levels($stage)
 		{
 			$this->_init();
 
-			$stage = $this->input->post('stage');
-			$userID = $this->input->post('USER_ID');
+			$stage = $stage;
+			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
 
 			if($stage == null) {
