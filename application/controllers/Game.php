@@ -25,7 +25,6 @@
 		{
 			$this->_init();
 
-			$stage = $stage;
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
 
