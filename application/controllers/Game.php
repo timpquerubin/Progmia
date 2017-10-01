@@ -13,9 +13,12 @@
 
 			$userID = $this->input->post('USER_ID');
 			$user = $this->session->userdata('username');
-			$stages = $this->Game_model->get_stages();
+			$progress = $this->Game_model->get_progress(array('USER_ID' => $userID));
+			$stages = $this->Game_model->get_stages($user);
 	        $data['h']=$this->Game_model->get_user($user);
+	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
 			$data['stage_list'] = $stages;
+			$data['progress_list'] = $progress;
 
 			$this->load->view('templates/game_header');
 			$this->load->view('game/menu/menu_stages', $data);
