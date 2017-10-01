@@ -23,13 +23,18 @@
 
 			return $levels->result_array();
 		}
-
 		public function get_user($user)
 		{
 			$this->db->select('column_name');
 			$query = $this->db->query('SELECT USER_ID FROM USER WHERE USER_USERNAME=\''.$user.'\';');
 	        //return $query;
 	        return $result=$query->row(0);	
+		}
+
+		public function get_max_level($params = null)
+		{
+			$max_level = $this->db->query('SELECT `level`.`LVL_NUM`,`level`.`STAGE`,`level`.`LVL_ID` FROM `level` WHERE (`level`.`LVL_NUM`,`level`.`STAGE`)in (SELECT MAX(`level`.`LVL_NUM`),`level`.`STAGE` FROM `level` group by `level`.`STAGE`)');
+			return $max_level->result_array();
 		}
 
 		public function get_progress($user = null)
@@ -67,12 +72,7 @@
 
 		public function get_stages($params = null)
 		{
-			if($params != null)
-			{
-				$stages = $this->db->get_where('STAGE', $params);
-			} else {
 				$stages = $this->db->query('SELECT * FROM STAGE;');
-			}
 
 			return $stages->result_array();
 		}
