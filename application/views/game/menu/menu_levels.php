@@ -80,7 +80,6 @@
 <div class="game-level-menu-container">
 	<!--<?php //$stage = $_GET["link"];?>-->
 	<!--<?php //echo $h->USER_ID; ?>-->
-	<?php $score = 0; ?>
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
 	<?php foreach ($level_list as $level) { ?>
@@ -92,6 +91,7 @@
 						<a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $level['LVL_ID']; ?>">
 							<div class="level-link">
 								<h2>Level <?php echo $i+1; ?></h2>
+								<?php $score = 0; ?>
 									<?php foreach ($progress_list as $progress) { ?>
 										<?php if($progress['LVL_ID'] == $level['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID ) { ?>
 											<?php echo $progress['POINTS_SCORED']; ?>
