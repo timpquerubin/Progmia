@@ -1,11 +1,11 @@
-body {background-color: #24242b;background-color: #121c1d;}
+body {background-color: #24242b;background-color: #121c1d;max-width: 1555px;margin:0 auto;}
 
 nav {
     position:absolute;
     top:0;left:0;
     right:0;
     height:120px;
-    z-index: 1 !important;
+    z-index: 999999999 !important;
 }
 nav div.center{
     background:#444;
@@ -82,6 +82,7 @@ nav ul.right li a.volume i {
 footer{position:absolute;bottom:0;left:0;right:0;margin:0 30px;}
 h2 {font-family:ArcadeClassic;color:#252524;}
 div.wrapper {
+    position: relative;
     z-index: 99999999;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -336,13 +337,21 @@ span.unlocked {
     /*right/left margin set at (( width of child div x sin(30) ) / 2) makes a fairly tight fit; a 3px bottom seems to match*/
     margin: 0 12.5px 3px;
 }
+.wrapper-2{
+    position: absolute;
+    max-width: 1555px;
+    top:500px;
+    width: 100%;
+    margin:0 auto;
+    left:80%;
+}
 .options {
-    position: absolute;bottom:80px; right:80px;
+    position:fixed;
 }
 .hexrow > div.hexagon {
     width: 100px;
     height: 173.2px; /* ( width x cos(30) ) x 2 */
-    width: 50px;
+    width: 49.2px;
     height: 86.6px;
     /* For margin:
     right/left = ( width x sin(30) ) makes no overlap 
@@ -360,7 +369,10 @@ span.unlocked {
     text-align: center;
     line-height: 173.2px; /*equals height*/
     display: inline-block;
-    opacity: .7;
+    opacity: .9;
+    background: #222;
+    border-top:solid 1px #ffce12;
+    border-bottom:solid 1px #ffce12;
 }
 .hexrow > div.hexagon:nth-child(odd) {
     top: 43.3px; /* ( width x cos(30) / 2 ) */
@@ -374,6 +386,9 @@ span.unlocked {
 
 .hexrow > div.hexagon > div.first {
     background: #fff;
+    background: #222;
+    border-top:solid 1px #ffce12;
+    border-bottom:solid 1px #ffce12;
     position: absolute;
     width: 100%;
     height: 100%; 
@@ -418,6 +433,9 @@ span.unlocked {
 
 .hexrow > div.hexagon > div.second {
     background: #fff;
+    background: #222;
+    border-top:solid 1px #ffce12;
+    border-bottom:solid 1px #ffce12;
     content: '';
     position: absolute;
     width: 100%;
@@ -464,7 +482,7 @@ span.unlocked {
 
 .hexrow > div.hexagon > span {
     display: inline-block;
-    margin: 50px -30px;
+    margin: 15px -30px;
     line-height: 1.1;
     vertical-align: middle;
     white-space: normal; 
@@ -472,6 +490,10 @@ span.unlocked {
     font-family: Calibri;
     font-weight: 800;
     color:#fff;
+}
+.hexrow > div.hexagon > span > a > i {
+    font-size:60px;
+    color:#ffce12 !important;
 }
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {

@@ -10,27 +10,28 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/drag-on.js"></script>
 </head>
 <body>
-	<nav>
-		<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
-		<div class="center">
-		<h1>MAP</h1>
-		</div>
-		<ul class="right">
-			<li>
-				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
-			</li>
-			<li>
-				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
-			</li>
-			<li>
-				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
-			</li>
-		</ul>
-	</nav>
+	<div class="container-fluid" style="position: relative;max-width:1555px;">
+		<nav>
+			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
+			<div class="center">
+			<h1>MAP</h1>
+			</div>
+			<ul class="right">
+				<li>
+					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
+				</li>
+				<li>
+					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
+				</li>
+				<li>
+					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 	<div class="container-fluid" style="padding: 0 !important;">	
 		<div class="dragon"><!--<span><?php echo $this->session->userdata('username'); ?></span>-->
-			<div class="" style="">
-				<div class="wrapper">
+			<div class="wrapper">
 				<div class="bg-stage">
 					<div class="row">
 						<ul style="list-style: none;display: inline-flex;vertical-align:middle;margin:0 auto;">
@@ -73,28 +74,29 @@
 							<?php $ctr++; ?>
 						<?php } ?>
 						</ul>
-					</div>
 				</div>
 
-	<div class="options">
-		<div class="hexrow">
-		    <div class="hexagon">
-		        <span><i style="color:#ffce15;font-size:25px !important;" class="fa fa-star" aria-hidden="true"></i></span>
-		        <div class="first"></div>
-		        <div class="second"></div>
-		    </div>
-		    <div class="hexagon">
-		        <span><i style="color:#ffce15;font-size:25px !important;" class="fa fa-star" aria-hidden="true"></i></span>
-		        <div class="first"></div>
-		        <div class="second"></div>
-		    </div>
-		    <div class="hexagon">
-		        <span><i style="color:#ffce15;font-size:25px !important;" class="fa fa-star" aria-hidden="true"></i></span>
-		        <div class="first"></div>
-		        <div class="second"></div>
-		    </div>
-	    </div>
-    </div>
+			</div>
+			<div class="wrapper-2">
+					<div class="options">
+						<div class="hexrow">
+						    <div class="hexagon">
+						        <span><a style="font-size:35px;" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></span>
+						        <div class="first"></div>
+						        <div class="second"></div>
+						    </div>
+						    <div class="hexagon">
+						        <span><a style="font-size:35px;" href="#"><i class="fa fa fa-trophy" aria-hidden="true"></i></a></span>
+						        <div class="first"></div>
+						        <div class="second"></div>
+						    </div>
+						    <div class="hexagon">
+						        <span><a style="font-size:35px;" href="#"><i class="fa fa-cog" aria-hidden="true"></i></a></span>
+						        <div class="first"></div>
+						        <div class="second"></div>
+						    </div>
+					    </div>
+				    </div>
 				</div>
 			</div>
 		</div>
