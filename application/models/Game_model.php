@@ -37,14 +37,15 @@
 			return $max_level->result_array();
 		}
 
-		public function get_progress($user = null)
+		public function get_progress($params = null)
 		{
-			if($user === null) {
+			if($params === null) {
+				$progress = $this->db->query('SELECT * FROM PROGRESS');
+			} else if(isset($params['user'])) {
 				//$progress = $this->db->query('SELECT * FROM PROGRESS;');
-				$progress = $this->db->query('SELECT * FROM PROGRESS WHERE USER_ID=\''.$user.'\';');
-			} else {
-				$progress = $this->db->get_where('PROGRESS');
+				$progress = $this->db->query('SELECT * FROM PROGRESS WHERE USER_ID=\''.$params['user'].'\';');
 			}
+			
 			return $progress->result_array();
 		}
 
