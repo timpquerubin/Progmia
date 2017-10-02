@@ -38,9 +38,24 @@
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 			}
 
-			echo "<pre>";
-			var_dump($progress);
-			echo "</pre>";
+			// foreach ($levels as $l) {
+			// 	$level_score = 0;
+
+			// 	var_dump($l);
+
+			// 	foreach ($progress as $p) {
+			// 		if($l['LVL_ID'] === $p['LVL_ID'])
+			// 		{
+			// 			$level_score = (int)($p['POINTS_SCORED']/$p['MAX_POINTS']*100);
+			// 		}
+			// 	}
+
+			// 	$l['score'] = $level_score;
+			// }
+
+			// echo "<pre>";
+			// var_dump($levels);
+			// echo "</pre>";
 
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
