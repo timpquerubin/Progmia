@@ -35,7 +35,7 @@
 				$levels = $this->Game_model->get_levels($stage);
 			} else {
 				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
-				$progress = $this->Game_model->get_progress(array('USER_ID' => $userID));
+				$progress = $this->Game_model->get_progress(array('user' => $userID));
 			}
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
