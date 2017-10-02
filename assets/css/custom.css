@@ -1,31 +1,53 @@
-body {background-color: #a0d169;}
+body {background-color: #24242b;}
 
-nav{height:120px;z-index: 9999999;}
-nav ul{list-style: none;display:inline-flex;float: right;padding-top: 15px;}
-nav li{padding:10px;}
-nav ul li{margin:0 30px;}
+nav{position:absolute;top:0;left:0;right:0;height:120px;z-index: 9999999;}
+nav ul{background:#121c1d;display:block;list-style: none;float: right;padding-top: 15px;}
+nav ul li{padding:0px;display:inline-block;margin-right: 30px;}
 footer{position:absolute;bottom:0;left:0;right:0;margin:0 30px;}
-
-a.volume i {
-    font-size:50px; 
+nav ul{
+    float:right !important;
+}
+nav ul li a.volume {
+}
+nav ul li a.volume i {
+    font-size:30px; 
     color:#515250;
-    border:solid 5px #515250;
-    padding:5px 7px;
+    color:#555;
+    color:#ebea70;
+    color:#ccc;
+    border:solid 2px #515250;
+    border:solid 2px #ebea70;
+    border:solid 2px #ccc;
+    padding:3px 5px;
     border-radius: 100%;
     background-color: #999;
+    background-color: transparent;
 }
 h2 {font-family:ArcadeClassic;color:#252524;}
-div.bg-stage{
+div.wrapper {
     overflow-x: hidden;
     overflow-y: hidden;
-    padding:10% 0 20% 0;
-    margin:-120px 0px 0 0px;
-    background-image: url("../images/stages.png");
-    background-size:100%;
-    background-position:center center;
+    max-height:1000px;
+    height:100%;
+    padding-top:90px;
+    /*border:solid 3px #111;*/
+    background-color: #111;
+    background-color: #242425;
+}
+div.bg-stage{
+    overflow-x: hidden;
+    /*box-shadow:0px 0px 0px 2px #000;*/
+    padding:15px 20px 2% 40px;
+    margin:0 auto;
+    background-image: url("../images/latest_global_map.png");
+    background-size:cover;
+    background-position:0 center center center;
     background-color: #a0d169;
-    max-height: 970px;
-    height: auto;
+    background-color: #242425;
+    max-height:981px;
+    height:981px;
+    max-width: 1555px;
+    width:1555px;
     background-repeat: no-repeat;
 }
 div.bg-stage .unlocked-stage {
@@ -40,7 +62,12 @@ div.bg-stage .unlocked-stage img {
     border-left:solid 10px #777;
     border-right:solid 10px #777;
     border-bottom:solid 10px #444;
+    border-top-color:#ffce12;
+    border-bottom-color:#ffce12;
+    border-right-color:#dd7900;
+    border-left-color:#dd7900;
     background-color: rgba(49, 50, 50, .8) !important;
+    background-color: rgba(28, 70, 73, .9) !important;
 }
 div.bg-stage .locked-stage img {
     cursor:pointer;
@@ -54,6 +81,7 @@ div.bg-stage .locked-stage img {
 div.bg-stage .unlocked-stage img:hover {
     padding:10px;transition:.5s ease-in-out;
     border:solid 5px #242423;
+    border:solid 5px #ffce12;
 }
 div.bg-stage .locked-stage img:hover {
     padding:10px;
@@ -284,7 +312,7 @@ span.unlocked {
     margin: 0 12.5px 3px;
 }
 .options {
-    position: absolute;top:75%;right:30px;
+    position: absolute;bottom:80px; right:80px;
 }
 .hexrow > div.hexagon {
     width: 100px;

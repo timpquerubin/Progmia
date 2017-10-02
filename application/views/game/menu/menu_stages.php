@@ -11,24 +11,23 @@
 </head>
 <body>
 	<nav>
-		<div class="navbar-header">
-				<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
-		<ul>
+		<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
+		<ul class="pull-right">
 			<li>
-				<a href="#">Menu 1</a>
+				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 			</li>
 			<li>
-				<a href="#">Menu 2</a>
+				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 			</li>
 			<li>
 				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 			</li>
 		</ul>
-		</div>
 	</nav>
-	<div class="container-fluid">	
-		<div class="" style="max-height: 400px !important;">
-			<div class="dragon"><!--<span><?php echo $this->session->userdata('username'); ?></span>-->
+	<div class="container-fluid" style="padding: 0 !important;">	
+		<div class="dragon"><!--<span><?php echo $this->session->userdata('username'); ?></span>-->
+			<div class="" style="">
+				<div class="wrapper">
 				<div class="bg-stage">
 					<div class="row">
 						<ul style="list-style: none;display: inline-flex;vertical-align:middle;margin:0 auto;">
@@ -40,11 +39,11 @@
 							<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
 							<?php if ($exist == true){ ?>
 							<li style="position:relative;"><div class="popup unlocked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
-							<img class="" src="<?php echo base_url(); ?>assets/images/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
+							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
 							<a class="level-btn btn btn-default" href="<?php echo base_url(); ?>game/levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
 							<?php } else { ?>
 							<li style="position:relative;" attribute="dis"><div class="popup locked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
-							<img class="" src="<?php echo base_url(); ?>assets/images/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
+							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
 							<?php } ?>
 							<?php $exist = false; ?>
 							<?php foreach ($maxlevel_list as $maxlevel) { ?>
@@ -73,9 +72,7 @@
 						</ul>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
+
 	<div class="options">
 		<div class="hexrow">
 		    <div class="hexagon">
@@ -95,6 +92,10 @@
 		    </div>
 	    </div>
     </div>
+				</div>
+			</div>
+		</div>
+	</div>
 	</body>
 	<script>
 		$(function(){
