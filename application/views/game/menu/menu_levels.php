@@ -73,8 +73,9 @@
 	fieldset label { margin: 0; padding: 0;}
 	.stage-rating { border: none;}
 	.stage-rating input {display: none;}
-	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;}
-	.stage-rating label.not:before { color: #aaa;}
+	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;} /*FFD700*/ 
+	.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}
+	input.no-score + label:before{ color: #aaa;}
 </style>
 
 <div class="game-level-menu-container">
@@ -103,23 +104,10 @@
 								<input type="hidden" name="level_<?php echo $i+1; ?>_score" id="level_<?php echo $i+1; ?>_score" value="<?php echo $score; ?>">
 								<div class="bottom-stars">
 								<fieldset class="stage-rating">
-								<?php if($score == 0 || $score == null){ ?>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label class="not" for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label class="not" for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label class="not" for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-								<?php } elseif ($score == 1000) { ?>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label class="not" for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label class="not" for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-								<?php } elseif ($score== 2000) { ?>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label class="not" for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-								<?php } else {?>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="1"><label for="stage_<?php echo $i+1; ?>_star1" title="Good"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="2"><label for="stage_<?php echo $i+1; ?>_star2" title="Excellent"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="stage_<?php echo $i+1; ?>_star1" value="3"><label for="stage_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-								<?php } ?>
+								<!-- <?php // if($score == 0 || $score == null){ ?> -->
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star1" value="1" disabled><label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star2" value="2" disabled><label class="" for="level_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star3" value="3" disabled><label class="" for="level_<?php echo $i+1; ?>_star3" title="Perfect"></label>
 								</fieldset>
 								</div>
 							</div>
@@ -150,5 +138,22 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
+		var num_levels = document.getElementById("level_num").value;
+
+		for(var i = 1; i <= num_levels; i++) {
+			var level_score = parseInt(document.getElementById("level_"+ i +"_score").value);
+
+			if(level_score <= 33 && level_score > 0) {
+				$("#level_"+ i + "_star1").attr("checked", true);
+			} else if(level_score > 33 && level_score <= 66) {
+				$("#level_"+ i + "_star2").attr("checked", true);
+			} else if(level_score > 66 && level_score <= 100) {
+				$("#level_"+ i + "_star3").attr("checked", true);
+			} else {
+				$("#level_"+ i + "_star1").addClass("no-score");
+				$("#level_"+ i + "_star2").addClass("no-score");
+				$("#level_"+ i + "_star3").addClass("no-score");
+			}
+		}
 	});
 </script>
