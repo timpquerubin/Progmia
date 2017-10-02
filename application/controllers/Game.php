@@ -13,7 +13,7 @@
 
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
-			$progress = $this->Game_model->get_progress(array('USER_ID' => $userID));
+			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
@@ -32,11 +32,16 @@
 			$user = $this->session->userdata('username');
 
 			if($stage == null) {
-				$levels = $this->Game_model->get_levels($stage);
+				$levels = $this->Game_model->get_levels();
 			} else {
 				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
-				$progress = $this->Game_model->get_progress(array('user' => $userID));
+				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 			}
+
+			echo "<pre>";
+			var_dump($progress);
+			echo "</pre>";
+
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
 			$data['progress_list'] = $progress;

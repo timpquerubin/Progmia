@@ -15,7 +15,7 @@
 		{
 
 			if($stage === null) {
-				$levels = $this->db->query('SELECT * FROM LEVEL WHERE STAGE=\''.$stage.'\' ORDER BY LVL_NUM;');
+				$levels = $this->db->query('SELECT * FROM LEVEL BY STAGE, LVL_NUM;');
 			} else {
 				$this->db->order_by("LVL_NUM", "asc");
 				$levels = $this->db->get_where('LEVEL', $stage);
@@ -41,11 +41,14 @@
 		{
 			if($params === null) {
 				$progress = $this->db->query('SELECT * FROM PROGRESS');
+			} else if(isset($params['user']) && isset($params['stage'])) {
+				$progress = $this->db->query('SELECT P.PROG_ID, P.USER_ID, P.LVL_ID, L.STAGE, P.POINTS_SCORED, L.MAX_POINTS FROM PROGRESS P, LEVEL L WHERE P.USER_ID=\''.$params['user'].'\' AND L.STAGE=\''.$params['stage'].'\' AND P.LVL_ID=L.LVL_ID;');
 			} else if(isset($params['user'])) {
-				//$progress = $this->db->query('SELECT * FROM PROGRESS;');
 				$progress = $this->db->query('SELECT * FROM PROGRESS WHERE USER_ID=\''.$params['user'].'\';');
+			} else if(isset($params['stage'])) {
+				$progress = $this->db->query('SELECT * FROM PROGRESS P, LEVEL L WHERE P.LVL_ID=L.LVL_ID AND L.STAGE=\''.$params['stage'].'\';');
 			}
-			
+
 			return $progress->result_array();
 		}
 

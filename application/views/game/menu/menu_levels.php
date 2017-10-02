@@ -78,6 +78,7 @@
 </style>
 
 <div class="game-level-menu-container">
+	<input type="hidden" name="level_num" id="level_num" value="<?php echo count($level_list); ?>">
 	<!--<?php //$stage = $_GET["link"];?>-->
 	<!--<?php //echo $h->USER_ID; ?>-->
 	<?php $i = 0; ?>
@@ -94,10 +95,12 @@
 								<?php $score = 0; ?>
 									<?php foreach ($progress_list as $progress) { ?>
 										<?php if($progress['LVL_ID'] == $level['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID ) { ?>
-											<?php echo $progress['POINTS_SCORED']; ?>
-											<?php $score = $progress['POINTS_SCORED']; ?>
+											<!-- <?php //echo $progress['POINTS_SCORED']; ?> / <?php //echo $progress['MAX_POINTS']; ?> -->
+											<?php $score = (int)($progress['POINTS_SCORED']/$progress['MAX_POINTS']*100); ?>
+											<!-- <?php //echo $score ?>% -->
 										<?php } ?>
 									<?php } ?>
+								<input type="hidden" name="level_<?php echo $i+1; ?>_score" id="level_<?php echo $i+1; ?>_score" value="<?php echo $score; ?>">
 								<div class="bottom-stars">
 								<fieldset class="stage-rating">
 								<?php if($score == 0 || $score == null){ ?>
@@ -143,3 +146,7 @@
 	    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 	    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 	</fieldset> -->
+
+<script type="text/javascript">
+	
+</script>
