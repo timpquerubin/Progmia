@@ -12,7 +12,10 @@
 <body>
 	<nav>
 		<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
-		<ul class="pull-right">
+		<div class="center">
+		<h1>MAP</h1>
+		</div>
+		<ul class="right">
 			<li>
 				<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 			</li>

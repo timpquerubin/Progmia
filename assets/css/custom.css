@@ -1,30 +1,88 @@
-body {background-color: #24242b;}
+body {background-color: #24242b;background-color: #121c1d;}
 
-nav{position:absolute;top:0;left:0;right:0;height:120px;z-index: 9999999;}
-nav ul{background:#121c1d;display:block;list-style: none;float: right;padding-top: 15px;}
-nav ul li{padding:0px;display:inline-block;margin-right: 30px;}
-footer{position:absolute;bottom:0;left:0;right:0;margin:0 30px;}
-nav ul{
-    float:right !important;
+nav {
+    position:absolute;
+    top:0;left:0;
+    right:0;
+    height:120px;
+    z-index: 1 !important;
 }
-nav ul li a.volume {
+nav div.center{
+    background:#444;
+    background:#121c1d;
+    background:#273737;
+    border-right: 10px solid #075770;
+    border-left: 10px solid #075770;
+    border-bottom: 10px solid #075770;
+    border-right: 8px solid #222;
+    border-left: 8px solid #222;
+    border-bottom: 8px solid #111;
+    display:inline-block;
+    list-style: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding:0px;
+    margin:0 auto;
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    width:160px;
+    z-index: -1;
+    padding:5px 10px;
 }
-nav ul li a.volume i {
-    font-size:30px; 
+nav div.center h1 {
+    text-align: center;
+    font-family: ArcadeClassic;
+    color:#fff;
+    color:#ffce15;
+    font-size: 50px;
+    margin:0;
+    text-shadow:2px 2px 0px #000;
+}
+nav ul.right {
+    background:#444;
+    border-left: 3px solid #222;
+    border-bottom: 3px solid #111;
+    display:inline-flex;
+    list-style: none;
+    float: right;
+    padding:10px;
+    border-bottom-left-radius: 30px;
+    background:#273737;
+}
+nav ul.right li {
+    padding:0px;
+}
+nav ul.right li a.volume {
+}
+nav ul.right li a.volume i {
+    font-size:25px; 
+
     color:#515250;
     color:#555;
     color:#ebea70;
     color:#ccc;
+    color:#999;
+
     border:solid 2px #515250;
     border:solid 2px #ebea70;
-    border:solid 2px #ccc;
+    border-right:solid 2px #ccc;
+    border-top:solid 2px #ccc;
+    border-left:solid 2px #999;
+    border-bottom:solid 2px #999;
+    border:solid 2px #999;
+
     padding:3px 5px;
+    margin:0 5px;
     border-radius: 100%;
     background-color: #999;
     background-color: transparent;
 }
+footer{position:absolute;bottom:0;left:0;right:0;margin:0 30px;}
 h2 {font-family:ArcadeClassic;color:#252524;}
 div.wrapper {
+    z-index: 99999999;
     overflow-x: hidden;
     overflow-y: hidden;
     max-height:1000px;
@@ -33,8 +91,10 @@ div.wrapper {
     /*border:solid 3px #111;*/
     background-color: #111;
     background-color: #242425;
+    background-color: #121c1d;
 }
 div.bg-stage{
+    z-index: 99999;
     overflow-x: hidden;
     /*box-shadow:0px 0px 0px 2px #000;*/
     padding:15px 20px 2% 40px;
@@ -49,6 +109,7 @@ div.bg-stage{
     max-width: 1555px;
     width:1555px;
     background-repeat: no-repeat;
+    background-color: #121c1d;
 }
 div.bg-stage .unlocked-stage {
     border-radius:60%;
@@ -69,14 +130,29 @@ div.bg-stage .unlocked-stage img {
     background-color: rgba(49, 50, 50, .8) !important;
     background-color: rgba(28, 70, 73, .9) !important;
 }
+
 div.bg-stage .locked-stage img {
     cursor:pointer;
     padding:30px;
     height: 250px !important;
     margin:0 20px;
     border:solid 1px #000;
+    border-top:solid 10px #aaa;
+    border-left:solid 10px #777;
+    border-right:solid 10px #777;
+    border-bottom:solid 10px #444;
     background-color: rgba(51, 51, 51, .9) !important;
-    border-radius:5px;
+    background-color: rgba(18, 28, 29, .9) !important;
+}
+
+div.bg-stage .locked-stage .popuptext{
+    background-color: #121c1d;
+}
+div.bg-stage .locked-stage h2,div.bg-stage .locked-stage p{
+    color:#ccc;
+}
+div.bg-stage .locked-stage .popuptext::after {
+    border-color: transparent  transparent #121c1d transparent;
 }
 div.bg-stage .unlocked-stage img:hover {
     padding:10px;transition:.5s ease-in-out;
@@ -97,7 +173,7 @@ nav a.navbar-brand{
 }
 a.level-btn {
     font-family: ArcadeClassic !important;
-    background-color:#555 !important;
+    background-color:#222 !important;
     box-shadow:1px 1px 5px #000;
     border-top:solid 5px #aaa;
     border-left:solid 5px #ccc;
@@ -108,7 +184,7 @@ a.level-btn {
     width:40%;
     margin:0 auto;
     padding:0;
-    background:#333;
+    background:#222;
     color:#fff;cursor: 
     margin:5px;
     font-size:25px;
@@ -121,7 +197,7 @@ a.level-btn:hover {
     border-bottom-color:#ffce12;
     border-right-color:#dd7900;
     border-left-color:#dd7900;
-    background-color: #333 !important;
+    background-color: #111 !important;
 }
 div.stage:before {
     content: '';
@@ -166,6 +242,8 @@ span.locked {
     right: 0;
     font-size:120px;
     color:#7b7b78 !important;
+
+    color:#555 !important;
     text-shadow:1px 1px #242423;
     text-align:center;color:#ffce12;
 }
@@ -198,59 +276,6 @@ span.unlocked {
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
-}
-
-.popuptext-1 p,.popuptext-2 p,.popuptext-3 p,.popuptext-4 p,.popuptext-5 p{
-    color:#252524;
-}
-/* The actual popup */
-.popup-1 .popuptext-1 {
-    visibility: hidden;
-    width: 250px;
-    background-color: #ebea70;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 999;
-    top: 100%;
-    left: 38%;
-    margin-left: -80px;
-    padding:5px;
-    border:solid 3px #252524;
-}
-.show h2{
-    margin:7px;
-}
-/* Popup arrow */
-.popup-1 .popuptext-1::after,.popup-2 .popuptext-2::after,.popup-3 .popuptext-3::after,.popup-4 .popuptext-4::after {
-    content: "";
-    position: absolute;
-    top: -20%;
-    left: 50%;
-    margin-left: -20px;
-    border-width: 20px;
-    border-style: solid;
-    border-color: transparent  transparent #242423 transparent;
-}
-
-.popup-5 .popuptext-5::after{
-    content: "";
-    position: absolute;
-    top: -27%;
-    left: 50%;
-    margin-left: -20px;
-    border-width: 20px;
-    border-style: solid;
-    border-color: transparent  transparent #242423 transparent;
-}
-
-/* Toggle this class - hide and show the popup */
-.popup-1 .show,.popup-1,.popup-2 .show,.popup-2,.popup-3 .show,.popup-3,.popup-4 .show,.popup-4,.popup-5 .show,.popup-5 {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
 }
 
 /**/
