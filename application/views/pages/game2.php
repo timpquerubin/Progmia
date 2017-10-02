@@ -47,7 +47,7 @@
 	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($level[0]['LVL_GRID']) ? $level[0]['LVL_GRID'] : '' ?>" />
 	<input type="hidden" name="startPt" id="startPt" value="<?php echo $level[0]['LVL_STARTPOINT']?>">
 	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($level[0]['LVL_FILENAME']) ? $level[0]['LVL_FILENAME'] : '' ?>">
-	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($level[0]['LVL_COLS']) ? $level[0]['LVL_NUMCOLS'] : '' ?>">
+	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($level[0]['LVL_NUMCOLS']) ? $level[0]['LVL_NUMCOLS'] : '' ?>">
 
 	<div class="game-canvas-container" style="width: 100%; background-color: #000;">
 		<div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
