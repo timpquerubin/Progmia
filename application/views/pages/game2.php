@@ -111,7 +111,7 @@
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
 	img.map = new Image();
-	img.map.src = "<?php echo base_url(); ?>assets/images/" + map_filename;
+	img.map.src = "<?php echo base_url(); ?>assets/images/levels/" + map_filename;
 	img.key = new Image();
 	img.key.src = "<?php echo base_url(); ?>assets/images/key.png";
 	img.coin = new Image();
