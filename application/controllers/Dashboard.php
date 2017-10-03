@@ -17,7 +17,7 @@
 
 			$this->load->view('templates/dashboard_header');
 			$this->load->view('templates/load_init_links');
-			$this->load->view('game/game_list', $data);
+			$this->load->view('dashboard/game_list', $data);
 			$this->load->view('templates/dashboard_footer');
 		}
 
@@ -33,13 +33,18 @@
 
 			$this->load->view('templates/dashboard_header');
 			$this->load->view('templates/load_init_links');
-			$this->load->view('game/add_level',$data);
+			$this->load->view('dashboard/add_level',$data);
 			$this->load->view('templates/dashboard_footer');
 		}
 
 		public function save_add_level()
 		{
 			$this->__init();
+
+			echo "<pre>";
+			var_dump($_POST);
+			echo "</pre>";
+			exit();
 
 			$count_levels_params['STAGE'] = $_POST['stage'];
 

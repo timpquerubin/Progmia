@@ -70,6 +70,11 @@
 						<input type="text" class="form-control" id="startPtY" name="startPtY">
 					</div>
 				</div>
+
+				<div class="objective-block">
+					
+				</div>
+
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
 			</form>
 		</div>
@@ -80,6 +85,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+
 	    $("#imgMap").change(function(){
 	        if(this.files && this.files[0])
 	        {

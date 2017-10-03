@@ -6,6 +6,45 @@
 			$this->load->model('Game_model');
 		}
 
+		public function testview()
+		{
+			$sample = array(
+				'col1' => 'val1',
+				'col2' => 'val2',
+			);
+
+			$json_sample = json_encode($sample);
+
+			// $json_sample = "{'cosdl1':'val1','col2':'val2'}";
+
+			$data['sample_json'] = $json_sample;
+
+			$this->load->view('templates/load_init_links');
+			$this->load->view('pages/test', $data);
+		}
+
+		public function tryJSON ()
+		{
+			$sample = array(
+				'col1' => 'val1',
+				'col2' => 'val2',
+			);
+
+			echo "<pre>";
+			var_dump($sample);
+			echo "</pre>";
+
+			$json_sample = json_encode($sample);
+
+			echo $json_sample;
+
+			$json_decoded = json_decode($json_sample);
+
+			echo "<pre>";
+			var_dump($json_decoded);
+			echo "</pre>";
+		}
+
 		public function transferRows() 
 		{
 			$this->__init();
