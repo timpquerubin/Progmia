@@ -11,11 +11,11 @@
 			return $this->db->insert('LEVEL', $params);
 		}
 
-		public function get_levels($stage)
+		public function get_levels($stage = null)
 		{
 
 			if($stage === null) {
-				$levels = $this->db->query('SELECT * FROM LEVEL BY STAGE, LVL_NUM;');
+				$levels = $this->db->query('SELECT * FROM LEVEL ORDER BY STAGE, LVL_NUM;');
 			} else {
 				$this->db->order_by("LVL_NUM", "asc");
 				$levels = $this->db->get_where('LEVEL', $stage);

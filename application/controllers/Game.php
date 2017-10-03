@@ -35,7 +35,8 @@
 			$this->load->view('game/menu/menu_stages', $data);
 			$this->load->view('templates/game_footer');
 		}
-		public function levels($stage)
+
+		public function levels($stage = null)
 		{
 			$this->_init();
 			$this->isLoggedIn();
@@ -87,7 +88,7 @@
 		{
 			$this->_init();
 			$this->isLoggedIn();
-			
+
 			$level_params = array(
 				'LVL_ID' => $lvlId,
 			);
