@@ -47,17 +47,17 @@
 			$level_count++;
 
 			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
-
 			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
+			$lvlId = md5($_POST['stage'] + $level_count + $_POST['level-name']);
 
 			$level_params = array(
-				'LVL_ID' => md5($_POST['stage'] + $level_count + $_POST['level-name']),
+				'LVL_ID' => $lvlId,
 				'LVL_GRID' => $_POST['mapCol'],
 				'LVL_NAME' => $_POST['level-name'],
-				'LVL_SPOINT' => json_encode($startPt),
-				'LVL_COLS' => (int)$_POST['numCols'],
-				'LVL_MAP_HEIGHT' => $map_size[1],
-				'LVL_MAP_WIDTH' => $map_size[0],
+				'LVL_STARTPOINT' => json_encode($startPt),
+				'LVL_NUMCOLS' => (int)$_POST['numCols'],
+				'LVL_IMGHEIGHT' => $map_size[1],
+				'LVL_IMGWIDTH' => $map_size[0],
 				'STAGE' => $_POST['stage'],
 				'LVL_NUM' => $level_count,
 			);
@@ -78,6 +78,7 @@
 				$config['max_size'] = '2048';
 				$config['max_width'] = '2000';
 				$config['max_height'] = '2000';
+				$config['file_name'] = $lvlId;
 				
 				$this->load->library('upload', $config);
 				
@@ -87,10 +88,12 @@
 				}
 				else {
 					$data = array('upload_data' => $this->upload->data());
+
+					$level_params['LVL_FILENAME'] =  $lvlId.$data['upload_data']['file_ext'];
 				}
 			}
 
-			$this->Game_model->add_level($params);
+			$this->Game_model->add_level($level_params);
 			redirect('Dashboard/level_list');
 
 		}

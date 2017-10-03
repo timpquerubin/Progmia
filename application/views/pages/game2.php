@@ -53,7 +53,7 @@
 		<div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
 			<div class="player-hp">
 				<label class="col-sm-1 col-xs-2" style="color: #FFF;">HP:</label>
-				<div class="progress col-sm-4 col-xs-5" style="padding: 0px;">
+				<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
 				 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
 				</div>
 			</div>

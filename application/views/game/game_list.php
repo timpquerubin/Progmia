@@ -27,8 +27,8 @@
 								<td><?php echo $lvl['STAGE'] ?></td>
 								<td><?php echo $lvl['LVL_NUM'] ?></td>
 								<td><?php echo $lvl['LVL_NAME'] ?></td>
-								<td><?php echo $lvl['LVL_SPOINT'] ?></td>
-								<td><?php echo $lvl['LVL_COLS'] ?></td>
+								<td><?php echo $lvl['LVL_STARTPOINT'] ?></td>
+								<td><?php echo $lvl['LVL_NUMCOLS'] ?></td>
 								<td><?php echo $lvl['LVL_CREATEDAT'] ?></td>
 								<td><?php echo $lvl['LVL_UPDATEDAT'] ?></td>
 							</tr>

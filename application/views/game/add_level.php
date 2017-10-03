@@ -29,6 +29,14 @@
 				</div>
 
 				<div class="form-group">
+					<label class="control-label col-sm-2">Level Description:</label>
+					<div class="col-sm-6">
+						<!-- <input type="text" class="form-control" name="level-description" id="level-description" placeholder="Level Description"> -->
+						<textarea class="form-control" style="resize: none;" rows="5" name="level-description" id="level-description" placeholder="Level Description"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
 					<label class="control-label col-sm-2">Map Photo:</label>
 					<div class="col-sm-4">
 						<input class="form-control" type="file" name="imgMap" id="imgMap">
