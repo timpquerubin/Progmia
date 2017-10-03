@@ -46,6 +46,7 @@
 
 			if($stage == null) {
 				$levels = $this->Game_model->get_levels();
+				$progress = $this->Game_model->get_progress();
 			} else {
 				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
