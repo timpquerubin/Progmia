@@ -37,6 +37,14 @@
 			$this->load->view('templates/dashboard_footer');
 		}
 
+		public function load_objectives_block() 
+		{
+			var_dump($_POST);
+			// $data['objecttives'] = $_POST['objectives'];
+
+			$this->load->view('dashboard/objectives_block');
+		}
+
 		public function save_add_level()
 		{
 			$this->__init();

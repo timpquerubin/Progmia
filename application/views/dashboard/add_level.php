@@ -71,9 +71,20 @@
 					</div>
 				</div>
 
-				<div class="objective-block">
-					
+				<div class="form-group">
+					<label class="control-label col-sm-2">Objectives:</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="type" name="type">
+					</div>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="obj_val" name="obj_val">
+					</div>
+					<div class="col-sm-3">
+						<button type="button" onclick="append_objective()">Add</button>
+					</div>
 				</div>
+
+				<div class="objective-block"></div>
 
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
 			</form>
@@ -85,6 +96,43 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+
+		var objective_list = {};
+		var objCtr = 0;
+
+		append_objective = function() {
+			var type = document.getElementById("type").value;
+			var value = document.getElementById("obj_val").value;
+
+			objective_list[objCtr] = {type: type, value: value};
+
+			objCtr++;
+
+			document.getElementById("type").value = "";
+			document.getElementById("obj_val").value = "";
+
+			load_objectives_block();
+		}
+
+		load_objectives_block = function() {
+
+			var data = {};
+			data['objectives'] = objective_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>" + "dashboard/load_objectives_block",
+				data: data,
+				success: function(data) {
+					$(".objective-block").html(data);
+				},
+				error: function(xhr, status, err) {
+					console.log(err);
+				}
+			});
+		}
+
+		load_objectives_block();
 
 	    $("#imgMap").change(function(){
 	        if(this.files && this.files[0])
