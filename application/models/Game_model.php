@@ -33,7 +33,7 @@
 
 		public function get_max_level($params = null)
 		{
-			$max_level = $this->db->query('SELECT `level`.`LVL_NUM`,`level`.`STAGE`,`level`.`LVL_ID` FROM `level` WHERE (`level`.`LVL_NUM`,`level`.`STAGE`)in (SELECT MAX(`level`.`LVL_NUM`),`level`.`STAGE` FROM `level` group by `level`.`STAGE`)');
+			$max_level = $this->db->query('SELECT `level`.`LVL_NUM`,`level`.`STAGE`,`level`.`LVL_ID` FROM `level` WHERE (`level`.`LVL_NUM`,`level`.`STAGE`) in (SELECT MAX(`level`.`LVL_NUM`),`level`.`STAGE` FROM `level` group by `level`.`STAGE`)');
 			return $max_level->result_array();
 		}
 

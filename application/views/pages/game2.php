@@ -323,13 +323,13 @@
 		Maps.current = Maps(id, imgSrc, mapGrid2d, startPt);
 	}
 
-	Objective = function(id, status, desc, checkPt)
+	Objective = function(id, status, desc, task)
 	{
 		var self = {
 			id: id,
 			status: status,
 			description: desc,
-			checkPt: checkPt,
+			task: task,
 		};
 
 		Objective.list[id] = self;
