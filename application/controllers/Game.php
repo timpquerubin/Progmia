@@ -4,12 +4,23 @@
 		public function _init()
 		{
 			$this->load->model('Game_model');
+			$this->load->model('User_model');
 			$this->load->model('Character_model');
+		}
+
+		public function isLoggedIn()
+		{
+			if(!$this->User_model->is_logged_in())
+			{
+				$this->session->set_flashdata('user_notloggedin', 'Please login first');
+				redirect('Home');
+			}
 		}
 
 		public function stages()
 		{
 			$this->_init();
+			$this->isLoggedIn();
 
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
@@ -27,6 +38,7 @@
 		public function levels($stage)
 		{
 			$this->_init();
+			$this->isLoggedIn();
 
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
@@ -37,25 +49,6 @@
 				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 			}
-
-			// foreach ($levels as $l) {
-			// 	$level_score = 0;
-
-			// 	var_dump($l);
-
-			// 	foreach ($progress as $p) {
-			// 		if($l['LVL_ID'] === $p['LVL_ID'])
-			// 		{
-			// 			$level_score = (int)($p['POINTS_SCORED']/$p['MAX_POINTS']*100);
-			// 		}
-			// 	}
-
-			// 	$l['score'] = $level_score;
-			// }
-
-			// echo "<pre>";
-			// var_dump($levels);
-			// echo "</pre>";
 
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
@@ -93,6 +86,8 @@
 		public function play($lvlId)
 		{
 			$this->_init();
+			$this->isLoggedIn();
+			
 			$level_params = array(
 				'LVL_ID' => $lvlId,
 			);

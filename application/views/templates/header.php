@@ -21,14 +21,11 @@
     			<ul class="nav navbar-nav">
       				<li><a href="<?php echo base_url(); ?>home">Home</a></li>
       				<li><a href="<?php echo base_url(); ?>about">About</a></li>
-      				<li><a href="<?php echo base_url(); ?>Game/stages">Game</a></li>
+      				<?php if($this->session->userdata('logged_in')): ?>
+      					<li><a href="<?php echo base_url(); ?>Game/stages">Game</a></li>
+      				<?php  endif; ?>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
-    				<?php if(!$this->session->userdata('logged_in')): ?>
-    					<!-- <li><a href="<?php echo base_url(); ?>users/login">Login</a></li> -->
-    					<!-- <li><a href="<?php echo base_url(); ?>users/register">Register</a></li> -->
-    				<?php  endif; ?>
-
     				<?php if($this->session->userdata('logged_in')): ?>
     					<li class="dropdown">
     						<a class="dropbtn dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
@@ -59,4 +56,8 @@
 			
 			<?php if($this->session->flashdata('user_loggedfailed')) : ?>
 				<?php echo '<p class="alert alert-success alert-danger" >'.$this->session->flashdata('user_loggedfailed').'</p>'; ?>
+			<?php endif; ?>
+
+			<?php if($this->session->flashdata('user_notloggedin')) : ?>
+				<?php echo '<p class="alert alert-success alert-danger" >'.$this->session->flashdata('user_notloggedin').'</p>'; ?>
 			<?php endif; ?>

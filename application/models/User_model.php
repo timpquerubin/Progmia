@@ -83,7 +83,7 @@
 			}
 		}
 	
-	public function check_email_exists($email)
+		public function check_email_exists($email)
 		{
 			$query = $this->db->get_where('user', array('user_email' => $email));
 			
@@ -94,6 +94,15 @@
 			else 
 			{
 				return FALSE;	
+			}
+		}
+
+		public function is_logged_in()
+		{
+			if($this->session->userdata('logged_in')) {
+				return TRUE;
+			} else {
+				return FALSE;
 			}
 		}
 	}
