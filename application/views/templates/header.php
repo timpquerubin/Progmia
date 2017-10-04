@@ -31,7 +31,7 @@
     						<a class="dropbtn dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
     						<ul class="dropdown-menu">
     							<li class="text-center"><span class="user-level">1</span><a href="#"><img src="" class="img-circle"></a><h5><?php echo $this->session->userdata('username'); ?></h5></li>
-    							<li><a href="<?php echo base_url(); ?>profile">Profile</a></li>
+    							<li><a href="<?php echo base_url(); ?>profile/user/<?php echo $this->session->userdata('user_id'); ?>">Profile</a></li>
     							<li><a href="#">Settings</a></li>
     							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
     						</ul>
