@@ -39,20 +39,18 @@
 
 		public function load_objectives_block() 
 		{
-			var_dump($_POST);
-			// $data['objecttives'] = $_POST['objectives'];
+			if(count($_POST) > 0) {
+				$data['objectives'] = $_POST['objectives'];
+			} else {
+				$data['objectives'] = [];
+			}
 
-			$this->load->view('dashboard/objectives_block');
+			$this->load->view('dashboard/objectives_block', $data);
 		}
 
 		public function save_add_level()
 		{
 			$this->__init();
-
-			echo "<pre>";
-			var_dump($_POST);
-			echo "</pre>";
-			exit();
 
 			$count_levels_params['STAGE'] = $_POST['stage'];
 
@@ -60,6 +58,12 @@
 			$level_count++;
 
 			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
+
+			// echo "<pre>";
+			// var_dump($map_size);
+			// echo "</pre>";
+			// exit();
+
 			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
 			$lvlId = md5($_POST['stage'] + $level_count + $_POST['level-name']);
 
@@ -74,15 +78,6 @@
 				'STAGE' => $_POST['stage'],
 				'LVL_NUM' => $level_count,
 			);
-			
-			// $params['MAP_ID'] = md5($_FILES['imgMap']['name']);
-			// $params['MAP_NUMCOLS'] = (int)$_POST['numCols'];
-			// $params['MAP_GRID'] = $_POST['mapCol'];
-			// $params['MAP_STARTPOINT'] = json_encode($startPt);
-			// $params['MAP_IMGHEIGHT'] = $map_size[1];
-			// $params['MAP_IMGWIDTH'] = $map_size[0];
-
-			// $test = json_decode($mapCol, true);
 			
 			if($_FILES['imgMap']['tmp_name'] != '')
 			{
@@ -106,9 +101,22 @@
 				}
 			}
 
-			$this->Game_model->add_level($level_params);
+			$new_level = $this->Game_model->add_level($level_params);
+
+			echo "<pre>";
+			var_dump($new_level);
+			echo "</pre>";
+			exit();
+
 			redirect('Dashboard/level_list');
 
+		}
+
+		public function save_objectives()
+		{
+			echo "<pre>";
+			var_dump($_POST);
+			echo "</pre>";
 		}
 
 		public function temp_insert_char()

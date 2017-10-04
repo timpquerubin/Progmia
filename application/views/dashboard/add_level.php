@@ -3,7 +3,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h4><?php echo $title ?></h4></div>
 		<div class="panel-body">
-			<form class="form-horizontal" method="post" action="save_add_level" enctype="multipart/form-data">
+			<form class="form-horizontal" id="add_level_form" name="add_level_form" method="post" action="save_add_level" enctype="multipart/form-data">
 				<input type="hidden" name="mapCol" id="mapCol">
 				<!-- <textarea name="mapCol" id="mapCol"></textarea> -->
 				<!-- <div class="">
@@ -104,7 +104,7 @@
 			var type = document.getElementById("type").value;
 			var value = document.getElementById("obj_val").value;
 
-			objective_list[objCtr] = {type: type, value: value};
+			objective_list[objCtr] = {objNum:objCtr, type: type, value: value};
 
 			objCtr++;
 
@@ -132,7 +132,59 @@
 			});
 		}
 
+		deleteObjective = function(objIndex) {
+			var index = parseInt(objIndex);
+			console.log("index" + index);
+
+			delete objective_list[objIndex];
+
+			load_objectives_block();
+		}
+
 		load_objectives_block();
+
+		$("#add_level_form").submit(function(e) {
+
+			e.preventDefault();
+
+			var formData = {};
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				console.log(e.target.result);
+			}
+
+			reader.readAsDataURL(document.getElementById("imgMap").files[0]);
+
+			// console.log(document.getElementById("imgMap").files[0].target.result);
+
+			$.each($("#add_level_form").serializeArray(), function(i, field){
+				formData[field.name] = field.value;
+			});
+
+			formData['objectives'] = objective_list;
+
+
+
+			// var formData2 = new FormData($("#add_level_form")[0]);
+			// console.log(formData2);
+			// formData.push(objective_list);
+			// formData['objectives'] = objective_list;
+			
+			// $.ajax({
+			// 	type: 'post',
+			// 	url: "<?php // echo base_url(); ?>" + "dashboard/save_add_level",
+			// 	data: formData,
+			// 	success: function(data) {
+			// 		console.log(data);
+			// 	},
+			// 	error: function(xhr, status, err) {
+			// 		console.log(err);
+			// 	}
+			// });
+
+			e.preventDefault();
+		});
 
 	    $("#imgMap").change(function(){
 	        if(this.files && this.files[0])
