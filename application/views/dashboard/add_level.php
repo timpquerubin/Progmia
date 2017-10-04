@@ -145,43 +145,44 @@
 
 		$("#add_level_form").submit(function(e) {
 
-			e.preventDefault();
+			var formData = new FormData($("#add_level_form")[0]);
+			var newLvlId = "";
+			var list = {};
+			list['objectives'] = objective_list;
 
-			var formData = {};
-			var reader = new FileReader();
-
-			reader.onload = function(e) {
-				console.log(e.target.result);
-			}
-
-			reader.readAsDataURL(document.getElementById("imgMap").files[0]);
-
-			// console.log(document.getElementById("imgMap").files[0].target.result);
-
-			$.each($("#add_level_form").serializeArray(), function(i, field){
-				formData[field.name] = field.value;
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>" + "dashboard/save_add_level",
+				data: formData,
+				contentType: false,
+				processData: false,
+				dataType: 'json',
+				success: function(data) {
+					newLvlId = data['lvlId'];
+				},
+				error: function(xhr, status, err) {
+					console.log(err);
+				}
 			});
 
-			formData['objectives'] = objective_list;
-
-
-
-			// var formData2 = new FormData($("#add_level_form")[0]);
-			// console.log(formData2);
-			// formData.push(objective_list);
-			// formData['objectives'] = objective_list;
-			
-			// $.ajax({
-			// 	type: 'post',
-			// 	url: "<?php // echo base_url(); ?>" + "dashboard/save_add_level",
-			// 	data: formData,
-			// 	success: function(data) {
-			// 		console.log(data);
-			// 	},
-			// 	error: function(xhr, status, err) {
-			// 		console.log(err);
-			// 	}
-			// });
+			if(lvlId != "") {
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>" + "dashboard/save_objectives",
+					data: list,
+					dataType: 'json',
+					success: function(res) {
+						if(res['status']) {
+							window.location = "dashboard/level_list";
+						} else {
+							window.location = "dashboard/add_level";
+						}
+					},
+					error: function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			}
 
 			e.preventDefault();
 		});

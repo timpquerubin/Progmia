@@ -52,18 +52,17 @@
 		{
 			$this->__init();
 
+			// echo "<pre>";
+			// var_dump($_POST);
+			// echo "</pre>";
+			// exit();
+
 			$count_levels_params['STAGE'] = $_POST['stage'];
 
 			$level_count = count($this->Game_model->get_levels($count_levels_params));
 			$level_count++;
 
 			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
-
-			// echo "<pre>";
-			// var_dump($map_size);
-			// echo "</pre>";
-			// exit();
-
 			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
 			$lvlId = md5($_POST['stage'] + $level_count + $_POST['level-name']);
 
@@ -103,12 +102,14 @@
 
 			$new_level = $this->Game_model->add_level($level_params);
 
-			echo "<pre>";
-			var_dump($new_level);
-			echo "</pre>";
-			exit();
+			$return['lvlId'] = $lvlId;
 
-			redirect('Dashboard/level_list');
+			// echo "<pre>";
+			echo json_encode($return);
+			// echo "</pre>";
+			// exit();
+
+			// redirect('Dashboard/level_list');
 
 		}
 
@@ -117,6 +118,8 @@
 			echo "<pre>";
 			var_dump($_POST);
 			echo "</pre>";
+
+			redirect('Dashboard/level_list');
 		}
 
 		public function temp_insert_char()
