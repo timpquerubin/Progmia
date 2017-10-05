@@ -119,7 +119,7 @@
 			var_dump($_POST);
 			echo "</pre>";
 
-			redirect('Dashboard/level_list');
+			
 		}
 
 		public function temp_insert_char()
