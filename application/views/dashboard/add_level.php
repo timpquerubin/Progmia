@@ -72,7 +72,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2">Objectives:</label>
+					<label class="control-label col-sm-2">Objective:</label>
 					<div class="col-sm-3">
 						<input type="text" class="form-control" id="type" name="type">
 					</div>
@@ -81,6 +81,13 @@
 					</div>
 					<div class="col-sm-3">
 						<button type="button" onclick="append_objective()">Add</button>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2">Description:</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" style="resize: none;" rows="5" name="objective-description" id="objective-description" placeholder="Objective Description"></textarea>
 					</div>
 				</div>
 
@@ -103,8 +110,9 @@
 		append_objective = function() {
 			var type = document.getElementById("type").value;
 			var value = document.getElementById("obj_val").value;
+			var desc = document.getElementById("objective-description").value;
 
-			objective_list[objCtr] = {objNum:objCtr, type: type, value: value};
+			objective_list[objCtr] = {objNum:objCtr, type: type, value: value desc: desc};
 
 			objCtr++;
 
@@ -159,19 +167,21 @@
 				dataType: 'json',
 				success: function(data) {
 					newLvlId = data['lvlId'];
+					list['lvlId'] = newLvlId;
 				},
 				error: function(xhr, status, err) {
 					console.log(err);
 				}
 			});
 
-			if(lvlId != "") {
+			if(newLvlId != "") {
 				$.ajax({
 					type: 'post',
 					url: "<?php echo base_url(); ?>" + "dashboard/save_objectives",
 					data: list,
 					dataType: 'json',
 					success: function(res) {
+						// console.log(res);
 						if(res['status']) {
 							window.location = "dashboard/level_list";
 						} else {

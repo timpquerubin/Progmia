@@ -115,11 +115,34 @@
 
 		public function save_objectives()
 		{
-			echo "<pre>";
-			var_dump($_POST);
-			echo "</pre>";
 
-			
+			$this->__init();
+
+			if(count($_POST) > 0) {
+				$objectives = $_POST['objectives'];
+				$lvlId = $_POST['lvlId'];
+				$objCtr = 1;
+
+				foreach ($objectives as $obj) {
+
+					$jsonVal = array();
+					$jsonVal[$obj['type']] = $obj['value'];
+					
+					$obj_params = array(
+						'LVL_ID' => $lvlId,
+						'OBJ_NUM' => $objCtr,
+						'OBJ_DESC' => $obj['desc'],
+						'OBJ_JSONVAL' => json_encode($jsonVal),
+					);
+
+					$this->Game_model->add_objective($obj_params);
+
+					$objCtr++;
+
+				}
+			}
+
+			json_encode(array('status' => true,));
 		}
 
 		public function temp_insert_char()

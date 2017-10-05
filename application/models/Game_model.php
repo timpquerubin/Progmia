@@ -76,9 +76,14 @@
 
 		public function get_stages($params = null)
 		{
-				$stages = $this->db->query('SELECT * FROM STAGE;');
+			$stages = $this->db->query('SELECT * FROM STAGE;');
 
 			return $stages->result_array();
+		}
+
+		public function add_objective($params)
+		{
+			return $this->db->insert('OBJECTIVE', $params);
 		}
 	}
 ?>
