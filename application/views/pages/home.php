@@ -41,7 +41,7 @@
 	</div>
 </div>
 <div class="bg-color" style="background-color: #66b9bf;padding:0 80px;">
-	<div class="container-fluid">
+	<div class="container">
 		<div class="header" style="margin:0;">
 			<h1 style="color:#fff !important;background-color: #33a2aa;margin:0;padding:20px 40px;text-align: center;">About</h1>
 		</div>
@@ -59,7 +59,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="header" style="margin:0;">
 			<h1 style="color:#fff !important;background-color: #971e23;margin:0;padding:20px 40px;text-align: center;">About</h1>
 		</div>
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="header" style="margin:0;">
 			<h1 style="color:#fff !important;background-color: #33a2aa;margin:0;padding:20px 40px;text-align: center;">About</h1>
 		</div>
