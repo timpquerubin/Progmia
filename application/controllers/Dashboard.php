@@ -64,7 +64,7 @@
 
 			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
 			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
-			$lvlId = md5($_POST['stage'] + $level_count + $_POST['level-name']);
+			$lvlId = md5($_POST['stage'].$level_count.$_POST['level-name']);
 
 			$level_params = array(
 				'LVL_ID' => $lvlId,
@@ -142,7 +142,7 @@
 				}
 			}
 
-			json_encode(array('status' => true,));
+			echo json_encode(array('status' => true));
 		}
 
 		public function temp_insert_char()

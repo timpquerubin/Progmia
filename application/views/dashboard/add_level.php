@@ -112,7 +112,7 @@
 			var value = document.getElementById("obj_val").value;
 			var desc = document.getElementById("objective-description").value;
 
-			objective_list[objCtr] = {objNum:objCtr, type: type, value: value desc: desc};
+			objective_list[objCtr] = {objNum:objCtr, type: type, value: value, desc: desc};
 
 			objCtr++;
 
@@ -158,41 +158,43 @@
 			var list = {};
 			list['objectives'] = objective_list;
 
-			$.ajax({
-				type: 'post',
-				url: "<?php echo base_url(); ?>" + "dashboard/save_add_level",
-				data: formData,
-				contentType: false,
-				processData: false,
-				dataType: 'json',
-				success: function(data) {
-					newLvlId = data['lvlId'];
-					list['lvlId'] = newLvlId;
-				},
-				error: function(xhr, status, err) {
-					console.log(err);
-				}
-			});
+			var promise = new Promise(function(resolve, reject) {
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>" + "dashboard/save_add_level",
+					data: formData,
+					contentType: false,
+					processData: false,
+					dataType: 'json',
+					success: function(data) {
+						resolve(data['lvlId']);
+						
+					},
+					error: function(xhr, status, err) {
+						console.log(err);
+					}
+				});
+			}).then(function(lvlId) {
+				
+				list['lvlId'] = lvlId;
 
-			if(newLvlId != "") {
 				$.ajax({
 					type: 'post',
 					url: "<?php echo base_url(); ?>" + "dashboard/save_objectives",
 					data: list,
 					dataType: 'json',
 					success: function(res) {
-						// console.log(res);
 						if(res['status']) {
-							window.location = "dashboard/level_list";
+							window.location = "<?php echo base_url(); ?>dashboard/level_list";
 						} else {
-							window.location = "dashboard/add_level";
+							window.location = "<?php echo base_url(); ?>dashboard/add_level";
 						}
 					},
 					error: function(xhr, status, err) {
 						console.log(err);
 					}
 				});
-			}
+			});
 
 			e.preventDefault();
 		});
