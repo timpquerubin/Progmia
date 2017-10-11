@@ -35,6 +35,23 @@
 			$this->load->view('templates/dashboard_footer');
 		}
 
+		public function manage_objectives($lvlId)
+		{
+			$header_data = array(
+				'title' => 'Edit Level',
+				'tab_active' => 'levels',
+				'page' => 'level-objectives',
+				'lvlId' => $lvlId
+			);
+
+			$data['lvlId'] = $lvlId;
+
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/level/manage_objectives', $data);
+			$this->load->view('templates/dashboard_footer');
+		}
+
 		public function level_list()
 		{
 			$this->__init();
@@ -153,6 +170,43 @@
 
 		}
 
+		public function delete_objective()
+		{
+			$this->__init();
+			
+			if(isset($_POST))
+			{
+				$delete_params = array(
+					'LVL_ID' => $_POST['lvlId'],
+					'OBJ_NUM' => $_POST['objNum']
+				);
+
+				$res = $this->Game_model->delete_objective($delete_params);
+
+				echo "<pre>";
+				var_dump($res);
+				echo "</pre>";
+				exit();
+			}
+		}
+
+		public function get_objectives()
+		{
+			$this->__init();
+
+			if(!isset($_POST['lvlId'])) {
+				$objectives = $this->Game_model->get_objectives();
+			} else {
+				$obj_params = array(
+					'LVL_ID' => $_POST['lvlId']
+				);
+
+				$objectives = $this->Game_model->get_objectives($obj_params);
+			}
+
+			echo json_encode($objectives);
+		}
+
 		public function save_objectives()
 		{
 
@@ -161,7 +215,21 @@
 			if(count($_POST) > 0) {
 				$objectives = $_POST['objectives'];
 				$lvlId = $_POST['lvlId'];
-				$objCtr = 1;
+
+				$count_params['LVL_ID'] = $lvlId;
+
+				$obj_count = $this->Game_model->count_objectives($count_params);
+
+				// echo "<pre>";
+				// var_dump($obj_count);
+				// echo "</pre>";
+				// exit();
+
+				if($obj_count === 0) {
+					$objCtr = 1;
+				} else {
+					$objCtr = $obj_count + 1;
+				}
 
 				foreach ($objectives as $obj) {
 

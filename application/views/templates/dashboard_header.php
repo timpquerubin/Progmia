@@ -25,7 +25,10 @@
 						<?php if($page === "level-list") { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a>
 						<?php } ?>
-						<?php if($page === "level-add" || $page === "level-edit") { ?>
+						<?php if($page === "level-objectives") { ?>
+							<a href="<?php echo base_url(); ?>Dashboard/edit_level/<?php echo $lvlId ?>" class="btn btn-default" >Edit Level</a>
+						<?php } ?>
+						<?php if($page === "level-add" || $page === "level-edit" || $page === "level-objectives") { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/level_list" class="btn btn-default" >Level List</a>
 						<?php } ?>
 						<?php if($page === "level-edit" ) { ?>
