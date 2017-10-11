@@ -33,8 +33,6 @@
 			$this->load->view('templates/load_init_links');
 			$this->load->view('dashboard/level/edit', $data);
 			$this->load->view('templates/dashboard_footer');
-
-			
 		}
 
 		public function level_list()
