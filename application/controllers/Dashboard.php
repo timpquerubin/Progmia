@@ -7,6 +7,36 @@
 			$this->load->model('Game_model');
 		}
 
+		public function edit_level($lvlId)
+		{
+			$this->__init();
+
+			$lvl = $this->Game_model->get_level_details(array('LVL_ID' => $lvlId));
+			$stages = $this->Game_model->get_stages();
+
+			$data['stage_list'] = $stages;
+			$data['lvl'] = $lvl[0];
+
+			// echo "<pre>";
+			// var_dump($lvl);
+			// echo "</pre>";
+			// exit();
+
+			$header_data = array(
+				'title' => 'Edit Level',
+				'tab_active' => 'levels',
+				'page' => 'level-edit',
+				'lvlId' => $lvlId
+			);
+
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/level/edit', $data);
+			$this->load->view('templates/dashboard_footer');
+
+			
+		}
+
 		public function level_list()
 		{
 			$this->__init();
@@ -15,9 +45,15 @@
 
 			$data['levels'] = $levels;
 
-			$this->load->view('templates/dashboard_header');
+			$header_data = array(
+				'title' => 'Levels',
+				'tab_active' => 'levels',
+				'page' => 'level-list'
+			);
+
+			$this->load->view('templates/dashboard_header', $header_data);
 			$this->load->view('templates/load_init_links');
-			$this->load->view('dashboard/game_list', $data);
+			$this->load->view('dashboard/level/list', $data);
 			$this->load->view('templates/dashboard_footer');
 		}
 
@@ -31,9 +67,15 @@
 
 			$data['stage_list'] = $stages;
 
-			$this->load->view('templates/dashboard_header');
+			$header_data = array(
+				'title' => 'Add Level',
+				'tab_active' => 'levels',
+				'page' => 'level-add'
+			);
+
+			$this->load->view('templates/dashboard_header', $header_data);
 			$this->load->view('templates/load_init_links');
-			$this->load->view('dashboard/add_level',$data);
+			$this->load->view('dashboard/level/add',$data);
 			$this->load->view('templates/dashboard_footer');
 		}
 

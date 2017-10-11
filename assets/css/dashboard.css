@@ -3,7 +3,9 @@ div.dash-navbar {
 	margin-bottom: 20px;
 }
 
-div.levels-button-container {}
+div.dash-button-container a{
+	margin-right: 10px;
+}
 
 div.level-img-prev {
 	height: 500px; 
