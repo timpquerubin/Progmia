@@ -217,18 +217,16 @@
 				$lvlId = $_POST['lvlId'];
 
 				$count_params['LVL_ID'] = $lvlId;
-
 				$obj_count = $this->Game_model->count_objectives($count_params);
-
-				// echo "<pre>";
-				// var_dump($obj_count);
-				// echo "</pre>";
-				// exit();
 
 				if($obj_count === 0) {
 					$objCtr = 1;
 				} else {
-					$objCtr = $obj_count + 1;
+
+					$curr_obj_params['LVL_ID'] = $lvlId;
+					$curr_obj = $this->Game_model->get_objectives($curr_obj_params);
+
+					$objCtr = $curr_obj[$obj_count - 1]['OBJ_NUM'] + 1;
 				}
 
 				foreach ($objectives as $obj) {

@@ -63,6 +63,7 @@
 				objective_list[key]['type'] = Object.keys(jsonval)[0];
 				objective_list[key]['value'] = jsonval[objective_list[key]['type']];
 				objective_list[key]['objNum'] = objective_list[key]['OBJ_NUM'];
+				objective_list[key]['desc'] = objective_list[key]['OBJ_DESC'];
 
 			}
 
