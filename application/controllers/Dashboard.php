@@ -7,6 +7,20 @@
 			$this->load->model('Game_model');
 		}
 
+		public function index() {
+
+			$header_data = array(
+				'title' => 'Edit Level',
+				'tab_active' => 'home',
+				'page' => 'dash-home',
+			);
+
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/index');
+			$this->load->view('templates/dashboard_footer');
+		}
+
 		public function edit_level($lvlId)
 		{
 			$this->__init();

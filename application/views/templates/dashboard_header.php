@@ -12,9 +12,9 @@
 
 			<div class="container dash-navbar">
 				<ul class="nav nav-tabs">
-					<li id="nav-pill-home"><a data-toggle="tab" href="<?php echo base_url(); ?>Dashboard/Home">Home</a></li>
-					<li id="nav-pill-stages"><a data-toggle="tab" href="#">Stages</a></li>
-					<li id="nav-pill-levels"><a data-toggle="tab" href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></li>
+					<li id="nav-pill-home"><a href="<?php echo base_url(); ?>Dashboard/index">Home</a></li>
+					<li id="nav-pill-stages"><a href="#">Stages</a></li>
+					<li id="nav-pill-levels"><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></li>
 				</ul>
 			</div>
 
