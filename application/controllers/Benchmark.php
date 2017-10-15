@@ -6,12 +6,6 @@
 			$this->load->model('Game_model');
 		}
 
-		public function testPromise()
-		{
-			$this->load->view('templates/load_init_links');
-			$this->load->view('pages/test');
-		}
-
 		public function testview()
 		{
 			$sample = array(

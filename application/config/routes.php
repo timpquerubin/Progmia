@@ -53,8 +53,6 @@ $route['default_controller'] = 'pages/view';
 
 $route['(:any)'] = 'pages/view/$1';
 
-// $route['dashboard'] = 'dashboard/index';
-
 $route['users/register'] = 'users/register';
 $route['users/login'] = 'users/login';
 

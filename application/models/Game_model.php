@@ -85,32 +85,5 @@
 		{
 			return $this->db->insert('OBJECTIVE', $params);
 		}
-
-		public function delete_objective($params)
-		{
-			return $this->db->delete('OBJECTIVE', $params);
-		}
-
-		public function get_objectives($params = null)
-		{
-			if($params === null) {
-				$objectives = $this->db->get("objective");
-			} else {
-				$objectives = $this->db->get_where("objective", $params);
-			}
-
-			return $objectives->result_array();
-		}
-
-		public function count_objectives($params = null)
-		{
-			if($params === null) {
-				$objectives = $this->db->get("objective");
-			} else {
-				$objectives = $this->db->get_where("objective", $params);
-			}
-
-			return $objectives->num_rows();
-		}
 	}
 ?>

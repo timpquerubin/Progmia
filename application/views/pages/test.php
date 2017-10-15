@@ -3,30 +3,24 @@
 	<title></title>
 </head>
 <body>
+
+	<input type="text" name="val1" id="val1">
+	<button onclick="pushtoarray()">push</button>
+
 	<script type="text/javascript">
-		
 		$(document).ready(function() {
 
-			var promise = new Promise(function(resolve, reject) {
-				$.ajax({
-					type: 'get',
-					url: 'https://jsonplaceholder.typicode.com/posts',
-					dataType: 'json',
-					success: function(res) {
-						resolve(res);
-					},
-					error: function() {
-						console.log("error");
-					}
-				});
-			});
+			var testArray = [];
 
-			promise.then(function(res) {
-				console.log(res);
-			});
+			pushtoarray = function() {
+				var val = document.getElementById("val1").value;
+				testArray.push(val);
 
+				console.log(testArray);
+			}
+
+			// console.log(JSON.parse('<?php echo $sample_json; ?>'));
 		});
-
 	</script>
 </body>
 </html>

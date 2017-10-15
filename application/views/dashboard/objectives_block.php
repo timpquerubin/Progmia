@@ -4,8 +4,7 @@
 			<th>#</th>
 			<th>Type</th>
 			<th>Value</th>
-			<th>Description</th>
-			<th>Action</th>
+			<th></th>
 		</thead>
 		<tbody>
 			<?php if(sizeof($objectives) > 0) { ?>
@@ -15,8 +14,7 @@
 						<td><?php echo $rowCtr  ?></td>
 						<td><?php echo $obj['type']  ?></td>
 						<td><?php echo $obj['value'] ?></td>
-						<td><?php echo $obj['desc'] ?></td>
-						<td><button type="button" class="btn btn-danger" onclick="deleteObjective(<?php echo $obj['objNum']; ?>)">Delete</button></td>
+						<td><button type="button" onclick="deleteObjective(<?php echo $obj['objNum']; ?>)">Delete</button></td>
 					</tr>
 					<?php $rowCtr++; ?>
 				<?php } ?>
