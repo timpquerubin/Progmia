@@ -4,10 +4,10 @@
 	div.game-menu {position: absolute; /*border: 2px solid #ff0000;*/ width: 50%;}
 	div.player-hp {margin-top: 10px;}
 
-	div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
+	div.code-area-container {margin: 0px; padding: 0px;}
 
 	div.code_area {
-		/*background-color: #595959;*/
+		background-color: #595959;
 		font-family: "Courier New";
 		margin: 0px;
 		padding: 0px;
@@ -38,6 +38,8 @@
 		border: none;
 	}
 
+	div.objectives-container {background-color: #fff; padding: 0px;}
+
 	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
 	div.button-run-container div.button-run {padding: 20px 0px; }
 
@@ -63,22 +65,39 @@
 		</div></center>
 	</div>
 	<!-- <div id="test" class="col-sm-2"></div> -->
-	<div class="code-area-container">
+	<div class="code-area-container row">
 		<!-- <center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center> -->
-		<div class="row code_area">
+		<div class="row code_area col-md-8">
 			<div class="line-number col-md-1 col-sm-1 col-xs-1">
 				<textarea rows="20" id="textarea1" disabled></textarea>
 			</div>
 			<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
 				<textarea class="code_area" id="code_area" name="code_area" rows="20" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 			</div>
-		</div>
-		<div class="row button-run-container">
-			<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-				<button class="btn btn-basic btn-block" onclick="executeCommand(0);">RUN</button>
+			<div class="row button-run-container">
+				<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+					<button class="btn btn-basic btn-block" onclick="executeCommand(0);">RUN</button>
+				</div>
 			</div>
 		</div>
-		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
+
+		<div class="objectives-container col-md-4">
+			<div class="objectives-panel" style="border: 1px dotted #000">
+				<h4 style="text-align: center;">Objectives</h4>
+				<hr>
+				<?php if(count($objectives) > 0) { ?>
+					<?php $ctr = 1; ?>
+					<?php foreach($objectives as $obj) { ?>
+						<div>
+							<input type="checkbox" name="objectives" id="check_obj_<?php $ctr; ?>" disabled value="<?php echo $obj['OBJ_NUM']; ?>"><?php echo $obj['OBJ_DESC']; ?>
+						</div>
+						<?php $ctr++; ?>
+					<?php } ?>
+				<?php } else { ?>
+					<p style="text-align: center;">No Objectives</p>
+				<?php } ?>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -93,6 +112,9 @@
 	var start_point = document.getElementById('startPt').value;
 	var map_filename = document.getElementById('map_filename').value;
 	var map_numcols = parseInt(document.getElementById('map_width').value);
+	var lvlId = "<?php echo $level[0]['LVL_ID'] ?>";
+
+	console.log(lvlId);
 
 	document.getElementById('textarea1').value = '1';
 
@@ -106,12 +128,12 @@
 	var startloop = 0;
 
 	var img = {};
+	img.map = new Image();
+	img.map.src = "<?php echo base_url(); ?>assets/images/levels/" + map_filename;
 	img.player = new Image();
 	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/cfcd208495d565ef66e7dff9f98764da.png";
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
-	img.map = new Image();
-	img.map.src = "<?php echo base_url(); ?>assets/images/levels/" + map_filename;
 	img.key = new Image();
 	img.key.src = "<?php echo base_url(); ?>assets/images/key.png";
 	img.coin = new Image();
@@ -323,16 +345,57 @@
 		Maps.current = Maps(id, imgSrc, mapGrid2d, startPt);
 	}
 
-	Objective = function(id, status, desc, task)
+	Objective = function(id, num, status, desc, type, val)
 	{
 		var self = {
 			id: id,
+			num: num,
 			status: status,
 			description: desc,
-			task: task,
+			type: type,
+			value: val
 		};
 
 		Objective.list[id] = self;
+	}
+
+	Objective.init = function() 
+	{
+		var data = {};
+		data['lvlId'] = lvlId;
+
+		$.ajax({
+			type: 'post',
+			url: "<?php echo base_url(); ?>dashboard/get_objectives",
+			data: data,
+			dataType: 'json',
+			success: function(res) {
+
+				var ctr = 1;
+				
+				for(var key in res) {
+
+					var jsonval = JSON.parse(res[key]['OBJ_JSONVAL']);
+					var task_type = Object.keys(jsonval)[0];
+
+					if(task_type === 'Finish') {
+						var task_val = jsonval['Finish'];
+					} else if(task_type === 'Health') {
+						var task_val = parseInt(jsonval['Health']);
+					}
+
+					Objective("obj_" + res[key]['OBJ_NUM'], ctr, false, res[key]['OBJ_DESC'], task_type, task_val);
+
+					ctr++;
+				}
+
+				console.log(Objective.list);
+
+			},
+			error: function(xhr, status, err) {
+				console.log(err);
+			}
+		});
 	}
 
 	Objective.list = {};
@@ -985,9 +1048,11 @@
 		Projectile.list = {};
 		Coin.list = {};
 		Bully.list = {};
+		Objective.list = {};
 
 		player = new Player('plyr1', Maps.current.startPt.x*1.25, Maps.current.startPt.y*1.25, img.player.width/5, img.player.height/5, img.player);
 		key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
+		Objective.init();
 		key.locate();
 		Coin.Init();
 		Bully.init();
@@ -1011,24 +1076,28 @@
 
 	update = function()
 	{
-		ctx.clearRect(0,0,canvas.width,canvas.height);
-		Maps.current.update();
-		key.update();
-		Coin.update();
-		player.update();
-		Bully.update();
-		Projectile.update();
+		var promise = new Promise(function(resolve, reject) {
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			Maps.current.update();
+			resolve(true);
+		}).then(function() {
+			key.update();
+			Coin.update();
+			player.update();
+			Bully.update();
+			Projectile.update();
+		});
 	}
 
 	start_point = JSON.parse(start_point);
 	var mapGrid2d = [];
 
-	Maps.init('cMap', img.map.src, map_numcols, JSON.parse(map_grid), {x: start_point[0], y: start_point[1]});
-
-	// Objective('obj_1', false, 'Reach Checkpoint 1', {x: 155, y: 72});
-	// Objective('start_point', false, 'Level 1 start point', {x: 50, y: 72});
-
-	startNewGame();
+	var promise = new Promise(function(resolve, reject) {
+		Maps.init('cMap', img.map.src, map_numcols, JSON.parse(map_grid), {x: start_point[0], y: start_point[1]});
+		resolve(true);
+	}).then(function() {
+		startNewGame();
+	});
 	setInterval(update,40);
 
 	});

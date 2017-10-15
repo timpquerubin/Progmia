@@ -1,9 +1,4 @@
 <div class="container">
-
-	<div class="levels-button-container" style="margin-bottom: 20px;">
-		<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a>
-	</div>
-
 	<div class="panel panel-default">
 		<div class="panel-heading">Map List</div>
 		<div class="panel-body">
@@ -25,7 +20,7 @@
 							<tr>
 								<td><?php echo $ctr; ?></td>
 								<td><?php echo $lvl['STAGE'] ?></td>
-								<td><?php echo $lvl['LVL_NUM'] ?></td>
+								<td><a href="<?php echo base_url(); ?>dashboard/edit_level/<?php echo $lvl['LVL_ID'] ?>"><?php echo $lvl['LVL_NUM'] ?></a></td>
 								<td><?php echo $lvl['LVL_NAME'] ?></td>
 								<td><?php echo $lvl['LVL_STARTPOINT'] ?></td>
 								<td><?php echo $lvl['LVL_NUMCOLS'] ?></td>
