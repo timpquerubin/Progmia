@@ -1,3 +1,9 @@
+
+@font-face {
+	font-family:BebasNeue;
+	src: url("../fonts/BebasNeue.otf");
+}
+
 html{
 }
 body{
@@ -16,28 +22,74 @@ a.navbar-brand{
 	padding-top: 7px;
 	padding-bottom:5px;
 }
+li a.navbar-brand{padding-top:7px;}
+a.navbar-brand:hover{
+	background-color: transparent !important;
+}
 div.navbar-custom{
 	padding:0 5%;
 background-color: #121c1d;
 background-color: #333333;
+background-color: #333333;background-color: #16232b;
 border-radius: 0;
 border-bottom: solid 3px #111;
 margin-bottom: 0;
+	border-bottom:solid 3px #253544;
 }
 nav{position:relative;height:80px;
 	background:#121c1d;
 background-color: #121c1d;
-background-color: #333333;
+background-color: #333333;background-color: #16232b;
 padding:0px 0;}
 nav ul {
+	padding-left:10px;
 }
-nav ul li{}		
-nav ul li a{}
+nav ul li:not(:first-child){padding:15px;}		
+nav ul li a{font-family: BebasNeue; font-size:25px;color:#fff;}
 h1,h2,h3{color:#000;}
 section{
 	padding:0 80px;
 	margin:0 auto;
 
+}
+/* Reveal */
+.hvr-reveal:hover{
+	background-color: transparent !important;
+	color:#ffce15;
+}
+.hvr-reveal {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  position: relative;
+  overflow: hidden;
+}
+.hvr-reveal:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-color: #2098D1;
+  border-color: #304759;
+  border-color: #ffce15;
+  border-style: solid;
+  border-width: 0;
+  -webkit-transition-property: border-width;
+  transition-property: border-width;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-reveal:hover:before, .hvr-reveal:focus:before, .hvr-reveal:active:before {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  border-width: 4px;
 }
 ol{
 	background-color: #333 !important;}
@@ -57,8 +109,8 @@ div.wrapper {
 	background-color: #121c1d;
 	background-color: #ebea70 !important;
 	background-color: #121c1d !important;
-	border-left:5px solid #111;
-	border-right:5px solid #111;
+	border-left:5px solid #253544;
+	border-right:5px solid #253544;
 }
 .breadcrumb{margin-bottom: 40px !important;}
 div.wrapper p {

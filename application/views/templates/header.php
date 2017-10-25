@@ -11,6 +11,7 @@
 		<!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap_superhero.min.css"> -->
 		<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
 		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	</head>
 	<body>
 		<nav id="navbar" class="navbar navbar-default">
@@ -19,18 +20,19 @@
       				<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
     			</div>
     			<ul class="nav navbar-nav">
-      				<li><a href="<?php echo base_url(); ?>home">Home</a></li>
-      				<li><a href="<?php echo base_url(); ?>about">About</a></li>
+      				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>home">Home</a></li>
+      				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>about">About</a></li>
       				<?php if($this->session->userdata('logged_in')): ?>
-      					<li><a href="<?php echo base_url(); ?>Game/stages">Game</a></li>
+      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/stages">Game</a></li>
       				<?php  endif; ?>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
     				<?php if($this->session->userdata('logged_in')): ?>
     					<li class="dropdown">
-    						<a class="dropbtn dropdown-toggle" data-toggle="dropdown">My Account<span class="caret"></span></a>
+    						<a class="hvr-icon-hang dropbtn dropdown-toggle" data-toggle="dropdown">My Account</a>
     						<ul class="dropdown-menu">
-    							<li class="text-center"><span class="user-level">1</span><a href="#"><img src="" class="img-circle"></a><h5><?php echo $this->session->userdata('username'); ?></h5></li>
+    							<li class="text-center"><a href="#"><img src="<?php echo base_url(); ?>assets/images/avatar.png" class="img-circle"></a></li>
+    							<li class="text-center username"><?php echo $this->session->userdata('username'); ?></li>
     							<li><a href="<?php echo base_url(); ?>profile/user/<?php echo $this->session->userdata('user_id'); ?>">Profile</a></li>
     							<li><a href="#">Settings</a></li>
     							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>

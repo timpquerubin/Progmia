@@ -12,7 +12,13 @@
 	<body>
 	<div class="navbar-custom">
 		<nav>
-			
-				<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
+				<ul class="nav navbar-nav">
+				<li><a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a></li>
+      				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>home">Home</a></li>
+      				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>about">About</a></li>
+      				<?php if($this->session->userdata('logged_in')): ?>
+      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/stages">Game</a></li>
+      				<?php  endif; ?>
+    			</ul>
 		</nav>
 	</div>

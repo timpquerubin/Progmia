@@ -85,7 +85,16 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-	
+	var bgmusic = new Audio();
+	bgmusic = new Audio();
+	bgmusic.src = "<?php echo base_url(); ?>assets/sounds/Tbone and friends.wav";
+	bgmusic.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+	bgmusic.play();
+	var success = new Audio();
+	success.src = "<?php echo base_url(); ?>assets/sounds/success.mp3";
 	var ctx = document.getElementById("ctx").getContext("2d");
 	var canvas = document.getElementById("ctx");
 	var code_area = document.getElementById('code_area');
@@ -415,7 +424,6 @@
 		self.updatePosition = function()
 		{
 			var isError = false;
-
 			oldX = self.x;
 			oldY = self.y;
 
@@ -439,6 +447,7 @@
 
 				} else
 				{
+					success.play();
 					alert('goal');
 					startNewGame();
 				}

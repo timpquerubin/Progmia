@@ -18,10 +18,10 @@
 									<?php echo $userID = $this->session->userdata('username'); ?>
 								</h3>
 								<div class="extra-info">
-									<span data-i18n="general.player_level" class="spr">Points</span><strong>1</strong>
+									<span data-i18n="general.player_level" class="spr">Points<br></span><strong>1</strong>
 								</div>
 								<div class="extra-info">
-									<span data-i18n="general.player_level" class="spr">Gold</span><strong>1</strong>
+									<span data-i18n="general.player_level" class="spr">Gold<br></span><strong>1</strong>
 								</div>
 							</div>
 						</div>
