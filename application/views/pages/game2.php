@@ -8,12 +8,11 @@
 
 	div.code_area {
 		/*background-color: #595959;*/
-		font-family: "Courier New";height:120px;
-		margin: 0px;
+		font-family: "Courier New";
 		padding: 0px;
 	}
 
-	textarea.code_area {height:120px;
+	textarea.code_area {
 		background-color: inherit;
 		border: none; 
 		resize:none; 
@@ -38,7 +37,8 @@
 		border: none;
 	}
 
-	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:70px;}
+	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:92px;font-family:ArcadeClassic;}
+	div.button-run-container .btn {font-size:25px !important;width:30%;margin:0 auto;}
 	div.button-run-container div.button-run {padding: 20px 0px; }
 
 </style>
