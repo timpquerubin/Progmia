@@ -1,19 +1,19 @@
 	<style type="text/css">
 
-	div.game-canvas-container{margin-top: 100px;}
-	div.game-menu {position: absolute; /*border: 2px solid #ff0000;*/ width: 50%;}
+	div.game-canvas-container{margin-top: 100px;margin:0 auto;padding-top:60px;}
+	div.game-menu {position: absolute;top:10px;left:12%; /*border: 2px solid #ff0000;*/ width: 50%;}
 	div.player-hp {margin-top: 10px;}
 
 	div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
 
 	div.code_area {
 		/*background-color: #595959;*/
-		font-family: "Courier New";
+		font-family: "Courier New";height:120px;
 		margin: 0px;
 		padding: 0px;
 	}
 
-	textarea.code_area {
+	textarea.code_area {height:120px;
 		background-color: inherit;
 		border: none; 
 		resize:none; 
@@ -33,12 +33,12 @@
 		resize: none; 
 		width: 100%; 
 		background-color: inherit; 
-		color: b0b0b0; 
+		color: #b0b0b0; 
 		text-align: right;
 		border: none;
 	}
 
-	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
+	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:70px;}
 	div.button-run-container div.button-run {padding: 20px 0px; }
 
 </style>
@@ -49,7 +49,7 @@
 	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($level[0]['LVL_FILENAME']) ? $level[0]['LVL_FILENAME'] : '' ?>">
 	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($level[0]['LVL_NUMCOLS']) ? $level[0]['LVL_NUMCOLS'] : '' ?>">
 
-	<div class="game-canvas-container" style="width: 100%; background-color: #000;">
+	<div class="game-canvas-container" style="width: 100%; background-color: #17232b;">
 		<div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
 			<div class="player-hp">
 				<label class="col-sm-1 col-xs-2" style="color: #FFF;">HP:</label>

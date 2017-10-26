@@ -22,7 +22,7 @@
 	/*input#test {display: none;}
 	label.rate:before { margin: 5px; font-size: 3em; font-family: FontAwesome; color: #FFD700; display: inline-block; content: "\f005";}*/
 
-	div.game-level-menu-container {background-color: #a0d169; margin-top: 100px;padding-top:20px;}
+	div.game-level-menu-container {background-color: #a0d169;background-color:#17242c; margin-top: 20px;padding-top:20px;}
 
 	div.level-row {
 		max-width: 1000px;
@@ -79,11 +79,15 @@
 </style>
 
 <div class="game-level-menu-container">
-	<input type="hidden" name="level_num" id="level_num" value="<?php echo count($level_list); ?>">
+	<!--<input type="hidden" name="level_num" id="level_num" value="<?php echo count($level_list); ?>">-->
 	<!--<?php //$stage = $_GET["link"];?>-->
 	<!--<?php //echo $h->USER_ID; ?>-->
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
+	<h1 style="color:#000;margin-top:5px;text-align: center;"><?php foreach ($level_stages as $img) { ?>
+		<img style="height:220px;" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $img['STG_FILENAME']; ?>"/>
+		<?php } ?>
+	</h1>
 	<?php foreach ($level_list as $level) { ?>
 		<?php if($rowCtr == 0) { ?>
 			<div class="row level-row text-center">

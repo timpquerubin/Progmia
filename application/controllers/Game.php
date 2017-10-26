@@ -40,7 +40,6 @@
 		{
 			$this->_init();
 			$this->isLoggedIn();
-
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
 
@@ -49,11 +48,12 @@
 				$progress = $this->Game_model->get_progress();
 			} else {
 				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
+				$level_stage = $this->Game_model->get_level_stage($stage);
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 			}
-
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
+			$data['level_stages'] = $level_stage;
 			$data['progress_list'] = $progress;
 
 			$this->load->view('templates/game_header');
