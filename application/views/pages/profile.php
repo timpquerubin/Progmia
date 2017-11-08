@@ -34,7 +34,20 @@
 							<div class="panel-body">
 								<p data-i18n="user.no_achievements">No Achievements earned yet.</p>
 								<?php foreach ($progress_list as $progress) { ?>
-								<p><?php echo $progress['USER_USERNAME']; ?></p><?php echo $progress['POINTS_SCORED']; ?>
+								<div style="border:3px solid #253544;background:#333; color:#fff;margin:10px;padding:10px 30px;">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="row">
+											<p><?php echo $progress['USER_USERNAME']; ?></p><p>Completed</p>
+											</div>
+											<div class="row">
+											<p style="border:solid 1px #fff;"><h3 style="color:#ffce12;">POINTS:</h3><?php echo $progress['POINTS_SCORED']; ?></p>
+											<p style="border:solid 1px #fff;"><h3 style="color:#ffce12;">EARNED:</h3><?php $date = $progress['DATE_PLAYED']; 
+			   echo date('d-m-Y H:i:s', strtotime($date)); ?></p>
+											</div>
+										</div>
+									</div>
+								</div>
 								<?php } ?>
 							</div>
 						</div>

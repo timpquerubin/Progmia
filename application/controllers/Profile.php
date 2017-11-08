@@ -11,8 +11,9 @@
 			$this->__init();
 
 			$userID = $this->session->userdata('user_id');
+			$user = $this->session->userdata('username');
 
-			$progress = $this->Profile_model->get_progress(array('user' => $userID));
+			$progress = $this->Profile_model->get_progress($user);
 
 			$data['progress_list'] = $progress;
 			$this->load->view('templates/profile_header');
