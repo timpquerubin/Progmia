@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css" />
+
 <div class="container">
 	<div class="panel panel-default">
 		<div class="panel-heading">Map List</div>
