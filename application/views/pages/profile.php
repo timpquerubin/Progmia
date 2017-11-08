@@ -42,7 +42,7 @@
 											</div>
 											<div class="row">
 											<p style="border:solid 1px #fff;"><h3 style="color:#ffce12;">POINTS:</h3><?php echo $progress['POINTS_SCORED']; ?></p>
-											<p style="border:solid 1px #fff;"><h3 style="color:#ffce12;">EARNED:</h3><?php $date = $progress['DATE_PLAYED']; 
+											<p style="border:solid 1px #fff;"><h3 style="color:#ffce12;">PLAYED:</h3><?php $date = $progress['DATE_PLAYED']; 
 			   echo date('d-m-Y H:i:s', strtotime($date)); ?></p>
 											</div>
 										</div>
