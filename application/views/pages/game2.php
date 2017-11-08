@@ -37,8 +37,12 @@
 		border: none;
 	}
 
+<<<<<<< HEAD
 	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:92px;font-family:ArcadeClassic;}
 	div.button-run-container .btn {font-size:25px !important;width:30%;margin:0 auto;}
+=======
+	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
+>>>>>>> parent of a6d2e92... Merge branch 'master' of https://github.com/timpquerubin/Progmia
 	div.button-run-container div.button-run {padding: 20px 0px; }
 
 </style>
