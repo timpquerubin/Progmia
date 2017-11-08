@@ -4,7 +4,7 @@
 			<div class="wrapper">
 				<ol class="breadcrumb">
 					<li>
-						<a href="<?php echo base_url(); ?>"><span class="glyphicon glyphicon-home"></span></a>
+						<a href="<?php echo base_url(); ?>"><span class="fa fa-home"></span></a>
 					</li>
 					<li data-i18n="nav.profile" class="active">Profile
 					</li>

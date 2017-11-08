@@ -12,6 +12,7 @@
 
 			$userID = $this->session->userdata('user_id');
 
+			$progress = $this->Profile_model->get_progress(array('user' => $userID));
 			$this->load->view('templates/profile_header');
 			$this->load->view('pages/profile.php');
 			$this->load->view('templates/profile_footer');
