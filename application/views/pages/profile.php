@@ -33,6 +33,9 @@
 							</div>
 							<div class="panel-body">
 								<p data-i18n="user.no_achievements">No Achievements earned yet.</p>
+								<?php foreach ($progress_list as $progress) { ?>
+								<p><?php echo $progress['USER_USERNAME']; ?></p><?php echo $progress['POINTS_SCORED']; ?>
+								<?php } ?>
 							</div>
 						</div>
 					</div>

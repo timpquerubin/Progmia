@@ -13,8 +13,10 @@
 			$userID = $this->session->userdata('user_id');
 
 			$progress = $this->Profile_model->get_progress(array('user' => $userID));
+
+			$data['progress_list'] = $progress;
 			$this->load->view('templates/profile_header');
-			$this->load->view('pages/profile.php');
+			$this->load->view('pages/profile.php', $data);
 			$this->load->view('templates/profile_footer');
 		}
 		/*
