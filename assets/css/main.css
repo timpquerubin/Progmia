@@ -337,7 +337,7 @@ div.banner{
 	position: relative;
 	background-image: url("../images/home_bg.jpg");
 	padding: 90px 70px;
-	max-height: 600px !important;
+	max-height: 700px !important;
 	background-size: cover;
 	margin: 0px 0px 0px 0px;
 	overflow-y: hidden;
