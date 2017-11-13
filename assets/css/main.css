@@ -28,7 +28,7 @@ nav.navbar li.dropdown button ul.dropdown-menu{
 	background-color: transparent !important;
 }
 .img-circle{
-	border: #08161c 7px solid;
+	border: #b3c6cc 7px solid;
     width: 98px;
     height: 98px;
     border-radius: 50%;
@@ -87,7 +87,9 @@ nav.navbar ul.dropdown-menu li:first-child a:hover {
 	color:#020d15;
 	transition: .3s;
 	background-color: #b3c6cc !important;
-
+}
+nav.navbar ul.dropdown-menu li:first-child a:hover .img-circle {
+	border: #08161c 7px solid;
 }
 nav.navbar ul.dropdown-menu li a{
 	color:#fff;
@@ -140,8 +142,11 @@ nav.navbar-default {
 	background-color: rgba(22, 35, 43, .9) !important;
 
 	background-color: rgba(22, 35, 43, .95) !important;
+	background-color: #3d4d66 !important;
+	background-color:transparent !important;
 	background-image:none;
 	box-shadow:1px 1px 50px #222;
+	box-shadow: 0px 0px 0px #000;
 	border:none;
 	border-radius:0;
 	z-index:2 !important;
@@ -174,7 +179,8 @@ nav.navbar-default a.navbar-brand {
 nav.navbar-default ul {
 	font-family: BebasNeue; 
 	font-size:30px !important;
-	overflow-x:hidden;}
+	overflow-x:hidden;
+}
 
 nav.navbar-default:hover {
 	transition: .3s;
@@ -183,11 +189,19 @@ nav.navbar-default:hover {
 	height:120px !important;
 	border-bottom:solid 3px white;
 	border-bottom:solid 3px #253544;
+	border-bottom: none;
 }
 
 nav.navbar-default ul:not(:first-child){
 	font-size:20px; 
 	margin-top:18px;
+	color:#fff !important;
+}
+.navbar-default .navbar-nav>li>a {
+	color:#fff !important;
+}
+.navbar-default .navbar-nav>li>a:hover {
+	color:#ffce15 !important;
 }
 nav.navbar-default ul:not(:first-child):not(:last-child) a{
 	margin-left:20px;
@@ -198,7 +212,7 @@ nav.navbar-default ul:not(:first-child):not(:last-child) a:hover{
 	transition: .3s;
 	background-color: rgba(28,70,73,.9) !important;background-color: rgba(17, 186, 174, .7);*/
 	background-color: transparent !important;
-	color:#ffce12;
+	color:#ffce15;
 	/*color:#568a95;
 	border-bottom:solid 2px #869497;*/
 }
@@ -237,6 +251,7 @@ nav.navbar-default ul:not(:first-child):not(:last-child) a:hover{
   -webkit-transform: translateY(0);
   transform: translateY(0);
   border-width: 4px;
+  color: #ffce15 !important;
 }
 /* Icon Hang */
 @-webkit-keyframes hvr-icon-hang {
@@ -322,12 +337,12 @@ div.banner{
 	position: relative;
 	background-image: url("../images/home_bg.jpg");
 	padding: 90px 70px;
-	max-height: 600px !important;
+	max-height: 700px !important;
 	background-size: cover;
 	margin: 0px 0px 0px 0px;
 	overflow-y: hidden;
 	overflow-x: hidden;
-	border-bottom:solid 15px #253544;
+	border-bottom:solid 1px #111;
 }
 
 div.banner h1 {

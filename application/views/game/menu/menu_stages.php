@@ -43,8 +43,13 @@
 							<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
 							<?php if ($exist == true){ ?>
 							<li style="position:relative;"><div class="popup unlocked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
-							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
-							<a class="level-btn btn btn-default" href="<?php echo base_url(); ?>game/levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+							<p>
+							<script type="text/javascript">
+							</script>
+							<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>game/levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+							
+
 							<?php } else { ?>
 							<li style="position:relative;" attribute="dis"><div class="popup locked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
 							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>

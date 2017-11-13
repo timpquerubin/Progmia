@@ -12,6 +12,7 @@
 		<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
 		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
 	</head>
 	<body>
 		<nav id="navbar" class="navbar navbar-default">
@@ -31,7 +32,7 @@
     					<li class="dropdown">
     						<a class="hvr-icon-hang dropbtn dropdown-toggle" data-toggle="dropdown">My Account</a>
     						<ul class="dropdown-menu">
-    							<li class="text-center"><a href="#"><img src="<?php echo base_url(); ?>assets/images/avatar.png" class="img-circle"></a></li>
+    							<li class="text-center"><a href="#"><img src="<?php echo base_url(); ?>assets/images/avatar-1.png" class="img-circle"></a></li>
     							<li class="text-center username"><?php echo $this->session->userdata('username'); ?></li>
     							<li><a href="<?php echo base_url(); ?>profile/user/<?php echo $this->session->userdata('user_id'); ?>">Profile</a></li>
     							<li><a href="#">Settings</a></li>
