@@ -79,7 +79,7 @@
 </style>
 
 <div class="game-level-menu-container">
-	<!--<input type="hidden" name="level_num" id="level_num" value="<?php echo count($level_list); ?>">-->
+	<input type="hidden" name="level_num" id="level_num" value="<?php echo count($level_list); ?>">
 	<!--<?php //$stage = $_GET["link"];?>-->
 	<!--<?php //echo $h->USER_ID; ?>-->
 	<?php $i = 0; ?>
