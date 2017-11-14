@@ -14,7 +14,11 @@
 			$user = $this->session->userdata('username');
 
 			$progress = $this->Profile_model->get_progress($user);
+			$stages = $this->Profile_model->get_stages($user);
+			$levels = $this->Profile_model->get_levels($user);
 
+			$data['levels_list'] = $levels;
+			$data['stages_list'] = $stages;
 			$data['progress_list'] = $progress;
 			$this->load->view('templates/profile_header');
 			$this->load->view('pages/profile.php', $data);

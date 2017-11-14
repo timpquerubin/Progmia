@@ -83,41 +83,43 @@ section{
   position: relative;
   overflow: hidden;
 }
-.profile-navigation {
-	margin-top:20px;
-	margin-bottom: 20px;
+.sidebar {
+	margin:20px 0px;
 	background:#111;
 	width: 100%;
 	padding:30px;
 	border: solid 3px #ffce15;
 }
-.profile-navigation ul{
+.sidebar ul{
 	list-style: none;
 	padding:10px;
 }
-.profile-navigation ul .avatar{
+.sidebar ul .avatar{
 	margin:10px auto;
 	background-color: #777;
 	margin:0 auto;
 	text-align: center;
 }
-.profile-navigation ul li .menu{
+.sidebar ul li .info p{font-size: 15px; color:#fff;}
+.sidebar ul li .menu{
 	padding:5px;
 	text-align: center;border-top:solid 1px #ffce12;
 }
-.profile-navigation ul li .menu a{
+.sidebar ul li .menu a{
 	color:#fff;
 	font-size: 25px;
 }
-.profile-navigation ul li a i{
+.sidebar ul li a i{
 	color:#fff;
 	font-size: 25px;
 }
-.profile-navigation ul li a:hover{
+.sidebar ul li a:hover{
 	transition:.3s ease-in-out;
 	color:#ffff00;
 	text-decoration: none;
 }
+.content {margin:20px;background-color: #333;padding:30px;}
+.content .stage-progress {width:200px;}
 .hvr-reveal:before {
   content: "";
   position: absolute;
