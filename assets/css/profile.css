@@ -43,6 +43,9 @@ body{
 	background-color: #6ca2a7;
 	background-color: #222233;
 	background-color: #111212;
+	background-color: #2C6A79;
+	background-color: #012E38;
+	background-color: #001A20;
 }
 a.navbar-brand img {
 	height: 70px;
@@ -109,11 +112,12 @@ section{
 	margin:20px 0px;
 	background:#111;
 	background-color: #323232;
+	background-color: #3398b7;
 	width: 100%;
-	padding:30px;
+	padding:10px;
 	/*border: solid 10px #fba51e;*/
-	border-top:solid 3px #7a7a77;
-	border-bottom:solid 3px #7a7a77;
+	border-top:solid 3px #074350;
+	border-bottom:solid 3px #074350;
 }
 .sidebar ul{
 	list-style: none;
@@ -122,9 +126,10 @@ section{
 .sidebar ul .avatar{
 	margin:10px auto;
 	background-color: #584922;
+	background-color: #14566a;
 	margin:0 auto;
 	text-align: center;
-}
+}.sidebar ul .avatar img{text-align: center;margin: 0 auto;}
 .sidebar ul li .info {margin-top:20px;}
 .sidebar ul li .info p{text-align:center;font-size: 25px; color:#fff;color:#e7d921;line-height: 20px;letter-spacing: 2px;}
 .sidebar ul li .menu{
@@ -144,7 +149,15 @@ section{
 	color:#ffff00;
 	text-decoration: none;
 }
-.content {margin:20px;background-color: #feba11;background-color:#2f3044;border-radius:3px;border:solid 10px #bcdce7;padding:30px;}
+.content {
+	margin:20px;
+	background-color: #feba11;
+	background-color:#2f3044;
+	background-color:#054351;
+	background-color: #14566a;
+	border-radius:3px;
+	border:solid 10px #bcdce7;
+	padding:30px;}
 .content div:first-child{}
 .content>.row{border-bottom:3px solid #ffff00;padding-bottom:30px;}
 .content .stage-progress {width:200px;}
