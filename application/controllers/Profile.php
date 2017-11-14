@@ -16,7 +16,9 @@
 			$progress = $this->Profile_model->get_progress($user);
 			$stages = $this->Profile_model->get_stages($user);
 			$levels = $this->Profile_model->get_levels($user);
-
+			$total_points = $this->Profile_model->get_total_points($userID);
+			
+        	$data['total_points'] = $total_points;
 			$data['levels_list'] = $levels;
 			$data['stages_list'] = $stages;
 			$data['progress_list'] = $progress;

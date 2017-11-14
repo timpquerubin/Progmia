@@ -19,8 +19,15 @@
 		}
 		public function get_levels($user = null)
 		{
-			$levels = $this->db->query('SELECT `level`.* FROM `level` order by LVL_NUM;');
+			$levels = $this->db->query('SELECT `level`.* FROM `level` order by LVL_NUM ASC;');
 
 			return $levels->result_array();
+		}
+
+		public function get_total_points($userID)
+		{
+			$query = $this->db->query('SELECT SUM(POINTS_SCORED) AS value_sum FROM `progress` WHERE `progress`.`USER_ID` = \''.$userID.'\';');
+			$row = $query->row();
+	        return $row->value_sum;	
 		}
 	}

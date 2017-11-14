@@ -10,6 +10,24 @@ src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-ope
 font-weight: normal;
 font-style: normal;
 }
+@font-face {
+	font-family: 'ArcadeClassic';
+	src: url("../fonts/ARCADECLASSIC.ttf");
+
+}
+@font-face {
+	font-family: 'PT Sans', sans-serif;
+	src: url("../fonts/PT_Sans-Web-Bold.ttf");
+	src: url("../fonts/PT_Sans-Web-BoldItalic.ttf");
+	src: url("../fonts/PT_Sans-Web-Italic.ttf");
+	src: url("../fonts/PT_Sans-Web-Regular.ttf");
+}
+h1{
+	font-family: 'PT Sans', sans-serif;
+	font-weight: 400;
+	color: #bce3ff !important;
+	font-size:40px;
+}
 html{
 }
 .fa .fa-home{
@@ -23,6 +41,8 @@ body{
 	background:#fff;
 	background:#121c1d;
 	background-color: #6ca2a7;
+	background-color: #222233;
+	background-color: #111212;
 }
 a.navbar-brand img {
 	height: 70px;
@@ -84,11 +104,16 @@ section{
   overflow: hidden;
 }
 .sidebar {
+	font-family: 'ArcadeClassic';
+	font-size: 25px;
 	margin:20px 0px;
 	background:#111;
+	background-color: #323232;
 	width: 100%;
 	padding:30px;
-	border: solid 3px #ffce15;
+	/*border: solid 10px #fba51e;*/
+	border-top:solid 3px #7a7a77;
+	border-bottom:solid 3px #7a7a77;
 }
 .sidebar ul{
 	list-style: none;
@@ -96,11 +121,12 @@ section{
 }
 .sidebar ul .avatar{
 	margin:10px auto;
-	background-color: #777;
+	background-color: #584922;
 	margin:0 auto;
 	text-align: center;
 }
-.sidebar ul li .info p{font-size: 15px; color:#fff;}
+.sidebar ul li .info {margin-top:20px;}
+.sidebar ul li .info p{text-align:center;font-size: 25px; color:#fff;color:#e7d921;line-height: 20px;letter-spacing: 2px;}
 .sidebar ul li .menu{
 	padding:5px;
 	text-align: center;border-top:solid 1px #ffce12;
@@ -118,8 +144,11 @@ section{
 	color:#ffff00;
 	text-decoration: none;
 }
-.content {margin:20px;background-color: #333;padding:30px;}
+.content {margin:20px;background-color: #feba11;background-color:#2f3044;border-radius:3px;border:solid 10px #bcdce7;padding:30px;}
+.content div:first-child{}
+.content>.row{border-bottom:3px solid #ffff00;padding-bottom:30px;}
 .content .stage-progress {width:200px;}
+.content ul {padding:0px;}
 .hvr-reveal:before {
   content: "";
   position: absolute;
