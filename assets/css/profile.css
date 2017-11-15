@@ -30,6 +30,11 @@ h1{
 }
 html{
 }
+#sidebar {
+    position: -webkit-sticky;  // required for Safari
+    position: sticky;
+    top: 0; // required as well.
+}  
 .fa .fa-home{
 font-family: 'FontAwesome';
 }
@@ -38,14 +43,9 @@ font-family: 'FontAwesome';
 font-family: 'FontAwesome';
 }
 body{
-	background:#fff;
-	background:#121c1d;
-	background-color: #6ca2a7;
-	background-color: #222233;
-	background-color: #111212;
-	background-color: #2C6A79;
-	background-color: #012E38;
-	background-color: #001A20;
+}
+.bg{
+	background-image: url("../assets/images/profile-page-bg.png");
 }
 a.navbar-brand img {
 	height: 70px;
@@ -111,32 +111,43 @@ section{
 	font-size: 25px;
 	margin:20px 0px;
 	background:#111;
-	background-color: #323232;
 	background-color: #3398b7;
-	width: 100%;
-	padding:10px;
 	/*border: solid 10px #fba51e;*/
 	border-top:solid 3px #074350;
 	border-bottom:solid 3px #074350;
+	background-color: #0baa8a;border:solid 1px #000;
+    position: -webkit-sticky;  // required for Safari
+    position: sticky;
+    top: 0; // required as well.
+}
+div.col-md-10,div.col-md-2{
+	margin: 20px 0 !important;
+	padding:0px;
 }
 .sidebar ul{
 	list-style: none;
 	padding:10px;
 }
-.sidebar ul .avatar{
-	margin:10px auto;
-	background-color: #584922;
-	background-color: #14566a;
+.sidebar .avatar{
+	margin:10px auto;	
+	padding:10px;
 	margin:0 auto;
 	text-align: center;
-}.sidebar ul .avatar img{text-align: center;margin: 0 auto;}
-.sidebar ul li .info {margin-top:20px;}
-.sidebar ul li .info p{text-align:center;font-size: 25px; color:#fff;color:#e7d921;line-height: 20px;letter-spacing: 2px;}
+}
+.sidebar .avatar img{
+	background-color: #584922;
+	background-color: #123a2f;text-align: center;margin: 0 auto;width:180px;}
+.sidebar .info {
+	background-color: #10896c;
+	
+	padding:10px;margin-top:15px;}
+.sidebar .info p{text-align:center;font-size: 22px; color:#fff;color:#333;line-height: 20px;letter-spacing: 1px;}
 .sidebar ul li .menu{
 	padding:5px;
 	text-align: center;border-top:solid 1px #ffce12;
 }
-.sidebar ul li .menu a{
+.sidebar .nav{background-color: #10896c;}
+.sidebar .nav ul li .menu a{
 	color:#fff;
 	font-size: 25px;
 }
@@ -150,18 +161,23 @@ section{
 	text-decoration: none;
 }
 .content {
-	margin:20px;
+	margin-top:20px;
 	background-color: #feba11;
 	background-color:#2f3044;
 	background-color:#054351;
 	background-color: #14566a;
-	border-radius:3px;
-	border:solid 10px #bcdce7;
+	background-color: #166651;
+	border:solid 1px #222;
 	padding:30px;}
 .content div:first-child{}
 .content>.row{border-bottom:3px solid #ffff00;padding-bottom:30px;}
-.content .stage-progress {width:200px;}
-.content ul {padding:0px;}
+.content .stage-progress {margin:0 auto;}
+.content ul {background:#000;max-width:400px;position:relative;margin:0 auto;padding:0px;display:flex;list-style: none;margin:0 auto;
+  flex-direction: column;
+  flex-flow: wrap;text-align: center;}
+.content ul li {margin: 0 auto;}
+.content .stage-progress img {
+	background-color: #123a2f;padding:20px;max-height:200px;margin: 0 auto 20px auto;}
 .hvr-reveal:before {
   content: "";
   position: absolute;
@@ -193,7 +209,7 @@ ol{
 		color:#ffce12;
 	}
 div.bg {
-    background-image: url("../images/latest_global_map.png");
+    background-image: url("../images/profile-page-bg.png");
     background-size:60%;
     background-color:#121c1d;
     background-position:0 center center center;
