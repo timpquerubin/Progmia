@@ -55,32 +55,35 @@
 					}
 					} ?> <!-- foreach levels -->
 				<div class="row">
-					<h2 style="text-align: center;"><?php echo $stages['STG_DESCRIPTION']; ?></h2>
-					<?php $percentage = 0;
-					if ($totalLevels != 0){
-					$percentage = ($finishedLevels / $totalLevels) * 100;} ?>
-					<h3 style="text-align: center;"><?php echo $finishedLevels; ?>/<?php echo $totalLevels; ?>(<?php echo $percentage; ?>%)</h3>
-				</div>
-				<div class="row">
-					<div class="stage-progress"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stages['STG_FILENAME']; ?>"/>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+						<div class="stage-progress"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stages['STG_FILENAME']; ?>"/>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<ul>
-					<?php foreach ($levels_list as $levels) { ?>
-					<?php $finished = false; ?>
-					<?php if ($levels['STAGE'] == $stages['STG_ID']) { ?>
-					<?php foreach ($progress_list as $progress){ ?>
-					<?php if ($progress['LVL_ID'] == $levels['LVL_ID']) { ?>
-					<li><a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $levels['LVL_ID']; ?>"><div style="border-bottom:3px solid #ffff00;background:#ffce12; border-radius:7px;width:50px;height: 50px;margin:10px;text-align: center;"><?php echo $levels['LVL_NUM']; ?></div></a></li>
-					<?php $finished=true;} ?>
-					<?php } if ($finished != true){?>
-					<li><a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $levels['LVL_ID']; ?>"><div style="border-bottom:3px solid #fff;background:#555; border-radius:7px;width:50px;height: 50px;margin:10px;text-align: center;"><?php echo $levels['LVL_NUM']; ?></div></a></li>
-					<?php } ?>
-					<?php } ?>
-					<?php } ?>
-					</ul>
-				</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+						<div class="row">
+							<h2 style="text-align: center;"><?php echo $stages['STG_DESCRIPTION']; ?></h2>
+							<?php $percentage = 0;
+							if ($totalLevels != 0){
+							$percentage = ($finishedLevels / $totalLevels) * 100;} ?>
+							<h3 style="text-align: center;"><?php echo $finishedLevels; ?>/<?php echo $totalLevels; ?>(<?php echo $percentage; ?>%)</h3>
+						</div>
+						<div class="row">
+							<div class="levels">
+								<?php foreach ($levels_list as $levels) { ?>
+								<?php $finished = false; ?>
+								<?php if ($levels['STAGE'] == $stages['STG_ID']) { ?>
+								<?php foreach ($progress_list as $progress){ ?>
+								<?php if ($progress['LVL_ID'] == $levels['LVL_ID']) { ?>
+								<div><a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $levels['LVL_ID']; ?>"><div class="finished"><?php echo $levels['LVL_NUM']; ?></div></a></div>
+								<?php $finished=true;} ?>
+								<?php } if ($finished != true){?><div><a href="<?php echo base_url(); ?>index.php/Game/play/<?php echo $levels['LVL_ID']; ?>"><div class="unlocked"><?php echo $levels['LVL_NUM']; ?></div></a></div>
+								<?php } ?>
+								<?php } ?>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				</div><!-- 2ndary row -->
 			</div><!-- col-md-6 -->
 		<?php if ($ctr == 2){ ?>
 		</div><!-- main row -->
