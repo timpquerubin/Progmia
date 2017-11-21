@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2017 at 10:04 AM
+-- Generation Time: Nov 21, 2017 at 09:26 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -91,11 +91,16 @@ CREATE TABLE `objective` (
   `LVL_ID` varchar(255) NOT NULL,
   `OBJ_NUM` int(11) NOT NULL,
   `OBJ_DESC` varchar(100) DEFAULT NULL,
-  `OBJ_TYPE` varchar(20) DEFAULT NULL,
-  `OBJ_JSONVAL` text,
-  `OBJ_FLOATVAL` decimal(10,5) DEFAULT NULL,
-  `OBJ_TEXTVAL` text
+  `OBJ_JSONVAL` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `objective`
+--
+
+INSERT INTO `objective` (`LVL_ID`, `OBJ_NUM`, `OBJ_DESC`, `OBJ_JSONVAL`) VALUES
+('c9f0f895fb98ab9159f51fd0297e236d', 1, 'Successfully finish level', '{\"Finish\": true}'),
+('c9f0f895fb98ab9159f51fd0297e236d', 2, 'Finish level with max health', '{\"Health\":\"100\"}');
 
 -- --------------------------------------------------------
 
@@ -129,18 +134,19 @@ CREATE TABLE `progress` (
   `PROG_ID` int(11) NOT NULL,
   `USER_ID` varchar(255) DEFAULT NULL,
   `LVL_ID` varchar(255) DEFAULT NULL,
-  `POINTS_SCORED` int(11) NOT NULL
+  `POINTS_SCORED` int(11) NOT NULL,
+  `DATE_PLAYED` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `progress`
 --
 
-INSERT INTO `progress` (`PROG_ID`, `USER_ID`, `LVL_ID`, `POINTS_SCORED`) VALUES
-(1, '1', '11063c44f1a827a14fdcda88a7f098d5', 1000),
-(2, '1', '2662293801155867a2c8bbea88cc782a', 2000),
-(3, '1', '9c6d4eba7dd0a13b564c66caf53265ac', 3000),
-(4, '1', 'a070085dcfee15fbdd6c4e9096ac28a6', 0);
+INSERT INTO `progress` (`PROG_ID`, `USER_ID`, `LVL_ID`, `POINTS_SCORED`, `DATE_PLAYED`) VALUES
+(1, '1', '11063c44f1a827a14fdcda88a7f098d5', 1000, '2017-11-09 06:14:07'),
+(2, '1', '2662293801155867a2c8bbea88cc782a', 2000, '0000-00-00 00:00:00'),
+(3, '1', '9c6d4eba7dd0a13b564c66caf53265ac', 3000, '0000-00-00 00:00:00'),
+(4, '1', 'a070085dcfee15fbdd6c4e9096ac28a6', 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
