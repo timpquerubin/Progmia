@@ -24,6 +24,14 @@
 			return $levels->result_array();
 		}
 
+		public function get_user_info($user)
+		{
+			$levels = $this->db->query('SELECT * FROM `user` where `user`.`user_username` = \''.$user.'\';');
+
+			return $levels->result_array();
+		}
+
+
 		public function get_total_points($userID)
 		{
 			$query = $this->db->query('SELECT SUM(POINTS_SCORED) AS value_sum FROM `progress` WHERE `progress`.`USER_ID` = \''.$userID.'\';');

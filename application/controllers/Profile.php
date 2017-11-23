@@ -12,17 +12,17 @@
 
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
-
+			$userinfo = $this->Profile_model->get_user_info($user);
 			$progress = $this->Profile_model->get_progress($user);
 			$stages = $this->Profile_model->get_stages($user);
 			$levels = $this->Profile_model->get_levels($user);
 			$total_points = $this->Profile_model->get_total_points($userID);
-			
+			$data['user_info'] = $userinfo; 
         	$data['total_points'] = $total_points;
 			$data['levels_list'] = $levels;
 			$data['stages_list'] = $stages;
 			$data['progress_list'] = $progress;
-			$this->load->view('templates/profile_header');
+			$this->load->view('templates/profile_header', $data);
 			$this->load->view('pages/profile.php', $data);
 			$this->load->view('templates/profile_footer');
 		}
