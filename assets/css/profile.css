@@ -77,11 +77,10 @@ div.profile .username h2{text-align: center;font-size: 32px;color:#ffff00;}
 div.profile .email-address h3{margin-top:0px;text-align: center;font-size: 20px; color:#ffaa12;}
 div.profile .joined h4{text-align: center;}
 .avatar > a > img {text-align: center;margin:0 auto;}
-footer{text-align: right;padding: 10px 20px;color:#ffce15;}
 .sidebar{display: block;background-color: #000;width: auto;height: auto;}
 .row {margin:0px;}
 
-.badges .badge-img{background-color:#050a0c; max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}.badges ul{list-style: none;margin: 0;padding: 0;overflow: auto;display:flex;}
+.badges .badge-img{background-color:#050a0c; padding:5px;max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}.badges ul{list-style: none;margin: 0;padding: 0;overflow: auto;display:flex;}
 
 .badges ul li{margin-top: -25px;color: #777;display: block;position: relative;float: left;width: 100%;height: 70px;}
 .badges ul li input[type=radio]{position: absolute;visibility: hidden;}
@@ -93,6 +92,8 @@ footer{text-align: right;padding: 10px 20px;color:#ffce15;}
 .badges input[type=radio]:checked ~ .check {border: 5px solid #1d9ce5;}
 .badges input[type=radio]:checked ~ .check::before{background: #1d9ce5;}
 .badges input[type=radio]:checked ~ label{color: #1d9ce5;}
+
+footer{text-align: right;padding: 10px 20px;color:#ffce15;}
 
 
 

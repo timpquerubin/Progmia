@@ -60,7 +60,6 @@
 								<h1>badges</h1>
 							</div>
 							<div class="col-md-9">
-							<div class="form-group">
 								<ul>
 									<li>
 										<input type="radio" id="all-option" value="All" checked="true" name="badges">
@@ -74,23 +73,20 @@
 									</li>
 								</ul>
 							</div>
-							</div>
 						</div>
 						<!-- -->
-						<?php foreach ($badges_list as $badges) { ?>
 						<?php $ctr = 0 ;?>
+						<?php foreach ($badges_list as $badges) { ?>
 						<?php if ($ctr == 0) {?>
-							<div class="row">
+						<div class="row">
 						<?php } ?>
 							<?php $ctr++; ?>
 									<div class="col-md-6"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_FILENAME']; ?>" /></div>
 						<?php if ($ctr == 2) { ?>
-							</div>
+						</div>
+						<?php $ctr = 0 ;?>
 						<?php } ?>
 						<?php } ?>
-
-
-
 						<!-- -->
 					</div>
 					<div id="leaderboard" class="leaderboard">
@@ -107,11 +103,12 @@
 					</div>
 
 					
-				</div><!-- area -->
-			</div>
+				</div>
+			</div><!-- area -->
 		</div>
-<script>
-  $(document).ready(function(){
-    $("#sidebar").sticky({topSpacing:0});
-  });
-</script>
+	<script>
+	  $(document).ready(function(){
+	    $("#sidebar").sticky({topSpacing:0});
+	  });
+	</script>
+	</body>
