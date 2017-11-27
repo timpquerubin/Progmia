@@ -57,9 +57,23 @@
 					<div id="badges" class="badges">
 						<div class="row">
 							<div class="col-md-3">
-								<div class="row">
-									<h1>badges</h1>
-								</div>
+								<h1>badges</h1>
+							</div>
+							<div class="col-md-9">
+							<div class="form-group">
+								<ul>
+									<li>
+										<input type="radio" id="all-option" value="All" checked="true" name="badges">
+										<label for="all-option">All Badges</label>
+										<div class="check"></div>
+									</li>
+									<li>
+										<input type="radio" id="acquired-option" value="Acquired" name="badges">
+										<label for="acquired-option">Acquired Badges</label>
+										<div class="check"></div>	
+									</li>
+								</ul>
+							</div>
 							</div>
 						</div>
 						<!-- -->
