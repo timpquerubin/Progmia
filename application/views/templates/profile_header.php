@@ -17,20 +17,14 @@
 						<ul class="upper-nav">
 							<li>
 								<div class="logo">
-									<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo1.png"></a>
+									<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo2.png"></a>
 								</div>
 							</li>
-							<li>
-								<ul>
-									<li>
-										<a href="">Welcome back, <span><?php echo $this->session->userdata('username'); ?></span>!</a>
-									</li>
-									<li>
-										<div>Total Points Earned <div><?php if ($total_points == 0){ ?>0<?php } ?>
-											<?php echo $total_points; ?></div></div>
-									</li>
-								</ul>
+							<li class="greetings">
+								<a href="">Welcome back, <span><?php echo $this->session->userdata('username'); ?></span>!</a>
 							</li>
+
+			    				<li><a href="">Play!</a></li>
 							<li>
 								<a href="<?php echo base_url(); ?>users/logout">Logout</a>
 							</li>
@@ -38,7 +32,7 @@
 						<center class="align-center">
 			    			<ul class="secondary-nav">
 			    				<li class="active menu-1"><a href="#">PROFILE</a></li>
-			    				<li class="menu-2"><a href="#">ACHIEVEMENTS</a></li>
+			    				<li class="menu-2"><a href="#">BADGES</a></li>
 			    				<li class="menu-3"><a href="#">LEADERBOARD</a></li>
 			    				<div id="menu-active"></div>
 			    			</ul>
@@ -61,7 +55,7 @@
 							   		'display':'block',
 							   		'transition':'.5s'
 							    });
-							    $('#achievements').css({
+							    $('#badges').css({
 							   		'display':'none',
 							   		'transition':'.5s'
 							    });
@@ -73,14 +67,14 @@
 							   /* */
 							   $("ul li.menu-2").click(function() {
 							   	$('#menu-active').css({
-							   		'left':'45%',
+							   		'left':'46%',
 							   		'transition':'.5s'
 							    });
 							    $('#profile').css({
 							   		'display':'none',
 							   		'transition':'.5s'
 							    });
-							    $('#achievements').css({
+							    $('#badges').css({
 							   		'display':'block',
 							   		'transition':'.5s'
 							    });
@@ -99,7 +93,7 @@
 							   		'display':'none',
 							   		'transition':'.5s'
 							    });
-							    $('#achievements').css({
+							    $('#badges').css({
 							   		'display':'none',
 							   		'transition':'.5s'
 							    });

@@ -17,6 +17,9 @@
 			$stages = $this->Profile_model->get_stages($user);
 			$levels = $this->Profile_model->get_levels($user);
 			$total_points = $this->Profile_model->get_total_points($userID);
+			$badges = $this->Profile_model->get_badges($userID);
+
+			$data['badges_list'] = $badges;
 			$data['user_info'] = $userinfo; 
         	$data['total_points'] = $total_points;
 			$data['levels_list'] = $levels;

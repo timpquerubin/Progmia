@@ -21,35 +21,37 @@ font-style: normal;
 	src: url("../fonts/BarlowCondensed-Light.ttf");
 }
 body{background-color: #0f191c;background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}
-div.bg{margin:30px 50px;border:solid 10px #1f3238;}
+div.bg{margin:30px 50px;;}
 /*div.bg > div.area {border: solid 3px #838c10;border: solid 2px #aaa;background: rgba(12,21,24,1);background: -moz-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(12,21,24,1)), color-stop(55%, rgba(22,40,47,1)), color-stop(100%, rgba(31,55,66,1)));background: -webkit-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -o-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -ms-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: linear-gradient(to bottom, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c1518', endColorstr='#1f3742', GradientType=0 );}
 */
-#profile,#achievements,#leaderboard{background-color: #06151c;
+#profile,#badges,#leaderboard{background-color: #06151c;
 	font-family: 'Barlow';color: #546f76;font-size: 25px;}
 #profile {display:block;}
-#achievements {display: none;}
+#badges {display: none;}
 #leaderboard {display:none;}
+.badges, .profile, .leaderboard {padding:40px;background-color: #06151c;}
 div.bg > div.area {box-shadow: 0px 0px 6px #000;border-radius:5px;}
-div.navbar-custom > nav {border-top-left-radius:5px;border-top-right-radius:5px;z-index:99999;padding:10px 10px 0px 10px;border-bottom: solid 2px #000;background-color: #0f191c;background-color:#055871;}
+div.navbar-custom > nav {z-index:99999;padding:0px;border-bottom: solid 2px #D0E729;background-color: #0f191c;background-color:#055871;background: #1b94bf;}
 div.navbar-custom > nav ul.upper-nav {padding-left: 0px;margin-bottom: 0px;}
-div.navbar-custom > nav div.logo {margin-bottom:80px;margin-top:20px;}
+div.navbar-custom > nav div.logo {margin-bottom:80px;}
 div.navbar-custom > nav div.logo > a > img{height:110px;}
 div.navbar-custom > nav ul.upper-nav > li {display: inline-flex;list-style: none;}
-div.navbar-custom > nav ul.upper-nav > li > ul {list-style: none;margin-left:30px;}
-div.navbar-custom > nav ul.upper-nav > li > ul > li {margin:10px auto 0 auto;text-align:center;font-family: 'Barlow';}
-div.navbar-custom > nav ul.upper-nav > li > ul > li > a{font-size:30px;color: #fff;font-weight: 600;}
-div.navbar-custom > nav ul.upper-nav > li > ul > li > a > span{color: #ffff00;}
+div.navbar-custom > nav ul.upper-nav > li.greetings {font-family: 'Barlow';font-size: 28px;}
+div.navbar-custom > nav ul.upper-nav > li.greetings a {color:#fff;}
+div.navbar-custom > nav ul.upper-nav > li.greetings a > span {color:#ffff00;}
+
 div.navbar-custom > nav ul.upper-nav > li > ul > li > div{display:inline-flex;font-size: 18px;color:#fff;padding: 3px 15px;background:#0f191c;border: solid 1px #fff;box-shadow: 0px 0px 3px #333;}
 div.navbar-custom > nav ul.upper-nav > li > ul > li > div > div {padding:0px 0px 0 20px; margin-left:20px;border-left: solid 1px #fff;color: #ffff00;}
+
 div.navbar-custom > nav ul.upper-nav > li:last-child{float:right;color:#fff !important;}
 div.navbar-custom > nav ul.upper-nav > li:last-child > a{color:#fff;font-size:20px;margin:40px;font-family: 'Barlow';}
 div.navbar-custom > nav div.navbar-header > a > img{height:80px !important;}
-div.navbar-custom > nav ul.secondary-nav {position:relative;list-style: none;display: inline-flex;margin-top:-10px;}
+div.navbar-custom > nav ul.secondary-nav {position:relative;list-style: none;display: inline-flex;margin-top:-40px;}
 div.navbar-custom > nav ul.secondary-nav > div#menu-active{background-color: #ffff00;height: 15px;width:100px;text-align: center;position: absolute;left:14%;bottom: -18px;border-radius:2px;max-width:100px;margin:0 auto;}
 div.navbar-custom > nav ul.secondary-nav li {text-align:center;position: relative;width:220px;}
 div.navbar-custom > nav ul.secondary-nav li a {text-decoration:none;font-family:'Barlow';
 	font-family:BebasNeue;color:#33cbc6;color:#fff;font-size:32px;height: 0px;width:0%;}
-div.navbar-custom > nav ul.secondary-nav li.active > a {color: #ffff00 !important;font-size:36px;transition: .5s;}
+div.navbar-custom > nav ul.secondary-nav li.active > a {color: #ffff00 !important;font-size:32px;transition: .5s;}
 div.navbar-custom > nav ul.secondary-nav li.active {color:#ffff00;animation: createUnderline;}
 
 
@@ -69,7 +71,26 @@ div.navbar-custom > nav > div.row > ul.nav li a.navbar-brand img {height: 100px;
 .content .levels > div a {color:#000;}
 .content .levels > div a .finished {border: solid 1px #000;text-align: center;}
 .content .levels > div a .unlocked {border: solid 1px #000;text-align: center;}
-#profile {padding:50px;}
-div#profile .avatar img {border: #b3c6cc 5px solid;height: auto;border-radius: 5px;margin-top: 10px;padding: 10px;}
+div.profile {padding:20px;}
+div.profile .avatar img {/*border: #b3c6cc 5px solid;*/border-bottom:solid 3px #000;height: auto;border-radius: 50%;margin-top: 10px;padding: 10px;height: 200px;background: #3a3620;}
+div.profile .username h2{text-align: center;font-size: 32px;color:#ffff00;}
+div.profile .email-address h3{margin-top:0px;text-align: center;font-size: 20px; color:#ffaa12;}
+div.profile .joined h4{text-align: center;}
 .avatar > a > img {text-align: center;margin:0 auto;}
-footer{position: fixed;bottom:0;left:0;right: 0;text-align: right;padding: 20px;}
+footer{text-align: right;padding: 10px 20px;color:#ffce15;}
+.sidebar{display: block;background-color: #000;width: auto;height: auto;}
+.row {margin:0px;}
+
+.badges .badge-img{background-color:#050a0c; max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}
+
+.stage-progress {position:relative;border: solid 1px #000;margin:0 auto;width: auto;}
+.stage-progress > div{position: absolute;bottom:30px;padding:10px;border: solid 1px #000;}
+.stage-progress img {padding:0px;margin: 0 auto;border: solid 1px #000;}
+.levels {padding:10px;border: solid 1px #000;margin-top:50px;justify-content:center;align-content: flex-start;align-content:space-between;display:flex;list-style: none;margin:0 auto;flex-direction: row-reverse;flex-flow: wrap;}
+.levels > div {margin: 0 auto;}
+.levels > div:nth-child(n+1) {margin:5px;}
+
+.levels > div a div {width:30px;height: 30px;}
+
+.levels > div a .finished{border-bottom:3px solid #ffff00;background:#ffce12; border-radius:7px;text-align: center;}
+.levels > div a .unlocked{border-bottom:3px solid #fff;background:#555; border-radius:7px;text-align: center;}

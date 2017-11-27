@@ -38,4 +38,10 @@
 			$row = $query->row();
 	        return $row->value_sum;	
 		}
+		public function get_badges($userID)
+		{
+			$badges = $this->db->query('SELECT * FROM `badges`;');
+
+			return $badges->result_array();
+		}
 	}
