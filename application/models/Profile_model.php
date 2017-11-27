@@ -40,7 +40,7 @@
 		}
 		public function get_badges($userID)
 		{
-			$badges = $this->db->query('SELECT * FROM `badges`;');
+			$badges = $this->db->query('SELECT * FROM `badges` order by BDG_ORDER ASC;');
 
 			return $badges->result_array();
 		}

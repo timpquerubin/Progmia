@@ -63,16 +63,17 @@
 							</div>
 						</div>
 						<!-- -->
-							<?php foreach ($badges_list as $badges) { ?>
-
-						<div class="row">
-							<div class="col-md-12">
-								<div class="col-md-4"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_FILENAME']; ?>" /></div>
-								<div class="col-md-4"></div>
-								<div class="col-md-4"></div>
+						<?php foreach ($badges_list as $badges) { ?>
+						<?php $ctr = 0 ;?>
+						<?php if ($ctr == 0) {?>
+							<div class="row">
+						<?php } ?>
+							<?php $ctr++; ?>
+									<div class="col-md-6"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_FILENAME']; ?>" /></div>
+						<?php if ($ctr == 2) { ?>
 							</div>
-						</div>
-							<?php } ?>
+						<?php } ?>
+						<?php } ?>
 
 
 
