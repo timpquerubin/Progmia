@@ -1,4 +1,57 @@
 
+	<div class="container-fluid">
+		<nav>
+			<ul>
+				<li>
+					<div class="logo">
+						<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo2.png"></a>
+					</div>
+				</li>
+				<li class="bg-volume">
+					<h1>volume</h1>
+				</li>
+				<li>
+					
+				</li>
+			</ul>
+		</nav>
+	</div>
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+	<div class="modal-content">
+		<div class="row">
+		    <span class="close" onclick="close()">&times;</span>
+		</div>
+		<div class="row">
+			REMARKS (Good/Excellent/Perfect)
+		</div>
+		<div class="row">
+			<ul>
+				<li>STAR</li>
+				<li>STAR</li>
+				<li>STAR</li>
+			</ul>
+		</div>
+		<div class="row">
+			<h2>Points: XXXX</h2>
+		</div>
+	    <div class="row">
+		    <div class="col-md-4">
+		    	<button>Replay</button>
+		    </div>  
+		    <div class="col-md-4">
+		    	<button>Menu</button>
+		    </div>  
+		    <div class="col-md-4">
+		    	<button>Next</button>
+		    </div>  
+	    </div>
+	</div>
+
+</div>
+
+
 <div class="container-fluid">
 	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($level[0]['LVL_ID']) ? $level[0]['LVL_ID'] : '' ?>" />
 	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($level[0]['LVL_GRID']) ? $level[0]['LVL_GRID'] : '' ?>" />
@@ -26,10 +79,10 @@
 		<!-- <center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center> -->
 		<div class="row code_area">
 			<div class="line-number col-md-1 col-sm-1 col-xs-1">
-				<textarea rows="20" id="textarea1" disabled></textarea>
+				<textarea rows="10" id="textarea1" disabled></textarea>
 			</div>
 			<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
-				<textarea class="code_area" id="code_area" name="code_area" rows="20" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+				<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 			</div>
 		</div>
 		<div class="row button-run-container">
@@ -60,6 +113,32 @@
 	var start_point = document.getElementById('startPt').value;
 	var map_filename = document.getElementById('map_filename').value;
 	var map_numcols = parseInt(document.getElementById('map_width').value);
+
+	// Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	function close(){
+	    modal.style.display = "none";
+	}
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		bgmusic.play();
+	    modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+			bgmusic.play();
+	        modal.style.display = "none";
+		}
+	}
 
 	document.getElementById('textarea1').value = '1';
 
@@ -406,11 +485,11 @@
 				} else
 				{
 					//alert('goal');
-					startNewGame();
 					bgmusic.pause();
 					success.play();
     				modal.style.display = "block";
-				}
+					startNewGame();
+    			}
 			}
 
 			if(moveCtr <= 96*1.25)
@@ -1001,43 +1080,7 @@
 	setInterval(update,40);
 
 	});
+	
 
 </script>
 <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/Entities.js" ></script> -->
-
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
-  </div>
-
-</div>
-<script type="text/javascript">
-// Get the modal
-var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>

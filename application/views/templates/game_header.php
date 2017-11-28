@@ -9,20 +9,3 @@
 		<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
 	</head>
 	<body>
-		<div class="container-fluid">
-		<nav>
-			<ul>
-				<li>
-					<div class="logo">
-						<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo2.png"></a>
-					</div>
-				</li>
-				<li>
-					
-				</li>
-				<li>
-					
-				</li>
-			</ul>
-		</nav>
-	</div>

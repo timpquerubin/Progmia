@@ -1,3 +1,8 @@
+    
+@font-face {
+    font-family: 'ArcadeClassic';
+    src: url("../fonts/ARCADECLASSIC.ttf");
+}
 body {background-color: #24242b;background-color: #121c1d;max-width: 1555px;margin:0 auto;}
 
 nav {
@@ -80,7 +85,8 @@ nav ul.right li a.volume i {
     background-color: transparent;
 }
 footer{position:absolute;bottom:0;left:0;right:0;margin:0 30px;}
-h2 {font-family:ArcadeClassic;color:#252524;}
+h2 {
+    font-family: 'ArcadeClassic';color:#252524;}
 div.wrapper {
     position: relative;
     z-index: 99999999;
@@ -305,51 +311,22 @@ span.unlocked {
     border-bottom:solid 5px #252524;
     box-shadow: 3px 3px 10px #000;
 }
-.show h2{margin:20px auto 25px auto !important;
-    line-height: 20px;}
+.show h2{margin:20px auto 25px auto !important;line-height: 20px; color:#231f14;font-family: 'ArcadeClassic';}
 /* Popup arrow */
-.popup .popuptext::after {
-    content: "";
-    position: absolute;
-    top: -40px;
-    left: 50%;
-    margin-left: -20px;
-    border-width: 20px;
-    border-style: solid;
-    border-color: transparent  transparent #242423 transparent;
-    border-color: transparent  transparent #ebea70 transparent;
-}
+.popup .popuptext::after {content: "";position: absolute;top: -40px;left: 50%;margin-left: -20px;border-width: 20px;border-style: solid;border-color: transparent  transparent #ebea70 transparent;}
 
 /* Toggle this class - hide and show the popup */
-.popup .show,.popup {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
-}
+.popup .show,.popup {visibility: visible;-webkit-animation: fadeIn 1s;animation: fadeIn 1s;}
 /**/
 
 .unlocked-stage > img{animation: infinite pulse 1.5s;}
 
 
 
-.hexrow {
-    z-index:99999;
-    /*right/left margin set at (( width of child div x sin(30) ) / 2) makes a fairly tight fit; a 3px bottom seems to match*/
-    margin: 0 12.5px 3px;
-}
-.wrapper-2{
-    position: absolute;
-    max-width: 1555px;
-    top:500px;
-    width: 100%;
-    margin:0 auto;
-    left:80%;
-}
-.options {
-    position:fixed;
-}
-.hexrow > div.hexagon {
-    width: 100px;
+.hexrow {z-index:99999;/*right/left margin set at (( width of child div x sin(30) ) / 2) makes a fairly tight fit; a 3px bottom seems to match*/margin: 0 12.5px 3px;}
+.wrapper-2{position: absolute;max-width: 1555px;top:500px;width: 100%;margin:0 auto;left:80%;}
+.options {position:fixed;}
+.hexrow > div.hexagon {width: 100px;
     height: 173.2px; /* ( width x cos(30) ) x 2 */
     width: 49.2px;
     height: 86.6px;

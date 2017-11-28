@@ -31,9 +31,10 @@
 			$data['stage_list'] = $stages;
 			$data['progress_list'] = $progress;
 
-			$this->load->view('templates/game_header');
+			$this->load->view('templates/menu_header');
+			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_stages', $data);
-			$this->load->view('templates/game_footer');
+			$this->load->view('templates/menu_footer');
 		}
 
 		public function levels($stage = null)
@@ -56,10 +57,10 @@
 			$data['level_stages'] = $level_stage;
 			$data['progress_list'] = $progress;
 
-			$this->load->view('templates/game_header');
+			$this->load->view('templates/menu_header');
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_levels', $data);
-			$this->load->view('templates/footer');
+			$this->load->view('templates/menu_footer');
 		}
 
 		public function index()  
@@ -111,7 +112,7 @@
 			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');
 			$this->load->view('pages/game2', $data);
-			$this->load->view('templates/footer');
+			$this->load->view('templates/game_footer');
 		}
 	}
 ?>
