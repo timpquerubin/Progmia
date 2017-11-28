@@ -1,0 +1,65 @@
+	
+@font-face {
+	font-family: 'ArcadeClassic';
+	src: url("../fonts/ARCADECLASSIC.ttf");
+
+}
+body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;padding:30px 50px;}
+
+nav {height: 110px;background-color: #1b94bf;}
+nav ul {list-style: none;display:inline-flex;}
+nav ul li .logo a img{height: 80px;}
+
+div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;width: 100%; background-color: #17232b;}
+div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
+div.player-hp {margin-top: 10px;}
+div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
+div.code_area {font-family: "Courier New";padding: 0 15px !important;}
+
+textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #fff;}
+textarea.code_area:focus {outline: none;}
+
+div.line-number {margin: 0px; padding: 0px; padding-right: 20px;}
+div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #b0b0b0;text-align: right;border: none;}
+div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:92px;}
+div.button-run-container .btn {font-size:25px !important;width:30%;margin:0 auto;font-family: 'ArcadeClassic';}
+div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
+div.button-run-container div.button-run {padding: 20px 0px; }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

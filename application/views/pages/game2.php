@@ -1,51 +1,4 @@
-	<style type="text/css">
 
-	div.game-canvas-container{margin-top: 100px;margin:0 auto;padding-top:60px;}
-	div.game-menu {position: absolute;top:10px;left:12%; /*border: 2px solid #ff0000;*/ width: 50%;}
-	div.player-hp {margin-top: 10px;}
-
-	div.code-area-container {background-color: #595959; margin: 0px; padding: 0px;}
-
-	div.code_area {
-		/*background-color: #595959;*/
-		font-family: "Courier New";
-		padding: 0px;
-	}
-
-	textarea.code_area {
-		background-color: inherit;
-		border: none; 
-		resize:none; 
-		width:100%; 
-		margin: 0; 
-		padding: 0;
-		color: #fff;
-	}
-
-	textarea.code_area:focus {outline: none;}
-	div.line-number { /*border-right: 2px solid #000;*/ margin: 0px; padding: 0px; padding-right: 20px;}
-
-	div.line-number textarea {
-		margin: 0px; 
-		padding: 0px;
-		overflow:hidden; 
-		resize: none; 
-		width: 100%; 
-		background-color: inherit; 
-		color: #b0b0b0; 
-		text-align: right;
-		border: none;
-	}
-
-<<<<<<< HEAD
-	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:92px;font-family:ArcadeClassic;}
-	div.button-run-container .btn {font-size:25px !important;width:30%;margin:0 auto;}
-=======
-	div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
->>>>>>> parent of a6d2e92... Merge branch 'master' of https://github.com/timpquerubin/Progmia
-	div.button-run-container div.button-run {padding: 20px 0px; }
-
-</style>
 <div class="container-fluid">
 	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($level[0]['LVL_ID']) ? $level[0]['LVL_ID'] : '' ?>" />
 	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($level[0]['LVL_GRID']) ? $level[0]['LVL_GRID'] : '' ?>" />
@@ -53,18 +6,20 @@
 	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($level[0]['LVL_FILENAME']) ? $level[0]['LVL_FILENAME'] : '' ?>">
 	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($level[0]['LVL_NUMCOLS']) ? $level[0]['LVL_NUMCOLS'] : '' ?>">
 
-	<div class="game-canvas-container" style="width: 100%; background-color: #17232b;">
+	<div class="game-canvas-container">
 		<div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
 			<div class="player-hp">
-				<label class="col-sm-1 col-xs-2" style="color: #FFF;">HP:</label>
+				<label class="col-sm-1 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
 				<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
 				 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
 				</div>
 			</div>
 		</div>
-		<center><div class="">
+		<center>
+			<div class="">
 			<canvas id="ctx" width="<?php echo $level[0]['LVL_IMGWIDTH']*1.25; ?>" height="<?php echo $level[0]['LVL_IMGHEIGHT']*1.25; ?>" style="border:1px solid #000000;"></canvas>
-		</div></center>
+			</div>
+		</center>
 	</div>
 	<!-- <div id="test" class="col-sm-2"></div> -->
 	<div class="code-area-container">
@@ -85,7 +40,6 @@
 		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 	</div>
 </div>
-
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -451,9 +405,11 @@
 
 				} else
 				{
-					success.play();
-					alert('goal');
+					//alert('goal');
 					startNewGame();
+					bgmusic.pause();
+					success.play();
+    				modal.style.display = "block";
 				}
 			}
 
@@ -1048,3 +1004,40 @@
 
 </script>
 <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/Entities.js" ></script> -->
+
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
+</div>
+<script type="text/javascript">
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
