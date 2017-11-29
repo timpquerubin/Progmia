@@ -90,11 +90,12 @@
 		{
 			$this->_init();
 			$this->isLoggedIn();
-
 			$level_params = array(
 				'LVL_ID' => $lvlId,
+
 			);
 
+			$next_level = $this->Game_model->get_current_level($lvlId);
 			$level_details = $this->Game_model->get_level_details($level_params);
 
 			// echo "<pre>";
@@ -104,9 +105,7 @@
 			
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);
-
-
-
+			$data['next_level'] = $next_level;
 			$data['level'] = $level_details;
 
 			$this->load->view('templates/game_header');

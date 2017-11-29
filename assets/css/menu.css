@@ -13,12 +13,7 @@ nav {
     z-index: 999999999 !important;
 }
 nav div.center{
-    background:#444;
-    background:#121c1d;
-    background:#273737;
-    border-right: 10px solid #075770;
-    border-left: 10px solid #075770;
-    border-bottom: 10px solid #075770;
+    background:#2c5456;
     border-right: 8px solid #222;
     border-left: 8px solid #222;
     border-bottom: 8px solid #111;
@@ -104,7 +99,7 @@ div.bg-stage{
     z-index: 99999;
     overflow-x: hidden;
     /*box-shadow:0px 0px 0px 2px #000;*/
-    padding:5% 20px 2% 40px;
+    padding:7% 20px 2% 40px;
     margin:0 auto;
     background-image: url("../images/latest_global_map.png");
     background-size:cover;
@@ -173,10 +168,11 @@ div.bg-stage .locked-stage img:hover {
 }
 nav a.navbar-brand{
     padding: 5px !important;
-    width: 100px;
+    width: 175px;
     max-width: 120px;
     transition: .5s;
     margin-left:40px;
+    margin-top:10px;
 }
 a.level-btn {
     font-family: ArcadeClassic !important;

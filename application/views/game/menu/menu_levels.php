@@ -1,5 +1,4 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/create_character.css">
-
 <style type="text/css">
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
@@ -88,6 +87,8 @@
 		<img style="height:220px;" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $img['STG_FILENAME']; ?>"/>
 		<?php } ?>
 	</h1>
+	<?php $array = array(); ?>
+	<?php $array = $level_list; ?>
 	<?php foreach ($level_list as $level) { ?>
 		<?php if($rowCtr == 0) { ?>
 			<div class="row level-row text-center">

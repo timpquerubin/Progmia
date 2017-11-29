@@ -17,7 +17,7 @@
 							<p>
 							<script type="text/javascript">
 							</script>
-							<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>game/levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+							<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
 							
 
 							<?php } else { ?>

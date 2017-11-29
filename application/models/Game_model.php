@@ -13,7 +13,6 @@
 
 		public function get_levels($stage = null)
 		{
-
 			if($stage === null) {
 				$levels = $this->db->query('SELECT * FROM LEVEL ORDER BY STAGE, LVL_NUM;');
 			} else {
@@ -24,6 +23,11 @@
 			return $levels->result_array();
 		}
 
+		public function get_current_level($lvl_ID)
+		{
+			$levels = $this->db->query('SELECT * FROM LEVEL WHERE LVL_ID=\''.$lvl_ID.'\';');
+	        return $result=$levels->row(0);	
+		}
 		public function get_level_stage($stage = null) {
 
 			$level_stage = $this->db->query('SELECT STG_FILENAME FROM STAGE WHERE STG_ID=\''.$stage.'\';');

@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Progmia</title>
+		<title>Progmia | Home</title>
 		<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/main.css">
@@ -24,7 +24,7 @@
       				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>home">Home</a></li>
       				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>about">About</a></li>
       				<?php if($this->session->userdata('logged_in')): ?>
-      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/stages">Game</a></li>
+      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>
       				<?php  endif; ?>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">

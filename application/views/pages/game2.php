@@ -16,7 +16,7 @@
 			</ul>
 		</nav>
 	</div>
-<div id="myModal" class="modal">
+<div id="myModal" class="modal" style="display: block">
 
   <!-- Modal content -->
 	<div class="modal-content">
@@ -44,7 +44,8 @@
 		    	<button>Menu</button>
 		    </div>  
 		    <div class="col-md-4">
-		    	<button>Next</button>
+		    	<button><a href="">NEXT
+		    	<?php echo $next_level->LVL_NUM; ?></a></button>
 		    </div>  
 	    </div>
 	</div>

@@ -21,7 +21,7 @@ font-style: normal;
 	src: url("../fonts/BarlowCondensed-Light.ttf");
 }
 body{background-color: #0f191c;background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}
-div.bg{margin:30px 50px;;}
+div.bg{margin:30px 50px 10px 50px;}
 /*div.bg > div.area {border: solid 3px #838c10;border: solid 2px #aaa;background: rgba(12,21,24,1);background: -moz-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(12,21,24,1)), color-stop(55%, rgba(22,40,47,1)), color-stop(100%, rgba(31,55,66,1)));background: -webkit-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -o-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -ms-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: linear-gradient(to bottom, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c1518', endColorstr='#1f3742', GradientType=0 );}
 */
 #profile,#badges,#leaderboard{background-color: #06151c;
