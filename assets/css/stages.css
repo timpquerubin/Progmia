@@ -3,7 +3,7 @@
     font-family: 'ArcadeClassic';
     src: url("../fonts/ARCADECLASSIC.ttf");
 }
-body {background-color: #24242b;background-color: #121c1d;max-width: 1555px;margin:0 auto;}
+body {background-color: #24242b;background-color: #121c1d !important;max-width: 1555px;margin:0 auto;}
 
 nav {
     position:absolute;
@@ -510,3 +510,7 @@ span.unlocked {
       box-shadow: 0 0 0 0 rgba(204,169,44, 0);
   }
 }
+
+
+
+    

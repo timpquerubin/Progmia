@@ -2,79 +2,6 @@
 <style type="text/css">
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-	/*fieldset, label {margin: 0px; padding: 0px;}*/
-	/*.rating {border: none; float: left;}
-	.rating input {display: none;}
-	.rating label:before {margin: 5px; font-size: 1.25em; font-family: FontAwesome; display: inline-block; content: "\f005";}
-	.rating .half:before {content: "\f089"; position: absolute;}
-	.rating label {color: #ddd; float: right;}
-
-	.rating input:checked ~ label,
-	.rating:not(:checked) label:hover,
-	.rating:not(:checked) label:hover ~ label {color: #FFD700;}
-
-	.rating input:checked + label:hover,
-	.rating input:checked ~ label:hover,
-	.rating label:hover ~ input:checked ~ label,
-	.rating input:checked ~ label:hover ~ label { color: #FFED85;  }*/
-
-	/*input#test {display: none;}
-	label.rate:before { margin: 5px; font-size: 3em; font-family: FontAwesome; color: #FFD700; display: inline-block; content: "\f005";}*/
-
-	div.game-level-menu-container {background-color: #a0d169;background-color:#17242c; margin-top: 20px;padding-top:20px;}
-
-	div.level-row {
-		max-width: 1000px;
-		margin: 0px auto;
-	}
-
-	div.level {
-		display: block; 
-		height: 200px;
-		padding: 0px;
-		margin-bottom: 20px;
-	}
-
-	div.level-info h2 {
-		margin: 0px;
-		padding: 0px;
-		font-family: ArcadeClassic;
-		font-size:42px;
-		color:#ffff10;
-	}
-	div.level-info a{
-		text-decoration: none;
-	}
-
-	div.level-info {
-		background-color: #444;
-		display: block;
-		height: 100%;
-		margin: 0px 10%;
-	}
-
-	div.level-info:hover ,div.level-info:hover h2{
-		background-color: #aaa;
-		color:#333;
-	}
-
-	div.level-link {
-		height: 100%;
-		margin: 0px;
-		padding: 0px;
-		border-top:solid 10px #777;
-		border-left:solid 10px #555;
-		border-right:solid 10px #555;
-		border-bottom:solid 10px #333;
-
-	}
-	.bottom-stars{position: absolute;left: 0;bottom: 0;right: 0;max-width:180px;margin:0 auto 10px auto;background:#5d4f3b;border:solid #bbb 3px;}
-	fieldset label { margin: 0; padding: 0;}
-	.stage-rating { border: none;}
-	.stage-rating input {display: none;}
-	.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;} /*FFD700*/ 
-	.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}
-	input.no-score + label:before{ color: #aaa;}
 </style>
 
 <div class="game-level-menu-container">
@@ -83,10 +10,10 @@
 	<!--<?php //echo $h->USER_ID; ?>-->
 	<?php $i = 0; ?>
 	<?php $rowCtr = 0; ?>
-	<h1 style="color:#000;margin-top:5px;text-align: center;"><?php foreach ($level_stages as $img) { ?>
-		<img style="height:220px;" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $img['STG_FILENAME']; ?>"/>
+	<div style="color:#000;margin:5px auto;text-align: center;"><?php foreach ($level_stages as $img) { ?>
+		<img class="stage" style="height:150px;" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $img['STG_FILENAME']; ?>"/>
 		<?php } ?>
-	</h1>
+	</div>
 	<?php $array = array(); ?>
 	<?php $array = $level_list; ?>
 	<?php foreach ($level_list as $level) { ?>
