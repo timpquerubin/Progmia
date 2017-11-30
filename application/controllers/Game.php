@@ -95,9 +95,10 @@
 
 			);
 
-			$next_level = $this->Game_model->get_current_level($lvlId);
+			$stages = $this->Game_model->get_stages();
+			$current_level = $this->Game_model->get_current_level($lvlId);
 			$level_details = $this->Game_model->get_level_details($level_params);
-
+			$levels = $this->Game_model->get_levels();
 			// echo "<pre>";
 			// var_dump($level_details);
 			// echo "</pre>";
@@ -105,7 +106,10 @@
 			
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);
-			$data['next_level'] = $next_level;
+			$data['stage_list'] = $stages;
+	        $data['maxlevel_list']=$this->Game_model->get_max_level();
+			$data['level_list'] = $levels;
+			$data['current_level'] = $current_level;
 			$data['level'] = $level_details;
 
 			$this->load->view('templates/game_header');

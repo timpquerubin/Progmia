@@ -44,8 +44,33 @@
 		    	<button>Menu</button>
 		    </div>  
 		    <div class="col-md-4">
-		    	<button><a href="">NEXT
-		    	<?php echo $next_level->LVL_NUM; ?></a></button>
+		    	<?php $flag = false; ?>
+		    	<?php $stg; ?>
+				<?php foreach($level_list as $levels){ ?>
+			    	<?php if ($levels['STAGE'] == $current_level->STAGE) { ?>
+			    		<?php if ($current_level->LVL_NUM + 1 == $levels['LVL_NUM']){ ?>
+					    	<?php $flag = true; ?>
+					    	<button><a href="<?php echo base_url(); ?>Game/play/<?php echo $levels['LVL_ID'] ?>">NEXT LEVEL</a></button>
+			    		<?php }?>
+			    	<?php } ?>
+		    	<?php } ?>
+		    	<?php if ($flag == false){ ?>
+			    	<?php foreach($maxlevel_list as $max){ ?>
+				    	<?php if ($max['LVL_ID'] == $current_level->LVL_ID){ ?>
+				    		<?php foreach($stage_list as $stage){ ?>
+				    			<?php if ($flag == true){ ?>
+				    				<?php $stg = $stage['STG_ID']; ?>
+				    				<?php $flag = false; ?>
+				    			<?php } ?>
+				    			<?php if ($current_level->STAGE == $stage['STG_ID']){?>
+							    	<?php $flag = true; ?>
+				    			<?php } ?>
+				    		<?php } ?>
+				    	<?php } ?>
+			    	<?php } ?>
+				<button><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $stg ?>">NEXT STAGE</a></button>
+		    	<?php } ?>
+
 		    </div>  
 	    </div>
 	</div>
