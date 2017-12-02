@@ -30,7 +30,7 @@
 		}
 		public function get_level_stage($stage = null) {
 
-			$level_stage = $this->db->query('SELECT STG_FILENAME FROM STAGE WHERE STG_ID=\''.$stage.'\';');
+			$level_stage = $this->db->query('SELECT * FROM STAGE WHERE STG_ID=\''.$stage.'\';');
 
 			return $level_stage->result_array();
 
