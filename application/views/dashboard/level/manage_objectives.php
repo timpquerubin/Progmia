@@ -2,6 +2,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h4>Manage Objectives</h4></div>
 		<div class="panel-body">
+			<?php echo $lvl_info->LVL_ID ?>
 			<div class="objective-block"></div>
 
 			<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php base_url(); ?>dashboard/save_objectives">
@@ -13,6 +14,9 @@
 					</div>
 					<div class="col-sm-3">
 						<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Value">
+					</div>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="obj_val" name="obj_points" placeholder="Points">
 					</div>
 				</div>
 
@@ -26,9 +30,37 @@
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5" value="Add">
 
 			</form>
+
 		</div>
 	</div>
 </div>
+
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			var map_filename = "<?php echo $lvl['LVL_FILENAME']; ?>";
+
+			$("#imgPrev").css("background-image", "url(<?php echo base_url()."assets/images/levels/".$lvl['LVL_FILENAME']; ?>)");
+
+			$("#imgMap").change(function() {
+				if(this.files && this.files[0])
+		        {
+		        	console.log(this.files[0]);
+		        	var reader = new FileReader();
+		        	reader.onload = function(e)
+		        	{
+		        		$("#imgPrev").css("background-image", "url("+ e.target.result +")");
+		        		$("#imgPrev").show();
+		        	}
+
+		        	reader.readAsDataURL(this.files[0]);
+		        }
+			});
+
+		});
+	</script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -113,7 +145,7 @@
 
 			
 			var new_objective = [];
-			new_objective.push({'type': formData['type'], 'value': formData['obj_val'], 'desc': formData['objective-description']});
+			new_objective.push({'type': formData['type'], 'value': formData['obj_val'], 'points': formData['obj_points'], 'desc': formData['objective-description']});
 			
 			data['lvlId'] = lvlId;
 			data['objectives'] = new_objective;

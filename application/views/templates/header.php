@@ -24,8 +24,11 @@
       				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>home">Home</a></li>
       				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>about">About</a></li>
       				<?php if($this->session->userdata('logged_in')): ?>
+	      				<?php if (!($this->session->userdata('has_character'))){ ?>
+	      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Avatar">GAME</a></li>
+	      				<?php } else { ?>
       					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>
-      				<?php  endif; ?>
+      				<?php } endif; ?>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
     				<?php if($this->session->userdata('logged_in')): ?>

@@ -37,6 +37,27 @@
 			$this->load->view('templates/menu_stages_footer');
 		}
 
+		public function avatar()
+		{
+			$this->_init();
+			$this->isLoggedIn();
+
+			$userID = $this->session->userdata('user_id');
+			$user = $this->session->userdata('username');
+			$progress = $this->Game_model->get_progress(array('user' => $userID));
+			$stages = $this->Game_model->get_stages($user);
+	        $data['h']=$this->Game_model->get_user($user);
+	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
+			$data['stage_list'] = $stages;
+			$data['progress_list'] = $progress;
+
+			$this->load->view('templates/menu_stages_header');
+			$this->load->view('templates/load_init_links');
+			$this->load->view('game/menu/menu_avatar', $data);
+			$this->load->view('templates/menu_stages_footer');
+		}
+
+
 		public function levels($stage = null)
 		{
 			$this->_init();

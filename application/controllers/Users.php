@@ -167,23 +167,23 @@
 			$user = $this->input->post('username');
 			$pass = $this->input->post('password');
 			
-			$id = $this->User_model->login($user,$pass);
-			
-			if($id)
+			$user_info = $this->User_model->login($user,$pass);
+			if(count($user_info) > 0)
 			{
 				$user_data = array(
-					'user_id' => $id,
+					'user_id' => $user_info->USER_ID,
 					'username' => $this->input->post('username'),
-					'logged_in' => TRUE
+					'logged_in' => TRUE,
+					'has_character' => isset($user_info->CHAR_ID)
 				);
-				
+				$data["user_info"] = $user_info;
 				$this->session->set_userdata($user_data);
 				$this->session->set_flashdata('user_loggedin', 'You are now logged in');
 				redirect('home');
 			}
 			else 
 			{
-				$this->session->set_flashdata('user_loggedfailed', 'Invalid Username or Password'.$id);
+				$this->session->set_flashdata('user_loggedfailed', 'Invalid Username or Password'.$user_info->USER_ID);
 				redirect('home');
 			}
 		}

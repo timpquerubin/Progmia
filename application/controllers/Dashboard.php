@@ -51,13 +51,14 @@
 
 		public function manage_objectives($lvlId)
 		{
+			$this->__init();
 			$header_data = array(
 				'title' => 'Edit Level',
 				'tab_active' => 'levels',
 				'page' => 'level-objectives',
 				'lvlId' => $lvlId
 			);
-
+			$data['lvl_info'] = $this->Game_model->get_current_level($lvlId);
 			$data['lvlId'] = $lvlId;
 
 			$this->load->view('templates/dashboard_header', $header_data);
@@ -225,7 +226,6 @@
 		{
 
 			$this->__init();
-
 			if(count($_POST) > 0) {
 				$objectives = $_POST['objectives'];
 				$lvlId = $_POST['lvlId'];
@@ -252,6 +252,7 @@
 						'LVL_ID' => $lvlId,
 						'OBJ_NUM' => $objCtr,
 						'OBJ_DESC' => $obj['desc'],
+						'OBJ_POINTS' => $obj['points'],
 						'OBJ_JSONVAL' => json_encode($jsonVal),
 					);
 
