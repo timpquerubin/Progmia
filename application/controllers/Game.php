@@ -51,10 +51,10 @@
 			$data['stage_list'] = $stages;
 			$data['progress_list'] = $progress;
 
-			$this->load->view('templates/menu_stages_header');
+			$this->load->view('templates/menu_avatar_header');
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_avatar', $data);
-			$this->load->view('templates/menu_stages_footer');
+			$this->load->view('templates/menu_avatar_footer');
 		}
 
 

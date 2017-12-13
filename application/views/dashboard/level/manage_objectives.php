@@ -2,7 +2,8 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h4>Manage Objectives</h4></div>
 		<div class="panel-body">
-			<?php echo $lvl_info->LVL_ID ?>
+			<?php echo $
+			<?php echo $lvl_info->LVL_NUM ?>
 			<div class="objective-block"></div>
 
 			<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php base_url(); ?>dashboard/save_objectives">

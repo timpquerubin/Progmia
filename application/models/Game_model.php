@@ -41,7 +41,7 @@
 			$this->db->select('column_name');
 			$query = $this->db->query('SELECT USER_ID FROM USER WHERE USER_USERNAME=\''.$user.'\';');
 	        //return $query;
-	        return $result=$query->row(0);	
+	        return $result=$query->row(0);
 		}
 
 		public function get_max_level($params = null)
