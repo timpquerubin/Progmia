@@ -27,21 +27,55 @@
 
 		runCommand = function() {
 			var code = code_area.value.split("\n");
+			var code_structured = [];
+			var code_stack = [];
 			
 			for(var key in code) {
 
-				if(/^var\s[A-Za-z0-9_]*/g.test(code[key])) {
+				code[key] = code[key].trim();
+
+				console.log("COMMAND: " + code[key]);
+
+				if(/^student\.moveRight\(\);$/g.test(code[key])) {
+					console.log("valid: CHARACTER MOVES RIGHT");
+				} else if(/^student\.moveUp\(\);$/g.test(code[key])) {
+					console.log("valid: CHARACTER MOVES UP");
+				} else if(/^student\.moveDown\(\);$/g.test(code[key])) {
+					console.log("valid: CHARACTER MOVES DOWN");
+				} else if(/^student\.moveLeft\(\);$/g.test(code[key])) {
+					console.log("valid: CHARACTER MOVES LEFT");
+				} else if(/^student\.throw/g.test(code[key])) {
+					console.log("valid: CHARACTER THROWS PROJECTILE");
+				} else if(/^var\s[A-Za-z0-9_]*;$/g.test(code[key])) {
+					variables.push(code[key].replace(/(var|\s|;)/g, ""));
 					console.log("valid: NEW VARIABLE CREATED");
-					variables.push(code[key]);
 					console.log(variables);
-				} else if(/^if\([A-Za-z0-9=<>()\s]*\)/g.test(code[key])) {
+				} else if(/^if\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(code[key])) {
 					console.log("valid: IF STATEMENT");
-				} else if(/^while\([A-Za-z0-9=<>()\s]*\)/g.test(code[key])) {
+					code_stack.push("if");
+					console.log(code_stack);
+				} else if(/^while\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(code[key])) {
+					console.log(code[key].substr((code[key].indexOf("(") + 1), code[key].indexOf(")") - (code[key].indexOf("(") + 1)));
 					console.log("valid: WHILE STATEMENT");
+					code_stack.push("while");
+					console.log(code_stack);
+				} else if(/^}$/g.test(code[key])) {
+					console.log("POP: " + code_stack[code_stack.length-1]);
+					code_stack.pop();
 				} else {
 					console.log("INVALID COMMAND");
 				}
 
+			}
+		}
+
+		readCode = function(start, code) {
+			
+			if(/^if\([A-Za-z0-9=<>()\s]*\)/g.test(code[start])) {
+				code.push(code[start]);
+				readCode(start++, code)
+			} else {
+				code.push(code[start]);
 			}
 		}
 

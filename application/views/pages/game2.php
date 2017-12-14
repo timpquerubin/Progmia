@@ -16,7 +16,7 @@
 			</ul>
 		</nav>
 	</div>
-<div id="myModal" class="modal" style="display: block">
+<div id="myModal" class="modal" style="display: none;">
 
   <!-- Modal content -->
 	<div class="modal-content">
@@ -176,10 +176,12 @@
 	var moveCtr = 0;
 	var isloop = false;
 	var startloop = 0;
+	var code_stack = [];
+	var code_var = [];
 
 	var img = {};
 	img.player = new Image();
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/cfcd208495d565ef66e7dff9f98764da.png";
+	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/FINAL_SPRITE_BODY.png";
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
 	img.map = new Image();
@@ -251,15 +253,15 @@
 		{
 			cmdLine = code[commandNum].trim();
 
-			if(/^student.moveRight()/g.test(cmdLine)) {
+			if(/^student\.moveRight\(\);$/g.test(cmdLine)) {
 				player.isPressingRight = true;
-			} else if(/^student.moveUp()/g.test(cmdLine)) {
+			} else if(/^student\.moveUp\(\);$/g.test(cmdLine)) {
 				player.isPressingUp = true;
-			} else if(/^student.moveDown()/g.test(cmdLine)) {
+			} else if(/^student\.moveDown\(\);$/g.test(cmdLine)) {
 				player.isPressingDown = true;
-			} else if(/^student.moveLeft()/g.test(cmdLine)) {
+			} else if(/^student\.moveLeft\(\);$/g.test(cmdLine)) {
 				player.isPressingLeft = true;
-			} else if(/^student.throw/g.test(cmdLine)) {
+			} else if(/^student\.throw/g.test(cmdLine)) {
 				if(player.atkCtr == 100) {
 
 					var dir =  cmdLine.substring(cmdLine.indexOf("(") + 1, cmdLine.indexOf(")"));
@@ -271,16 +273,25 @@
 				} else {
 					toNextCmd = false;
 				}
-			} else if(/^while(true) {/g.test(cmdLine)) {
+			} else if(/^while\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(cmdLine)) {
 				isloop = true;
 				startloop = commandNum;
 				moveCtr = 97*1.25;
-			} else if(cmdLine === '}') {
-				// cmdNum = startloop;
+				code_stack.push({
+					command: "while", 
+					param: cmdLine.substr((cmdLine.indexOf("(") + 1), cmdLine.indexOf(")") - (cmdLine.indexOf("(") + 1))
+				});
+			} else if(/^if\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(cmdLine)) {
+				code_stack.push({
+					command: "if", 
+					param: cmdLine.substr((cmdLine.indexOf("(") + 1), cmdLine.indexOf(")") - (cmdLine.indexOf("(") + 1))
+				});
+			} else if(/^}$/g.test(cmdLine)) {
 				cmdNum = startloop;
 				moveCtr = 97*1.25;
-			}else {
-				console.log('error: invalid command');
+				code_stack.pop();
+			} else {
+				console.log('error: invalid command: ' + cmdLine);
 				moveCtr = 97*1.25;
 			}
 
