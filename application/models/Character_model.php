@@ -48,16 +48,13 @@
 
 		public function update_user_avatar($charID,$userID)
 		{
-			echo $charID;
 			$params = array(
 				'CHAR_ID' => $charID
 			);
 
-
-
 			$this->db->set($params); 
-			$this->db->where('USER_ID', $userID);
-			return $this->db->update('user', $params);
+			$this->db->where("USER_ID", $userID);
+			return $this->db->update("user", $params);
 
 		}
 	} 

@@ -30,11 +30,9 @@
 
 		public function update()
 		{
-			echo var_dump($_POST);
-			echo $_POST["avatarId"];
-			$avatars = $this->Character_model->update_user_avatar($_POST["avatarId"],$_POST['userID']);
-
-			var_dump($avatars);
+			$this->_init();
+			echo $_POST['avatarId'];
+			$avatars = $this->Character_model->update_user_avatar($_POST["avatarId"],$_POST["userID"]);
 
 		}
 

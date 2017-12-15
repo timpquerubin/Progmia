@@ -39,14 +39,8 @@
 		<div class="row button-select-container">
 			<div class="button-select col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 				<!--<button><a href="#" onclick="bad(document.querySelector('label.slick-active #avatar-input').value)">button</a></button>-->
-				<button id="btn" class="btn btn-basic btn-block"><a style="display:block;" class="hvr-reveal" onclick="bad(document.querySelector('label.slick-active #avatar-input').value)" href="#">SELECT</a></button>
+				<button id="btn" class="btn btn-basic btn-block"><a style="display:block;" class="hvr-reveal" href="#">SELECT</a></button>
 			</div>
-<!--<script>
-function bad($ter){
-	var lava = $ter;
-	alert(lava);
-}
-</script>-->
 		</div>
 	</div>
 </div>

@@ -42,6 +42,7 @@
 			$this->_init();
 			$this->isLoggedIn();
 			
+			$userID = $this->session->userdata('user_id');
 			$avatars = $this->Character_model->get_all_avatar();
 
 			$data['avatars'] = $avatars;
@@ -51,7 +52,7 @@
 
 			$data['avatar_list'] = $avatars;
 			$data['userID'] = $userID;
-			
+
 			$this->load->view('templates/menu_avatar_header');
 			$this->load->view('game/menu/menu_avatar', $data);
 			$this->load->view('templates/menu_avatar_footer');
@@ -64,7 +65,6 @@
 			$this->isLoggedIn();
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
-
 			if($stage == null) {
 				$levels = $this->Game_model->get_levels();
 				$progress = $this->Game_model->get_progress();
