@@ -47,12 +47,11 @@
 			$data['avatars'] = $avatars;
 
 			$userID = $this->session->userdata('user_id');
-			$user = $this->session->userdata('username');
 			$avatars =$this->User_model->get_avatars();
 
 			$data['avatar_list'] = $avatars;
-	        $data['h']=$this->Game_model->get_user($user);
-
+			$data['userID'] = $userID;
+			
 			$this->load->view('templates/menu_avatar_header');
 			$this->load->view('game/menu/menu_avatar', $data);
 			$this->load->view('templates/menu_avatar_footer');

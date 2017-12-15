@@ -46,10 +46,19 @@
 			return $avatars->result_array();
 		}
 
-		public function update_user_avatar($userID)
+		public function update_user_avatar($charID,$userID)
 		{
+			echo $charID;
+			$params = array(
+				'CHAR_ID' => $charID
+			);
+
+
+
+			$this->db->set($params); 
 			$this->db->where('USER_ID', $userID);
-			$this->db->update('CHAR_ID', $data);
+			return $this->db->update('user', $params);
+
 		}
 	} 
 ?>

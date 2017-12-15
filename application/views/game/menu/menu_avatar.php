@@ -1,7 +1,7 @@
 
 <div class="create-character-container">
-		<div class="title-container">
-			<h2>Character Creation</h2>
+	<div class="title-container">
+		<h2>Character Creation</h2>
 		</div>
 		<div class="row">
 		<div class="character-info" style="display: block;">
@@ -41,19 +41,12 @@
 				<!--<button><a href="#" onclick="bad(document.querySelector('label.slick-active #avatar-input').value)">button</a></button>-->
 				<button id="btn" class="btn btn-basic btn-block"><a style="display:block;" class="hvr-reveal" onclick="bad(document.querySelector('label.slick-active #avatar-input').value)" href="#">SELECT</a></button>
 			</div>
-<script>
-	$(function() {
-    monthly_payment();
- });
+<!--<script>
 function bad($ter){
 	var lava = $ter;
 	alert(lava);
 }
-function monthly_payment(){
-	var good = document.getElementByClass('label.slick-active').getElementById('input#avatar').value;
-    alert(good);
-}
-</script>
+</script>-->
 		</div>
 	</div>
 </div>
@@ -64,7 +57,7 @@ function monthly_payment(){
 						$.ajax({
 						type: 'POST',
 						url: '<?php echo base_url(); ?>Character/update',
-						data: {avatarId : document.querySelector('label.slick-active #avatar-input').value},
+						data: {avatarId : document.querySelector('label.slick-active #avatar-input').value, userID : '<?php echo $userID; ?>'},
 						encode: true,
 						success: function(res){
 							console.log(res);
@@ -74,33 +67,6 @@ function monthly_payment(){
 							}
 						});
 					});
-					function insert(){
-						$.ajax({
-						type: 'POST',
-						url: 'Users/register',
-						data: formData,
-						dataType: 'json',
-						encode: true,
-						success: function(res){
-							
-							if(res.errors)
-							{
-								for(var key in res["errors"])
-								{
-									console.log(key + ": " + res["errors"][key]);
-									$("#reg-" + key).addClass("has-error");
-									$("#reg-" + key).append('<div class="error-msg">'+ res["errors"][key] +'</div>');
-								}
-							} else {
-								window.location = "Home";
-							}
-
-						},
-						error: function(err) {
-							console.log(err);
-						}
-					});
-					}
 
 
 			});
