@@ -31,7 +31,6 @@
 		public function update()
 		{
 			$this->_init();
-			echo $_POST['avatarId'];
 			$avatars = $this->Character_model->update_user_avatar($_POST["avatarId"],$_POST["userID"]);
 
 		}

@@ -7,7 +7,6 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/slick.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/slick.min.js"></script>
-				
 	<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>

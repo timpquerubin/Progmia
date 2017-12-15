@@ -29,6 +29,5 @@ div.wrapper > div.container-fluid {padding:0px !important;}
 .single-item img{margin:0 auto;}
 .carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {height:100%;}
 
-div.avatar-image-preview {border: 1px solid;}
 
 canvas.avatar-ctx { height: 200px; width: 200px; display: block; margin: 0 auto;}
