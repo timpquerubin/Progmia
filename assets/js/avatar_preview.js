@@ -42,15 +42,15 @@ $(document).ready(function() {
 		self.img.src = imgSrc;
 
 		self.draw = function() {
-			var x = canvas.width/2 - self.width*3/2;
-			var y = canvas.height/2 - self.height*3/2;
+			var x = canvas.width/2 - self.width/4;
+			var y = canvas.height/2 - self.height/4;
 			
 			var frameWidth = self.img.width/4;
 			var frameHeight = self.img.height/4;
 
 			
 
-			ctx.drawImage(self.img, 0, frameHeight * self.dirMod, self.img.width/4, self.img.height/4, x, y, self.width*3, self.height*3);
+			ctx.drawImage(self.img, 0, frameHeight * self.dirMod, self.img.width/4, self.img.height/4, x, y, self.width/2, self.height/2);
 
 			// self.dirMod++;
 			if(self.dirMod == 0){
@@ -75,7 +75,7 @@ $(document).ready(function() {
 	Avatar.init = function() {
 		
 		for(var key in avatars) {
-			Avatar(avatars[key].CHAR_ID,avatars[key].CHAR_NAME, parseFloat(avatars[key].CHAR_HEIGHT), parseFloat(avatars[key].CHAR_WIDTH), base_url + "/assets/images/avatars/" + avatars[key].CHAR_SPRITEFILENAME);
+			Avatar(avatars[key].CHAR_ID,avatars[key].CHAR_NAME, parseFloat(avatars[key].CHAR_HEIGHT), parseFloat(avatars[key].CHAR_WIDTH), base_url + "/assets/images/avatars/" + avatars[key].CHAR_SPRITE_FILENAME);
 		}
 
 		currAvt = avatars[0].CHAR_ID;

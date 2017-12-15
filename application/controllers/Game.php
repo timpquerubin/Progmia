@@ -41,18 +41,19 @@
 		{
 			$this->_init();
 			$this->isLoggedIn();
+			
+			$avatars = $this->Character_model->get_all_avatar();
+
+			$data['avatars'] = $avatars;
 
 			$userID = $this->session->userdata('user_id');
 			$user = $this->session->userdata('username');
-			$progress = $this->Game_model->get_progress(array('user' => $userID));
-			$stages = $this->Game_model->get_stages($user);
+			$avatars =$this->User_model->get_avatars();
+
+			$data['avatar_list'] = $avatars;
 	        $data['h']=$this->Game_model->get_user($user);
-	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
-			$data['stage_list'] = $stages;
-			$data['progress_list'] = $progress;
 
 			$this->load->view('templates/menu_avatar_header');
-			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_avatar', $data);
 			$this->load->view('templates/menu_avatar_footer');
 		}

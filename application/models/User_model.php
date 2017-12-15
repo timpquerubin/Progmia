@@ -37,6 +37,13 @@
 				return $query->row(0);	
 			}
 		}
+
+		public function get_avatars()
+		{
+			$avatars = $this->db->query('SELECT * FROM AVATAR;');
+
+			return $avatars->result_array();
+		}
 		/* TESTING
 		public function account($USER_ID = 1)
 		{

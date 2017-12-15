@@ -22,7 +22,7 @@ textarea.code_area:focus {outline: none;}
 div.line-number {margin: 0px; padding: 0px; padding-right: 20px;}
 div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #b0b0b0;text-align: right;border: none;}
 div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;height:92px;background-color: #121c1d;}
-div.button-run-container .btn {font-size:25px !important;width:30%;margin:0 auto;font-family: 'ArcadeClassic';background:#d3c61e;border:solid 5px #0f0f0f;border-radius:0;
+div.button-run-container .btn {font-size:25px !important;margin:0 auto;font-family: 'ArcadeClassic';background:#d3c61e;border:solid 5px #0f0f0f;border-radius:0;
     transition: .3s;
     color:#ffce12;
     border-top-color:#ffce12;

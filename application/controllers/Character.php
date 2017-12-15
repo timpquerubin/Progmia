@@ -27,5 +27,17 @@
 
 			echo json_encode($avatars);
 		}
+
+		public function update()
+		{
+
+
+			$userID = $this->session->userdata('user_id');
+			echo var_dump($_POST);
+			echo $_POST["avatarId"];
+			$avatars = $this->Character_model->update_user_avatar($userID);
+
+		}
+
 	}
 ?>
