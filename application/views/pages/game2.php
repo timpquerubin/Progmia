@@ -830,19 +830,31 @@
 				var direction = "";
 
 				if(player.x === self.x) {
-					if(player.y > self.y) {
-						direction = "down";
-					} else {
+					if(((self.y - player.y) > 0) && ((self.y - player.y) < 97*1.25)) {
 						direction = "up";
+					} else if(((self.y - player.y) < 0) && ((self.y - player.y) > -97*1.25)) {
+						direction = "down";
 					}
+
+					// if(player.y > self.y) {
+					// 	direction = "down";
+					// } else {
+					// 	direction = "up";
+					// }
 				}
 
 				if(player.y === self.y) {
-					if(player.x > self.x) {
+					if(((self.x - player.x) > 0) && ((self.x - player.x) < 97*1.25)) {
+						direction = "left";
+					} else if(((self.x - player.x) < 0) && ((self.x - player.x) > -97*1.25)) {
 						direction = "right";
-					} else {
-						direction = "left"
 					}
+
+					// if(player.x > self.x) {
+					// 	direction = "right";
+					// } else {
+					// 	direction = "left"
+					// }
 				}
 
 				if(direction != "") {
