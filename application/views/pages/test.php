@@ -55,7 +55,7 @@
 					code_stack.push("if");
 					console.log(code_stack);
 				} else if(/^while\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(code[key])) {
-					console.log(code[key].substr((code[key].indexOf("(") + 1), code[key].indexOf(")") - (code[key].indexOf("(") + 1)));
+					console.log();
 					console.log("valid: WHILE STATEMENT");
 					code_stack.push("while");
 					console.log(code_stack);
