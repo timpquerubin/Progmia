@@ -25,6 +25,28 @@
 
 		var variables = [];
 
+		getConditions = function(statement, terminator1, terminator2) {
+
+			var startIndex = 0;
+			var lastIndex = 0;
+
+			// console.log(statement.indexOf(terminator, startIndex));
+
+			do {
+				
+				if(statement.indexOf(terminator2, startIndex) != -1) {
+					lastIndex = statement.indexOf(terminator2, startIndex);
+				}
+
+				startIndex = statement.indexOf(terminator2, startIndex) + 1;
+
+			} while(startIndex != 0);
+
+			// console.log(terminator1);
+			return statement.substr(statement.indexOf(terminator1) + 1, lastIndex - (statement.indexOf(terminator1) + 1));
+			// lastIndex - (statement.indexOf(terminator2) + 1)
+		}
+
 		runCommand = function() {
 			var code = code_area.value.split("\n");
 			var code_structured = [];
@@ -51,11 +73,25 @@
 					console.log("valid: NEW VARIABLE CREATED");
 					console.log(variables);
 				} else if(/^if\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(code[key])) {
+
+					// var startIndex = 0;
+					// var lastIndex = 0;
+
+					// do {
+
+					// 	if(code[key].indexOf(")", startIndex) != -1) {
+					// 		lastIndex = code[key].indexOf(")", startIndex);
+					// 	}
+
+					// 	startIndex = code[key].indexOf(")", startIndex) + 1;
+
+					// } while(startIndex != 0);
+					console.log(getConditions(code[key], "(", ")"));
+					// console.log(code[key].substr((code[key].indexOf("(") + 1), lastIndex - (code[key].indexOf("(") + 1)));
 					console.log("valid: IF STATEMENT");
 					code_stack.push("if");
 					console.log(code_stack);
 				} else if(/^while\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(code[key])) {
-					console.log();
 					console.log("valid: WHILE STATEMENT");
 					code_stack.push("while");
 					console.log(code_stack);

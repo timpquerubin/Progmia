@@ -237,6 +237,24 @@
 		&& rect2.y <= rect1.y + rect1.height;
 	}
 
+	getConditions = function(statement, terminator1, terminator2) {
+
+		var startIndex = 0;
+		var lastIndex = 0;
+
+		do {
+			
+			if(statement.indexOf(terminator2, startIndex) != -1) {
+				lastIndex = statement.indexOf(terminator2, startIndex);
+			}
+
+			startIndex = statement.indexOf(terminator2, startIndex) + 1;
+
+		} while(startIndex != 0);
+
+		return statement.substr(statement.indexOf(terminator1) + 1, lastIndex - (statement.indexOf(terminator1) + 1));
+	}
+
 	executeCommand = function(commandNum)
 	{
 		var code_whole = code_area.value;
@@ -253,7 +271,20 @@
 		{
 			cmdLine = code[commandNum].trim();
 
-			if(/^student\.moveRight\(\);$/g.test(cmdLine)) {
+			if(/^}$/g.test(cmdLine)) {
+				if(code_stack[code_stack.length - 1].command == "while") {
+					cmdNum = startloop;
+					// isloop = false;
+				} else if(code_stack[code_stack.length - 1].command == "if") {
+
+				}
+
+				moveCtr = 97*1.25;
+				code_stack.pop();
+				console.log("pop");
+			} else if((code_stack.length > 0) && (code_stack[code_stack.length - 1].cond_result == false)) {
+				moveCtr = 97*1.25;
+			} else if(/^student\.moveRight\(\);$/g.test(cmdLine)) {
 				player.isPressingRight = true;
 			} else if(/^student\.moveUp\(\);$/g.test(cmdLine)) {
 				player.isPressingUp = true;
@@ -275,21 +306,37 @@
 				}
 			} else if(/^while\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(cmdLine)) {
 				isloop = true;
-				startloop = commandNum;
+				startloop = commandNum - 1;
 				moveCtr = 97*1.25;
 				code_stack.push({
 					command: "while", 
-					param: cmdLine.substr((cmdLine.indexOf("(") + 1), cmdLine.indexOf(")") - (cmdLine.indexOf("(") + 1))
+					param: cmdLine.substr((cmdLine.indexOf("(") + 1), cmdLine.indexOf(")") - (cmdLine.indexOf("(") + 1)),
+					cond_result: true
 				});
+				console.log(getConditions(cmdLine, "(", ")"));
 			} else if(/^if\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(cmdLine)) {
+
+				var result = false;
+
+				if(/^isEnemyInRange\(\)$/g.test(getConditions(cmdLine, "(", ")"))) {
+					if(player.isEnemyInRange() != false) {
+						result = true;
+					} else {
+						result = false;
+					}
+				} else if(/^false$/g.test(getConditions(cmdLine, "(", ")"))) {
+					result = false;
+				} else if(/^true$/g.test(getConditions(cmdLine, "(", ")"))) {
+					result = true;
+				}
+
+				moveCtr = 97*1.25;
 				code_stack.push({
 					command: "if", 
-					param: cmdLine.substr((cmdLine.indexOf("(") + 1), cmdLine.indexOf(")") - (cmdLine.indexOf("(") + 1))
+					param: cmdLine.substr((cmdLine.indexOf("(") + 1), cmdLine.indexOf(")") - (cmdLine.indexOf("(") + 1)),
+					cond_result: result
 				});
-			} else if(/^}$/g.test(cmdLine)) {
-				cmdNum = startloop;
-				moveCtr = 97*1.25;
-				code_stack.pop();
+				console.log(getConditions(cmdLine, "(", ")"));
 			} else {
 				console.log('error: invalid command: ' + cmdLine);
 				moveCtr = 97*1.25;
@@ -641,6 +688,30 @@
 			// 	}
 			// }
 		};
+
+		self.isEnemyInRange = function() {
+			
+			for(var key in Bully.list) {
+
+				if(Bully.list[key].x === self.x) {
+					if(((self.y - Bully.list[key].y) <= 120) && ((self.y - Bully.list[key].y) > 0)) {
+						return "up";
+					} else if(((self.y - Bully.list[key].y) >= -97) && ((self.y - Bully.list[key].y) < 0)) {
+						return "down";
+					}
+				} else if(Bully.list[key].y === self.y) {
+					if(((self.x - Bully.list[key].x) <= 120) && ((self.x - Bully.list[key].x) > 0)) {
+						return "left";
+					} else if(((self.x - Bully.list[key].x) >= -97) && ((self.x - Bully.list[key].x) < 0)) {
+						return "right";
+					}
+				} else {
+					return false;
+				}
+			}
+
+			return false;
+		}
 
 		self.throwProjectile = function(direction) {
 			Projectile.generate(self, direction);
