@@ -176,6 +176,7 @@
 	var moveCtr = 0;
 	var isloop = false;
 	var startloop = 0;
+	var bullyCount = 0;
 	var code_stack = [];
 	var code_var = [];
 
@@ -561,7 +562,9 @@
 
 			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4))
 			{
-				if(key.status != true)
+				console.log(bullyCount > 0);
+				// key.status != true && 
+				if(key.status != true || bullyCount > 0)
 				{
 					alert('error: door locked');
 					startNewGame();
@@ -870,6 +873,8 @@
 					bullyId = "bully_" + Math.random();
 				
 					Bully(bullyId, bullyX, bullyY, img.bully.height/4, img.bully.width/4, img.bully.src);
+					bullyCount++;
+					console.log(bullyCount);
 				}
 
 				startPoint = Maps.current.grid[i].indexOf(7, startPoint) + 1;
@@ -887,6 +892,7 @@
 			if(Bully.list[key].toRemove === true)
 			{
 				delete Bully.list[key];
+				bullyCount--;
 			}
 		}
 	}
@@ -927,7 +933,6 @@
 				if(player.testCollision(self) || (self.x == 0 && self.y == 0))
 				{
 					self.status = true;
-					console.log('aquired key');
 				} else {
 					self.draw();
 				}
@@ -1138,9 +1143,22 @@
 	{
 		$(".player-hp-bar").css("width", "100%");
 
+		bullyCount = 0;
+		cmdNum = 0;
+		bumpWallCtr = 0;
+		moveCtr = 0;
+		isloop = false;
+		startloop = 0;
+
+		var code_stack = [];
+		var code_var = [];
+
 		Projectile.list = {};
 		Coin.list = {};
 		Bully.list = {};
+
+		code_stack = [];
+		code_var = [];
 
 		player = new Player('plyr1', Maps.current.startPt.x*1.25, Maps.current.startPt.y*1.25, img.player.width/5, img.player.height/5, img.player);
 		key = new Key('key', false,img.key.src, img.key.height/5, img.key.width/5);
