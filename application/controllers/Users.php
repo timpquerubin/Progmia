@@ -170,6 +170,7 @@
 			$user_info = $this->User_model->login($user,$pass);
 			if(count($user_info) > 0)
 			{
+
 				$user_data = array(
 					'user_id' => $user_info->USER_ID,
 					'username' => $this->input->post('username'),

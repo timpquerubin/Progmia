@@ -4,11 +4,13 @@
 			<ul>
 				<li>
 					<div class="logo">
-						<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo2.png"></a>
+						<a class="navbar-brand" href="<?php echo base_url(); ?>">
+							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo2.png">
+						</a>
 					</div>
 				</li>
 				<li class="bg-volume">
-					<h1>volume</h1>
+					<h1><button id="obj_modal_btn" style="border: 1px solid #000; border-radius: 50%; width: 30px; height: 30px; background-color: #000; font-size: 20px; color: #fff"><span class="fa fa-question"></span></button></h1>
 				</li>
 				<li>
 					
@@ -77,6 +79,17 @@
 
 </div>
 
+<div id="obj_modal" class="modal" style="display: none;">
+	<div class="modal-content">
+		<div>
+			<button id="obj_modal_close"><span>&times;</span></button>
+			<!-- <span class="close" onclick="close()">&times;</span> -->
+		</div>
+		objectives modal
+	</div>
+	
+</div>
+
 
 <div class="container-fluid">
 	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($level[0]['LVL_ID']) ? $level[0]['LVL_ID'] : '' ?>" />
@@ -122,13 +135,14 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+	
 	var bgmusic = new Audio();
 	bgmusic = new Audio();
 	bgmusic.src = "<?php echo base_url(); ?>assets/sounds/Tbone and friends.wav";
 	bgmusic.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
+    	this.currentTime = 0;
+    	this.play();
+	}, false);
 	bgmusic.play();
 	var success = new Audio();
 	success.src = "<?php echo base_url(); ?>assets/sounds/success.mp3";
@@ -165,6 +179,14 @@
 	        modal.style.display = "none";
 		}
 	}
+
+	$("#obj_modal_btn").click(function() {
+		document.getElementById('obj_modal').style.display = "block";
+	});
+
+	$("#obj_modal_close").click(function() {
+		document.getElementById('obj_modal').style.display = "none";
+	});
 
 	document.getElementById('textarea1').value = '1';
 

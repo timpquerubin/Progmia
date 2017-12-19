@@ -23,9 +23,12 @@
 			$this->isLoggedIn();
 
 			$userID = $this->session->userdata('user_id');
+
 			$user = $this->session->userdata('username');
 			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
+
+			
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
 			$data['stage_list'] = $stages;

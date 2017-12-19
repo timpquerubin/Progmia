@@ -3,7 +3,7 @@
 	font-family: 'ArcadeClassic';
 	src: url("../fonts/ARCADECLASSIC.ttf");
 }
-nav ul li.bg-volume {float:right;}
+nav ul li.bg-volume {float:right; padding-right: 15px;}
 body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;padding:30px 50px;}
 
 nav {height: 110px;background-color: #1b94bf;}
