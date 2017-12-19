@@ -37,7 +37,7 @@
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2">Map Photo:</label>
+					<label class="control-label col-sm-2">Map Image:</label>
 					<div class="col-sm-4">
 						<input class="form-control" type="file" name="imgMap" id="imgMap">
 					</div>

@@ -177,6 +177,27 @@
 			$this->load->view('dashboard/stage/list', $data);
 			$this->load->view('templates/dashboard_footer');
 		}
+		public function add_avatar()
+		{
+			$this->__init();
+
+			$data['title'] = 'Add New Avatar';
+
+			$avatars = $this->Avatar_model->get_avatars();
+
+			$data['avatar_list'] = $avatars;
+
+			$header_data = array(
+				'title' => 'Add Avatar',
+				'tab_active' => 'avatars',
+				'page' => 'avatar-add'
+			);
+
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/avatar/add',$data);
+			$this->load->view('templates/dashboard_footer');
+		}
 
 		public function add_level()
 		{
@@ -209,6 +230,69 @@
 			}
 
 			$this->load->view('dashboard/objectives_block', $data);
+		}
+
+
+
+		public function save_add_avatar()
+		{
+			$this->__init();
+
+			// echo "<pre>";
+			// var_dump($_POST);
+			// echo "</pre>";
+			// exit();
+
+			$count_levels_params['AVATAR'] = $_POST['avtrId'];
+
+			$avatar_count = count($this->Avatar_model->get_avatars($count_levels_params));
+			$avatar_count++;
+
+			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
+			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
+			$lvlId = md5($_POST['stage'].$level_count.$_POST['level-name']);
+
+			$level_params = array(
+				'AVTR_ID' => $avtrId,
+				'AVTR_NAME' => $_POST['mapCol'],
+				'AVTR_SPRITE_FILENAME' => $_POST['level-name'],
+				'AVTR_FRONTVIEW_FILENAME' => json_encode($startPt),
+				'AVTR_THUMBNAIL_FILENAME' => (int)$_POST['numCols']
+			);
+			
+			if($_FILES['imgMap']['tmp_name'] != '')
+			{
+				$config['upload_path'] = './assets/images/avatars/sprite';
+				$config['allowed_types'] = 'gif|jpg|png';
+				$config['max_size'] = '2048';
+				$config['max_width'] = '2000';
+				$config['max_height'] = '2000';
+				$config['file_name'] = $avtrId;
+				
+				$this->load->library('upload', $config);
+				
+				if(!$this->upload->do_upload('imgMap'))
+				{
+					$errors = array('error' => $this->upload->display_errors());
+				}
+				else {
+					$data = array('upload_data' => $this->upload->data());
+
+					$level_params['LVL_FILENAME'] =  $lvlId.$data['upload_data']['file_ext'];
+				}
+			}
+
+			$new_level = $this->Game_model->add_level($level_params);
+
+			$return['lvlId'] = $lvlId;
+
+			// echo "<pre>";
+			echo json_encode($return);
+			// echo "</pre>";
+			// exit();
+
+			// redirect('Dashboard/level_list');
+
 		}
 
 		public function save_add_level()

@@ -1,8 +1,8 @@
 
 			
-			<div class="panel-heading"><i class="fa fa-list-ol" aria-hidden="true"></i>Level List</div>
+			<div class="panel-heading"><i class="fa fa-list-ol" aria-hidden="true"></i>Avatar List</div>
 			<div class="row">
-				<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a>
+				<a href="<?php echo base_url(); ?>Dashboard/add_avatar" class="btn btn-default" >Add Avatar</a>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-body">

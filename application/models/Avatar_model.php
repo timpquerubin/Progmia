@@ -16,6 +16,13 @@
 
 			return $newId;
 		}
+
+		public function get_avatars($params = null)
+		{
+			$avatars = $this->db->query('SELECT * FROM AVATAR;');
+
+			return $avatars->result_array();
+		}
 		/*
 		public function show_student_id($data){
 		$this->db->select('*');
