@@ -39,7 +39,7 @@
 			return $this->db->insert('AVATAR', $params);
 		}
 
-		public function get_all_avatar()
+		public function get_all_avatars()
 		{
 			$avatars = $this->db->get('AVATAR');
 
@@ -49,7 +49,7 @@
 		public function update_user_avatar($charID,$userID)
 		{
 			$params = array(
-				'CHAR_ID' => $charID
+				'AVTR_ID' => $charID
 			);
 
 			$this->db->set($params); 

@@ -5,6 +5,7 @@
 		public function __init()
 		{
 			$this->load->model('Game_model');
+			$this->load->model('Avatar_model');
 		}
 
 		public function index() {
@@ -18,6 +19,26 @@
 			$this->load->view('templates/dashboard_header', $header_data);
 			$this->load->view('templates/load_init_links');
 			$this->load->view('dashboard/index');
+			$this->load->view('templates/dashboard_footer');
+		}
+
+		public function edit_avatar($avtrId)
+		{
+			$this->__init();
+
+			$avatar = $this->Game_model->get_avatar_details(array('AVTR_ID' => $avtrId));
+			$data['avtrId'] = $avtrId;
+			$data['avtr'] = $avatar[0];
+
+			$header_data = array(
+				'title' => 'Edit Avatar',
+				'tab_active' => 'avatar',
+				'page' => 'avatar-edit',
+				'avtrId' => $avtrId
+			);
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/avatar/edit', $data);
 			$this->load->view('templates/dashboard_footer');
 		}
 
@@ -100,19 +121,18 @@
 		{
 			$this->__init();
 
-			$levels = $this->Game_model->get_avatars();
-			$data['stages'] = $stages;
-			$data['levels'] = $levels;
+			$avatars = $this->Avatar_model->get_all_avatars();
+			$data['avatars'] = $avatars;
 
 			$header_data = array(
-				'title' => 'Levels',
-				'tab_active' => 'levels',
-				'page' => 'level-list'
+				'title' => 'Avatars',
+				'tab_active' => 'avatars',
+				'page' => 'avatar-list'
 			);
 
 			$this->load->view('templates/dashboard_header', $header_data);
 			$this->load->view('templates/load_init_links');
-			$this->load->view('dashboard/level/list', $data);
+			$this->load->view('dashboard/avatar/list', $data);
 			$this->load->view('templates/dashboard_footer');
 		}
 

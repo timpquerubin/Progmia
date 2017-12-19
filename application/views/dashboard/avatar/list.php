@@ -11,39 +11,34 @@
 							<th></th>
 							<th><strong>Actions</strong></th>
 							<!-- <th><strong>#</strong></th> -->
-							<th><strong>Stage Name</strong></th>
-							<th><strong>Level #</strong></th>
-							<th><strong>Level Name</strong></th>
-							<th><strong>Start Point</strong></th>
-							<th><strong>Columns</strong></th>
-							<th><strong>Created On</strong></th>
-							<th><strong>Recent Update</strong></th>
+							<th><strong>Avatar ID</strong></th>
+							<th><strong>Avatar Name</strong></th>
+							<th><strong>Avatar Sprite Filename</strong></th>
+							<th><strong>Avatar Thumbnail Filename</strong></th>
+							<th><strong>Avatar Frontview Filename</strong></th>
+							<th><strong>Avatar Sprite Height<br>(In Pixels)</strong></th>
+							<th><strong>Avatar Sprite Width<br>(In Pixels)</strong></th>
 						</thead>
 						<tbody>
-							<?php if(sizeof($levels) > 0) { ?>
+							<?php if(sizeof($avatars) > 0) { ?>
 								<?php $ctr = 1; ?>
-								<?php foreach($levels as $lvl) { ?>
+								<?php foreach($avatars as $avtr) { ?>
 									<tr>
 										<td><input type="checkbox" name=""></td>
 										<td>
 											<ul class="actions">
-												<li><a href="<?php echo base_url(); ?>dashboard/edit_level/<?php echo $lvl['LVL_ID'] ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
-												<li><a onclick="deleteLevel('<?php echo $lvl['LVL_ID'] ?>')"><i class="fa fa-eraser" aria-hidden="true"></i></a></li>
+												<li><a href="<?php echo base_url(); ?>dashboard/edit_avatar/<?php echo $avtr['AVTR_ID'] ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
+												<li><a onclick="deleteAvatar('<?php echo $avtr['AVTR_ID'] ?>')"><i class="fa fa-eraser" aria-hidden="true"></i></a></li>
 											</ul>
 										</td>
-										<!--<td><?php //echo $ctr; ?></td>-->
-										<?php foreach($stages as $stg) {?>
-											<?php if($stg['STG_ID'] == $lvl['STAGE']) { ?>
-												<td><?php echo $stg['STG_NAME']; ?></td>
-											<?php } ?>
-										<?php } ?>
 
-										<td><?php echo $lvl['LVL_NUM']; ?></td>
-										<td><?php echo $lvl['LVL_NAME']; ?></td>
-										<td><?php echo $lvl['LVL_STARTPOINT']; ?></td>
-										<td><?php echo $lvl['LVL_NUMCOLS']; ?></td>
-										<td><?php echo $lvl['LVL_CREATEDAT']; ?></td>
-										<td><?php echo $lvl['LVL_UPDATEDAT']; ?></td>
+										<td><?php echo $avtr['AVTR_ID']; ?></td>
+										<td><?php echo $avtr['AVTR_NAME']; ?></td>
+										<td><?php echo $avtr['AVTR_SPRT_FILENAME']; ?></td>
+										<td><?php echo $avtr['AVTR_THUMBNAIL_FILENAME']; ?></td>
+										<td><?php echo $avtr['AVTR_FRONTVIEW_FILENAME']; ?></td>
+										<td><?php echo $avtr['AVTR_SPRT_HEIGHT']; ?></td>
+										<td><?php echo $avtr['AVTR_SPRT_WIDTH']; ?></td>
 									</tr>
 									<?php $ctr++; ?>
 								<?php } ?>
@@ -87,21 +82,21 @@
 <script type="text/javascript">
 	
 
-		var lvlId = "<?php echo isset($lvlId) ? $lvlId : '' ?>"
+		var lvlId = "<?php echo isset($avtrId) ? $avtrId : '' ?>"
 		deleteLevel = function(objNum) {
 			var data = {};
-			data['lvlId'] = objNum;
+			data['avtrId'] = objNum;
 
 			$.ajax({
 				type: 'post',
-				url: "<?php echo base_url(); ?>" + "dashboard/delete_level",
+				url: "<?php echo base_url(); ?>" + "dashboard/delete_avatar",
 				data: data,
 				success: function(res) {
-					alert('Successfully deleted level!');
-					window.location = "<?php echo base_url(); ?>dashboard/level_list/";
+					alert('Successfully deleted avatar!');
+					window.location = "<?php echo base_url(); ?>dashboard/avatar_list/";
 				},
 				error: function(err) {
-					console.log("cannot delete level");
+					console.log("cannot delete avatar");
 				}
 			})
 

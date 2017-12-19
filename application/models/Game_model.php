@@ -80,6 +80,13 @@
 			return $levels->result_array();
 		}
 		*/
+		public function get_avatar_details($params)
+		{
+			$avatar_details = $this->db->get_where('AVATAR', $params);
+
+			return $avatar_details->result_array();
+		}
+
 		public function get_level_details($params)
 		{
 			$map_details = $this->db->get_where('LEVEL', $params);
