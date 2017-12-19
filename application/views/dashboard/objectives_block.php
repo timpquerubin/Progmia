@@ -13,9 +13,9 @@
 				<?php foreach ($objectives as $obj) { ?>
 					<tr>
 						<td><?php echo $rowCtr  ?></td>
-						<td><?php echo $obj['type']  ?></td>
-						<td><?php echo $obj['value'] ?></td>
-						<td><?php echo $obj['points'] ?></td>
+						<td><?php echo isset($obj['type']) ? $obj['type'] : '' ?></td>
+						<td><?php echo isset($obj['value']) ? $obj['value'] : '' ?></td>
+						<td><?php echo isset($obj['points']) ? $obj['points'] : '' ?></td>
 						<td><button type="button" onclick="deleteObjective(<?php echo $obj['objNum']; ?>)">Delete</button></td>
 					</tr>
 					<?php $rowCtr++; ?>

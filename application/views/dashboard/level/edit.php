@@ -1,3 +1,17 @@
+	
+	<style type="text/css">
+		
+		div.manage-objective-container {
+			margin: 20px 20px;
+			padding: 10px;
+			border: 1px solid #d9d9d9;
+		}
+
+		div.manage-objective-container div h4 {
+			font-family:BebasNeue;
+		}
+
+	</style>
 
 	<div class="panel panel-default">
 		<div class="panel-heading"><h4>Edit Level</h4></div>
@@ -42,10 +56,10 @@
 			</form>
 		</div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading"><h4>Manage Objectives</h4></div>
-		<div class="panel-body">
-			<?php echo $lvl_info->LVL_NUM ?>
+		<div class="manage-objective-container">
+			
+			<div class="manage-objectives-header"><h4>Objectives</h4></div>
+
 			<div class="objective-block"></div>
 
 			<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php base_url(); ?>dashboard/save_objectives">
@@ -73,13 +87,9 @@
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5" value="Add">
 
 			</form>
-
 		</div>
-	</div>
-	<div>
-		<button></button>
-	</div>
-	</div><script type="text/javascript">
+
+	<script type="text/javascript">
 		$(document).ready(function() {
 
 			var map_filename = "<?php echo $lvl['LVL_FILENAME']; ?>";
@@ -109,8 +119,11 @@
 
 		var lvlId = "<?php echo isset($lvlId) ? $lvlId : '' ?>"
 		var objective_list = {};
+
 		load_obj_blk();
+
 		function load_obj_blk(){
+
 			var promise = new Promise(function(resolve, reject) {
 			
 				var data = {};
@@ -139,6 +152,7 @@
 					objective_list[key]['value'] = jsonval[objective_list[key]['type']];
 					objective_list[key]['objNum'] = objective_list[key]['OBJ_NUM'];
 					objective_list[key]['desc'] = objective_list[key]['OBJ_DESC'];
+					objective_list[key]['points'] = objective_list[key]['OBJ_POINTS'];
 
 				}
 
@@ -157,8 +171,6 @@
 				});
 			});
 		};
-
-		
 
 		deleteObjective = function(objNum) {
 

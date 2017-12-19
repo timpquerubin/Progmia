@@ -117,6 +117,7 @@
 			$current_level = $this->Game_model->get_current_level($lvlId);
 			$level_details = $this->Game_model->get_level_details($level_params);
 			$levels = $this->Game_model->get_levels();
+			$objectives = $this->Game_model->get_objectives($level_params);
 			
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);
@@ -125,6 +126,7 @@
 			$data['level_list'] = $levels;
 			$data['current_level'] = $current_level;
 			$data['level'] = $level_details;
+			$data['objectives_list'] = $objectives;
 
 			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');

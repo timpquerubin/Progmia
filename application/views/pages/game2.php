@@ -82,10 +82,15 @@
 <div id="obj_modal" class="modal" style="display: none;">
 	<div class="modal-content">
 		<div>
-			<button id="obj_modal_close"><span>&times;</span></button>
-			<!-- <span class="close" onclick="close()">&times;</span> -->
+			<button style="float: right;" id="obj_modal_close"><span>&times;</span></button>
+			<?php 
+				echo "<pre>";
+				echo var_dump($objectives_list);
+				echo "</pre>";
+
+			?>
 		</div>
-		objectives modal
+		
 	</div>
 	
 </div>
