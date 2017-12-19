@@ -87,6 +87,13 @@
 			return $map_details->result_array();
 		}
 
+		public function get_stage_details($params)
+		{
+			$stage_details = $this->db->get_where('STAGE', $params);
+
+			return $stage_details->result_array();
+		}
+
 		public function get_stages($params = null)
 		{
 			$stages = $this->db->query('SELECT * FROM STAGE;');

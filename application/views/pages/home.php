@@ -34,7 +34,7 @@
 		</div>
 		<div class="row" >
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-				<h3 class="learn-more"><a href="#">Learn More<br><i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></a></h3>
+				<h3 class="learn-more"><a href="#">Learn More<br><i class="fa fa-angle-double-down" aria-hidden="true"></i></a></h3>
 			</div>
 		</div>
 	</div>

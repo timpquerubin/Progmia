@@ -1,10 +1,13 @@
 
 			
 			<div class="panel-heading"><i class="fa fa-list-ol" aria-hidden="true"></i>Level List</div>
+			<div class="row">
+							<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a></div>
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<table class="table table-striped">
 						<thead>
+							<th></th>
 							<th><strong>#</strong></th>
 							<th><strong>Stage</strong></th>
 							<th><strong>Level</strong></th>
@@ -20,6 +23,7 @@
 								<?php $ctr = 1; ?>
 								<?php foreach($levels as $lvl) { ?>
 									<tr>
+										<td><input type="checkbox" name=""></td>
 										<td><?php echo $ctr; ?></td>
 										<td><?php echo $lvl['STAGE'] ?></td>
 										<td><?php echo $lvl['LVL_NUM'] ?></td>

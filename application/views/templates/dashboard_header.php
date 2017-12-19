@@ -2,13 +2,15 @@
 	<head>
 		<title>Progmia | <?php echo isset($title) ? $title : '' ?></title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dashboard.css" />
+		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dashboard.css" />
+		<script src="<?php echo base_url();?>assets/js/jquery.js"></script>
+		<script src="<?php echo base_url();?>assets/js/jquery.sticky.js"></script>
 	</head>
 	<body>
 
 	<input type="hidden" name="tab-active" id="tab-active" value="<?php echo isset($tab_active) ? $tab_active : '' ?>" >
 
-	<div class="container dash-navbar">
+	<div class="dash-navbar">
 		<ul class="nav nav-tabs">
 			<li id="nav-pill-home"><a href="<?php echo base_url(); ?>Dashboard/index">Home</a></li>
 			<li id="nav-pill-stages"><a href="#">Stages</a></li>
@@ -18,6 +20,8 @@
 <div class="wrapper">
 	<div class="container-fluid">
 		<div class="row">
+				<div id="sticker" class="sticker">
+					
 			<div class="col-md-2 sidebar">
 				<div class="row top">
 					<div class="col-md-8"><a class="navbar-brand" href="<?php echo base_url(); ?>Dashboard/index"><img class="img-responsive logo" src="<?php echo base_url(); ?>assets/images/final_logo.png"></a></div>
@@ -28,11 +32,12 @@
 						<li><a href="#">DASHBOARD</a></li>
 						<li><button class="game-editor">GAME EDITOR<div class="expand"></div></button>
 								<ul class="accordion-panel">
-									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Stages</a></a></li>
+									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/stage_list">Stages</a></a></li>
 									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></a></li>
 								</ul>
 
 							<script>
+
 							var acc = document.getElementsByClassName("game-editor");
 							var i;
 
@@ -73,13 +78,19 @@
 					</ul>
 				</div>
 			</div>
+
+				</div>
+		<script>
+			  $(document).ready(function(){
+			    $("#sticker").sticky({topSpacing:0});
+			  });
+		</script>
 			<div class="col-md-10">
 				<div class="row">
 			<?php if(isset($page)) { ?>
 					<div class="dash-button-container" style="margin-bottom: 20px;">
 
 						<?php if($page === "level-list") { ?>
-							<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a>
 						<?php } ?>
 						<?php if($page === "level-objectives") { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/edit_level/<?php echo $lvlId ?>" class="btn btn-default" >Edit Level</a>
