@@ -26,7 +26,48 @@
 				<div class="row bottom">
 					<ul>
 						<li><a href="#">DASHBOARD</a></li>
-						<li><a class="game-editor" href="<?php echo base_url(); ?>Dashboard/level_list">GAME EDITOR</a></li>
+						<li><button class="game-editor">GAME EDITOR<div class="expand"></div></button>
+								<ul class="accordion-panel">
+									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Stages</a></a></li>
+									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></a></li>
+								</ul>
+
+							<script>
+							var acc = document.getElementsByClassName("game-editor");
+							var i;
+
+							for (i = 0; i < acc.length; i++) {
+							  acc[i].addEventListener("click", function() {
+							    this.classList.toggle("active");
+							    var panel = this.nextElementSibling;
+							    if (panel.style.maxHeight){
+							      panel.style.maxHeight = null;
+							    } else {
+							      panel.style.maxHeight = panel.scrollHeight + "px";
+							    } 
+							  });
+							}
+
+							$("button.game-editor").click(function() {
+							   	$('.expand:after').css({
+							   		'color':'#ff0000 !important',
+							   		'transition':'.5s'
+							    });
+							    $('div#profile').css({
+							   		'display':'block',
+							   		'transition':'.5s'
+							    });
+							    $('#badges').css({
+							   		'display':'none',
+							   		'transition':'.5s'
+							    });
+							    $('#leaderboard').css({
+							   		'display':'none',
+							   		'transition':'.5s'
+							    });
+							   });
+							</script>
+						</li>
 						<li><button class="statistics">STATISTICS</button></li>
 						<li><a href="#"></a></li>
 					</ul>
