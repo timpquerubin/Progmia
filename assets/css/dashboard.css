@@ -22,6 +22,7 @@ div.dash-navbar {
 	display:none;
 }
 .game-editor:before{color: #444 !important;margin:0 15px 0 20px;font-size:25px;content:"\f040";font-family: 'FontAwesome';color:#fff;}
+.game-editor:hover:before{text-decoration:none;}
 .expand:after{font-size:15px;margin-left:15px;
 font-family: 'FontAwesome';color:#00ff00;content:"\f055";}
 
