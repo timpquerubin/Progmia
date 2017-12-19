@@ -82,7 +82,7 @@
 							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Objective Value"/>
 						</div>
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Points"/>
+							<input type="text" class="form-control" id="obj_points" name="obj_points" placeholder="Points"/>
 						</div>
 						<div class="col-sm-2">
 							<button type="button" onclick="append_objective()">Add</button>
@@ -119,14 +119,16 @@
 			var type = document.getElementById("type").value;
 			var value = document.getElementById("obj_val").value;
 			var desc = document.getElementById("objective-description").value;
+			var points = document.getElementById("obj_points").value;
 
-			objective_list[objCtr] = {objNum:objCtr, type: type, value: value, desc: desc};
+			objective_list[objCtr] = {objNum:objCtr, type: type, value: value, desc: desc, points: points};
 
 			objCtr++;
 
 			document.getElementById("type").value = "";
 			document.getElementById("obj_val").value = "";
 			document.getElementById("objective-description").value = "";
+			document.getElementById("obj_points").value = "";
 
 			load_objectives_block();
 		}
