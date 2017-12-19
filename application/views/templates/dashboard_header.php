@@ -1,25 +1,81 @@
 <html>
 	<head>
-		<title>Dashboard | <?php echo isset($title) ? $title : '' ?></title>
+		<title>Progmia | <?php echo isset($title) ? $title : '' ?></title>
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dashboard.css" />
 	</head>
 	<body>
 
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dashboard.css" />
+	<input type="hidden" name="tab-active" id="tab-active" value="<?php echo isset($tab_active) ? $tab_active : '' ?>" >
 
-		<div class="container-fluid">
+	<div class="container dash-navbar">
+		<ul class="nav nav-tabs">
+			<li id="nav-pill-home"><a href="<?php echo base_url(); ?>Dashboard/index">Home</a></li>
+			<li id="nav-pill-stages"><a href="#">Stages</a></li>
+			<li id="nav-pill-levels"><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></li>
+		</ul>
+	</div>
+<div class="wrapper">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2 sidebar">
+				<div class="row top">
+					<div class="col-md-8"><a class="navbar-brand" href="<?php echo base_url(); ?>Dashboard/index"><img class="img-responsive logo" src="<?php echo base_url(); ?>assets/images/final_logo.png"></a></div>
+					<div class="col-md-4"><i class="fa fa-bars" aria-hidden="true"></i></div>
+				</div>
+				<div class="row bottom">
+					<ul>
+						<li><a href="#">DASHBOARD</a></li>
+						<li><button class="game-editor">GAME EDITOR<div class="expand"></div></button>
+								<ul class="accordion-panel">
+									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Stages</a></a></li>
+									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></a></li>
+								</ul>
 
-			<input type="hidden" name="tab-active" id="tab-active" value="<?php echo isset($tab_active) ? $tab_active : '' ?>" >
+							<script>
+							var acc = document.getElementsByClassName("game-editor");
+							var i;
 
-			<div class="container dash-navbar">
-				<ul class="nav nav-tabs">
-					<li id="nav-pill-home"><a href="<?php echo base_url(); ?>Dashboard/index">Home</a></li>
-					<li id="nav-pill-stages"><a href="#">Stages</a></li>
-					<li id="nav-pill-levels"><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></li>
-				</ul>
+							for (i = 0; i < acc.length; i++) {
+							  acc[i].addEventListener("click", function() {
+							    this.classList.toggle("active");
+							    var panel = this.nextElementSibling;
+							    if (panel.style.maxHeight){
+							      panel.style.maxHeight = null;
+							    } else {
+							      panel.style.maxHeight = panel.scrollHeight + "px";
+							    } 
+							  });
+							}
+
+							$("button.game-editor").click(function() {
+							   	$('.expand:after').css({
+							   		'color':'#ff0000 !important',
+							   		'transition':'.5s'
+							    });
+							    $('div#profile').css({
+							   		'display':'block',
+							   		'transition':'.5s'
+							    });
+							    $('#badges').css({
+							   		'display':'none',
+							   		'transition':'.5s'
+							    });
+							    $('#leaderboard').css({
+							   		'display':'none',
+							   		'transition':'.5s'
+							    });
+							   });
+							</script>
+						</li>
+						<li><button class="statistics">STATISTICS</button></li>
+						<li><a href="#"></a></li>
+					</ul>
+				</div>
 			</div>
-
+			<div class="col-md-10">
+				<div class="row">
 			<?php if(isset($page)) { ?>
-				<div class="container">
 					<div class="dash-button-container" style="margin-bottom: 20px;">
 
 						<?php if($page === "level-list") { ?>
@@ -35,6 +91,5 @@
 							<a href="<?php echo base_url(); ?>Dashboard/manage_objectives/<?php echo $lvlId ?>" class="btn btn-default" >Objectives</a>
 						<?php } ?>
 					</div>
-				</div>
 			<?php } ?>
-
+				</div>

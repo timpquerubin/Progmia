@@ -72,15 +72,23 @@
 				</div>
 
 				<div class="form-group">
-					<label class="control-label col-sm-2">Objective:</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="type" name="type">
+					<div class="row">
+					<label class="control-label col-sm-2">Level Objective</label>
 					</div>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="obj_val" name="obj_val">
-					</div>
-					<div class="col-sm-3">
-						<button type="button" onclick="append_objective()">Add</button>
+					<hr>
+					<div class="row">
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="type" name="type" placeholder="Objective Type"/>
+						</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Objective Value"/>
+						</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Points"/>
+						</div>
+						<div class="col-sm-3">
+							<button type="button" onclick="append_objective()">Add</button>
+						</div>
 					</div>
 				</div>
 
@@ -118,6 +126,7 @@
 
 			document.getElementById("type").value = "";
 			document.getElementById("obj_val").value = "";
+			document.getElementById("objective-description").value = "";
 
 			load_objectives_block();
 		}

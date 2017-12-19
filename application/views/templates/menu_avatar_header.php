@@ -13,5 +13,6 @@
 <body>
 	<div class="container-fluid" style="position: relative;max-width:1555px;">
 		<nav>
-			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/FINALEST_LOGO2.png"></a>
+			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
 	</div>
+	

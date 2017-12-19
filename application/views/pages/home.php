@@ -1,5 +1,4 @@
 
-
 <div class="banner">
 	<div class="container">
 		<div class="row">
@@ -40,6 +39,7 @@
 		</div>
 	</div>
 </div>
+<hr>
 <div class="bg-color" style="background-color: #2c333d;padding:20px 80px 0 80px;">
 	<div class="container-fluid" style="margin:20px 0; padding:0px;border-radius:10px;background-color: #2c333d;box-shadow: 0px 0px 20px #111;">
 		<div class="header" style="margin:0;">

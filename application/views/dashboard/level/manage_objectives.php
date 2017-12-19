@@ -2,7 +2,6 @@
 	<div class="panel panel-default">
 		<div class="panel-heading"><h4>Manage Objectives</h4></div>
 		<div class="panel-body">
-			<?php echo $
 			<?php echo $lvl_info->LVL_NUM ?>
 			<div class="objective-block"></div>
 

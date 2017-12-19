@@ -10,8 +10,8 @@
 		public function index() {
 
 			$header_data = array(
-				'title' => 'Edit Level',
-				'tab_active' => 'home',
+				'title' => 'Dashboard',
+				'tab_active' => 'HOME',
 				'page' => 'dash-home',
 			);
 

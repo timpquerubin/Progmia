@@ -1,18 +1,88 @@
+@font-face {
+font-family: 'FontAwesome';
+src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+	font-family:BebasNeue;
+	src: url("../fonts/BebasNeue.otf");
+}
+.logo{padding:5px;}
+.wrapper {padding:0px !important;}
+.wrapper .container-fluid{padding:0px !important;}
+.wrapper .row {margin:0px !important;}
+
+
 div.dash-navbar {
 	margin-top: 100px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	display:none;
 }
+.game-editor:before{color: #444 !important;margin:0 15px 0 20px;font-size:25px;content:"\f040";font-family: 'FontAwesome';color:#fff;}
+.expand:after{font-size:15px;margin-left:15px;
+font-family: 'FontAwesome';color:#00ff00;content:"\f055";}
 
-div.levels-button-container {}
-
-div.level-img-prev {
-	height: 500px; 
-	width: 100%; 
-	margin-top: 15px;
-	border-style: solid; 
-	border-width: 1px; 
-	background-size: contain; 
-	background-position: center center; 
-	background-repeat: no-repeat;
-	background-color: #d9d9d9;
+/* Style the buttons that are used to open and close the accordion panel */
+.game-editor,.statistics {
+	display:inline-flex !important;
+	position: relative;
+	color:#aaa!important;
+    color: #444;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: right;
+    outline: none;
+    transition: 0.4s;
+    background: #202020;
+    padding:0px !important;
 }
+.sidebar {border-right:solid 1px #111;box-shadow: 3px 3px 30px #00000055;}
+.active, .game-editor:hover{
+    color:#333 !important;
+}
+.active .expand:after, .game-editor:hover .expand:after,{
+	color:#ff0000 !important;
+	content:"\f056" !important;
+} 
+.top {background: #0094a2;padding:10px 0px;}
+.accordion-panel {
+	border-radius:0px !important;
+    padding: 0 18px;
+    background-color: white;
+    border:none !important;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.bottom > ul {list-style: none;margin:0 auto !important;padding:0px !important;font-family: BebasNeue; font-size:25px;}
+
+
+.bottom > ul > li {border-top:solid 1px #000;}
+
+.statistics:before {color: #444 !important;margin:0 15px 0 20px;font-size:20px;content:"\f1fe";
+font-family: 'FontAwesome';}
+
+img.logo {}
+.expand:hover:after{color:#aaffaa;}
+.sidebar {padding:0px !important;}
+.dashboard-header{background-color: #0094a2 !important;padding:10px !important;}
+i.fa-bars {font-size: 35px !important;text-align: center !important;margin:15px auto 0px auto !important;padding-left:10px;}
+
+.sidebar {padding:20px 10px;background-color: #202020 !important;display:block; color:#ffffff;height: 100%;}
+.sidebar ul{}
+.sidebar ul li {display: block;text-align: center;}
+table {font-size:12px !important;}
+.dash-button-container .btn {float:right;}
+.fa-list-ol {margin-right:20px !important;background-color: #52bf8a !important; color:#fff !important;border-radius: 50%;padding:15px;}
+.panel-heading {font-family:BebasNeue;font-size:40px;padding:15px 40px!important;}
+ul.actions{display:inline-flex;padding:0px !important;margin:0 !important;}
+ul.actions li{list-style: none;margin:3px;}
+ul.actions li i {font-size:25px;}
+.table-striped>tbody>tr:nth-of-type(odd){}
+.table-striped>tbody>tr:nth-of-type(even){}
+ul.actions li i.fa-pencil{color:#0066ff;border:solid 1px #333;border-radius: 5px;padding:2px 5px;}
+ul.actions li i.fa-eraser{color:#cc0033;border:solid 1px #333;border-radius: 5px;padding:2px 3px;}
