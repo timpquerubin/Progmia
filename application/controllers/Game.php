@@ -28,7 +28,7 @@
 			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
 
-			
+
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
 			$data['stage_list'] = $stages;
@@ -123,10 +123,6 @@
 			$current_level = $this->Game_model->get_current_level($lvlId);
 			$level_details = $this->Game_model->get_level_details($level_params);
 			$levels = $this->Game_model->get_levels();
-			// echo "<pre>";
-			// var_dump($level_details);
-			// echo "</pre>";
-			// exit();
 			
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);

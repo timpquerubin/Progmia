@@ -42,7 +42,7 @@
 						<input class="form-control" type="file" name="imgMap" id="imgMap">
 					</div>
 					<div class="col-sm-12">
-						<div class="level-img-prev" id="imgPrev" name="imgPrev"></div>
+						<div class="level-img-prev" style="margin: 20px 0px; height: 500px; width: 100%; background-color: #e6e6e6; background-size: contain; background-repeat: no-repeat; background-position: center;" id="imgPrev" name="imgPrev"></div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -72,23 +72,23 @@
 				</div>
 
 				<div class="form-group">
-					<div class="row">
-					<label class="control-label col-sm-2">Level Objective</label>
-					</div>
 					<hr>
 					<div class="row">
+						<label class="control-label col-sm-2">Objective:</label>
 						<div class="col-sm-3">
 							<input type="text" class="form-control" id="type" name="type" placeholder="Objective Type"/>
 						</div>
 						<div class="col-sm-3">
 							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Objective Value"/>
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Points"/>
 						</div>
-						<div class="col-sm-3">
+						<div class="col-sm-2">
 							<button type="button" onclick="append_objective()">Add</button>
 						</div>
+					</div>
+					<div class="row">
 					</div>
 				</div>
 
