@@ -133,5 +133,35 @@
 			$this->load->view('pages/game2', $data);
 			$this->load->view('templates/game_footer');
 		}
+
+		public function get_objectives() {
+
+			$this->_init();
+
+			
+
+			if(isset($_POST)) {
+
+				$obj_params = array(
+					"LVL_ID" => $_POST['lvlId']
+				);
+
+				$objectives_list = $this->Game_model->get_objectives($obj_params);
+
+				// echo json_encode(array("status" => true, "message" => "working"));
+				// exit();
+
+				if(sizeof($objectives_list) > 0) {
+					echo json_encode(array("status" => true, "objectives_list" => $objectives_list));
+				} else {
+					echo json_encode(array("status" => false, "message" => "no objectives"));
+				}
+
+
+
+			} else {
+				echo json_encode(array("status" => false, "message" => "failed to retreive objectives list"));
+			}
+		}
 	}
 ?>

@@ -1,4 +1,5 @@
 
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<div class="container-fluid">
 		<nav>
 			<ul>
@@ -82,13 +83,25 @@
 <div id="obj_modal" class="modal" style="display: none;">
 	<div class="modal-content">
 		<div>
-			<button style="float: right;" id="obj_modal_close"><span>&times;</span></button>
-			<?php 
-				echo "<pre>";
-				echo var_dump($objectives_list);
-				echo "</pre>";
-
-			?>
+			<div>
+				<button style="float: right;" id="obj_modal_close"><span>&times;</span></button>
+			</div>
+		</div>
+		<div class="objectives container" style="margin-top: 30;">
+			<ul style="list-style-type: none;">
+				<?php foreach ($objectives_list as $obj): ?>
+					<li>
+						<div class="row">
+							<div class="obj-description col-md-8">
+								<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+							</div>
+							<div class="obj-status col-md-4">
+								<input type="checkbox" name="obj_status">
+							</div>
+						</div>
+					</li>	
+				<?php endforeach ?>
+			</ul>
 		</div>
 		
 	</div>
@@ -204,6 +217,7 @@
 	var isloop = false;
 	var startloop = 0;
 	var bullyCount = 0;
+	var KilledBullies = 0;
 	var code_stack = [];
 	var code_var = [];
 
@@ -491,6 +505,54 @@
 		};
 
 		Objective.list[id] = self;
+	}
+
+	Objective.init = function() {
+
+		var promise = new Promise(function(resolve, reject) {
+
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo base_url(); ?>Game/get_objectives',
+				data: {lvlId: document.getElementById("mapId").value},
+				dataType: 'json',
+				success: function(res) {
+					resolve(res);
+				},
+				error: function(err) {
+					console.log(err);
+				}
+			}).then(function(result) {
+
+				if(result.status) {
+					var objectives_list = result['objectives_list'];
+
+					for(var key in objectives_list) {
+
+						var taskObj = {};
+						var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
+						var objKey = Object.keys(jsonObj);
+
+						if(objKey[0] == "Finish") {
+
+							if(jsonObj['Finish'] == "True") {
+								taskObj = {finish: true};
+							} else {
+								taskObj = {finish: false};
+							}
+						} else if() {}
+						
+
+
+						Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj);
+					}
+
+					// console.log(Objective.list);
+				} else {
+					console.log(result.message);
+				}
+			});
+		});
 	}
 
 	Objective.list = {};
@@ -930,6 +992,7 @@
 		for(var key in Bully.list) {
 			if(Bully.list[key].toRemove === true)
 			{
+				KilledBullies++;
 				delete Bully.list[key];
 				bullyCount--;
 			}
@@ -1183,6 +1246,7 @@
 		$(".player-hp-bar").css("width", "100%");
 
 		bullyCount = 0;
+		KilledBullies = 0;
 		cmdNum = 0;
 		bumpWallCtr = 0;
 		moveCtr = 0;
@@ -1195,6 +1259,7 @@
 		Projectile.list = {};
 		Coin.list = {};
 		Bully.list = {};
+		Objective.list = {};
 
 		code_stack = [];
 		code_var = [];
@@ -1204,6 +1269,7 @@
 		key.locate();
 		Coin.Init();
 		Bully.init();
+		Objective.init();
 
 		// do{
 		// 	canvas.width = Maps.current.width;
