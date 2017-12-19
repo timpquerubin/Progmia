@@ -68,7 +68,7 @@
 				'page' => 'level-edit',
 				'lvlId' => $lvlId
 			);
-			
+
 			$data['lvl_info'] = $this->Game_model->get_current_level($lvlId);
 			$data['lvlId'] = $lvlId;
 
@@ -96,12 +96,34 @@
 			$this->load->view('templates/dashboard_footer');
 		}
 
+		public function avatar_list()
+		{
+			$this->__init();
+
+			$levels = $this->Game_model->get_avatars();
+			$data['stages'] = $stages;
+			$data['levels'] = $levels;
+
+			$header_data = array(
+				'title' => 'Levels',
+				'tab_active' => 'levels',
+				'page' => 'level-list'
+			);
+
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/level/list', $data);
+			$this->load->view('templates/dashboard_footer');
+		}
+
 		public function level_list()
 		{
 			$this->__init();
 
 			$levels = $this->Game_model->get_levels();
+			$stages = $this->Game_model->get_stages();
 
+			$data['stages'] = $stages;
 			$data['levels'] = $levels;
 
 			$header_data = array(
@@ -251,6 +273,21 @@
 				var_dump($res);
 				echo "</pre>";
 				exit();
+			}
+		}
+
+		public function delete_level()
+		{
+			$this->__init();
+			
+			if(isset($_POST))
+			{
+				$lvlId = $_POST['lvlId'];
+				$array = array(
+					'LVL_ID' => $_POST['lvlId']
+				);
+				$res = $this->Game_model->delete_objective($array);
+				$res = $this->Game_model->delete_level($array);
 			}
 		}
 

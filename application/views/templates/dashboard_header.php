@@ -32,6 +32,7 @@
 						<li><a href="#">DASHBOARD</a></li>
 						<li><button class="game-editor">GAME EDITOR<div class="expand"></div></button>
 								<ul class="accordion-panel">
+									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/avatar_list">Avatars</a></a></li>
 									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/stage_list">Stages</a></a></li>
 									<li><a href=""><a href="<?php echo base_url(); ?>Dashboard/level_list">Levels</a></a></li>
 								</ul>

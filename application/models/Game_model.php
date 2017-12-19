@@ -111,6 +111,12 @@
 			return $this->db->delete('OBJECTIVE', $params);
 		}
 
+		public function delete_level($params)
+		{
+			
+			return $this->db->delete('LEVEL', $params);
+		}
+
 		public function get_objectives($params = null)
 		{
 			if($params === null) {
