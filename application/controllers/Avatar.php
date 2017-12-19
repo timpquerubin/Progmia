@@ -1,27 +1,27 @@
 <?php
-	class Character extends CI_Controller
+	class Avatar extends CI_Controller
 	{
 		public function _init()
 		{
-			$this->load->model('Character_model');
+			$this->load->model('Avatar_model');
 		}
 
-		public function create()
+		public function add_avatar()
 		{
 			$this->_init();
 
-			$avatars = $this->Character_model->get_all_avatar();
+			$avatars = $this->Avatar_model->get_all_avatar();
 
 			$data['avatars'] = $avatars;
 
-			$this->load->view('character/create', $data);
+			$this->load->view('avatar/add', $data);
 		}
 
 		public function get_avatar_list() {
 
 			$this->_init();
 
-			$avatars = $this->Character_model->get_all_avatar();
+			$avatars = $this->Avatar_model->get_all_avatar();
 
 			$data['avatars'] = json_encode($avatars);
 
@@ -31,7 +31,7 @@
 		public function update()
 		{
 			$this->_init();
-			$avatars = $this->Character_model->update_user_avatar($_POST["avatarId"],$_POST["userID"]);
+			$avatars = $this->Avatar_model->update_user_avatar($_POST["avatarId"],$_POST["userID"]);
 
 		}
 

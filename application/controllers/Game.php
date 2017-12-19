@@ -5,7 +5,7 @@
 		{
 			$this->load->model('Game_model');
 			$this->load->model('User_model');
-			$this->load->model('Character_model');
+			$this->load->model('Avatar_model');
 		}
 
 		public function isLoggedIn()
@@ -15,6 +15,22 @@
 				$this->session->set_flashdata('user_notloggedin', 'Please login first');
 				redirect('Home');
 			}
+		}
+
+		public function avatar()
+		{
+			$this->_init();
+			$this->isLoggedIn();
+
+			$userID = $this->session->userdata('user_id');
+			$avatars = $this->Avatar_model->get_all_avatar();
+
+			$data['avatar_list'] = $avatars;
+			$data['userID'] = $userID;
+
+			$this->load->view('templates/menu_avatar_header');
+			$this->load->view('game/menu/menu_avatar', $data);
+			$this->load->view('templates/menu_avatar_footer');
 		}
 
 		public function stages()
@@ -39,29 +55,7 @@
 			$this->load->view('game/menu/menu_stages', $data);
 			$this->load->view('templates/menu_stages_footer');
 		}
-
-		public function avatar()
-		{
-			$this->_init();
-			$this->isLoggedIn();
-			
-			$userID = $this->session->userdata('user_id');
-			$avatars = $this->Character_model->get_all_avatar();
-
-			$data['avatars'] = $avatars;
-
-			$userID = $this->session->userdata('user_id');
-			$avatars =$this->User_model->get_avatars();
-
-			$data['avatar_list'] = $avatars;
-			$data['userID'] = $userID;
-
-			$this->load->view('templates/menu_avatar_header');
-			$this->load->view('game/menu/menu_avatar', $data);
-			$this->load->view('templates/menu_avatar_footer');
-		}
-
-
+		
 		public function levels($stage = null)
 		{
 			$this->_init();

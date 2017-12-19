@@ -1,5 +1,5 @@
 <?php 
-	class Character_model extends CI_Model
+	class Avatar_model extends CI_Model
 	{
 		public function __construct()
 		{
