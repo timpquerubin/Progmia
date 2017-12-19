@@ -2,8 +2,12 @@
 	<style type="text/css">
 		
 		div.manage-objective-container {
-			margin: 20px 20px;
-			padding: 10px;
+			margin: 0px;	
+		}
+
+		div.manage-objectives {
+			margin: 0px 20px;
+			padding: 20px;
 			border: 1px solid #d9d9d9;
 		}
 
@@ -57,36 +61,42 @@
 		</div>
 
 		<div class="manage-objective-container">
+
+			<div class="manage-objectives">
 			
-			<div class="manage-objectives-header"><h4>Objectives</h4></div>
+				<div class="manage-objectives-header"><h4>Objectives</h4></div>
 
-			<div class="objective-block"></div>
+				<div class="objective-block"></div>
 
-			<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php base_url(); ?>dashboard/save_objectives">
+				
+				<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php base_url(); ?>dashboard/save_objectives">
 
-				<div class="form-group">
-					<label class="control-label col-sm-2">Objective:</label>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="type" name="type" placeholder="Objective Type">
+					<div class="form-group">
+						<label class="control-label col-sm-2">Objective:</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="type" name="type" placeholder="Objective Type">
+						</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Value">
+						</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="obj_val" name="obj_points" placeholder="Points">
+						</div>
 					</div>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Value">
-					</div>
-					<div class="col-sm-3">
-						<input type="text" class="form-control" id="obj_val" name="obj_points" placeholder="Points">
-					</div>
-				</div>
 
-				<div class="form-group">
-					<label class="control-label col-sm-2">Description:</label>
-					<div class="col-sm-9">
-						<textarea class="form-control" style="resize: none;" rows="5" name="objective-description" id="objective-description" placeholder="Objective Description"></textarea>
+					<div class="form-group">
+						<label class="control-label col-sm-2">Description:</label>
+						<div class="col-sm-9">
+							<textarea class="form-control" style="resize: none;" rows="5" name="objective-description" id="objective-description" placeholder="Objective Description"></textarea>
+						</div>
 					</div>
-				</div>
 
-				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5" value="Add">
+					<div class="row">
+						<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5" value="Add">
+					</div>
 
-			</form>
+				</form>
+			</div>
 		</div>
 
 	<script type="text/javascript">
