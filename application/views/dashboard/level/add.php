@@ -164,7 +164,7 @@
 
 		$("#add_level_form").submit(function(e) {
 
-			var formData = new FormData($("#add_level_form")[0]);
+			var formData = new FormData($("#add_avatar_form")[0]);
 			var newLvlId = "";
 			var list = {};
 			list['objectives'] = objective_list;

@@ -298,12 +298,6 @@
 		public function save_add_level()
 		{
 			$this->__init();
-
-			// echo "<pre>";
-			// var_dump($_POST);
-			// echo "</pre>";
-			// exit();
-
 			$count_levels_params['STAGE'] = $_POST['stage'];
 
 			$level_count = count($this->Game_model->get_levels($count_levels_params));

@@ -87,21 +87,20 @@
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
 			</form>
 
+
 <script type="text/javascript">
 	$(document).ready(function(){
 
 		var objective_list = {};
 		var objCtr = 0;
 
-		add_avatar = function() {
+		append_objective = function() {
 			var type = document.getElementById("type").value;
 			var value = document.getElementById("obj_val").value;
 			var desc = document.getElementById("objective-description").value;
 			var points = document.getElementById("obj_points").value;
 
 			objective_list[objCtr] = {objNum:objCtr, type: type, value: value, desc: desc, points: points};
-
-			objCtr++;
 
 			document.getElementById("type").value = "";
 			document.getElementById("obj_val").value = "";
@@ -111,124 +110,22 @@
 			load_objectives_block();
 		}
 
-		deleteObjective = function(objIndex) {
-			var index = parseInt(objIndex);
-			console.log("index" + index);
+		load_objectives_block = function() {
 
-			delete objective_list[objIndex];
+			var data = {};
+			data['objectives'] = objective_list;
 
-			load_objectives_block();
-		}
-
-		load_objectives_block();
-
-		$("#add_avatar_form").submit(function(e) {
-
-			var formData = new FormData($("#add_avatar_form")[0]);
-			var newAvtrId = "";
-			var list = {};
-			list['avatar'] = avatar_list;
-
-			var promise = new Promise(function(resolve, reject) {
-				$.ajax({
-					type: 'post',
-					url: "<?php echo base_url(); ?>" + "dashboard/save_add_avatar",
-					data: formData,
-					contentType: false,
-					processData: false,
-					dataType: 'json',
-					success: function(data) {
-						resolve(data['avtrId']);
-						
-					},
-					error: function(xhr, status, err) {
-						console.log(err);
-					}
-				});
-			}).then(function(lvlId) {
-				
-				list['avtrId'] = avtrId;
-
-				$.ajax({
-					type: 'post',
-					url: "<?php echo base_url(); ?>" + "dashboard/save_avatar",
-					data: list,
-					dataType: 'json',
-					success: function(res) {
-						if(res['status']) {
-							window.location = "<?php echo base_url(); ?>dashboard/avatar_list";
-						} else {
-							window.location = "<?php echo base_url(); ?>dashboard/add_avatar";
-						}
-					},
-					error: function(xhr, status, err) {
-						console.log(err);
-					}
-				});
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>" + "dashboard/load_objectives_block",
+				data: data,
+				success: function(data) {
+					$(".objective-block").html(data);
+				},
+				error: function(xhr, status, err) {
+					console.log(err);
+				}
 			});
-
-			e.preventDefault();
-		});
-
-	    $("#imgSprite").change(function(){
-	        if(this.files && this.files[0])
-	        {
-	        	console.log(this.files[0]);
-	        	var reader = new FileReader();
-	        	reader.onload = function(e)
-	        	{
-	        		var img = new Image();
-	        		img.src = e.target.result;
-	        		console.log(img.height + "," + img.width);
-
-	        		$("#imgPrev1").css("background-image", "url("+ e.target.result +")");
-	        		$("#imgPrev1").show();
-	        	}
-
-	        	reader.readAsDataURL(this.files[0]);
-	        }
-	    });
-
-
-
-	    $("#imgFront").change(function(){
-	        if(this.files && this.files[0])
-	        {
-	        	console.log(this.files[0]);
-	        	var reader = new FileReader();
-	        	reader.onload = function(e)
-	        	{
-	        		var img = new Image();
-	        		img.src = e.target.result;
-	        		console.log(img.height + "," + img.width);
-
-	        		$("#imgPrev2").css("background-image", "url("+ e.target.result +")");
-	        		$("#imgPrev2").show();
-	        	}
-
-	        	reader.readAsDataURL(this.files[0]);
-	        }
-	    });
-
-
-
-	    $("#imgThumb").change(function(){
-	        if(this.files && this.files[0])
-	        {
-	        	console.log(this.files[0]);
-	        	var reader = new FileReader();
-	        	reader.onload = function(e)
-	        	{
-	        		var img = new Image();
-	        		img.src = e.target.result;
-	        		console.log(img.height + "," + img.width);
-
-	        		$("#imgPrev3").css("background-image", "url("+ e.target.result +")");
-	        		$("#imgPrev3").show();
-	        	}
-
-	        	reader.readAsDataURL(this.files[0]);
-	        }
-	    });
-	});
-</script>			
+		}
+		);
+	</script>
