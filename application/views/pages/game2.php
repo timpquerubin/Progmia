@@ -218,12 +218,14 @@
 	var startloop = 0;
 	var bullyCount = 0;
 	var KilledBullies = 0;
+	var coinCount = 0;
+	var collectedCoins = 0;
 	var code_stack = [];
 	var code_var = [];
 
 	var img = {};
 	img.player = new Image();
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/FINAL_SPRITE_BODY.png";
+	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
 	img.map = new Image();
@@ -540,19 +542,52 @@
 							} else {
 								taskObj = {finish: false};
 							}
-						} else if() {}
+						} else if(objKey[0] == 'Defeat Bullies') {
+
+							taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
+
+						} else if(objKey[0] == 'Use Command') {
+
+							taskObj = {use_command: jsonObj['Use Command']};
+
+						} else if(objKey[0] == 'Collect Coins') {
+
+							taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
+
+						} else if(objKey[0] == 'Health') {
+
+							var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
+							taskObj = {health: healthPerc};
+						}
 						
 
 
 						Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj);
 					}
 
-					// console.log(Objective.list);
+					console.log(Objective.list);
 				} else {
 					console.log(result.message);
 				}
 			});
 		});
+	}
+
+	Objective.update = function() {
+
+		for(var key in Objective.list) {
+
+			var objKey = Object.keys(Objective.list[key].task);
+
+			if(objKey == 'health') {
+
+				var hpPerc = player.hp / player.hpMax;
+				
+				if(hpPerc >= Objective.list[key].task.health) {
+					Objective.list[key].status = true;
+				}
+			}
+		}
 	}
 
 	Objective.list = {};
@@ -975,13 +1010,14 @@
 				
 					Bully(bullyId, bullyX, bullyY, img.bully.height/4, img.bully.width/4, img.bully.src);
 					bullyCount++;
-					console.log(bullyCount);
 				}
 
 				startPoint = Maps.current.grid[i].indexOf(7, startPoint) + 1;
 
 			} while(startPoint != 0);
 		}
+
+		console.log("bullies: " + bullyCount);
 	}
 
 	Bully.update = function() {
@@ -994,7 +1030,8 @@
 			{
 				KilledBullies++;
 				delete Bully.list[key];
-				bullyCount--;
+				// bullyCount--;
+				KilledBullies++;
 			}
 		}
 	}
@@ -1098,12 +1135,15 @@
 					coinId = "coin_" + Math.random();
 				
 					Coin(coinId, img.coin.src, 50, 25, coinX, coinY);
+					coinCount++;
 				}
 
 				startPoint = Maps.current.grid[i].indexOf(6, startPoint) + 1;
 
 			} while(startPoint != 0);
 		}
+
+		console.log("coins: " + coinCount);
 	}
 
 	Coin.update = function()
@@ -1117,6 +1157,7 @@
 			{
 				console.log('coins + 1');
 				delete Coin.list[key];
+				collectedCoins++;
 			}
 		}
 	}
@@ -1247,6 +1288,8 @@
 
 		bullyCount = 0;
 		KilledBullies = 0;
+		coinCount = 0;
+		collectedCoins = 0;
 		cmdNum = 0;
 		bumpWallCtr = 0;
 		moveCtr = 0;
@@ -1297,6 +1340,7 @@
 		player.update();
 		Bully.update();
 		Projectile.update();
+		Objective.update();
 	}
 
 	start_point = JSON.parse(start_point);
