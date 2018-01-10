@@ -13,10 +13,3 @@ div.level-info {background-color: #444;display: block;height: 100%;margin: 0px 1
 div.level-info:hover ,div.level-info:hover h2{background-color: #aaa;color:#333;}
 
 div.level-link {height: 100%;margin: 0px;padding: 0px;border-top:solid 10px #777;border-left:solid 10px #555;border-right:solid 10px #555;border-bottom:solid 10px #333;}
-.bottom-stars{position: absolute;left: 0;bottom: 0;right: 0;max-width:180px;margin:0 auto 10px auto;background:#5d4f3b;border:solid #bbb 3px;}
-fieldset label {margin: 0; padding: 0;}
-.stage-rating {border: none;}
-.stage-rating input {display: none;}
-.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;} /*FFD700*/ 
-.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}
-input.no-score + label:before{ color: #aaa;}

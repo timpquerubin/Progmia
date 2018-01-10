@@ -69,11 +69,13 @@
 				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
 				$level_stage = $this->Game_model->get_level_stage($stage);
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
+				$lvl_max_pts = $this->Game_model->get_lvl_max_points();
 			}
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
 			$data['level_stages'] = $level_stage;
 			$data['progress_list'] = $progress;
+			$data['lvl_max_pts'] = $lvl_max_pts;
 
 			$this->load->view('templates/menu_levels_header');
 			$this->load->view('templates/load_init_links');
@@ -161,6 +163,31 @@
 
 			} else {
 				echo json_encode(array("status" => false, "message" => "failed to retreive objectives list"));
+			}
+		}
+
+		public function record_progress() {
+
+			$this->_init();
+
+			if(isset($_POST)) {
+
+				$userID = $this->session->userdata('user_id');
+				$progress = $this->Game_model->get_progress();
+
+				$prog_params = array(
+					'PROG_ID' => (count($progress) + 1),
+					'USER_ID' => $userID,
+					'LVL_ID' => $_POST['lvl_id'],
+					'POINTS_SCORED' => $_POST['total_score']
+				);
+
+				$result = $this->Game_model->insert_progress($prog_params);
+
+				echo json_encode(array("status" => true, "message" => "successfuly recorded progress"));
+			} else {
+
+				echo json_encode(array("status" => false, "message" => "failed to record progress"));
 			}
 		}
 	}

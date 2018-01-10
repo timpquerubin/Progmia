@@ -19,23 +19,40 @@
 			</ul>
 		</nav>
 	</div>
-<div id="myModal" class="modal" style="display: none;">
+<div id="myModal" class="modal" style="display: block;">
 
   <!-- Modal content -->
 	<div class="modal-content">
 		<div class="row">
 		    <span class="close" onclick="close()">&times;</span>
 		</div>
-		<div class="row">
-			REMARKS (Good/Excellent/Perfect)
-		</div>
-		<div class="row">
-			<ul>
-				<li>STAR</li>
-				<li>STAR</li>
-				<li>STAR</li>
+
+		<div class="objectives container">
+			<h4>Objectives</h4>
+			<ul style="list-style-type: none;">
+				<?php foreach ($objectives_list as $obj): ?>
+					<li>
+						<div class="row">
+							<div class="obj-description col-md-8">
+								<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+							</div>
+							<div class="obj-status col-md-4">
+								<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" type="checkbox" name="obj_status">
+							</div>
+						</div>
+					</li>	
+				<?php endforeach ?>
 			</ul>
 		</div>
+
+		<div class="stars container">
+			<fieldset class="stage-rating">
+				<input type="radio" name="rating_stage" id="star1" value="1" disabled><label class="" for="star1" title="Good"></label>
+				<input type="radio" name="rating_stage" id="star2" value="2" disabled><label class="" for="star2" title="Excellent"></label>
+				<input type="radio" name="rating_stage" id="star3" value="3" disabled><label class="" for="star3" title="Perfect"></label>
+			</fieldset>
+		</div>
+
 		<div class="row">
 			<h2>Points: XXXX</h2>
 		</div>
@@ -96,7 +113,7 @@
 								<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
 							</div>
 							<div class="obj-status col-md-4">
-								<input type="checkbox" name="obj_status">
+								<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" type="checkbox" name="obj_status">
 							</div>
 						</div>
 					</li>	
@@ -222,6 +239,11 @@
 	var collectedCoins = 0;
 	var code_stack = [];
 	var code_var = [];
+
+	var used_loop = false;
+	var used_if = false;
+
+	var isFinished = false;
 
 	var img = {};
 	img.player = new Image();
@@ -349,6 +371,7 @@
 					toNextCmd = false;
 				}
 			} else if(/^while\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(cmdLine)) {
+				used_loop = true;
 				isloop = true;
 				startloop = commandNum - 1;
 				moveCtr = 97*1.25;
@@ -361,6 +384,8 @@
 			} else if(/^if\([A-Za-z0-9=<>()\s]*\)\s*{$/g.test(cmdLine)) {
 
 				var result = false;
+
+				used_if = true;
 
 				if(/^isEnemyInRange\(\)$/g.test(getConditions(cmdLine, "(", ")"))) {
 					if(player.isEnemyInRange() != false) {
@@ -381,6 +406,8 @@
 					cond_result: result
 				});
 				console.log(getConditions(cmdLine, "(", ")"));
+			} else if(/^System\.out\.println\([A-Za-z0-9"+()\s]*\);$/g) {
+				player.say("hello");
 			} else {
 				console.log('error: invalid command: ' + cmdLine);
 				moveCtr = 97*1.25;
@@ -497,13 +524,14 @@
 		Maps.current = Maps(id, imgSrc, mapGrid2d, startPt);
 	}
 
-	Objective = function(id, status, desc, task)
+	Objective = function(id, status, desc, task, points)
 	{
 		var self = {
 			id: id,
 			status: status,
 			description: desc,
 			task: task,
+			points: points,
 		};
 
 		Objective.list[id] = self;
@@ -546,9 +574,9 @@
 
 							taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
 
-						} else if(objKey[0] == 'Use Command') {
+						} else if(objKey[0] == 'Use command') {
 
-							taskObj = {use_command: jsonObj['Use Command']};
+							taskObj = {use_command: jsonObj['Use command']};
 
 						} else if(objKey[0] == 'Collect Coins') {
 
@@ -562,7 +590,7 @@
 						
 
 
-						Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj);
+						Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
 					}
 
 					console.log(Objective.list);
@@ -585,9 +613,100 @@
 				
 				if(hpPerc >= Objective.list[key].task.health) {
 					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				}
+			} else if(objKey == 'collect_coins') {
+
+				if(collectedCoins == Objective.list[key].task.collect_coins) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				}
+			} else if(objKey == 'defeat_bullies') {
+
+				if(KilledBullies >= Objective.list[key].task.defeat_bullies) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				}
+			} else if(objKey == 'use_command') {
+
+				if(Objective.list[key].task.use_command == 'Loop') {
+					if(used_loop) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				}
+
+				if(Objective.list[key].task.use_command == 'If') {
+					if(used_if) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				}
+			} else if(objKey == 'finish') {
+				if(isFinished) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 				}
 			}
+			
 		}
+	}
+
+	Objective.computeScore = function() {
+
+		var totalScore = 0;
+		var perfect_score = 0;
+		var score_perc = 0;
+
+		for(var key in Objective.list) {
+
+			perfect_score += Objective.list[key].points;
+
+			if(Objective.list[key].status) {
+				totalScore += Objective.list[key].points;
+			}
+		}
+
+		score_perc = parseFloat((totalScore/perfect_score)*100);
+
+		console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
+
+		if(score_perc < 50 && score_perc > 0) {
+			$("#star1").attr("checked", true);
+		} else if(score_perc >= 50 && score_perc < 100) {
+			$("#star2").attr("checked", true);
+		} else if(score_perc == 100) {
+			$("#star3").attr("checked", true);
+		} else {
+			$("#star1").addClass("no-score");
+			$("#star2").addClass("no-score");
+			$("#star3").addClass("no-score");
+		}
+
+		return totalScore;
+	}
+
+	Objective.recordScore = function() {
+
+		var aquiredScore = Objective.computeScore();
+
+		var data = {
+			lvl_id: document.getElementById("mapId").value,
+			total_score: aquiredScore
+		}
+
+		$.ajax({
+			type: 'POST',
+			url: '<?php echo base_url(); ?>Game/record_progress',
+			data: data,
+			dataType: 'json',
+			success: function(res) {
+				console.log(res);
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		});
 	}
 
 	Objective.list = {};
@@ -688,14 +807,18 @@
 			{
 				console.log(bullyCount > 0);
 				// key.status != true && 
-				if(key.status != true || bullyCount > 0)
+				if(key.status != true)
 				{
 					alert('error: door locked');
 					startNewGame();
 
-				} else
-				{
-					//alert('goal');
+				} else {	
+
+					isFinished = true;
+					Objective.update();
+					console.log(Objective.list);
+					Objective.recordScore();
+
 					bgmusic.pause();
 					success.play();
     				modal.style.display = "block";
@@ -816,6 +939,11 @@
 			// }
 		};
 
+		self.say = function(strSay) {
+
+			Dialog.generate("testing", "player");
+		}
+
 		self.isEnemyInRange = function() {
 			
 			for(var key in Bully.list) {
@@ -823,13 +951,13 @@
 				if(Bully.list[key].x === self.x) {
 					if(((self.y - Bully.list[key].y) <= 120) && ((self.y - Bully.list[key].y) > 0)) {
 						return "up";
-					} else if(((self.y - Bully.list[key].y) >= -97) && ((self.y - Bully.list[key].y) < 0)) {
+					} else if(((self.y - Bully.list[key].y) >= -120) && ((self.y - Bully.list[key].y) < 0)) {
 						return "down";
 					}
 				} else if(Bully.list[key].y === self.y) {
 					if(((self.x - Bully.list[key].x) <= 120) && ((self.x - Bully.list[key].x) > 0)) {
 						return "left";
-					} else if(((self.x - Bully.list[key].x) >= -97) && ((self.x - Bully.list[key].x) < 0)) {
+					} else if(((self.x - Bully.list[key].x) >= -120) && ((self.x - Bully.list[key].x) < 0)) {
 						return "right";
 					}
 				} else {
@@ -862,6 +990,65 @@
 		}
 
 		return self;
+	}
+
+	Dialog = function(id, x, y, textString, dialogType) {
+
+		var self = {
+			id: id,
+			x: x,
+			y: y,
+			duration: 30,
+			type: dialogType,
+			text: textString,
+			toRemove: false,
+		};
+
+		self.update = function() {
+
+			self.duration--;
+
+			if(self.duration <= 0) {
+				self.toRemove = true;
+			}
+
+			self.draw();
+
+		}
+
+		self.draw = function() {
+
+			ctx.save();
+
+			if(self.type == "player")
+			
+			ctx.font = "15px Arial";
+			ctx.fillText("\"" + textString + "\"", player.x + 25 , player.y + 7);
+
+			ctx.restore();
+		}
+
+		Dialog.list[id] = self;
+	}
+
+	Dialog.list = {};
+
+	Dialog.update = function() {
+
+		for(var key in Dialog.list) {
+			Dialog.list[key].update();
+
+			if(Dialog.list[key].toRemove) {
+				delete Dialog.list[key];
+			}
+		}
+	}
+
+	Dialog.generate = function(textSay, type) {
+
+		var id = Math.random();
+
+		Dialog("dlg_" + id, 0, 0, textSay, type);
 	}
 
 	Bully = function(id, x, y, height, width, imgSrc) 
@@ -1028,10 +1215,11 @@
 		for(var key in Bully.list) {
 			if(Bully.list[key].toRemove === true)
 			{
-				KilledBullies++;
 				delete Bully.list[key];
 				// bullyCount--;
 				KilledBullies++;
+
+				console.log("Defeated Bullies: " + KilledBullies);
 			}
 		}
 	}
@@ -1155,9 +1343,10 @@
 
 			if(player.testCollision(Coin.list[key]))
 			{
-				console.log('coins + 1');
 				delete Coin.list[key];
 				collectedCoins++;
+
+				console.log("collected coins: " +collectedCoins);
 			}
 		}
 	}
@@ -1296,6 +1485,11 @@
 		isloop = false;
 		startloop = 0;
 
+		used_loop = false;
+		used_if = false;
+
+		isFinished = false;
+
 		var code_stack = [];
 		var code_var = [];
 
@@ -1303,6 +1497,7 @@
 		Coin.list = {};
 		Bully.list = {};
 		Objective.list = {};
+		Dialog.list = {};
 
 		code_stack = [];
 		code_var = [];
@@ -1339,6 +1534,7 @@
 		Coin.update();
 		player.update();
 		Bully.update();
+		Dialog.update();
 		Projectile.update();
 		Objective.update();
 	}

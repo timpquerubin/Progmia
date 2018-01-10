@@ -26,21 +26,26 @@
 							<div class="level-link">
 								<h2>Level <?php echo $i+1; ?></h2>
 								<?php $score = 0; ?>
-									<?php foreach ($progress_list as $progress) { ?>
-										<?php if($progress['LVL_ID'] == $level['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID ) { ?>
-											<!-- <?php //echo $progress['POINTS_SCORED']; ?> / <?php //echo $progress['MAX_POINTS']; ?> -->
-											<?php $score = (int)($progress['POINTS_SCORED']/$progress['MAX_POINTS']*100); ?>
-											<!-- <?php //echo $score ?>% -->
+								<?php foreach ($progress_list as $progress) { ?>
+									<?php if($progress['LVL_ID'] == $level['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID ) { ?>
+
+										<?php foreach($lvl_max_pts as $max_pts) { ?>
+											<?php if($max_pts['LVL_ID'] == $level['LVL_ID']) { ?>
+												<?php $score = (int)($progress['POINTS_SCORED']/$max_pts['MAX_PTS']*100); ?>
+											<?php } ?>
 										<?php } ?>
+										<!-- <?php //echo $progress['POINTS_SCORED']; ?> / <?php //echo $progress['MAX_POINTS']; ?> -->
+										<!-- <?php //echo $score ?>% -->
 									<?php } ?>
+								<?php } ?>
 								<input type="hidden" name="level_<?php echo $i+1; ?>_score" id="level_<?php echo $i+1; ?>_score" value="<?php echo $score; ?>">
 								<div class="bottom-stars">
-								<fieldset class="stage-rating">
-								<!-- <?php // if($score == 0 || $score == null){ ?> -->
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star1" value="1" disabled><label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star2" value="2" disabled><label class="" for="level_<?php echo $i+1; ?>_star2" title="Excellent"></label>
-									<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star3" value="3" disabled><label class="" for="level_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-								</fieldset>
+									<fieldset class="stage-rating">
+									<!-- <?php // if($score == 0 || $score == null){ ?> -->
+										<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star1" value="1" disabled><label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"></label>
+										<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star2" value="2" disabled><label class="" for="level_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+										<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star3" value="3" disabled><label class="" for="level_<?php echo $i+1; ?>_star3" title="Perfect"></label>
+									</fieldset>
 								</div>
 							</div>
 						</a>
@@ -75,11 +80,23 @@
 		for(var i = 1; i <= num_levels; i++) {
 			var level_score = parseInt(document.getElementById("level_"+ i +"_score").value);
 
-			if(level_score <= 33 && level_score > 0) {
+			// if(level_score <= 33 && level_score > 0) {
+			// 	$("#level_"+ i + "_star1").attr("checked", true);
+			// } else if(level_score > 33 && level_score <= 66) {
+			// 	$("#level_"+ i + "_star2").attr("checked", true);
+			// } else if(level_score > 66 && level_score <= 100) {
+			// 	$("#level_"+ i + "_star3").attr("checked", true);
+			// } else {
+			// 	$("#level_"+ i + "_star1").addClass("no-score");
+			// 	$("#level_"+ i + "_star2").addClass("no-score");
+			// 	$("#level_"+ i + "_star3").addClass("no-score");
+			// }
+
+			if(level_score < 50 && level_score > 0) {
 				$("#level_"+ i + "_star1").attr("checked", true);
-			} else if(level_score > 33 && level_score <= 66) {
+			} else if(level_score >= 50 && level_score < 100) {
 				$("#level_"+ i + "_star2").attr("checked", true);
-			} else if(level_score > 66 && level_score <= 100) {
+			} else if(level_score == 100) {
 				$("#level_"+ i + "_star3").attr("checked", true);
 			} else {
 				$("#level_"+ i + "_star1").addClass("no-score");
