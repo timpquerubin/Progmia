@@ -26,7 +26,7 @@
 							<?php } ?>
 							<?php $exist = false; ?>
 							<?php foreach ($maxlevel_list as $maxlevel) { ?>
-								<?php if ($maxlevel['STAGE'] == $stage['STG_ID']){ ?>
+								<?php if ($maxlevel['STG_ID'] == $stage['STG_ID']){ ?>
 									<?php if ($exist == true){break;} ?>
 									<?php foreach ($progress_list as $progress) {?>
 										<?php if ($exist == true){break;} ?>

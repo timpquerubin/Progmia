@@ -14,7 +14,7 @@
 		public function get_levels($stage = null)
 		{
 			if($stage === null) {
-				$levels = $this->db->query('SELECT * FROM LEVEL ORDER BY STAGE, LVL_NUM;');
+				$levels = $this->db->query('SELECT * FROM LEVEL ORDER BY STG_ID, LVL_NUM;');
 			} else {
 				$this->db->order_by("LVL_NUM", "asc");
 				$levels = $this->db->get_where('LEVEL', $stage);
@@ -46,7 +46,7 @@
 
 		public function get_max_level($params = null)
 		{
-			$max_level = $this->db->query('SELECT `level`.`LVL_NUM`,`level`.`STAGE`,`level`.`LVL_ID` FROM `level` WHERE (`level`.`LVL_NUM`,`level`.`STAGE`) in (SELECT MAX(`level`.`LVL_NUM`),`level`.`STAGE` FROM `level` group by `level`.`STAGE`)');
+			$max_level = $this->db->query('SELECT `level`.`LVL_NUM`,`level`.`STG_ID`,`level`.`LVL_ID` FROM `level` WHERE (`level`.`LVL_NUM`,`level`.`STG_ID`) in (SELECT MAX(`level`.`LVL_NUM`),`level`.`STG_ID` FROM `level` group by `level`.`STG_ID`)');
 			return $max_level->result_array();
 		}
 
@@ -59,7 +59,7 @@
 			} else if(isset($params['user'])) {
 				$progress = $this->db->query('SELECT * FROM PROGRESS WHERE USER_ID=\''.$params['user'].'\';');
 			} else if(isset($params['stage'])) {
-				$progress = $this->db->query('SELECT * FROM PROGRESS P, LEVEL L WHERE P.LVL_ID=L.LVL_ID AND L.STAGE=\''.$params['stage'].'\';');
+				$progress = $this->db->query('SELECT * FROM PROGRESS P, LEVEL L WHERE P.LVL_ID=L.LVL_ID AND L.STG_ID=\''.$params['STG_ID'].'\';');
 			}
 
 			return $progress->result_array();
