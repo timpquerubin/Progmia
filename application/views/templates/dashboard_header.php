@@ -20,7 +20,8 @@
 <div class="wrapper">
 	<div class="container-fluid">
 		<div class="row">
-				<div id="sticker" class="sticker">
+				
+		<div id="sticker" class="sticker">
 					
 			<div class="col-md-2 sidebar">
 				<div class="row top">
@@ -80,7 +81,7 @@
 				</div>
 			</div>
 
-				</div>
+		</div>
 		<script>
 			  $(document).ready(function(){
 			    $("#sticker").sticky({topSpacing:0});

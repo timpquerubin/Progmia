@@ -49,7 +49,6 @@
 		public function get_all_avatars()
 		{
 			$avatars = $this->db->get('AVATAR');
-
 			return $avatars->result_array();
 		}
 

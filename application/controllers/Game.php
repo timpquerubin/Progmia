@@ -23,7 +23,7 @@
 			$this->isLoggedIn();
 
 			$userID = $this->session->userdata('user_id');
-			$avatars = $this->Avatar_model->get_all_avatar();
+			$avatars = $this->Avatar_model->get_avatars();
 
 			$data['avatar_list'] = $avatars;
 			$data['userID'] = $userID;
