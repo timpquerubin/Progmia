@@ -31,7 +31,7 @@
 
 										<?php foreach($lvl_max_pts as $max_pts) { ?>
 											<?php if($max_pts['LVL_ID'] == $level['LVL_ID']) { ?>
-												<?php $score = (int)($progress['POINTS_SCORED']/$max_pts['MAX_PTS']*100); ?>
+												<?php $score = (int)($progress['GAME_SCORE']/$max_pts['MAX_PTS']*100); ?>
 											<?php } ?>
 										<?php } ?>
 										<!-- <?php //echo $progress['POINTS_SCORED']; ?> / <?php //echo $progress['MAX_POINTS']; ?> -->

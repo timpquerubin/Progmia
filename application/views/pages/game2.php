@@ -67,7 +67,7 @@
 		    	<?php $flag = false; ?>
 		    	<?php $stg; ?>
 				<?php foreach($level_list as $levels){ ?>
-			    	<?php if ($levels['STAGE'] == $current_level->STAGE) { ?>
+			    	<?php if ($levels['STG_ID'] == $current_level->STG_ID) { ?>
 			    		<?php if ($current_level->LVL_NUM + 1 == $levels['LVL_NUM']){ ?>
 					    	<?php $flag = true; ?>
 					    	<button><a href="<?php echo base_url(); ?>Game/play/<?php echo $levels['LVL_ID'] ?>">NEXT LEVEL</a></button>
@@ -82,7 +82,7 @@
 				    				<?php $stg = $stage['STG_ID']; ?>
 				    				<?php $flag = false; ?>
 				    			<?php } ?>
-				    			<?php if ($current_level->STAGE == $stage['STG_ID']){?>
+				    			<?php if ($current_level->STG_ID == $stage['STG_ID']){?>
 							    	<?php $flag = true; ?>
 				    			<?php } ?>
 				    		<?php } ?>

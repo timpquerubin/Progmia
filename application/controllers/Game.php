@@ -66,7 +66,7 @@
 				$levels = $this->Game_model->get_levels();
 				$progress = $this->Game_model->get_progress();
 			} else {
-				$levels = $this->Game_model->get_levels(array('STAGE' => $stage ));
+				$levels = $this->Game_model->get_levels(array('STG_ID' => $stage ));
 				$level_stage = $this->Game_model->get_level_stage($stage);
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 				$lvl_max_pts = $this->Game_model->get_lvl_max_points();
