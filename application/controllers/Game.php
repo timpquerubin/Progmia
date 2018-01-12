@@ -136,6 +136,18 @@
 			$this->load->view('templates/game_footer');
 		}
 
+		public function play_basics() {
+
+			$this->_init();
+			$this->isLoggedIn();
+
+			$this->load->view('templates/game_header');
+			$this->load->view('templates/load_init_links');
+			$this->load->view('game/programming_basics.php');
+			$this->load->view('templates/game_footer');
+
+		}
+
 		public function get_objectives() {
 
 			$this->_init();
