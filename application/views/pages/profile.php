@@ -81,7 +81,7 @@
 						<div class="row">
 						<?php } ?>
 							<?php $ctr++; ?>
-									<div class="col-md-6"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_FILENAME']; ?>" /></div>
+									<div class="col-md-6"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME']; ?>" /></div>
 						<?php if ($ctr == 2) { ?>
 						</div>
 						<?php $ctr = 0 ;?>

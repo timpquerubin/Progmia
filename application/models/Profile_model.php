@@ -9,7 +9,7 @@
 
 		public function get_progress($user)
 		{
-			$progress = $this->db->query('SELECT `user`.`USER_USERNAME`, `stage`.`STG_NAME`, `stage`.`STG_DESCRIPTION`, `level`.`LVL_ID`, `progress`.`POINTS_SCORED`, `progress`.`DATE_PLAYED` FROM `user`, `stage`, `level`, `progress` WHERE `progress`.`LVL_ID` = `level`.`LVL_ID` AND `USER`.`USER_USERNAME` = \''.$user.'\' AND (`progress`.`POINTS_SCORED` != 0 OR `progress`.`POINTS_SCORED` != null) group by `level`.`LVL_NUM` order by `progress`.`DATE_PLAYED` DESC;');
+			$progress = $this->db->query('SELECT `user`.`USER_USERNAME`, `stage`.`STG_NAME`, `stage`.`STG_DESCRIPTION`, `level`.`LVL_ID`, `progress`.`GAME_SCORE`, `progress`.`DATE_PLAYED` FROM `user`, `stage`, `level`, `progress` WHERE `progress`.`LVL_ID` = `level`.`LVL_ID` AND `USER`.`USER_USERNAME` = \''.$user.'\' AND (`progress`.`GAME_SCORE` != 0 OR `progress`.`GAME_SCORE` != null) group by `level`.`LVL_NUM` order by `progress`.`DATE_PLAYED` DESC;');
 			return $progress->result_array();
 		}
 		public function get_stages($user = null)
@@ -34,7 +34,7 @@
 
 		public function get_total_points($userID)
 		{
-			$query = $this->db->query('SELECT SUM(POINTS_SCORED) AS value_sum FROM `progress` WHERE `progress`.`USER_ID` = \''.$userID.'\';');
+			$query = $this->db->query('SELECT SUM(GAME_SCORE) AS value_sum FROM `progress` WHERE `progress`.`USER_ID` = \''.$userID.'\';');
 			$row = $query->row();
 	        return $row->value_sum;	
 		}

@@ -2,17 +2,17 @@
 <div class="wrapper">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<div id="avatar" class="single-item">
-				<?php foreach ($avatar_list as $avatar) { ?>
-					<label>
-					    <input id="avatar-input" type="text" style="display:none" name="fb" value="<?php echo $avatar["CHAR_ID"]; ?>" />
-					    <img class="avatar img-responsive" src="<?php echo base_url(); ?>assets/images/avatars/FRONT_VIEW/<?php echo $avatar["CHAR_FRONTVIEW_FILENAME"]; ?>" >
-					</label>
-						
-				<?php } ?>
+				<div class="selection-center">
+					<div id="avatar" class="center">
+					<?php foreach ($avatar_list as $avatar) { ?>
+						<label>
+						    <input id="avatar-input" type="text" style="display:none" name="fb" value="<?php echo $avatar["AVTR_ID"]; ?>" />
+						    <img class="avatar" src="<?php echo base_url(); ?>assets/images/avatars/FRONTVIEW/<?php echo $avatar["AVTR_FRONTVIEW_FILENAME"]; ?>" >
+						</label>
+							
+					<?php } ?>
+					</div>
 				</div>
-			</div>
 		</div>
 		<div class="row button-select-container">
 			<div class="button-select col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
@@ -22,7 +22,78 @@
 		</div>
 	</div>
 </div>
-
+<script type="text/javascript">
+	$('.center').slick({
+  centerMode: true,
+  centerPadding: '0px',
+  slidesToShow: 2,
+  responsive: [
+    {
+      breakpoint: 1300,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '5px',
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 1224,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '15px',
+        slidesToShow: 2
+      }
+    },
+    {
+      breakpoint: 1024,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '25px',
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '35px',
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '65px',
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '85px',
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 320,
+      settings: {
+        arrows: false,
+        centerMode: true,
+        centerPadding: '100px',
+        slidesToShow: 3
+      }
+    }
+  ]
+});
+</script>
 <script type="text/javascript">
 	$(document).ready(function(){
 					$("#btn").click(function(){
