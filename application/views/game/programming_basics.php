@@ -41,7 +41,7 @@
 	
 	code_area = document.getElementById("code_area");
 
-	var vrbls = {};
+	var vrbls = [];
 
 	document.getElementById('textarea1').value = '1';
 
@@ -89,8 +89,13 @@
 
 			cmdLine = code[commandNum].trim();
 
-			if(/^(int|double|char|String|bool)\s[A-Za-z0-9]*;$/g.test(cmdLine)) {
-				console.log("variable created");
+			if(/^(int|double|char|String|bool)\s[A-Za-z0-9]+\s*;$/g.test(cmdLine)) {
+
+				var tempLine = cmdLine.replace(";", "");
+				
+				var declareLine = tempLine.split(' ');
+
+				console.log(declareLine);
 			} else {
 				console.log("error");
 			}

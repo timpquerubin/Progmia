@@ -191,7 +191,7 @@
 					'PROG_ID' => (count($progress) + 1),
 					'USER_ID' => $userID,
 					'LVL_ID' => $_POST['lvl_id'],
-					'POINTS_SCORED' => $_POST['total_score']
+					'GAME_SCORE' => $_POST['total_score']
 				);
 
 				$result = $this->Game_model->insert_progress($prog_params);
