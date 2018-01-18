@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/create_character.css">
 
+
+
 			<form class="form-horizontal" id="add_level_form" name="add_level_form" method="post" action="save_add_avatar" enctype="multipart/form-data">
 				<div class="row">
 					<div class="col-md-12">

@@ -23,7 +23,7 @@
       				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>home">Home</a></li>
       				<li><a class="hvr-reveal" href="<?php echo base_url(); ?>about">About</a></li>
       				<?php if($this->session->userdata('logged_in')): ?>
-	      				<?php if (!($this->session->userdata('has_character'))){ ?>
+	      				<?php if (!($this->session->userdata('has_avatar'))){ ?>
 	      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Avatar">GAME</a></li>
 	      				<?php } else { ?>
       					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>

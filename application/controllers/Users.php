@@ -175,7 +175,7 @@
 					'user_id' => $user_info->USER_ID,
 					'username' => $this->input->post('username'),
 					'logged_in' => TRUE,
-					'has_character' => isset($user_info->CHAR_ID)
+					'has_avatar' => isset($user_info->AVTR_ID)
 				);
 				$data["user_info"] = $user_info;
 				$this->session->set_userdata($user_data);
@@ -209,7 +209,7 @@
 			$this->session->unset_userdata('user_id');
 			$this->session->unset_userdata('username');
 			$this->session->unset_userdata('logged_in');
-			
+			$this->session->unset_userdata('has_avatar');
 			$this->session->set_flashdata('user_loggedout', 'You are now logged out');
 			redirect('home');
 		}

@@ -52,16 +52,17 @@
 			return $avatars->result_array();
 		}
 
-		public function update_user_avatar($charID,$userID)
+		public function update_user_avatar($avtrID,$userID)
 		{
 			$params = array(
-				'AVTR_ID' => $charID
+				'AVTR_ID' => $avtrID
 			);
 
-			$this->db->set($params); 
+			$this->db->set($params);
 			$this->db->where("USER_ID", $userID);
-			return $this->db->update("user", $params);
-
+			$this->db->update("user", $params);
+			$this->session->set_userdata('has_avatar', true);
+			var_dump($this->session->userdata);
 		}
 	} 
 ?>

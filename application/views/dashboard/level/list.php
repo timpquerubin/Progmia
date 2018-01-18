@@ -33,7 +33,7 @@
 										</td>
 										<!--<td><?php //echo $ctr; ?></td>-->
 										<?php foreach($stages as $stg) {?>
-											<?php if($stg['STG_ID'] == $lvl['STAGE']) { ?>
+											<?php if($stg['STG_ID'] == $lvl['STG_ID']) { ?>
 												<td><?php echo $stg['STG_NAME']; ?></td>
 											<?php } ?>
 										<?php } ?>

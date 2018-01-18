@@ -91,14 +91,33 @@
 					</div>
 					<div id="leaderboard" class="leaderboard">
 						<div class="row">
-							<div class="col-md-3">
-								<div class="row">
+								<div class="col-md-12">
 									<h1>LEADERBOARD</h1>
 								</div>
-								<div class="row">
-
-								</div>
-							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">Ranking</div>
+							<div class="col-md-4">User</div>
+							<div class="col-md-4">Total Game Score</div>
+						</div>
+						<?php $ranking = 1; ?>
+						<?php foreach ($leaderboard_list as $leaderboard){ ?>
+						<div class="row">
+							<div class="col-md-4<?php switch($ranking) {
+										case 1:?> rank-1"
+										<?php break; 
+										case 2:?> rank-2"
+										<?php break;
+										case 3:?> rank-3"
+										<?php break;
+										default:?> rank-n"
+										<?php 
+										break; } ?>>
+									<?php echo $ranking; ?></div>
+									<div class="col-md-4"><?php echo $leaderboard['USER']; ?></div>
+									<div class="col-md-4"><?php echo $leaderboard['TOTAL GAME SCORE']; ?></div>
+								<?php $ranking++; ?>
+						<?php } ?>
 						</div>
 					</div>
 

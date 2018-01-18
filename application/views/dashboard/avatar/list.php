@@ -34,11 +34,11 @@
 
 										<td><?php echo $avtr['AVTR_ID']; ?></td>
 										<td><?php echo $avtr['AVTR_NAME']; ?></td>
-										<td><?php echo $avtr['AVTR_SPRT_FILENAME']; ?></td>
+										<td><?php echo $avtr['AVTR_SPRITE_FILENAME']; ?></td>
 										<td><?php echo $avtr['AVTR_THUMBNAIL_FILENAME']; ?></td>
 										<td><?php echo $avtr['AVTR_FRONTVIEW_FILENAME']; ?></td>
-										<td><?php echo $avtr['AVTR_SPRT_HEIGHT']; ?></td>
-										<td><?php echo $avtr['AVTR_SPRT_WIDTH']; ?></td>
+										<td><?php echo $avtr['AVTR_HEIGHT']; ?></td>
+										<td><?php echo $avtr['AVTR_WIDTH']; ?></td>
 									</tr>
 									<?php $ctr++; ?>
 								<?php } ?>
