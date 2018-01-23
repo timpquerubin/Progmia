@@ -91,9 +91,23 @@
 					</div>
 					<div id="leaderboard" class="leaderboard">
 						<div class="row">
-								<div class="col-md-12">
-									<h1>LEADERBOARD</h1>
-								</div>
+							<div class="col-md-3">
+								<h1>LEADERBOARD</h1>
+							</div>
+							<div class="col-md-9">
+								<ul>
+									<li>
+										<input type="radio" id="all-option" value="All" checked="true" name="badges">
+										<label for="all-option">All Badges</label>
+										<div class="check"></div>
+									</li>
+									<li>
+										<input type="radio" id="acquired-option" value="Acquired" name="badges">
+										<label for="acquired-option">Acquired Badges</label>
+										<div class="check"></div>	
+									</li>
+								</ul>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4">Ranking</div>

@@ -226,23 +226,5 @@
 			// }
 
 		</script>
-
-		<style type="text/css">
-			div.modal-body{padding:20px 30px 10px 30px !important;}
-			div.modal-dialog .radio-inline {font-size:20px;display:inline-block;}
-			div.modal-dialog ul{list-style: none;margin: 0;padding: 0;overflow: auto;display:flex;}
-			div.modal-dialog ul li{margin-top: -25px;color: #777;display: block;position: relative;float: left;width: 100%;height: 70px;}
-			div.modal-dialog ul li input[type=radio]{position: absolute;visibility: hidden;}
-			div.modal-dialog ul li label{display: block;position: relative;font-weight: 300;font-size: 25px;padding: 25px 25px 25px 80px;margin: 0 auto;height: 30px;z-index: 9;cursor: pointer;-webkit-transition: all 0.25s linear;}
-			div.modal-dialog ul li:hover label{color: #777;}
-			div.modal-dialog ul li .check{display: block;position: absolute;border: 5px solid #777;border-radius: 100%;height: 25px;width: 25px;top: 30px;left: 20px;z-index: 5;transition: border .25s linear;-webkit-transition: border .25s linear;}
-			div.modal-dialog ul li:hover .check {border: 5px solid #777;}
-			div.modal-dialog ul li .check::before {display: block;position: absolute;content: '';border-radius: 100%;height: 11px;width: 11px;top: 2px;left: 2px;margin: auto;transition: background 0.25s linear;-webkit-transition: background 0.25s linear;}
-			div.modal-dialog input[type=radio]:checked ~ .check {border: 5px solid #1d9ce5;}
-			div.modal-dialog input[type=radio]:checked ~ .check::before{background: #1d9ce5;}
-			div.modal-dialog input[type=radio]:checked ~ label{color: #1d9ce5;}
-			div.modal-dialog p{margin-bottom: 0px;}
-		</style>
-
 	</body>
 </html>
