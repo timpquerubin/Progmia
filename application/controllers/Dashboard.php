@@ -221,6 +221,25 @@
 			$this->load->view('templates/dashboard_footer');
 		}
 
+		public function manage_bullies($lvlId) {
+
+			$this->__init();
+
+			$header_data = array(
+				'title' => 'Manage Bullies',
+				'tab_active' => 'levels',
+				'page' => 'manage-bullies',
+				'lvlId' => $lvlId
+			);
+
+			$data['lvl_Id'] = $lvlId;
+
+			$this->load->view('templates/dashboard_header', $header_data);
+			$this->load->view('templates/load_init_links');
+			$this->load->view('dashboard/level/manage_bullies', $data);
+			$this->load->view('templates/dashboard_footer');
+		}
+
 		public function load_objectives_block() 
 		{
 			if(count($_POST) > 0) {

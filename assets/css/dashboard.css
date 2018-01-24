@@ -85,7 +85,8 @@ i.fa-bars {font-size: 35px !important;text-align: center !important;margin:15px 
 .sidebar ul{}
 .sidebar ul li {display: block;text-align: center;}
 table {font-size:12px !important;}
-.dash-button-container .btn {float:right;}
+.dash-button-container {padding: 20px;}
+.dash-button-container a {padding-right: 10px;}
 .fa-list-ol {margin-right:20px !important;background-color: #52bf8a !important; color:#fff !important;border-radius: 50%;padding:15px;}
 .panel-heading {font-family:BebasNeue;font-size:40px;padding:15px 40px!important;}
 ul.actions{display:inline-flex;padding:0px !important;margin:0 !important;}

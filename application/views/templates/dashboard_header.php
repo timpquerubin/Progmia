@@ -87,10 +87,12 @@
 			    $("#sticker").sticky({topSpacing:0});
 			  });
 		</script>
-			<div class="col-md-10">
-				<div class="row">
-			<?php if(isset($page)) { ?>
-					<div class="dash-button-container" style="margin-bottom: 20px;">
+
+
+		<div class="col-md-10 col-sm-10 col-xs-10">
+			<div class="row">
+				<?php if(isset($page)) { ?>
+					<div class="dash-button-container" style="padding-bottom: 20px;">
 
 						<?php if($page === "level-list") { ?>
 						<?php } ?>
@@ -99,10 +101,14 @@
 						<?php } ?>
 						<?php if($page === "level-add" || $page === "level-edit" || $page === "level-objectives") { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/level_list" class="btn btn-default" >Level List</a>
+
+							<?php if($page != "level_objectives") { ?>
+								<!-- <a class="btn btn-default" href="<?php echo base_url(); ?>Dashboard/manage_bullies/<?php echo $lvlId ?>">Manage Bullies</a> -->
+							<?php } ?>
 						<?php } ?>
 						<?php if($page === "level-edit" ) { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/manage_objectives/<?php echo $lvlId ?>" class="btn btn-default" >Objectives</a>
 						<?php } ?>
 					</div>
-			<?php } ?>
-				</div>
+				<?php } ?>
+			</div>

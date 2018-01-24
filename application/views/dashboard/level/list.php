@@ -1,7 +1,7 @@
 
 			
 			<div class="panel-heading"><i class="fa fa-list-ol" aria-hidden="true"></i>Level List</div>
-			<div class="row">
+			<div class="row" style="padding-bottom: 20px;">
 				<a href="<?php echo base_url(); ?>Dashboard/add_level" class="btn btn-default" >Add Level</a>
 			</div>
 			<div class="panel panel-default">

@@ -71,35 +71,134 @@
 					</div>
 				</div>
 
-				<div class="form-group">
-					<hr>
-					<div class="row">
-						<label class="control-label col-sm-2">Objective:</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="type" name="type" placeholder="Objective Type"/>
+				<div class="panel panel-default">
+					<div class="panel-heading"><h4>Level Objectives</h4></div>
+					<div class="panel-body">
+						
+						<div class="form-group">
+							<div class="row">
+								<label class="control-label col-sm-2">Objective:</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="type" name="type" placeholder="Objective Type"/>
+								</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Objective Value"/>
+								</div>
+								<div class="col-sm-2">
+									<input type="text" class="form-control" id="obj_points" name="obj_points" placeholder="Points"/>
+								</div>
+								<div class="col-sm-2">
+									<button type="button" onclick="append_objective()">Add</button>
+								</div>
+							</div>
+							<div class="row">
+							</div>
 						</div>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="obj_val" name="obj_val" placeholder="Objective Value"/>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Description:</label>
+							<div class="col-sm-9">
+								<textarea class="form-control" style="resize: none;" rows="5" name="objective-description" id="objective-description" placeholder="Objective Description"></textarea>
+							</div>
 						</div>
-						<div class="col-sm-2">
-							<input type="text" class="form-control" id="obj_points" name="obj_points" placeholder="Points"/>
-						</div>
-						<div class="col-sm-2">
-							<button type="button" onclick="append_objective()">Add</button>
-						</div>
-					</div>
-					<div class="row">
+
+						<div class="objective-block"></div>
+
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label class="control-label col-sm-2">Description:</label>
-					<div class="col-sm-9">
-						<textarea class="form-control" style="resize: none;" rows="5" name="objective-description" id="objective-description" placeholder="Objective Description"></textarea>
+				<div class="panel panel-default">
+					<div class="panel-heading"><h4>Bullies</h4></div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-8 col-sm-8">
+								<div class="form-group">
+									<label class="control-label col-sm-3">Bully Type:</label>
+									<div class="col-sm-4">
+										<select class="form-control"  id="bly_type" name="bly_type">
+											<option selected>Bully Type 1</option>
+											<option>Bully Type 2</option>
+											<option>Bully Type 3</option>
+											<option>Bully Type 4</option>
+										</select>
+									</div>
+								</div>
+								<div class="bly-img-prev" style="margin: 20px 0px; height: 250px; width: 100%; background-color: #e6e6e6; background-size: contain; background-repeat: no-repeat; background-position: center;" id="BlyImgPrev" name="BlyImgPrev"></div>
+							</div>
+							<div class="col-md-4 col-sm-4">
+								<div class="form-group">
+									<label class="control-label col-sm-5">Spawn Point x:</label>
+									<div class="col-sm-7">
+										<input class="form-control" type="text" name="bly_spawn_x" id="bly_spawn_x">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-5">Spawn Point y:</label>
+									<div class="col-sm-7">
+										<input class="form-control" type="text" name="bly_spawn_y" id="bly_spawn_y">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-5">Max HP:</label>
+									<div class="col-sm-7">
+										<!-- <input class="form-control" type="text" name="bly_max_hp" id="bly_max_hp"> -->
+										<select class="form-control" id="bly_max_hp" name="bly_max_hp">
+											<option selected="true" value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Question Type:</label>
+							<div class="col-sm-2">
+								<select class="form-control" id="qstn_type" name="qstn_type">
+									<option>Variable</option>
+									<option>Command</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Question Dialog:</label>
+							<div class="col-sm-8">
+								<textarea class="form-control" id="qstn_dialog" name="qstn_dialog" style="resize: none;" rows="5" placeholder="Question"></textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Data Type:</label>
+							<div class="col-sm-2">
+								<select class="form-control" id="var_dataType" name="var_dataType">
+									<option value="int">Integer</option>
+									<option value="double">Double</option>
+									<option value="char">Character</option>
+									<option value="String">String</option>
+									<option class="bool">Boolean</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Identifier:</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" name="var_identifier" id="var_identifier">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2">Value:</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" name="var_value" id="var_value">
+							</div>
+						</div>
+
 					</div>
 				</div>
-
-				<div class="objective-block"></div>
 
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
 			</form>

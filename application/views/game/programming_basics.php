@@ -548,12 +548,6 @@
 
 	Bully = function(id, imgSrc, height, width, x, y, hpMax) {
 
-		// vrbls.push({
-		// 	dataType: var_info[0],
-		// 	var_identifier: var_info[1],
-		// 	var_value: tempValue,
-		// });
-
 		var self = {
 			id: id,
 			img: new Image(),
@@ -607,6 +601,17 @@
 
 			Bully.list[key].update();
 		}
+	}
+
+	Question = function(id, qstnNum, bullyId, dialog, answer) {
+
+		var self = {
+			id: id,
+			qstnNum: qstnNum,
+			bully: bullyId,
+			dialog: dialog,
+			answer: answer,
+		}		
 	}
 
 	Maps = function(id, imgSrc, height, width, grid) {
