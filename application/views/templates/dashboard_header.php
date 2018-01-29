@@ -3,7 +3,8 @@
 		<title>Progmia | <?php echo isset($title) ? $title : '' ?></title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/dashboard.css" />
-		<script src="<?php echo base_url();?>assets/js/jquery.js"></script>
+		<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js""></script>
+		<!-- <script src="<?php echo base_url();?>assets/js/jquery.js"></script> -->
 		<script src="<?php echo base_url();?>assets/js/jquery.sticky.js"></script>
 	</head>
 	<body>
@@ -55,24 +56,24 @@
 							  });
 							}
 
-							$("button.game-editor").click(function() {
-							   	$('.expand:after').css({
-							   		'color':'#ff0000 !important',
-							   		'transition':'.5s'
-							    });
-							    $('div#profile').css({
-							   		'display':'block',
-							   		'transition':'.5s'
-							    });
-							    $('#badges').css({
-							   		'display':'none',
-							   		'transition':'.5s'
-							    });
-							    $('#leaderboard').css({
-							   		'display':'none',
-							   		'transition':'.5s'
-							    });
-							   });
+							// $("button.game-editor").click(function() {
+							//    	$('.expand:after').css({
+							//    		'color':'#ff0000 !important',
+							//    		'transition':'.5s'
+							//     });
+							//     $('div#profile').css({
+							//    		'display':'block',
+							//    		'transition':'.5s'
+							//     });
+							//     $('#badges').css({
+							//    		'display':'none',
+							//    		'transition':'.5s'
+							//     });
+							//     $('#leaderboard').css({
+							//    		'display':'none',
+							//    		'transition':'.5s'
+							//     });
+							//    });
 							</script>
 						</li>
 						<li><button class="statistics">STATISTICS</button></li>

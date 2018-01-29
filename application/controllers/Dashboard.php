@@ -251,6 +251,39 @@
 			$this->load->view('dashboard/objectives_block', $data);
 		}
 
+		public function load_questions_block() {
+
+			if(count($_POST) > 0) {
+				$data['question_list'] = $_POST['questions'];
+			} else {
+				$data['question_list'] = [];
+			}
+
+			$this->load->view('dashboard/questions_block', $data);
+		}
+
+		public function load_variables_block() {
+
+			if(count($_POST) > 0) {
+				$data['var_list'] = $_POST['variables'];
+			} else {
+				$data['var_list'] = [];
+			}
+
+			$this->load->view('dashboard/variables_block', $data);
+		}
+
+		public function load_bullies_block() {
+
+			if(count($_POST) > 0) {
+				$data['bully_list'] = $_POST['bully_list'];
+			} else {
+				$data['bully_list'] = [];
+			}
+
+			$this->load->view('dashboard/bullies_block', $data);
+		}
+
 
 
 		public function save_add_avatar()
