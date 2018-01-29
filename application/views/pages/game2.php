@@ -247,7 +247,8 @@
 
 	var img = {};
 	img.player = new Image();
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
+	// img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
+	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/MINI-SPRITE-GIRL.png";
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
 	img.map = new Image();

@@ -168,9 +168,12 @@
 			$pass = $this->input->post('password');
 			
 			$user_info = $this->User_model->login($user,$pass);
-			if(count($user_info) > 0)
-			{
 
+			// var_dump($user_info);
+			// exit();
+// count($user_info) > 0
+			if($user_info)
+			{
 				$user_data = array(
 					'user_id' => $user_info->USER_ID,
 					'username' => $this->input->post('username'),
@@ -180,7 +183,14 @@
 				$data["user_info"] = $user_info;
 				$this->session->set_userdata($user_data);
 				$this->session->set_flashdata('user_loggedin', 'You are now logged in');
-				redirect('home');
+
+				
+				if(isset($user_info->AVTR_ID)){
+				redirect('Game/Stages');
+				}
+				else{
+				redirect('Game/Avatar');
+				}
 			}
 			else 
 			{

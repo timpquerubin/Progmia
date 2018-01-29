@@ -14,8 +14,7 @@
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
 	</head>
 	<body>
-
-		<nav>
+		<!-- <nav>
 			<ul class="">
   				<?php if($this->session->userdata('logged_in')): ?>
       				<?php if (!($this->session->userdata('has_avatar'))){ ?>
@@ -24,10 +23,10 @@
   					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>
   				<?php } endif; ?>
 			</ul>
-		</nav>
-		<div class="logo">
+		</nav> -->
+		<div class="logo container-fluid">
 			<div class="row">
-	  				<a href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
+  				<a href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/blue-logo.png"></a>
 			</div>
 		</div>
 		<div class="login-panel">
@@ -45,15 +44,19 @@
 							<label class="sr-only" for="password">Password:</label>
 							<input type="Password" name="password" id="password" class="form-control" placeholder="Password">
 						</div>
+						<!-- <?php if($this->session->userdata('logged_in')): ?>
+		      				<?php if (!($this->session->userdata('has_avatar'))){ ?>
+							<input type="submit" name="btn_login" id="btn_login" class="btn btn-primary btn-block" value="Login">
+		      				<?php } else { ?>
+							<input type="submit" name="btn_login" id="btn_login" class="btn btn-primary btn-block" value="Login">
+	      				<?php } endif; ?> -->
 						<input type="submit" name="btn_login" id="btn_login" class="btn btn-primary btn-block" value="Login">
 						<input type="button" name="btn_register" id="btn_register" class="btn btn-success btn-block" data-toggle="modal" data-target="#modal-register" value="Register">
 					</form>
 				</div>
 			</div>
 		</div>
-		<div class="">
-			
-		</div>
+		<!-- 
 		<nav id="navbar" class="navbar navbar-default">
   			<div class="container">
     			<div class="navbar-header">
@@ -84,7 +87,7 @@
     				<?php endif; ?>
     			</ul>
   			</div>
-		</nav>
+		</nav> -->
 		
 		<div class="container-fluid" style="margin: 0px; padding: 0px;">
 			<?php if($this->session->flashdata('user_registered')) : ?>

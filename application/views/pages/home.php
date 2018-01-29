@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="banner">
 	<div class="container">
 		<div class="row">
@@ -38,7 +38,8 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
+
 <!-- 
 <hr>
 <div class="bg-color" style="background-color: #2c333d;padding:20px 80px 0 80px;">
