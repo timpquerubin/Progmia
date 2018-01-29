@@ -221,6 +221,76 @@
 			$this->load->view('templates/dashboard_footer');
 		}
 
+		public function save_bullies() {
+
+			$this->__init();
+
+			if(isset($_POST)) {
+
+				if(isset($_POST["bullies"])) {
+
+					$bully_list = $_POST["bullies"];
+					$lvl_id = $_POST["lvlId"];
+					$bly_ctr = 0;
+					$date_today = date('Y-m-d');
+
+					foreach ($bully_list as $b) {
+
+						$bly_id = md5($lvl_id.$bly_ctr.$date_today);
+						$spawnPt = array(
+							(int)$b["spawnPt"][0],
+							(int)$b["spawnPt"][1],
+						);
+						
+						$bully_params = array(
+							"BLY_ID" => $bly_id,
+							"LVL_ID" => $lvl_id,
+							"BLY_IMAGEURL" => "bully.png",
+							"BLY_SPAWNPOINT" => json_encode($spawnPt),
+							"BLY_MAXHP" => $b["maxHp"],
+						);
+
+						$this->Game_model->insert_bully($bully_params);
+
+						if(isset($b["questions"])) {
+
+							foreach($b["questions"] as $q) {
+
+								$question_params = array(
+									"BLY_ID" => $bly_id,
+									"QSTN_NUM" => $q["qstn_num"],
+									"QSTN_DIALOG" => $q["qstn_dialog"],
+									"QSTN_ANSWER" => json_encode($q["qstn_ans"]),
+									"QSTN_TYPE" => $q["qstn_type"],
+								);
+
+								$this->Game_model->insert_question($question_params);
+							}
+						}
+
+						$bly_ctr++;
+					}
+
+					echo json_encode(array(
+						"status" => true,
+						"message" => "bullies have successfully added",
+					));
+
+				} else {
+					echo json_encode(array(
+						"status" => false,
+						"message" => "no bullies",
+					));
+				}
+
+			} else {
+				echo json_encode(array(
+					"status" => false,
+					"message" => "failed to save bullies",
+				));
+			}
+		}
+
 		public function manage_bullies($lvlId) {
 
 			$this->__init();
@@ -350,7 +420,13 @@
 		public function save_add_level()
 		{
 			$this->__init();
-			$count_levels_params['STAGE'] = $_POST['stage'];
+
+			// echo "<pre>";
+			// var_dump($_POST);
+			// echo "</pre>";
+			// exit();
+
+			$count_levels_params['STG_ID'] = $_POST['stage'];
 
 			$level_count = count($this->Game_model->get_levels($count_levels_params));
 			$level_count++;
@@ -367,8 +443,9 @@
 				'LVL_NUMCOLS' => (int)$_POST['numCols'],
 				'LVL_IMGHEIGHT' => $map_size[1],
 				'LVL_IMGWIDTH' => $map_size[0],
-				'STAGE' => $_POST['stage'],
+				'STG_ID' => $_POST['stage'],
 				'LVL_NUM' => $level_count,
+				'LVL_DESC' => $_POST['level-description'],
 			);
 			
 			if($_FILES['imgMap']['tmp_name'] != '')
