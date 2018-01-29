@@ -110,6 +110,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading"><h4>Bullies</h4></div>
 					<div class="panel-body">
+						<div class="bullies-block"></div>
 						<div class="row">
 							<div class="col-md-8 col-sm-8">
 								<div class="form-group">
@@ -153,50 +154,77 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label class="control-label col-sm-2">Question Type:</label>
-							<div class="col-sm-2">
-								<select class="form-control" id="qstn_type" name="qstn_type">
-									<option>Variable</option>
-									<option>Command</option>
-								</select>
+						<div class="panel panel-default">
+							<div class="panel-heading"><h4>Questions</h4></div>
+							<div class="panel-body">
+
+								<div class="questions-block"></div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2">Question Type:</label>
+									<div class="col-sm-2">
+										<select class="form-control" id="qstn_type" name="qstn_type">
+											<option value="variable">Variable</option>
+											<option value="command">Command</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-2">Question Dialog:</label>
+									<div class="col-sm-8">
+										<textarea class="form-control" id="qstn_dialog" name="qstn_dialog" style="resize: none;" rows="5" placeholder="Question"></textarea>
+									</div>
+								</div>
+
+								<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px;">
+									<div class="row">
+										<div class="col-sm-5">
+											<div class="form-group">
+												<label class="control-label col-sm-5">Data Type:</label>
+												<div class="col-sm-5">
+													<select class="form-control" id="var_dataType" name="var_dataType">
+														<option value="int">Integer</option>
+														<option value="double">Double</option>
+														<option value="char">Character</option>
+														<option value="String">String</option>
+														<option value="bool">Boolean</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-sm-5">Identifier:</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" name="var_identifier" id="var_identifier">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-sm-5">Value:</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" name="var_value" id="var_value">
+												</div>
+											</div>
+
+											<input type="button" class="btn btn-default col-sm-12" value="Add Variable" onclick="append_variable()">
+										</div>
+										<div class="col-sm-7">
+											<div class="variables-block"></div>
+										</div>
+									</div>
+								</div>
+
+								<div class="add-question-button" style="padding-top: 15px; padding-bottom: 15px;">
+									<input type="button" class="btn btn-default col-sm-4 col-sm-offset-4" value="Add Question" onclick="append_question()">
+								</div>
+									
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label class="control-label col-sm-2">Question Dialog:</label>
-							<div class="col-sm-8">
-								<textarea class="form-control" id="qstn_dialog" name="qstn_dialog" style="resize: none;" rows="5" placeholder="Question"></textarea>
-							</div>
+						<div class="add-bully-button">
+							<input type="button" class="btn btn-default col-sm-4 col-sm-offset-4" value="Add Bully" onclick="append_bully()">
 						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-2">Data Type:</label>
-							<div class="col-sm-2">
-								<select class="form-control" id="var_dataType" name="var_dataType">
-									<option value="int">Integer</option>
-									<option value="double">Double</option>
-									<option value="char">Character</option>
-									<option value="String">String</option>
-									<option class="bool">Boolean</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-2">Identifier:</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" name="var_identifier" id="var_identifier">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-sm-2">Value:</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" name="var_value" id="var_value">
-							</div>
-						</div>
-
 					</div>
 				</div>
 
@@ -212,7 +240,14 @@
 	$(document).ready(function(){
 
 		var objective_list = {};
+		var question_list = {};
+		var bully_list = {};
+		var variable_list = {};
+
 		var objCtr = 0;
+		var varCtr = 0;
+		var qstnCtr = 1;
+		var blyCtr = 0;
 
 		append_objective = function() {
 			var type = document.getElementById("type").value;
@@ -232,6 +267,113 @@
 			load_objectives_block();
 		}
 
+		append_variable = function() {
+
+			var dataType = document.getElementById("var_dataType").value;
+			var identifier = document.getElementById("var_identifier").value;
+			var value = document.getElementById("var_value").value;
+
+			if(parseValue(dataType, value)) {
+
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: parseValue(dataType, value)};
+				console.log(variable_list);
+				varCtr++;
+			} else {
+				console.log("datatype missmatch");
+			}
+
+			document.getElementById("var_dataType").value = "int";
+			document.getElementById("var_identifier").value = "";
+			document.getElementById("var_value").value = "";
+
+			load_variables_block();
+		}
+
+		append_question = function() {
+
+			var question_type = document.getElementById("qstn_type").value;
+			var question_dialog = document.getElementById("qstn_dialog").value;
+
+			if(question_type == "variable") {
+
+				var answer = variable_list;
+			}
+
+			question_list[qstnCtr] = {qstn_num: qstnCtr, qstn_type: question_type, qstn_dialog: question_dialog, qstn_ans: answer};
+
+			qstnCtr++;
+			varCtr = 0;
+
+			variable_list = {};
+
+			load_variables_block();
+			load_questions_block();
+		}
+
+		append_bully = function() {
+
+			var bully_type = document.getElementById("bly_type").value;
+			var bly_spawn_x = document.getElementById("bly_spawn_x").value;
+			var bly_spawn_y = document.getElementById("bly_spawn_y").value;
+			var bly_max_hp = document.getElementById("bly_max_hp").value;
+
+			bully_list[blyCtr] = {type: bully_type, spawnPt: [bly_spawn_x, bly_spawn_y], maxHp: bly_max_hp, questions: question_list};
+
+			console.log(bully_list);
+
+			blyCtr++;
+
+			question_list = {};
+
+			load_bullies_block();
+			load_questions_block();
+		}
+
+		parseValue = function(dataType, value) {
+
+		console.log(value);
+
+		if(dataType == "int") {
+			
+			if(/^[0-9]+$/i.test(value)) {
+				return parseInt(value);
+			} else {
+				return false;
+			}
+		} else if(dataType == "double") {
+
+			if(/^[0-9\.]+$/i.test(value)) {
+				return parseFloat(value);
+			} else {
+				return false;
+			}
+		} else if(dataType == "char") {
+
+			if(/^\'\w\'$/i.test(value)) {
+				value = value.replace(/\'/g, "");
+				return value;
+			} else {
+				return false;
+			}
+		} else if(dataType == "String") {
+
+			if(/^\".*\"$/i.test(value)) {
+				value = value.replace(/\"/g, "");
+				return value;
+			} else {
+				return false;
+			}
+		} else if(dataType == "bool") {
+
+			value = value.toLowerCase();
+			if(/^(true|false)$/i.test(value)) {
+				return value;
+			} else {
+				return false;
+			}
+		}
+	}
+
 		load_objectives_block = function() {
 
 			var data = {};
@@ -250,6 +392,60 @@
 			});
 		}
 
+		load_questions_block = function() {
+
+			var data = {};
+			data['questions'] = question_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_questions_block",
+				data: data,
+				success: function(data) {
+					$(".questions-block").html(data);
+				},
+				error: function(err) {
+					console.log(err);
+				}
+			});
+		}
+
+		load_variables_block = function() {
+
+			var data = {};
+			data['variables'] = variable_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_variables_block",
+				data: data,
+				success: function(data) {
+					$(".variables-block").html(data);
+				},
+				error: function(err) {
+					console.log(err);
+				}
+			});
+		}
+
+		load_bullies_block = function() {
+
+			var data = {};
+			data['bully_list'] = bully_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_bullies_block",
+				data: data,
+				success: function(data) {
+					$(".bullies-block").html(data);
+				},
+				error: function(err) {
+					console.log(err);
+				}
+			});
+		}
+
 		deleteObjective = function(objIndex) {
 			var index = parseInt(objIndex);
 			console.log("index" + index);
@@ -260,6 +456,9 @@
 		}
 
 		load_objectives_block();
+		load_bullies_block();
+		load_questions_block();
+		load_variables_block();
 
 		$("#add_level_form").submit(function(e) {
 
