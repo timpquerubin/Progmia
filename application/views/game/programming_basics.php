@@ -21,10 +21,10 @@
 
 	<div class="canvas-container">
 		<div class="" style="margin: 0px; padding: 10px; background-color: #000">
-			<canvas id="ctx" style="margin: 0px; padding: 0px; width: 100%; height: 250px;"></canvas>
+			<canvas id="ctx" height="125" width="1000" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 		</div>
 	</div>
-
+	<div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15;m min-width:250px; padding:20px 40px;width:96%;margin:20px auto;height:100px;border:solid 5px #000000;"><p style="font-family:ArcadeClassic;font-size: 30px;color:#000000;">Text Here!</p></div>
 	<div class="console-container">
 		<div class="console">
 			<textarea rows="5" id="console-area" style="margin: 0px; padding: 0px; width: 100%; resize: none;" disabled></textarea>
@@ -66,6 +66,8 @@
 
 	var img = {};
 	img.map = new Image();
+	img.dialog = new Image();
+	img.dialog.src = "<?php echo base_url(); ?>assets/images/BORDER-1.png";
 	img.map.src = "<?php echo base_url(); ?>assets/images/levels/level_1_temp.png";
 	img.player = new Image();
 	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
@@ -603,15 +605,23 @@
 		}
 	}
 
-	Question = function(id, qstnNum, bullyId, dialog, answer) {
+	Question = function() {
 
-		var self = {
-			id: id,
-			qstnNum: qstnNum,
-			bully: bullyId,
-			dialog: dialog,
-			answer: answer,
-		}		
+		// id, qstnNum, bullyId, dialog, answer
+
+		// var self = {
+		// 	id: id,
+		// 	qstnNum: qstnNum,
+		// 	bully: bullyId,
+		// 	dialog: dialog,
+		// 	answer: answer,
+		// }
+
+		self.draw = function() {
+			//DIALOG
+			// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 10,img.dialog.width,img.dialog.height);
+			Console.log(img.dialog);
+		}
 	}
 
 	Maps = function(id, imgSrc, height, width, grid) {
@@ -665,12 +675,15 @@
 		currentMap.update();
 		player.update();
 		Bully.update();
+		ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
+
 	}
 
 	var map_grid = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 
 	var currentMap = new Maps('currentmap', img.map.src, img.map.height, img.map.width, map_grid);
 	var player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 72, 56, 10); //[72,56]
+	var question = new Question();
 	startNewGame();
 
 	setInterval(update, 40);

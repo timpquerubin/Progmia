@@ -14,6 +14,46 @@
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
 	</head>
 	<body>
+
+		<nav>
+			<ul class="">
+  				<?php if($this->session->userdata('logged_in')): ?>
+      				<?php if (!($this->session->userdata('has_avatar'))){ ?>
+  					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Avatar">GAME</a></li>
+      				<?php } else { ?>
+  					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>
+  				<?php } endif; ?>
+			</ul>
+		</nav>
+		<div class="logo">
+			<div class="row">
+	  				<a href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
+			</div>
+		</div>
+		<div class="login-panel">
+			<div class="row">
+				<h2>Log In</h2>
+			</div>
+			<div class="row">
+				<div class="login-form">
+					<form action="<?php echo base_url(); ?>Users/login" method="post">
+						<div class="form-group">
+							<label class="sr-only" for="username">Username:</label>
+							<input type="text" name="username" id="username" class="form-control" placeholder="Username">
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="password">Password:</label>
+							<input type="Password" name="password" id="password" class="form-control" placeholder="Password">
+						</div>
+						<input type="submit" name="btn_login" id="btn_login" class="btn btn-primary btn-block" value="Login">
+						<input type="button" name="btn_register" id="btn_register" class="btn btn-success btn-block" data-toggle="modal" data-target="#modal-register" value="Register">
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="">
+			
+		</div>
 		<nav id="navbar" class="navbar navbar-default">
   			<div class="container">
     			<div class="navbar-header">

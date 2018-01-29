@@ -12,9 +12,15 @@
 	font-family:BebasNeue;
 	src: url("../fonts/BebasNeue.otf");
 }
+@font-face
 
 body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;max-width: 1600px;margin:0 auto;}
 
+@font-face{
+font-family: 'Barlow';
+src: url("../fonts/BarlowCondensed-Regular.ttf");
+src: url("../fonts/BarlowCondensed-Light.ttf");
+}
 nav.navbar ul {
 	font-family: BebasNeue;
 	font-size:30px !important;
@@ -371,31 +377,61 @@ div.banner h1 {
 	font-size: 50px;
 	letter-spacing: 3px;
 }
+div.logo img {width:190px !important;margin:0 auto;}
 
 div.login-panel {
 	margin-top:30px;
-	padding:20px 40px;
-	max-height:320px;
-	border-radius: 10px;
-	background: rgba(0, 0, 0, 0.5);
-	height: 100%;
+	margin:30px auto 0 auto;
+	padding:10px 20px;
+	/*max-height:323px;
+	height: 100%;*/
 	position: relative;
+	background: #353535;
+	max-width: 280px !important;
+}
+div.login-panel::after{
+	position:absolute;
+	bottom:-40px;
+	left:0;
+	right:0;
+	margin:0 auto;
+	content:'';
+	width: 270px;
+	height: 0;
+	border-style: solid;
+	border-width: 40px 140px 0 140px;
+	border-color: #353535 transparent transparent transparent;
 }
 
 div.login-panel label, div.login-panel input, div.login-panel h2{
-	font-family: AdventPro;
 }
 
 div.login-panel h2{
 	text-align: center !important;
 	color:#fff !important;
-	margin:10px auto !important;
+	margin:7px auto !important
+}
+div.login-panel input#username,div.login-panel input#password {
+background-color: #1c1c1c;
+color: #ffffff !important;
+	font-family: Barlow !important;
+}
+div.login-form input.btn{
+	font-family: BebasNeue !important;
+	border-radius: 0px !important;
+	border:none;
+}
+div.login-form input#btn_login{
+	background: #007095 !important;
+}
+div.login-form input#btn_register{
+	background: #005f75 !important;
 }
 
 div.login-form {
 	margin: 0px auto;
-	font-family: AdventPro;
 	z-index:2;
+	max-width: 250px !important;
 }
 
 h3.learn-more a{
