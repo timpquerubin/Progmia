@@ -32,6 +32,20 @@
 							</li>
 							<?php } ?>
 
+							<!-- <?php // $exist = false; ?>
+							<?php // foreach ($maxlevel_list as $maxlevel) { ?>
+								<?php // if ($maxlevel['STG_ID'] == $stage['STG_ID']){ ?>
+									<?php // if ($exist == true){break;} ?>
+									<?php // foreach ($progress_list as $progress) {?>
+										<?php // if ($exist == true){break;} ?>
+											<?php // if($progress['LVL_ID'] == $maxlevel['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID) {
+											// $exist = true;
+											// break;} ?> 
+									<?php //} ?>
+								<?php  //} ?>
+								<?php // if ($exist == true){break;} ?>
+							<?php //} ?> -->
+
 							
 							<!-- <form action="<?php echo base_url(); ?>game/levels" method="post">
 							   <input type='hidden' id='stage' name='stage' value='<?php echo $stage['STG_ID']; ?>' />
