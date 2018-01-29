@@ -317,11 +317,12 @@
 			var bly_spawn_y = document.getElementById("bly_spawn_y").value;
 			var bly_max_hp = document.getElementById("bly_max_hp").value;
 
-			bully_list[blyCtr] = {type: bully_type, spawnPt: [bly_spawn_x, bly_spawn_y], maxHp: bly_max_hp, questions: question_list};
+			bully_list[blyCtr] = {type: bully_type, spawnPt: [parseInt(bly_spawn_x), parseInt(bly_spawn_y)], maxHp: bly_max_hp, questions: question_list};
 
 			console.log(bully_list);
 
 			blyCtr++;
+			qstnCtr = 1;
 
 			question_list = {};
 
@@ -331,7 +332,7 @@
 
 		parseValue = function(dataType, value) {
 
-		console.log(value);
+		// console.log(value);
 
 		if(dataType == "int") {
 			
@@ -462,7 +463,7 @@
 
 		$("#add_level_form").submit(function(e) {
 
-			var formData = new FormData($("#add_avatar_form")[0]);
+			var formData = new FormData($("#add_level_form")[0]);
 			var newLvlId = "";
 			var list = {};
 			list['objectives'] = objective_list;
@@ -476,6 +477,7 @@
 					processData: false,
 					dataType: 'json',
 					success: function(data) {
+						// console.log(data);
 						resolve(data['lvlId']);
 						
 					},
@@ -484,25 +486,59 @@
 					}
 				});
 			}).then(function(lvlId) {
-				
-				list['lvlId'] = lvlId;
 
-				$.ajax({
-					type: 'post',
-					url: "<?php echo base_url(); ?>" + "dashboard/save_objectives",
-					data: list,
-					dataType: 'json',
-					success: function(res) {
-						if(res['status']) {
-							window.location = "<?php echo base_url(); ?>dashboard/level_list";
-						} else {
-							window.location = "<?php echo base_url(); ?>dashboard/add_level";
+				var obj_keys = Object.keys(objective_list);
+				newLvlId = lvlId;
+
+				if(obj_keys.length > 0) {
+
+					list['lvlId'] = lvlId;
+
+					$.ajax({
+						type: 'post',
+						url: "<?php echo base_url(); ?>" + "dashboard/save_objectives",
+						data: list,
+						dataType: 'json',
+						success: function(res) {
+							console.log(res);
+						},
+						error: function(xhr, status, err) {
+							console.log(err);
 						}
-					},
-					error: function(xhr, status, err) {
-						console.log(err);
-					}
-				});
+					});
+				}
+				
+			}).then(function(lvlId) {
+
+				var bully_keys = Object.keys(bully_list);
+
+				// console.log(newLvlId);
+
+				if(bully_keys.length > 0) {
+
+					var data = {};
+					data["lvlId"] = newLvlId;
+					data["bullies"] = bully_list;
+
+					$.ajax({
+						type: 'post',
+						url: "<?php echo base_url(); ?>dashboard/save_bullies",
+						data: data,
+						dataType: 'json',
+						success: function(res) {
+							if(res['status']) {
+								window.location = "<?php echo base_url(); ?>dashboard/level_list";
+							} else {
+								window.location = "<?php echo base_url(); ?>dashboard/add_level";
+							}
+						},
+						error: function(err) {
+							console.log(err);
+						}
+					});
+				} else {
+					window.location = "<?php echo base_url(); ?>dashboard/level_list";
+				}
 			});
 
 			e.preventDefault();

@@ -155,5 +155,13 @@
 
 			return $lvl_max_pts->result_array();
 		}
+
+		public function insert_bully($params) {
+			return $this->db->insert('BULLY', $params);
+		}
+
+		public function insert_question($params) {
+			return $this->db->insert('QUESTION', $params);
+		}
 	}
 ?>

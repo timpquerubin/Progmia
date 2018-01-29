@@ -5,38 +5,34 @@
 				<div class="bg-stage">
 					<div class="row">
 						<ul style="list-style: none;display: inline-flex;vertical-align:middle;margin:0 auto;">
+						
 						<?php $stage1 = true; ?>
 						<?php $i = 0; ?>
 						<?php $ctr = 1; ?>
 						<?php $exist = true ?>
+
 						<?php foreach ($stage_list as $stage) { ?>
 							<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
 							<?php if ($exist == true){ ?>
-							<li style="position:relative;"><div class="popup unlocked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
-							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p>
-							<p>
-							<script type="text/javascript">
-							</script>
-							<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+							<li style="position:relative;">
+								<div class="popup unlocked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#">
+									<span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+									<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/>
+									<span class="popuptext" id="myPopup-<?php echo $i+1; ?>">
+											<h2><?php echo $stage['STG_NAME']; ?></h2>
+											<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+							<!-- <p> -->
+									<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+							</li>
 							
 
 							<?php } else { ?>
 							<li style="position:relative;" attribute="dis"><div class="popup locked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
-							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p><p>
+							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+							</li>
 							<?php } ?>
-							<?php $exist = false; ?>
-							<?php foreach ($maxlevel_list as $maxlevel) { ?>
-								<?php if ($maxlevel['STG_ID'] == $stage['STG_ID']){ ?>
-									<?php if ($exist == true){break;} ?>
-									<?php foreach ($progress_list as $progress) {?>
-										<?php if ($exist == true){break;} ?>
-											<?php if($progress['LVL_ID'] == $maxlevel['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID) {
-											$exist = true;
-											break;} ?> 
-									<?php } ?>
-								<?php } ?>
-								<?php if ($exist == true){break;} ?>
-							<?php } ?>
+
+							
 							<!-- <form action="<?php echo base_url(); ?>game/levels" method="post">
 							   <input type='hidden' id='stage' name='stage' value='<?php echo $stage['STG_ID']; ?>' />
 							   <input type='hidden' id='user' name='user' value='<?php echo $h->USER_ID; ?>' />
