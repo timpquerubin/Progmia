@@ -21,7 +21,7 @@
 
 	<div class="canvas-container">
 		<div class="" style="margin: 0px; padding: 10px; background-color: #000">
-			<canvas id="ctx" height="125" width="1000" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
+			<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 		</div>
 	</div>
 	<div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15;m min-width:250px; padding:20px 40px;width:96%;margin:20px auto;height:100px;border:solid 5px #000000;"><p style="font-family:ArcadeClassic;font-size: 30px;color:#000000;">Text Here!</p></div>
@@ -68,7 +68,7 @@
 	img.map = new Image();
 	img.dialog = new Image();
 	img.dialog.src = "<?php echo base_url(); ?>assets/images/BORDER-1.png";
-	img.map.src = "<?php echo base_url(); ?>assets/images/levels/level_1_temp.png";
+	img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
 	img.player = new Image();
 	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
 	img.bully = new Image();
@@ -433,7 +433,6 @@
 			hpMax: hpMax,
 			hp: hpMax,
 			moveCtr: 0,
-			currentQuestion: [],
 		}
 
 		self.img.src = imgSrc;
@@ -459,14 +458,14 @@
 
 				var bullyId = self.isEnemyInRange();
 
-				if(self.currentQuestion[0]) {
+				// if(self.currentQuestion[0]) {
 
-				} else {
-					console.log("no current question");
-					Bully.list[bullyId].questions[0].status = true;
-					self.currentQuestion = Bully.list[bullyId].questions;
-					self.currentQuestion[0].result = false;
-				}
+				// } else {
+				// 	console.log("no current question");
+				// 	Bully.list[bullyId].questions[0].status = true;
+				// 	self.currentQuestion = Bully.list[bullyId].questions;
+				// 	self.currentQuestion[0].result = false;
+				// }
 			}
 
 			self.updatePosition();
@@ -559,9 +558,6 @@
 			y: y,
 			hpMax: hpMax,
 			hp: hpMax,
-			questions: [
-				{qNum: 1, qDialog: "Declare an int variable x with a value of 10", qAnswer: {dataType: "int", var_identifier: "x", var_value: 10}, status: false},
-			],
 		}
 
 		self.img.src = imgSrc;
@@ -595,6 +591,44 @@
 		var newId = "Bully_" + Math.random();
 
 		Bully(newId, imgSrc, height, width, x, y, hpMax);
+	}
+
+	Bully.init = function() {
+
+		var promise = new Promise(function(resolve, reject) {
+
+			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>Game/get_bully_list",
+				data: {lvlId: lvlId},
+				dataType: 'json',
+				success: function(res) {
+					resolve(res);
+				},
+				error: function(err) {
+					console.log("failed to retreive bully data");
+				}
+			}).then(function(result) {
+
+				if(result['status']) {
+					console.log(result['bully_list'][0].BLY_SPAWNPOINT);
+
+					var bully_list = result['bully_list'];
+
+					for(var key in bully_list) {
+
+						var bully_spawn = JSON.parse(bully_list[key].BLY_SPAWNPOINT);
+
+						Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+					}
+
+				} else {
+					console.log(result['message']);
+				}
+			});
+		});
 	}
 
 	Bully.update = function() {
@@ -645,7 +679,7 @@
 			var x = (ctxWidth/2 - player.x) - 80;
 			var y = ctxHeight/2 - player.y;
 
-			ctx.drawImage(self.img,0,0,self.img.width,self.img.height, x, y,self.width * zoomMultiplier,self.height * zoomMultiplier);
+			ctx.drawImage(self.img,0,0,self.img.width,self.img.height, x, y,self.width * 1,self.height * 1);
 		}
 
 		return self;
@@ -664,9 +698,10 @@
 		// }
 
 		player.hp = player.hpMax;
+		Bully.init();
 
-		Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 168, 56, 1);
-		Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 360, 56, 1);
+		// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 168, 56, 1);
+		// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 360, 56, 1);
 	}
 
 	update = function() {
@@ -675,14 +710,14 @@
 		currentMap.update();
 		player.update();
 		Bully.update();
-		ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
+		// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
 
 	}
 
 	var map_grid = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 
 	var currentMap = new Maps('currentmap', img.map.src, img.map.height, img.map.width, map_grid);
-	var player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 72, 56, 10); //[72,56]
+	var player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 56, 56, 10); //[72,56]
 	var question = new Question();
 	startNewGame();
 
