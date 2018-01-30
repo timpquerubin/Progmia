@@ -112,6 +112,13 @@
 			return $stages->result_array();
 		}
 
+		public function get_bully_list($params) {
+
+			$bullies = $this->db->get_where('BULLY', $params);
+
+			return $bullies->result_array();
+		}
+
 		public function add_objective($params)
 		{
 			return $this->db->insert('OBJECTIVE', $params);

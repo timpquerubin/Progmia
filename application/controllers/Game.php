@@ -71,6 +71,10 @@
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 				$lvl_max_pts = $this->Game_model->get_lvl_max_points();
 			}
+
+			// var_dump($level_stage);
+			// exit();
+
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
 			$data['level_stages'] = $level_stage;
@@ -136,14 +140,25 @@
 			$this->load->view('templates/game_footer');
 		}
 
-		public function play_basics() {
+		public function play_basics($lvlId) {
 
 			$this->_init();
 			$this->isLoggedIn();
 
+			$level_params = array(
+				"LVL_ID" => $lvlId
+			);
+
+			$level_info = $this->Game_model->get_level_details($level_params);
+
+			// var_dump($level_info[0]);
+			// exit();
+
+			$data['level_info'] = $level_info[0];
+
 			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');
-			$this->load->view('game/programming_basics.php');
+			$this->load->view('game/programming_basics.php', $data);
 			$this->load->view('templates/game_footer');
 
 		}
@@ -175,6 +190,25 @@
 
 			} else {
 				echo json_encode(array("status" => false, "message" => "failed to retreive objectives list"));
+			}
+		}
+
+		public function get_bully_list() {
+
+			$this->_init();
+
+			if(isset($_POST)) {
+
+				$bully_params = array(
+					"LVL_ID" => $_POST["lvlId"],
+				);
+
+				$bully_list = $this->Game_model->get_bully_list($bully_params);
+
+				echo json_encode(array("status" => true, "bully_list" => $bully_list));
+
+			} else {
+				echo json_encode(array("status" => false, "message" => "lvlid parameter is required"));
 			}
 		}
 
