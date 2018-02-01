@@ -170,5 +170,16 @@
 		public function insert_question($params) {
 			return $this->db->insert('QUESTION', $params);
 		}
+
+		public function get_question_list($params = null) {
+
+			if($params === null) {
+				$question_list = $this->db->get("question");
+			} else if(isset($params["LVL_ID"])) {
+				$question_list = $this->db->query('SELECT B.BLY_ID, Q.QSTN_NUM, Q.QSTN_DIALOG, Q.QSTN_ANSWER, Q.QSTN_TYPE FROM LEVEL L, BULLY B, QUESTION Q WHERE L.LVL_ID=B.LVL_ID AND B.BLY_ID=Q.BLY_ID AND L.LVL_ID=\''.$params["LVL_ID"].'\';');
+			}
+
+			return $question_list->result_array();
+		}
 	}
 ?>

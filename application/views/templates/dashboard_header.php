@@ -97,7 +97,7 @@
 
 						<?php if($page === "level-list") { ?>
 						<?php } ?>
-						<?php if($page === "level-objectives") { ?>
+						<?php if($page === "level-objectives" || $page === "level-bullies") { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/edit_level/<?php echo $lvlId ?>" class="btn btn-default" >Edit Level</a>
 						<?php } ?>
 						<?php if($page === "level-add" || $page === "level-edit" || $page === "level-objectives") { ?>
@@ -109,6 +109,7 @@
 						<?php } ?>
 						<?php if($page === "level-edit" ) { ?>
 							<a href="<?php echo base_url(); ?>Dashboard/manage_objectives/<?php echo $lvlId ?>" class="btn btn-default" >Objectives</a>
+							<a href="<?php echo base_url(); ?>Dashboard/manage_bullies/<?php echo $lvlId ?>" class="btn btn-default">Bullies</a>
 						<?php } ?>
 					</div>
 				<?php } ?>

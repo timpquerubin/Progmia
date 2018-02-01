@@ -212,6 +212,38 @@
 			}
 		}
 
+		public function get_question_list() {
+
+			$this->_init();
+
+			if(isset($_POST)) {
+
+				$question_params = array(
+					"LVL_ID" => $_POST["lvlId"],
+				);
+
+				$question_list = $this->Game_model->get_question_list($question_params);
+
+				echo json_encode(array("status" => true, "question_list" => $question_list));
+
+			} else {
+				echo json_encode(array("status" => false, "message" => "lvlid parameter is required"));
+			}
+		}
+
+		public function display_dialog() {
+
+			if(isset($_POST)) {
+
+				$data["dialog"] = $_POST["dialog"];
+
+				$this->load->view('game/dialog.php', $data);
+
+			} else {
+				echo json_encode(array("status" => false, "message" => "parameter dialog is required"));
+			}
+		}
+
 		public function record_progress() {
 
 			$this->_init();

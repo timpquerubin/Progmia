@@ -24,12 +24,14 @@
 			<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 		</div>
 	</div>
-	<div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15;m min-width:250px; padding:20px 40px;width:96%;margin:20px auto;height:100px;border:solid 5px #000000;"><p style="font-family:ArcadeClassic;font-size: 30px;color:#000000;">Text Here!</p></div>
-	<div class="console-container">
+
+	<div class="dialog-container"></div>
+	
+	<!-- <div class="console-container">
 		<div class="console">
 			<textarea rows="5" id="console-area" style="margin: 0px; padding: 0px; width: 100%; resize: none;" disabled></textarea>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="code-area-container">
 		<div class="row code_area">
@@ -42,7 +44,7 @@
 		</div>
 		<div class="row button-run-container">
 			<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-				<button class="btn btn-basic btn-block" onclick="start();">RUN</button>
+				<button class="btn btn-basic btn-block" onclick="runCode();">RUN</button>
 			</div>
 		</div>
 		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
@@ -70,9 +72,11 @@
 	img.dialog.src = "<?php echo base_url(); ?>assets/images/BORDER-1.png";
 	img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
 	img.player = new Image();
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
+	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/PLAYER-04.png";
 	img.bully = new Image();
-	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
+	img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png";
+	img.projectile = new Image();
+	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
 
 	document.getElementById('textarea1').value = '1';
 
@@ -110,6 +114,13 @@
 	}
 	
 	enableTab('code_area');
+
+	testCollisionRectRect = function(rect1,rect2){
+	return rect1.x <= rect2.x+rect2.width 
+		&& rect2.x <= rect1.x+rect1.width
+		&& rect1.y <= rect2.y + rect2.height
+		&& rect2.y <= rect1.y + rect1.height;
+	}
 
 	isEndOfCode = function(commandNum) {
 
@@ -172,9 +183,11 @@
 						console.log(vrbls);
 					} else {
 						console.log("error: data type missmatch");
+						return {status: false, message: "error: data type missmatch"};
 					}
 				} else {
 					console.log("error: no value assigned");
+					return {status: false, message: "error: no value assigned"};
 				}
 			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9]*;$/g.test(cmdLine)) {
 
@@ -228,6 +241,7 @@
 
 					if(isMismatch) {
 						console.log("error: dataType missmatch");
+						return {status: false, message: "error: dataType missmatch"};
 					} else {
 						vrbls.push({
 							dataType: arrInfo[0],
@@ -239,6 +253,7 @@
 					}
 				} catch(err) {
 					console.log("error: value assigned invalid");
+					return {status: false, message: "error: value assigned invalid"};
 				}
 
 			} else if(/^([A-Za-z][A-Za-z0-9]*|[A-Za-z][A-Za-z0-9]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9]*|[A-Za-z][A-Za-z0-9]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
@@ -296,13 +311,91 @@
 
 				} else {
 					console.log(var1_identifier + " or " + var2_identifier + " variable does not exist");
+					return {status: false, message: var1_identifier + " or " + var2_identifier + " variable does not exist"};
 				}
 
 
 			} else {
 				console.log("error");
+				return {status: false, message: "syntax error"};
 			}
+
+			return {status: true, message: "execution was successful"};
 		}
+	}
+
+	runCode = function() {
+
+		var hasErrors = false;
+
+		cmdNum = 0;
+
+		if(player.isEnemyInRange()) {
+
+			var bullyId = player.isEnemyInRange();
+
+			do {
+				
+				var exec_status = executeCommand(cmdNum);
+
+				if(!exec_status.status) {
+					console.log(exec_status.message);
+					hasErrors = true;
+					break;
+				} else {
+					cmdNum++;
+				}
+
+			} while(!isEndOfCode);
+
+			for(var key in Question.list) {
+
+				if(Question.list[key].bully == bullyId) {
+					console.log(Question.list[key].isAsked);
+					if(Question.list[key].isAsked) {
+						if(Question.list[key].status == "not answered") {
+							// console.log("here");
+							// console.log(vrbls);
+							// console.log(Question.list[key].answer)
+							if(!hasErrors) {
+
+								var answers = Question.list[key].answer;
+								var ansCount = answers.length;
+								var correctAns = 0;
+
+								for(var akey in answers) {
+
+									for(var vkey in vrbls) {
+
+										if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value == vrbls[vkey].var_value) {
+
+											correctAns++;
+										}
+									}
+								}
+
+								if(ansCount <= correctAns) {
+									Question.list[key].status = "correct";
+									Projectile.generate(player, "right");
+								} else {
+									Question.list[key].status = "wrong";
+									Projectile.generate(Bully.list[bullyId], "left");
+								}
+
+							} else {
+								Question.list[key].status = "wrong";
+								Projectile.generate(Bully.list[bullyId], "left");
+							}
+
+							Question.closeDialog();
+						}
+					}
+				}
+			}
+
+
+		}		
+
 	}
 
 	getConditions = function(statement, terminator1, terminator2) {
@@ -388,30 +481,30 @@
 		return false;
 	}
 
-	document.onkeydown = function(event){
-		if(event.keyCode === 68)	//d
-			player.pressingRight = true;
-		else if(event.keyCode === 83)	//s
-			player.pressingDown = true;
-		else if(event.keyCode === 65) //a
-			player.pressingLeft = true;
-		else if(event.keyCode === 87) // w
-			player.pressingUp = true;
+	// document.onkeydown = function(event){
+	// 	if(event.keyCode === 68)	//d
+	// 		player.pressingRight = true;
+	// 	else if(event.keyCode === 83)	//s
+	// 		player.pressingDown = true;
+	// 	else if(event.keyCode === 65) //a
+	// 		player.pressingLeft = true;
+	// 	else if(event.keyCode === 87) // w
+	// 		player.pressingUp = true;
 			
-		else if(event.keyCode === 80) //p
-			paused = !paused;
-	}
+	// 	else if(event.keyCode === 80) //p
+	// 		paused = !paused;
+	// }
 
-	document.onkeyup = function(event){
-		if(event.keyCode === 68)	//d
-			player.pressingRight = false;
-		else if(event.keyCode === 83)	//s
-			player.pressingDown = false;
-		else if(event.keyCode === 65) //a
-			player.pressingLeft = false;
-		else if(event.keyCode === 87) // w
-			player.pressingUp = false;
-	}
+	// document.onkeyup = function(event){
+	// 	if(event.keyCode === 68)	//d
+	// 		player.pressingRight = false;
+	// 	else if(event.keyCode === 83)	//s
+	// 		player.pressingDown = false;
+	// 	else if(event.keyCode === 65) //a
+	// 		player.pressingLeft = false;
+	// 	else if(event.keyCode === 87) // w
+	// 		player.pressingUp = false;
+	// }
 
 	// isEnemyInRange = function() {
 
@@ -433,6 +526,7 @@
 			hpMax: hpMax,
 			hp: hpMax,
 			moveCtr: 0,
+			type: "player",
 		}
 
 		self.img.src = imgSrc;
@@ -458,18 +552,30 @@
 
 				var bullyId = self.isEnemyInRange();
 
-				// if(self.currentQuestion[0]) {
+				for(var key in Question.list) {
 
-				// } else {
-				// 	console.log("no current question");
-				// 	Bully.list[bullyId].questions[0].status = true;
-				// 	self.currentQuestion = Bully.list[bullyId].questions;
-				// 	self.currentQuestion[0].result = false;
-				// }
+					if(Question.list[key].bully == bullyId) {
+
+						if(!Question.list[key].isAsked) {
+							if(Question.list[key].status == "not answered") {
+
+								Question.list[key].showQuestion();
+
+								// document.getElementById("console-area").value += ("\nProgmia> Bully: " + Question.list[key].dialog);
+								Question.list[key].isAsked = true;
+							}
+						}
+					}
+				}
+			} else {
+
+				self.pressingRight = true;
 			}
 
 			self.updatePosition();
 			self.draw();
+
+			
 		}
 
 		self.updatePosition = function() {
@@ -513,7 +619,7 @@
 			if(self.pressingRight)
 				directionMod = 2;
 
-			ctx.drawImage(self.img, walkingMod * frameWidth, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width * zoomMultiplier, self.height * zoomMultiplier);
+			ctx.drawImage(self.img, walkingMod * frameWidth, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width * zoomMultiplier, self.height  * zoomMultiplier);
 		}
 
 		self.isEnemyInRange = function() {
@@ -558,6 +664,8 @@
 			y: y,
 			hpMax: hpMax,
 			hp: hpMax,
+			type: "bully",
+			toRemove: false,
 		}
 
 		self.img.src = imgSrc;
@@ -565,6 +673,10 @@
 		self.update = function() {
 
 			self.draw();
+
+			if(self.hp <= 0) {
+				self.toRemove = true;
+			}
 		}
 
 		self.draw = function() {
@@ -575,10 +687,36 @@
 			var x = (ctxWidth/2 - player.x) - 80;
 			var y = ctxHeight/2 - player.y;
 
-			x += (self.x - self.width/2);
-			y += (self.y - self.height/2);
+			// x += (self.x - self.width/2);
+			// y += (self.y - self.height/2);
 
-			ctx.drawImage(self.img, 0, 0, self.img.width/4, self.img.height/4, x, y, self.width, self.height);
+			x += self.x - self.width/2;
+			y += self.y - self.height/2;
+
+			ctx.drawImage(self.img, 0, 0, self.img.width/4, self.img.height/4, x, y, self.width  * zoomMultiplier, self.height  * zoomMultiplier);
+			ctx.fillStyle = 'red';
+			ctx.fillRect((x + self.width/2), (y + self.height/2), 2, 2);
+			ctx.save();
+
+			// var HPx = ((ctxWidth/2 - player.x) - 80) + self.x - self.width/2;
+			// var HPy = (ctxHeight/2 - player.y) + self.y - self.height/2;
+
+			var HPx = x + self.width/2;
+			var HPy = y;
+
+			ctx.fillStyle = 'red';
+			var width = 50 * (self.hp / self.hpMax);
+
+			if(width < 0)
+			{
+				width = 0;
+			}
+
+			ctx.fillRect(HPx-28, HPy-10, width, 6);
+			ctx.strokeStyle = 'black';
+			ctx.strokeRect(HPx-28, HPy-10, 50, 6);
+
+			ctx.restore();
 		}
 
 		Bully.list[id] = self;
@@ -586,11 +724,11 @@
 
 	Bully.list = {};
 
-	Bully.generate = function(imgSrc, height, width, x, y, hpMax) {
+	Bully.generate = function(id,imgSrc, height, width, x, y, hpMax) {
 
-		var newId = "Bully_" + Math.random();
+		// var newId = "Bully_" + Math.random();
 
-		Bully(newId, imgSrc, height, width, x, y, hpMax);
+		Bully(id, imgSrc, height, width, x, y, hpMax);
 	}
 
 	Bully.init = function() {
@@ -613,7 +751,7 @@
 			}).then(function(result) {
 
 				if(result['status']) {
-					console.log(result['bully_list'][0].BLY_SPAWNPOINT);
+					// console.log(result['bully_list'][0].BLY_SPAWNPOINT);
 
 					var bully_list = result['bully_list'];
 
@@ -621,7 +759,7 @@
 
 						var bully_spawn = JSON.parse(bully_list[key].BLY_SPAWNPOINT);
 
-						Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+						Bully.generate(bully_list[key].BLY_ID,img.bully.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
 					}
 
 				} else {
@@ -636,26 +774,231 @@
 		for(var key in Bully.list) {
 
 			Bully.list[key].update();
+
+			if(Bully.list[key].toRemove) {
+				delete Bully.list[key];
+			}
 		}
 	}
 
-	Question = function() {
+	Projectile = function(id, imgSrc, type, x, y, dir) {
+
+		var self = {
+			id: id,
+			img: new Image(),
+			type: type,
+			x: x,
+			y: y,
+			direction: dir,
+			timer: 0,
+			toRemove: false,
+			height: 20,
+			width: 20,
+		}
+
+		self.img.src = imgSrc;
+
+		self.update = function() {
+
+			self.updatePosition();
+			self.draw();
+
+			if(self.type === "bully")
+			{
+				if(self.testCollision(player))
+				{
+					self.toRemove = true;
+					player.hp -= 1;
+
+					var hpPercent = (player.hp/player.hpMax)*100;
+
+					// $(".player-hp-bar").css("width", hpPercent + "%");
+				}
+			}
+
+			if(self.type === "player")
+			{
+				for(var key in Bully.list)
+				{
+					if(self.testCollision(Bully.list[key]))
+					{
+						self.toRemove = true;
+						Bully.list[key].hp -= 1;
+					}
+				}
+			}
+
+			self.timer++;
+
+			if(self.timer > 20)
+				self.toRemove = true;
+			// if(Maps.current.isPossitionWall(self) === 5)
+			// 	self.toRemove = true;
+		}
+
+		self.draw = function() {
+
+			var x = (ctxWidth/2 - player.x) - 80;
+			var y = ctxHeight/2 - player.y;
+
+			x += (self.x - self.width/2);
+			y += (self.y - self.height/2);
+
+			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, x, y, self.width * zoomMultiplier, self.height * zoomMultiplier);
+		}
+
+		self.updatePosition = function() {
+
+			if(self.direction === "up")
+				self.y -= 8;
+			if(self.direction === "down")
+				self.y += 8;
+			if(self.direction === "left")
+				self.x -= 8;
+			if(self.direction === "right")
+				self.x += 8;
+		}
+
+		self.testCollision = function(entity2){	//return if colliding (true/false)
+			var rect1 = {
+				x:self.x-self.width/2,
+				y:self.y-self.height/2,
+				width:self.width,
+				height:self.height,
+			}
+			var rect2 = {
+				x:entity2.x-entity2.width/2,
+				y:entity2.y-entity2.height/2,
+				width:entity2.width,
+				height:entity2.height,
+			}
+			return testCollisionRectRect(rect1,rect2);
+		}
+
+		Projectile.list[id] = self;
+	}
+
+	Projectile.list = {};
+
+	Projectile.update = function() {
+
+		for(var key in Projectile.list)
+		{
+			Projectile.list[key].update();
+			
+			if(Projectile.list[key].toRemove == true)
+				delete Projectile.list[key];
+		}
+	}
+
+	Projectile.generate = function(actor, direction) {
+		var x = actor.x;
+		var y = actor.y;
+
+		var id = Math.random();
+		var type = actor.type;
+
+		Projectile(id, img.projectile.src, type, x, y, direction);
+	}
+
+	Question = function(id, qstnNum, bullyId, dialog, answer) {
 
 		// id, qstnNum, bullyId, dialog, answer
 
-		// var self = {
-		// 	id: id,
-		// 	qstnNum: qstnNum,
-		// 	bully: bullyId,
-		// 	dialog: dialog,
-		// 	answer: answer,
-		// }
+		var self = {
+			id: id,
+			qstnNum: qstnNum,
+			bully: bullyId,
+			dialog: dialog,
+			answer: answer,
+			isAsked: false,
+			status: "not answered",
+		}
 
 		self.draw = function() {
 			//DIALOG
 			// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 10,img.dialog.width,img.dialog.height);
-			Console.log(img.dialog);
+			// Console.log(img.dialog);
 		}
+
+		self.showQuestion = function() {
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>Game/display_dialog",
+				data: {dialog: self.dialog},
+				success: function(res) {
+					$('.dialog-container').html(res);
+				},
+				error: function(err) {
+					console.log("cannot display dialog due to some error");
+				}
+			});
+		}
+
+		Question.list[id] = self;
+	}
+
+	Question.list = {};
+
+	Question.init = function() {
+
+		var promise = new Promise(function(resolve, reject) {
+
+			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url() ?>Game/get_question_list",
+				data: {lvlId: lvlId},
+				dataType: 'json',
+				success: function(res) {
+					// console.log(res),
+					resolve(res);
+				},
+				error: function(err) {
+					console.log("failed to retreive question list due to some error");
+				}
+			}).then(function(result) {
+
+				if(result.status) {
+					// console.log(result.question_list);
+
+					var question_list = result.question_list;
+
+					for(var key in question_list) {
+
+						var questionId = question_list[key].BLY_ID + "_" + question_list[key].QSTN_NUM;
+
+						if(question_list[key].QSTN_TYPE == "variable") {
+
+							var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+							for(var key in answers) {
+								answers[key].var_value = parseValue(answers[key].dataType, answers[key].var_value);
+							}
+
+							console.log(answers);
+						}
+
+						Question(questionId, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
+					}
+
+					console.log(Question.list);
+				}
+			});
+		});
+	}
+
+	Question.closeDialog = function() {
+		$('.dialog-container').html('');
+		// console.log("close dialog");
+	}
+
+	Question.isAllAnswered = function(bullyId) {
+
+		var qCtr = 0;
+		var qAns = 0;
 	}
 
 	Maps = function(id, imgSrc, height, width, grid) {
@@ -688,6 +1031,12 @@
 	startNewGame = function() {
 
 		Bully.list = {};
+		Question.list = {};
+		Projectile.list = {};
+
+		Bully.init();
+		Question.init();
+
 
 		// cmdNum = 0;
 		// vrbls = [];
@@ -698,7 +1047,6 @@
 		// }
 
 		player.hp = player.hpMax;
-		Bully.init();
 
 		// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 168, 56, 1);
 		// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 360, 56, 1);
@@ -710,6 +1058,7 @@
 		currentMap.update();
 		player.update();
 		Bully.update();
+		Projectile.update();
 		// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
 
 	}

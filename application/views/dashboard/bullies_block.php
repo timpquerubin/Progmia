@@ -5,6 +5,7 @@
 			<th>Type</th>
 			<th>Spawn Point</th>
 			<th>Max Hp</th>
+			<th>Questions</th>
 		</thead>
 		<tbody>
 			<?php if(sizeof($bully_list) > 0) { ?>
@@ -15,15 +16,27 @@
 						<td><?php echo $bully["type"] ?></td>
 						<td><?php echo json_encode($bully["spawnPt"]) ?></td>
 						<td><?php echo $bully["maxHp"] ?></td>
+						<td><button class="btn btn-default" type="button" onclick="load_questions('<?php echo $bully['id'] ?>')">Q</button></td>
 					</tr>
 
 					<?php $ctr++; ?>
 				<?php } ?>
 			<?php } else { ?>
 				<tr>
-					<td colspan="4" style="text-align: center;">No Bullies</td>
+					<td colspan="5" style="text-align: center;">No Bullies</td>
 				</tr>
 			<?php } ?>
 		</tbody>
 	</table>
 </div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+
+		load_questions = function(bullyId) {
+			console.log(bullyId);
+		}
+	});
+
+</script>

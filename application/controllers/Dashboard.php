@@ -298,7 +298,7 @@
 			$header_data = array(
 				'title' => 'Manage Bullies',
 				'tab_active' => 'levels',
-				'page' => 'manage-bullies',
+				'page' => 'level-bullies',
 				'lvlId' => $lvlId
 			);
 

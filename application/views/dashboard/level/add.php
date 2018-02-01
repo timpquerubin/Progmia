@@ -317,7 +317,9 @@
 			var bly_spawn_y = document.getElementById("bly_spawn_y").value;
 			var bly_max_hp = document.getElementById("bly_max_hp").value;
 
-			bully_list[blyCtr] = {type: bully_type, spawnPt: [parseInt(bly_spawn_x), parseInt(bly_spawn_y)], maxHp: bly_max_hp, questions: question_list};
+			var temp_id = "bully_" + blyCtr;
+
+			bully_list[blyCtr] = {id: temp_id, type: bully_type, spawnPt: [parseInt(bly_spawn_x), parseInt(bly_spawn_y)], maxHp: bly_max_hp, questions: question_list};
 
 			console.log(bully_list);
 
@@ -432,7 +434,16 @@
 		load_bullies_block = function() {
 
 			var data = {};
+			var all_questions = {};
 			data['bully_list'] = bully_list;
+
+			// for(var key in bully_list) {
+
+			// 	if(bully_list[key].questions) {
+
+			// 		all_questions[key]
+			// 	}
+			// }
 
 			$.ajax({
 				type: 'post',

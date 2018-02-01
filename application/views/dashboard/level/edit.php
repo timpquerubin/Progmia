@@ -27,7 +27,7 @@
 					<div class="col-sm-4">
 						<select class="form-control" id="stage" name="stage">
 							<?php foreach($stage_list as $s) { ?>
-								<option class="stage-option" value="<?php echo $s['STG_ID']; ?>" <?php echo $lvl['STAGE'] === $s['STG_ID'] ? 'selected' : '' ?>><?php echo $s['STG_NAME']; ?></option>
+								<option class="stage-option" value="<?php echo $s['STG_ID']; ?>" <?php echo $lvl['STG_ID'] === $s['STG_ID'] ? 'selected' : '' ?>><?php echo $s['STG_NAME']; ?></option>
 							<?php } ?>
 						</select>
 					</div>

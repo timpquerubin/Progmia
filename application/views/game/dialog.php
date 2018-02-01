@@ -1,0 +1,3 @@
+<!-- <div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15; min-width:250px; padding:20px 40px;width:96%;margin:20px auto;height:100px;border:solid 5px #000000;"><p style="font-family:ArcadeClassic;font-size: 30px;color:#000000;"><?php echo isset($dialog) ? $dialog : '' ?></p></div>
+ -->
+<div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15;min-width:250px;padding: 23px 40px;width:96%;margin:20px auto;height: auto;border:solid 5px #000000;"><p style="font-family:ArcadeClassic;font-size: 30px;color: #222222;letter-spacing: 1px;word-spacing: 15px;text-shadow: 1px 1px 2px #77777799;line-height: 30px;"><?php echo isset($dialog) ? $dialog : '' ?></p></div>
