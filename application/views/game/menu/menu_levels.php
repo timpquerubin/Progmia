@@ -39,14 +39,21 @@
 									<?php } ?>
 								<?php } ?>
 								<input type="hidden" name="level_<?php echo $i+1; ?>_score" id="level_<?php echo $i+1; ?>_score" value="<?php echo $score; ?>">
-								<div class="bottom-stars">
-									<fieldset class="stage-rating">
+								<ul style="display:inline-flex;list-style: none;margin:0 auto !important;padding: 0px !important;">
 									<!-- <?php // if($score == 0 || $score == null){ ?> -->
+									<li id="level_<?php echo $i+1; ?>_star1">
+										<div></div>
 										<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star1" value="1" disabled><label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"></label>
+									</li>
+									<li id="level_<?php echo $i+1; ?>_star2">
+										<div></div>
 										<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star2" value="2" disabled><label class="" for="level_<?php echo $i+1; ?>_star2" title="Excellent"></label>
+									</li>
+									<li id="level_<?php echo $i+1; ?>_star3">
+										<div></div>
 										<input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star3" value="3" disabled><label class="" for="level_<?php echo $i+1; ?>_star3" title="Perfect"></label>
-									</fieldset>
-								</div>
+									</li>
+									</ul>
 							</div>
 						</a>
 					</div>
@@ -71,7 +78,6 @@
 	    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
 	    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 	</fieldset> -->
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -94,14 +100,27 @@
 
 			if(level_score < 50 && level_score > 0) {
 				$("#level_"+ i + "_star1").attr("checked", true);
+				$("#level_"+ i + "_star1").addClass("s1");
+				$("#level_"+ i + "_star2").addClass("no-score u2");
+				$("#level_"+ i + "_star3").addClass("no-score u3");
 			} else if(level_score >= 50 && level_score < 100) {
+				$("#level_"+ i + "_star1").attr("checked", true);
+				$("#level_"+ i + "_star1").addClass("s1");
 				$("#level_"+ i + "_star2").attr("checked", true);
+				$("#level_"+ i + "_star2").addClass("s2");
+				$("#level_"+ i + "_star3").addClass("no-score u2");
+
 			} else if(level_score == 100) {
+				$("#level_"+ i + "_star1").attr("checked", true);
+				$("#level_"+ i + "_star1").addClass("s1");
+				$("#level_"+ i + "_star2").attr("checked", true);
+				$("#level_"+ i + "_star2").addClass("s2");
 				$("#level_"+ i + "_star3").attr("checked", true);
+				$("#level_"+ i + "_star3").addClass("s3");
 			} else {
-				$("#level_"+ i + "_star1").addClass("no-score");
-				$("#level_"+ i + "_star2").addClass("no-score");
-				$("#level_"+ i + "_star3").addClass("no-score");
+				$("#level_"+ i + "_star1").addClass("no-score u1");
+				$("#level_"+ i + "_star2").addClass("no-score u2");
+				$("#level_"+ i + "_star3").addClass("no-score u3");
 			}
 		}
 	});

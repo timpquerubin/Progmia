@@ -1,7 +1,6 @@
 
-body{background-image: url(../images/LOGIN_BG.png);height:100% !important;background-repeat: repeat;background-position: center;margin-bottom: 20px;}
-
-
+body{background-image: url(../images/LOGIN_BG.png);background-repeat: repeat;background-position: center;padding:40px 0px 0px 0px;}
+div.logo {padding:20px 0 0 0;}
 @font-face {
 	font-family: AdventPro;
 	src: url("fonts/AdventPro-Regular.ttf");
@@ -21,7 +20,8 @@ font-family: 'Barlow';
 src: url("../fonts/BarlowCondensed-Regular.ttf");
 src: url("../fonts/BarlowCondensed-Light.ttf");
 }
-
+h1.greetings{font-family:'Barlow'; color:#ffffff;max-width:300px;font-weight: 300;font-size:24px;}
+hr.greetings{border-color:#ffce12;border-width: 7px;}
 .alert {
 	position:absolute;
 	z-index: 1; 
@@ -32,69 +32,60 @@ src: url("../fonts/BarlowCondensed-Light.ttf");
 	margin:0 auto;
 }
 
-div.logo img {width:300px !important;margin:40px auto;}
+div.logo img {width:270px !important;margin:0 auto;}
 
 div.login-panel {
-	margin-top:30px;
+	border-radius: 10px;
 	margin:30px auto 0 auto;
-	padding:10px 20px;
+	padding:10px 30px 30px 30px;
 	/*max-height:323px;
 	height: 100%;*/
 	position: relative;
-	background: #353535;
+	background: #013639;
+	background-color: #0094a2 !important;
 	max-width: 320px !important;
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
-}
-div.login-panel::after{
-	position:absolute;
-	bottom:-40px;
-	left:0;
-	right:0;
-	margin:0 auto;
-	content:'';
-	width: 300px;
-	height: 0;
-	border-style: solid;
-	border-width: 40px 160px 0 160px;
-	border-color: #353535 transparent transparent transparent;
-}
-div.login-panel::before{
-	position:absolute;
-	bottom:-45px;
-	content: '';
-	background-color: #ffce12;
-	width:30px;
-	height:30px;
-	left:0;
-	right: 0;
-	margin: 0 auto;
-	border-radius: 90%;
+	/*border-top-left-radius: 20px;
+	border-top-right-radius: 20px;*/
 }
 
 div.login-panel label, div.login-panel input, div.login-panel h2{
 }
 
 div.login-panel h2{
+	font-family: 'BebasNeue';
 	text-align: center !important;
 	color:#fff !important;
-	margin:7px auto !important
+	margin:20px auto !important
 }
 div.login-panel input#username,div.login-panel input#password {
-background-color: #1c1c1c;
-color: #ffffff !important;
+	background-color: #1c1c1c;
+	background-color:#0a1e1d;
+	background-color: #004e55;
+	border:solid 1px #0899c8;
+	color: #ffffff !important;
 	font-family: Barlow !important;
+	padding-top:3px !important;
 }
 div.login-form input.btn{
 	font-family: BebasNeue !important;
-	border-radius: 0px !important;
+	margin:10px auto;
 	border:none;
+	border-radius:2px;
+
 }
 div.login-form input#btn_login{
+	font-size:20px;
 	background: #007095 !important;
+	background: #08b3e9 !important;
+	background: #006f7a!important;
+	color:#fff;
+	margin:20px auto;
 }
 div.login-form input#btn_register{
-	background: #005f75 !important;
+	font-size:20px;
+	background: #555 !important;
+	background: #006f7a!important;
+	color:#fff;
 }
 
 div.login-form {
@@ -119,5 +110,32 @@ div.modal-dialog input[type=radio]:checked ~ .check {border: 5px solid #1d9ce5;}
 div.modal-dialog input[type=radio]:checked ~ .check::before{background: #1d9ce5;}
 div.modal-dialog input[type=radio]:checked ~ label{color: #1d9ce5;}
 div.modal-dialog p{margin-bottom: 0px;}
-footer {position:fixed;height:30px;bottom:0;left:0;right:0;background: #0a1e1d;background: #111111;padding:5px 0;}
+footer {position:fixed;height:30px;bottom:0;left:0;right:0;background: #0a1e1d;background: #002529;padding:5px 0;}
 footer p {text-align: center;margin:0 !important;color:#777777;font-size:15px;font-family: 'Barlow';}
+
+
+/*div.login-panel::after{
+	position:absolute;
+	bottom:-45px;
+	left:0;
+	right:0;
+	margin:0 auto;
+	content:'';
+	width: 300px;
+	height: 0;
+	border-style: solid;
+	border-width: 45px 160px 0 160px;
+	border-color: #353535 transparent transparent transparent;
+}
+div.login-panel::before{
+	position:absolute;
+	bottom:-45px;
+	content: '';
+	background-color: #ffce12;
+	width:30px;
+	height:30px;
+	left:0;
+	right: 0;
+	margin: 0 auto;
+	border-radius: 90%;
+}*/

@@ -17,7 +17,7 @@
 			<div class="center">
 			<h1>MAP</h1>
 			</div>
-			<ul class="right">
+			<!-- <ul class="right">
 				<li>
 					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 				</li>
@@ -27,6 +27,20 @@
 				<li>
 					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
 				</li>
+			</ul> -->
+			<ul class="nav navbar-nav navbar-right" style="position:absolute !important; top:0px;right:20px;">
+				<?php if($this->session->userdata('logged_in')): ?>
+					<li class="dropdown">
+						<a class="hvr-icon-hang dropbtn dropdown-toggle" data-toggle="dropdown">My Account</a>
+						<ul class="dropdown-menu">
+							<li class="text-center"><a href="#"><img src="<?php echo base_url(); ?>assets/images/avatar-1.png" class="img-circle"></a></li>
+							<li class="text-center username"><?php echo $this->session->userdata('username'); ?></li>
+							<li><a href="<?php echo base_url(); ?>profile/user/<?php echo $this->session->userdata('user_id'); ?>">Profile</a></li>
+							<li><a href="#">Settings</a></li>
+							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
+						</ul>
+					</li>
+				<?php endif; ?>
 			</ul>
 		</nav>
 	</div>

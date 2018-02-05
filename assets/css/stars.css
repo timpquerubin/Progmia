@@ -2,6 +2,26 @@
 fieldset label {margin: 0; padding: 0;}
 .stage-rating {border: none;}
 .stage-rating input {display: none;}
-.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;} /*FFD700*/ 
-.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}
-input.no-score + label:before{ color: #aaa;}
+/*.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;}*/ /*FFD700*/ 
+/*.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}*/
+/*input.no-score + label:before{ color: #aaa;}*/
+/*div.s1 > img {background-image: url(../images/stars/stars-01.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.s2 > img {background-image: url(../images/stars/stars-02.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.s3 > img {background-image: url(../images/stars/stars-03.png);background-size: 50px 50px;background-repeat: no-repeat;}
+
+
+div.u1 > img {background-image: url(../images/stars/stars-04.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.u2 > img {background-image: url(../images/stars/stars-05.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.u3 > img {background-image: url(../images/stars/stars-06.png);background-size: 50px 50px;background-repeat: no-repeat;}
+
+*/
+
+li.s1 > div {display:inline-flex;background-image: url(../images/stars/STARS-01.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.s2 > div {display:inline-flex;background-image: url(../images/stars/STARS-02.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.s3 > div {display:inline-flex;background-image: url(../images/stars/STARS-03.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+
+
+li.u1 > div {display:inline-flex;background-image: url(../images/stars/STARS-04.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.u2 > div {display:inline-flex;background-image: url(../images/stars/STARS-05.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.u3 > div {display:inline-flex;background-image: url(../images/stars/STARS-06.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+
