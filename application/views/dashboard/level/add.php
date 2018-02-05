@@ -336,46 +336,46 @@
 
 		// console.log(value);
 
-		if(dataType == "int") {
-			
-			if(/^[0-9]+$/i.test(value)) {
-				return parseInt(value);
-			} else {
-				return false;
-			}
-		} else if(dataType == "double") {
+			if(dataType == "int") {
+				
+				if(/^[0-9]+$/i.test(value)) {
+					return parseInt(value);
+				} else {
+					return false;
+				}
+			} else if(dataType == "double") {
 
-			if(/^[0-9\.]+$/i.test(value)) {
-				return parseFloat(value);
-			} else {
-				return false;
-			}
-		} else if(dataType == "char") {
+				if(/^[0-9\.]+$/i.test(value)) {
+					return parseFloat(value);
+				} else {
+					return false;
+				}
+			} else if(dataType == "char") {
 
-			if(/^\'\w\'$/i.test(value)) {
-				value = value.replace(/\'/g, "");
-				return value;
-			} else {
-				return false;
-			}
-		} else if(dataType == "String") {
+				if(/^\'\w\'$/i.test(value)) {
+					value = value.replace(/\'/g, "");
+					return value;
+				} else {
+					return false;
+				}
+			} else if(dataType == "String") {
 
-			if(/^\".*\"$/i.test(value)) {
-				value = value.replace(/\"/g, "");
-				return value;
-			} else {
-				return false;
-			}
-		} else if(dataType == "bool") {
+				if(/^\".*\"$/i.test(value)) {
+					value = value.replace(/\"/g, "");
+					return value;
+				} else {
+					return false;
+				}
+			} else if(dataType == "bool") {
 
-			value = value.toLowerCase();
-			if(/^(true|false)$/i.test(value)) {
-				return value;
-			} else {
-				return false;
+				value = value.toLowerCase();
+				if(/^(true|false)$/i.test(value)) {
+					return value;
+				} else {
+					return false;
+				}
 			}
 		}
-	}
 
 		load_objectives_block = function() {
 

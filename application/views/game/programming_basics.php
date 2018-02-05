@@ -326,6 +326,7 @@
 
 	runCode = function() {
 
+		vrbls = [];
 		var hasErrors = false;
 
 		cmdNum = 0;
@@ -353,7 +354,7 @@
 				if(Question.list[key].bully == bullyId) {
 					console.log(Question.list[key].isAsked);
 					if(Question.list[key].isAsked) {
-						if(Question.list[key].status == "not answered") {
+						if(Question.list[key].status == "current question") {
 							// console.log("here");
 							// console.log(vrbls);
 							// console.log(Question.list[key].answer)
@@ -388,6 +389,7 @@
 							}
 
 							Question.closeDialog();
+							player.currentQuestion.questionNum++;
 						}
 					}
 				}
@@ -527,6 +529,7 @@
 			hp: hpMax,
 			moveCtr: 0,
 			type: "player",
+			currentQuestion: {},
 		}
 
 		self.img.src = imgSrc;
@@ -552,21 +555,56 @@
 
 				var bullyId = self.isEnemyInRange();
 
-				for(var key in Question.list) {
+				if(self.currentQuestion.questionNum) {
 
-					if(Question.list[key].bully == bullyId) {
+					var questionId = bullyId + "_" + self.currentQuestion.questionNum;
 
-						if(!Question.list[key].isAsked) {
-							if(Question.list[key].status == "not answered") {
 
-								Question.list[key].showQuestion();
+				} else {
 
-								// document.getElementById("console-area").value += ("\nProgmia> Bully: " + Question.list[key].dialog);
-								Question.list[key].isAsked = true;
-							}
+					self.currentQuestion = {bully: bullyId, questionNum: 1};
+
+					// console.log(self.currentQuestion.bully + "_" + self.currentQuestion.questionNum);
+				}
+
+				if (Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum]) {
+
+					var question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
+					
+					// console.log(Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum]);
+
+					if(!Question.list[question_id].isAsked) {
+						if(Question.list[question_id].status == "not answered") {
+
+							// if(prevQuestionStatus != "current question") {
+								Question.list[question_id].showQuestion();
+								Question.list[question_id].isAsked = true;
+								Question.list[question_id].status = "current question";
+								// prevQuestionStatus = Question.list[question_id].status;
+							// }
 						}
 					}
 				}
+
+				// var prevQuestionStatus = "";
+
+				// for(var key in Question.list) {
+
+				// 	if(Question.list[key].bully == bullyId) {
+
+				// 		if(!Question.list[key].isAsked) {
+				// 			if(Question.list[key].status == "not answered") {
+
+				// 				if(prevQuestionStatus != "current question") {
+				// 					Question.list[key].showQuestion();
+				// 					Question.list[key].isAsked = true;
+				// 					Question.list[key].status = "current question";
+				// 					prevQuestionStatus = Question.list[key].status;
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// }
 			} else {
 
 				self.pressingRight = true;
@@ -974,11 +1012,11 @@
 
 							var answers = JSON.parse(question_list[key].QSTN_ANSWER);
 
-							for(var key in answers) {
-								answers[key].var_value = parseValue(answers[key].dataType, answers[key].var_value);
+							for(var akey in answers) {
+								answers[akey].var_value = parseValue(answers[akey].dataType, answers[akey].var_value);
 							}
 
-							console.log(answers);
+							// console.log(answers);
 						}
 
 						Question(questionId, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);

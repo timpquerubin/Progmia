@@ -291,6 +291,83 @@
 			}
 		}
 
+		public function save_add_question() {
+
+			$this->__init();
+
+			if(isset($_POST)) {
+
+				$question_info = $_POST["question_info"];
+
+				$count_params = array(
+					"BLY_ID" => $question_info["bullyId"],
+				);
+
+				$qstnList = $this->Game_model->get_question_list($count_params);
+
+				// var_dump($qstnList);
+
+				$qstn_count = count($qstnList) + 1;
+
+				$question_params = array(
+					"BLY_ID" => $question_info["bullyId"],
+					"QSTN_NUM" => $qstn_count,
+					"QSTN_DIALOG" => $question_info["qstn_dialog"],
+					"QSTN_ANSWER" => json_encode($question_info["qstn_ans"]),
+					"QSTN_TYPE" => $question_info["qstn_type"],
+				);
+
+				$this->Game_model->insert_question($question_params);
+
+				echo json_encode(array("status" => true, "message" => "successfully added question"));
+			} else {
+				echo json_encode(array("status" => false, "message" => "failed to add question, parameter is required"));
+			}
+		}
+
+		public function save_add_bully() {
+
+			$this->__init();
+
+			// echo "<pre>";
+			// var_dump($_POST);
+			// echo "</pre>";
+
+			if(isset($_POST)) {
+
+				$date_today = date('Y-m-d');
+				$bully_info = $_POST["bully_info"];
+
+				$get_bully_params = array(
+					"LVL_ID" => $_POST["lvlId"]
+				);
+
+				$bly_list = $this->Game_model->get_bully_list($get_bully_params);
+				$bly_ctr = count($bly_list) + 1;
+
+				$bly_id = md5($_POST["lvlId"].$bly_ctr.$date_today);
+				$spawnPt = array(
+						(int)$bully_info["bly_spawn_x"],
+						(int)$bully_info["bly_spawn_y"],
+				);
+
+				$bully_params = array(
+					"BLY_ID" => $bly_id,
+					"LVL_ID" => $_POST["lvlId"],
+					"BLY_IMAGEURL" => $bully_info["bly_type"],
+					"BLY_SPAWNPOINT" => json_encode($spawnPt),
+					"BLY_MAXHP" => $bully_info["bly_maxHp"],
+					"BLY_NAME" => $bully_info["bly_name"],
+				);
+
+				$this->Game_model->insert_bully($bully_params);
+
+				echo json_encode(array("status" => true, "message" => "succesfully inserted bully"));
+			} else {
+				echo json_encode(array("status" => false, "message" => "failed to insert bully due to lack of parameter"));
+			}
+		}
+
 		public function manage_bullies($lvlId) {
 
 			$this->__init();

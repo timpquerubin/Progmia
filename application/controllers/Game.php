@@ -218,9 +218,17 @@
 
 			if(isset($_POST)) {
 
-				$question_params = array(
-					"LVL_ID" => $_POST["lvlId"],
-				);
+				if(isset($_POST["lvlId"])) {
+
+					$question_params = array(
+						"LVL_ID" => $_POST["lvlId"],
+					);
+				} else if(isset($_POST["bullyId"])) {
+
+					$question_params = array(
+						"BLY_ID" => $_POST["bullyId"],
+					);
+				}
 
 				$question_list = $this->Game_model->get_question_list($question_params);
 

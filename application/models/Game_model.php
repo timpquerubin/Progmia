@@ -177,6 +177,8 @@
 				$question_list = $this->db->get("question");
 			} else if(isset($params["LVL_ID"])) {
 				$question_list = $this->db->query('SELECT B.BLY_ID, Q.QSTN_NUM, Q.QSTN_DIALOG, Q.QSTN_ANSWER, Q.QSTN_TYPE FROM LEVEL L, BULLY B, QUESTION Q WHERE L.LVL_ID=B.LVL_ID AND B.BLY_ID=Q.BLY_ID AND L.LVL_ID=\''.$params["LVL_ID"].'\';');
+			} else if(isset($params["BLY_ID"])) {
+				$question_list = $this->db->query('SELECT * FROM QUESTION WHERE BLY_ID=\''.$params["BLY_ID"].'\' ORDER BY QSTN_NUM;');
 			}
 
 			return $question_list->result_array();
