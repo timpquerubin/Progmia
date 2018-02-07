@@ -21,6 +21,17 @@
 
 	<div class="canvas-container">
 		<div class="" style="margin: 0px; padding: 10px; background-color: #000">
+			<div class="hp-bar-container" style="">
+				<div class="player-hp" style="width: 50%;">
+					<div class="row">
+						<label class="col-sm-2 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
+						<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
+						 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 		</div>
 	</div>
@@ -49,6 +60,18 @@
 		</div>
 		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 	</div>
+
+	<div id="finish-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<h1>Finish</h1>
+		</div>
+	</div>
+
+	<div id="lose-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<h1>You Lost</h1>
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -65,6 +88,8 @@
 	var cmdNum = 0;
 	var vrbls = [];
 	var zoomMultiplier = 0.75;
+	var TILE_SIZE = 16;
+	var isPaused = false;
 
 	var img = {};
 	img.map = new Image();
@@ -543,10 +568,15 @@
 
 		self.update = function() {
 
+			if(self.hp <= 0) {
+				isPaused = true;
+				$("#lose-modal").css("display", "block");
+			}
+
 			if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
 			{
 				self.spriteAnimCtr += 0.25;
-				self.moveCtr += 6 * zoomMultiplier;
+				self.moveCtr += 3 * zoomMultiplier;
 			} else {
 				self.spriteAnimCtr = 0;
 			}
@@ -584,6 +614,10 @@
 							// }
 						}
 					}
+				} else if(Bully.list[bullyId].hp >= 0) {
+					// console.log("you lose");
+
+					Bully.list[bullyId].exit();
 				}
 
 				// var prevQuestionStatus = "";
@@ -618,24 +652,41 @@
 
 		self.updatePosition = function() {
 
-			if(self.moveCtr <= (96 * zoomMultiplier)) {
-				
-				if(self.pressingUp)
-					self.y -= (6);
-				if(self.pressingDown)
-					self.y += (6);
-				if(self.pressingLeft)
-					self.x -= (6);
-				if(self.pressingRight)
-					self.x += (6);
+			var actHeight = self.height/2 * zoomMultiplier;
+			var actWidth = self.width/2 * zoomMultiplier;
+
+			var topBumper = {x: self.x, y: self.y - actHeight};
+			var bottomBumper = {x: self.x, y: self.y + actHeight};
+			var leftBumper = {x: self.x - actWidth, y: self.y};
+			var rightBumper = {x: self.x + actWidth, y: self.y};
+
+			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
+
+				// self.toRemove = true;
+				console.log("exit");
+				isPaused = true;
+				$("#finish-modal").css("display", "block");
 			} else {
 
-				self.pressingUp = false;
-				self.pressingDown = false;
-				self.pressingRight = false;
-				self.pressingLeft = false;
+				if(self.moveCtr <= (96 * zoomMultiplier)) {
+				
+					if(self.pressingUp)
+						self.y -= (3);
+					if(self.pressingDown)
+						self.y += (3);
+					if(self.pressingLeft)
+						self.x -= (3);
+					if(self.pressingRight)
+						self.x += (3);
+				} else {
 
-				self.moveCtr = 0;
+					self.pressingUp = false;
+					self.pressingDown = false;
+					self.pressingRight = false;
+					self.pressingLeft = false;
+
+					self.moveCtr = 0;
+				}
 			}
 		}
 
@@ -706,10 +757,26 @@
 			toRemove: false,
 		}
 
+		self.pressingUp = false;
+		self.pressingDown = false;
+		self.pressingRight = false;
+		self.pressingLeft = false;
+
+		self.spriteAnimCtr = 0;
+
 		self.img.src = imgSrc;
 
 		self.update = function() {
 
+			if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
+			{
+				self.spriteAnimCtr += 0.25;
+				self.moveCtr += 6 * zoomMultiplier;
+			} else {
+				self.spriteAnimCtr = 0;
+			}
+
+			self.updatePosition();
 			self.draw();
 
 			if(self.hp <= 0) {
@@ -717,27 +784,49 @@
 			}
 		}
 
-		self.draw = function() {
 
-			// var x = ((ctxWidth/2 - self.x) - self.width/2) - 80;
-			// var y = (ctxHeight/2 - self.y) - self.height/2;
+		self.draw = function() {
 
 			var x = (ctxWidth/2 - player.x) - 80;
 			var y = ctxHeight/2 - player.y;
 
-			// x += (self.x - self.width/2);
-			// y += (self.y - self.height/2);
-
 			x += self.x - self.width/2;
 			y += self.y - self.height/2;
 
-			ctx.drawImage(self.img, 0, 0, self.img.width/4, self.img.height/4, x, y, self.width  * zoomMultiplier, self.height  * zoomMultiplier);
-			ctx.fillStyle = 'red';
-			ctx.fillRect((x + self.width/2), (y + self.height/2), 2, 2);
-			ctx.save();
+			var frameWidth = self.img.width/4;
+			var frameHeight = self.img.height/4;
 
-			// var HPx = ((ctxWidth/2 - player.x) - 80) + self.x - self.width/2;
-			// var HPy = (ctxHeight/2 - player.y) + self.y - self.height/2;
+			var directionMod = 0;
+			var walkingMod = Math.floor(self.spriteAnimCtr) % 4;
+
+			if(self.pressingUp) {
+				directionMod = 3;
+			} else if(self.pressingDown) {
+				directionMod = 0;
+			} else if(self.pressingRight) {
+				directionMod = 2;
+			} else if(self.pressingLeft) {
+				directionMod = 1;
+			} else {
+				var diffX = player.x - self.x;
+				var diffY = player.y - self.y;
+
+				var angleToUser = Math.atan2(diffY,diffX) / Math.PI * 180;
+
+				if(angleToUser < 0)
+					angleToUser = 360 + angleToUser;
+
+				var directionMod = 2; // right
+
+				if(angleToUser >= 45 && angleToUser < 135) // down
+					directionMod = 0;
+				if(angleToUser >= 135 && angleToUser < 225) // left
+					directionMod = 1;
+				if(angleToUser >= 225 && angleToUser < 315) // up
+					directionMod = 3;
+			}
+
+			ctx.drawImage(self.img, frameWidth * walkingMod, frameHeight * directionMod, frameWidth, frameHeight, x, y, self.width  * zoomMultiplier, self.height  * zoomMultiplier);
 
 			var HPx = x + self.width/2;
 			var HPy = y;
@@ -755,6 +844,37 @@
 			ctx.strokeRect(HPx-28, HPy-10, 50, 6);
 
 			ctx.restore();
+		}
+
+		self.updatePosition = function() {
+
+			var actHeight = self.height/2 * zoomMultiplier;
+			var actWidth = self.width/2 * zoomMultiplier;
+
+			var topBumper = {x: self.x, y: self.y - actHeight};
+			var bottomBumper = {x: self.x, y: self.y + actHeight};
+			var leftBumper = {x: self.x - actWidth, y: self.y};
+			var rightBumper = {x: self.x + actWidth, y: self.y};
+
+			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
+
+				self.toRemove = true;
+				// console.log("exit");
+			}
+
+				if(self.pressingUp)
+					self.y -= (6);
+				if(self.pressingDown)
+					self.y += (6);
+				if(self.pressingLeft)
+					self.x -= (6);
+				if(self.pressingRight)
+					self.x += (6);
+		}
+
+		self.exit = function() {
+
+			self.pressingRight = true;
 		}
 
 		Bully.list[id] = self;
@@ -846,11 +966,11 @@
 				if(self.testCollision(player))
 				{
 					self.toRemove = true;
-					player.hp -= 1;
+					player.hp -= 5;
 
 					var hpPercent = (player.hp/player.hpMax)*100;
 
-					// $(".player-hp-bar").css("width", hpPercent + "%");
+					$(".player-hp-bar").css("width", hpPercent + "%");
 				}
 			}
 
@@ -1063,7 +1183,77 @@
 			ctx.drawImage(self.img,0,0,self.img.width,self.img.height, x, y,self.width * 1,self.height * 1);
 		}
 
-		return self;
+		self.isPossitionWall = function(pt)
+		{
+			var gridX = Math.floor(pt.x / TILE_SIZE);
+			var gridY = Math.floor(pt.y / TILE_SIZE);
+
+			if(gridX < 0 || gridX >= self.grid[0].length)
+			{
+				return true;
+			}
+			if(gridY < 0 || gridY >= self.grid.length)
+			{
+				return true;
+			}
+
+			return self.grid[gridY][gridX];
+		};
+
+		Maps.current = self;
+		// return self;
+	}
+
+	Maps.current = {};
+
+	Maps.init = function() {
+
+		var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+		var promise = new Promise(function(resolve, reject) {
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>Game/get_level_info",
+				data: {lvlId: lvlId},
+				dataType: 'json',
+				success: function(res) {
+					resolve(res);
+				},
+				error: function(err) {
+					console.log("cannot retreive level info due to some error");
+				}
+			});
+		}).then(function(result) {
+
+			if(result.status) {
+				
+				var collArray = JSON.parse(result.map_info['LVL_GRID']);
+				var rowTiles = parseInt(result.map_info['LVL_NUMCOLS']);
+
+				var mapGrid2d = [];
+
+				var ctr = 0;
+				var ctr2D = 0;
+				mapGrid2d[ctr2D] = [];
+				while(collArray[ctr] != null)
+				{
+					mapGrid2d[ctr2D][(ctr%rowTiles)] = collArray[ctr];
+
+					ctr++;
+
+					if(ctr%(rowTiles) == 0 && collArray[ctr] != null)
+					{
+						ctr2D++;
+						mapGrid2d[ctr2D] = [];
+					}
+				}
+
+				Maps('currentmap', img.map.src, img.map.height, img.map.width, mapGrid2d);
+			} else {
+				console.log(result.message);
+			}
+		});
 	}
 
 	startNewGame = function() {
@@ -1071,9 +1261,14 @@
 		Bully.list = {};
 		Question.list = {};
 		Projectile.list = {};
+		Maps.current = {};
 
+		Maps.init();
 		Bully.init();
 		Question.init();
+
+		player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 56, 56, 10);
+
 
 
 		// cmdNum = 0;
@@ -1092,20 +1287,23 @@
 
 	update = function() {
 
-		ctx.clearRect(0,0,canvas.width,canvas.height);
-		currentMap.update();
-		player.update();
-		Bully.update();
-		Projectile.update();
-		// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
+		if(!isPaused) {
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			Maps.current.update();
+			player.update();
+			Bully.update();
+			Projectile.update();
+			// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
+		}
 
 	}
 
-	var map_grid = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
+	// var map_grid = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 
-	var currentMap = new Maps('currentmap', img.map.src, img.map.height, img.map.width, map_grid);
-	var player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 56, 56, 10); //[72,56]
+	// var Maps = new Maps('currentmap', img.map.src, img.map.height, img.map.width, map_grid);
 	var question = new Question();
+	var player = {};
+
 	startNewGame();
 
 	setInterval(update, 40);

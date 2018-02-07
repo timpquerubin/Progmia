@@ -163,6 +163,29 @@
 
 		}
 
+		public function get_level_info() {
+
+			$this->_init();
+
+			if(isset($_POST)) {
+
+				$level_params = array(
+					"LVL_ID" => $_POST['lvlId'],
+				);
+
+				$level_info = $this->Game_model->get_level_details($level_params);
+
+				if (sizeof($level_info) > 0) {
+					echo json_encode(array("status" => true, "map_info" => $level_info[0]));
+				} else {
+					echo json_encode(array("status" => false, "message" => "level does not exist"));	
+				}
+
+			} else {
+				echo json_encode(array("status" => false, "message" => "cannot retreive level info without the right parameter"));
+			}
+		}
+
 		public function get_objectives() {
 
 			$this->_init();
