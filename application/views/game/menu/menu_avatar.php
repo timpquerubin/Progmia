@@ -36,7 +36,7 @@
               }
             });
 
-      //return window.location.href = "<?php echo base_url()?>Game/Stages";
+      return window.location.href = "<?php echo base_url()?>Game/Stages";
     }
     </script>
 			</div>

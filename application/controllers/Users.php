@@ -169,9 +169,7 @@
 			
 			$user_info = $this->User_model->login($user,$pass);
 
-			// var_dump($user_info);
-			// exit();
-// count($user_info) > 0
+
 			if($user_info)
 			{
 				$user_data = array(
@@ -192,10 +190,25 @@
 				redirect('Game/Avatar');
 				}
 			}
-			else 
+			else
 			{
-				$this->session->set_flashdata('user_loggedfailed', 'Invalid Username or Password'.$user_info->USER_ID);
-				redirect('home');
+				if ($user == null && $pass == null) {
+					$this->session->set_flashdata('user_loggedfailed', '<i class="fa fa-exclamation"></i>Please fill in Username and Password.'.$user_info->USER_ID);
+					redirect('home');
+				}
+				if ($user == null) {
+					$this->session->set_flashdata('user_loggedfailed', '<i class="fa fa-exclamation"></i>Please fill in Username.'.$user_info->USER_ID);
+					redirect('home');
+				}
+				if ($pass == null) {
+					$this->session->set_flashdata('user_loggedfailed', '<i class="fa fa-exclamation"></i>Please fill in Password.'.$user_info->USER_ID);
+					redirect('home');
+				}
+				else
+				{
+					$this->session->set_flashdata('user_loggedfailed', '<i class="fa fa-exclamation"></i>Invalid Username/Password'.$user_info->USER_ID);
+					redirect('home');
+				}
 			}
 		}
 		/* TESTING

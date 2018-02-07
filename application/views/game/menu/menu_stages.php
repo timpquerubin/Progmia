@@ -1,98 +1,131 @@
+	<div class="content">
+		<div class="container-fluid">
+			<div id="game" class="game">
+				<?php $stage1 = true; ?>
+				<?php $i = 0; ?>
+				<?php $ctr = 1; ?>
+				<?php $exist = true ?>
 
-	<div class="container-fluid" style="padding: 0 !important;">	
-		<div class="dragon"><!--<span><?php echo $this->session->userdata('username'); ?></span>-->
-			<div class="wrapper">
-				<div class="bg-stage">
-					<div class="row">
-						<ul style="list-style: none;display: inline-flex;vertical-align:middle;margin:0 auto;">
-						
-						<?php $stage1 = true; ?>
-						<?php $i = 0; ?>
-						<?php $ctr = 1; ?>
-						<?php $exist = true ?>
+				<?php foreach ($stage_list as $stage) { ?>
+					<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
+					<?php if ($exist == true){ ?>
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+						<div class="popup unlocked-stage">
+							<span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+									<h2><?php echo "STAGE ".$ctr; ?></h2>
+									<!-- <h2><?php echo $stage['STG_NAME']; ?></h2> -->
+									<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+					<!-- <p> -->
+							<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+						</div>
+					</div>
+					
 
-						<?php foreach ($stage_list as $stage) { ?>
-							<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
-							<?php if ($exist == true){ ?>
-							<li style="position:relative;">
-								<div class="popup unlocked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#">
-									<span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
-									<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/>
-									<span class="popuptext" id="myPopup-<?php echo $i+1; ?>">
-											<h2><?php echo $stage['STG_NAME']; ?></h2>
-											<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
-							<!-- <p> -->
-									<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
+					<?php } else { ?>
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+						<div class="popup locked-stage">
+							<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
+									<h2><?php echo "STAGE ".$ctr; ?></h2>
+									<!-- <h2><?php echo $stage['STG_NAME']; ?></h2> -->
+									<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+						</div>
+					</div>
+					<?php } ?>
+				<?php $ctr++;} ?>
+			</div>
+			<div id="profile" class="profile">
+				
+						<div class="row">
+							<div class="col-md-4"><div>Total Points Earned <div><?php if ($total_points == 0){ ?>0<?php } ?>
+								<?php echo $total_points; ?></div></div></div>
+							<div class="col-md-4"><p>Joined </p></div>
+							<div class="col-md-4"><p>Date Registered:</p></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="row">
+									<div class="avatar">
+										<a href=""><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/avatar-1.png" ></a>
+									</div>
+								</div>
+								<div class="row">
+									<?php foreach($user_info as $userinfo){ ?>
+									<div class="username">
+										<h2><?php echo $this->session->userdata('username'); ?></h2>
+									</div>
+									<div class="email-address">
+										<h3><?php echo $userinfo['USER_EMAIL'] ?></h3>
+									</div>
+									<div class="joined">
+										<h4>Joined Month Year</h4>
+									</div>
+									<?php } ?>
+								</div>
+
+							</div>
+							<div class="col-md-9">
+								<?php foreach($user_info as $userinfo){ ?>
+								<div class="col-md-6">
+									<div class=""><label>Username: </label><?php echo $userinfo['USER_USERNAME'] ?></div>
+									<div class=""><label>Firstname: </label><?php echo $userinfo['USER_FNAME'] ?></div>
+									<p>First name: <?php echo $userinfo['USER_FNAME'] ?>	</p>
+									<p>Middle name: <?php echo $userinfo['USER_MNAME'] ?>	</p>
+									<p>Last name: <?php echo $userinfo['USER_LNAME'] ?>	</p>
+									<p>Gender: <?php if($userinfo['USER_GENDER'] == 'M') { ?>M<?php } ?>
+										<?php if($userinfo['USER_GENDER'] == 'F') { ?>F<?php } ?>
+									</p>
+									<p>Birthdate: <?php echo $userinfo['USER_BDAY'] ?>	</p>
+									
+								</div>
+
+								<div class="col-md-6">
+									<p>Email Address: <?php echo $userinfo['USER_EMAIL'] ?>	</p>
+									<p>Firstname:</p>
+									<p>Lastname:</p>
+									<p>Middlename:</p>
+									<p>Email Address:</p>
+									<p>Last played on:</p>
+								</div>
+								<?php } ?>
+							</div>
+						</div>
+			</div>
+			<div id="badges" class="badges">
+				<div class="row">
+					<div class="col-md-3">
+						<h1>badges</h1>
+					</div>
+					<div class="col-md-9">
+						<ul>
+							<li>
+								<input type="radio" id="all-option" value="All" checked="true" name="badges">
+								<label for="all-option">All Badges</label>
+								<div class="check"></div>
 							</li>
-							
-
-							<?php } else { ?>
-							<li style="position:relative;" attribute="dis"><div class="popup locked-stage" onclick="myFunction<?php echo $i+1; ?>()" href="#"><span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
-							<img class="" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $stage['STG_FILENAME']; ?>"/><span class="popuptext" id="myPopup-<?php echo $i+1; ?>"><h2><?php echo $stage['STG_NAME']; ?></h2><p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+							<li>
+								<input type="radio" id="acquired-option" value="Acquired" name="badges">
+								<label for="acquired-option">Acquired Badges</label>
+								<div class="check"></div>	
 							</li>
-							<?php } ?>
-
-							<!-- <?php // $exist = false; ?>
-							<?php // foreach ($maxlevel_list as $maxlevel) { ?>
-								<?php // if ($maxlevel['STG_ID'] == $stage['STG_ID']){ ?>
-									<?php // if ($exist == true){break;} ?>
-									<?php // foreach ($progress_list as $progress) {?>
-										<?php // if ($exist == true){break;} ?>
-											<?php // if($progress['LVL_ID'] == $maxlevel['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID) {
-											// $exist = true;
-											// break;} ?> 
-									<?php //} ?>
-								<?php  //} ?>
-								<?php // if ($exist == true){break;} ?>
-							<?php //} ?> -->
-
-							
-							<!-- <form action="<?php echo base_url(); ?>game/levels" method="post">
-							   <input type='hidden' id='stage' name='stage' value='<?php echo $stage['STG_ID']; ?>' />
-							   <input type='hidden' id='user' name='user' value='<?php echo $h->USER_ID; ?>' />
-							   <button class="level-btn" onClick='submit();'>
-							      <h3>Enter</h3>
-							   </button>
-							</form> -->
-							<?php echo "<script>function myFunction".$ctr,"() {var popup = document.getElementById(\"myPopup-".$ctr,"\");popup.classList.toggle(\"show\");}</script>"; ?>
-							<?php $i++; ?>
-							<?php $ctr++; ?>
-						<?php } ?>
 						</ul>
+					</div>
 				</div>
-
-			</div>
-			<div class="wrapper-2">
-					<div class="options">
-						<div class="hexrow">
-						    <div class="hexagon">
-						        <span><a style="font-size:35px;" href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a></span>
-						        <div class="first"></div>
-						        <div class="second"></div>
-						    </div>
-						    <div class="hexagon">
-						        <span><a style="font-size:35px;" href="#"><i class="fa fa fa-trophy" aria-hidden="true"></i></a></span>
-						        <div class="first"></div>
-						        <div class="second"></div>
-						    </div>
-						    <div class="hexagon">
-						        <span><a style="font-size:35px;" href="#"><i class="fa fa-cog" aria-hidden="true"></i></a></span>
-						        <div class="first"></div>
-						        <div class="second"></div>
-						    </div>
-					    </div>
-				    </div>
+				<!-- -->
+				<?php $ctr = 0 ;?>
+				<?php foreach ($badges_list as $badges) { ?>
+				<?php if ($ctr == 0) {?>
+				<div class="row">
+				<?php } ?>
+					<?php $ctr++; ?>
+							<div class="col-md-6"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME']; ?>" /></div>
+				<?php if ($ctr == 2) { ?>
 				</div>
+				<?php $ctr = 0 ;?>
+				<?php } ?>
+				<?php } ?>
+				<!-- -->
 			</div>
+			<div id="leaderboard" class="leaderboard"></div>
+		
 		</div>
 	</div>
-	</body>
-	<script>
-		$(function(){
-			$(div).dragOn()
-		});
-	</script>
-	<footer>
-		<div class="footer"><p>Copyright Progmia &copy; 2017</p></div>
-	</footer>
-</html>

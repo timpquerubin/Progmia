@@ -5,7 +5,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"><center>Register</center></h4>
+						<h4 class="modal-title">Sign Up</h4>
 					</div>
 					<div class="modal-body">
 						<form action="Users/register" method="post" id="register_from" name="register_from">
@@ -19,8 +19,9 @@
 									<input type="text" class="form-control" name="lastname" id="lastname" placeholder="Lastname">
 								</div>
 							</div>
-							<div class="form-group row">
-								<ul>
+							<div class="form-group row" style="margin-bottom: 5px !important;">
+								<ul class="gender" style="height: 40px !important;overflow-y: hidden;">
+									<li style="font-family:'Barlow';font-size:28px;color: #fff;display:block;margin-top: -6px;margin-left:70px;font-weight: 300;">Gender:</li>
 									<li>
 										<input type="radio" id="m-option" value="M" checked="true" name="gender">
 										<label for="m-option">Male</label>
@@ -53,7 +54,7 @@
 								<label class="sr-only" for="email">Email</label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="Email">
 							</div>
-							<input type="submit" class="btn btn-success btn-block" name="submit" id="submit" value="Register">
+							<input type="submit" class="register btn btn-success btn-block" name="submit" id="submit" value="Register">
 						</form>
 					</div>
 					<!-- <div class="modal-footer">

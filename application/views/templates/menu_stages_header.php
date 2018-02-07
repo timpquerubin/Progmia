@@ -11,36 +11,134 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/drag-on.js"></script>
 </head>
 <body>
-	<div class="container-fluid" style="position: relative;max-width:1555px;">
+	<div class="navbar-custom">
 		<nav>
-			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/FINALEST_LOGO2.png"></a>
-			<div class="center">
-			<h1>MAP</h1>
-			</div>
-			<!-- <ul class="right">
+			<ul class="upper-nav">
 				<li>
-					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
+					<div class="logo">
+						<a class="navbar-brand" href="<?php echo base_url(); ?>/Game/Stages"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
+					</div>
 				</li>
+				<li class="greetings">
+					<a href="">Welcome back, <span><?php echo $this->session->userdata('username'); ?></span>!</a>
+				</li>
+
+				<!-- <li><a href="">Play!</a></li> -->
 				<li>
-					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
+					<a href="<?php echo base_url(); ?>users/logout">Logout</a>
 				</li>
-				<li>
-					<a class="volume" href="#"><i class="fa fa-volume-up" aria-hidden="true"></i></a>
-				</li>
-			</ul> -->
-			<ul class="nav navbar-nav navbar-right" style="position:absolute !important; top:0px;right:20px;">
-				<?php if($this->session->userdata('logged_in')): ?>
-					<li class="dropdown">
-						<a class="hvr-icon-hang dropbtn dropdown-toggle" data-toggle="dropdown">My Account</a>
-						<ul class="dropdown-menu">
-							<li class="text-center"><a href="#"><img src="<?php echo base_url(); ?>assets/images/avatar-1.png" class="img-circle"></a></li>
-							<li class="text-center username"><?php echo $this->session->userdata('username'); ?></li>
-							<li><a href="<?php echo base_url(); ?>profile/user/<?php echo $this->session->userdata('user_id'); ?>">Profile</a></li>
-							<li><a href="#">Settings</a></li>
-							<li><a href="<?php echo base_url(); ?>users/logout">Logout</a></li>
-						</ul>
-					</li>
-				<?php endif; ?>
 			</ul>
+			<center class="align-center">
+    			<ul class="secondary-nav">
+    				<li class="active menu-1"><a href="#">GAME</a></li>
+    				<li class="menu-2"><a href="#">PROFILE</a></li>
+    				<li class="menu-3"><a href="#">BADGES</a></li>
+    				<li class="menu-4"><a href="#">LEADERBOARD</a></li>
+    				<div id="menu-active"></div>
+    			</ul>
+				<hr>
+    		</center>
+			<script type="text/javascript">
+				$(function() {
+				   $("ul.secondary-nav li").click(function() {
+				      // remove classes from all
+				      $("li").removeClass("active");
+				      // add class to the one we clicked
+				      $(this).addClass("active");
+				   });
+				   /* */
+				   $("ul li.menu-1").click(function() {
+				   	$('#menu-active').css({
+				   		'left':'10%',
+				   		'transition':'.5s'
+				    });
+				    $('div#game').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				    $('div#profile').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#badges').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#leaderboard').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				   });
+				   /* */
+				   $("ul li.menu-2").click(function() {
+				   	$('#menu-active').css({
+				   		'left':'34%',
+				   		'transition':'.5s'
+				    });
+				    $('#game').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#profile').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				    $('#badges').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#leaderboard').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				   });
+				   /* */
+				   $("ul li.menu-3").click(function() {
+				   	$('#menu-active').css({
+				   		'left':'57.5%',
+				   		'transition':'.5s'
+				    });
+				    $('#game').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#profile').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#badges').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				    $('#leaderboard').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				   });
+				   /* */$("ul li.menu-4").click(function() {
+				   	$('#menu-active').css({
+				   		'left':'81.5%',
+				   		'transition':'.5s'
+				    });
+				    $('#game').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#profile').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#badges').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('#leaderboard').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				   });
+				   /* */
+				});
+			</script>
 		</nav>
 	</div>

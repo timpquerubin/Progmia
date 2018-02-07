@@ -6,6 +6,7 @@
 			$this->load->model('Game_model');
 			$this->load->model('User_model');
 			$this->load->model('Avatar_model');
+			$this->load->model('Profile_model');
 		}
 
 		public function isLoggedIn()
@@ -44,7 +45,25 @@
 			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
 
+			//
+			
+			$user1 = $this->session->userdata('username');
+			$userinfo = $this->Profile_model->get_user_info($user1);
+			$progress = $this->Profile_model->get_progress($user1);
+			$stages = $this->Profile_model->get_stages($user1);
+			$levels = $this->Profile_model->get_levels($user1);
+			$total_points = $this->Profile_model->get_total_points($userID);
+			$badges = $this->Profile_model->get_badges($userID);
 
+			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
+			$data['badges_list'] = $badges;
+			$data['user_info'] = $userinfo; 
+        	$data['total_points'] = $total_points;
+			$data['levels_list'] = $levels;
+			$data['stages_list'] = $stages;
+			$data['progress_list'] = $progress;
+			//
+			
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
 			$data['stage_list'] = $stages;

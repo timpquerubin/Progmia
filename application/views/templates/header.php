@@ -24,11 +24,6 @@
   				<?php } endif; ?>
 			</ul>
 		</nav> -->
-		<div class="container-fluid">
-			<div class="row logo">
-  				<a href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/blue-logo.png"></a>
-			</div>
-		</div>
 		<!-- <div class="login-panel">
 			<div class="row">
 				<h2>Log In</h2>
