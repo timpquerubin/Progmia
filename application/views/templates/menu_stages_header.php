@@ -30,8 +30,8 @@
 			</ul>
 			<center class="align-center">
     			<ul class="secondary-nav">
-    				<li class="active menu-1"><a href="#">GAME</a></li>
-    				<li class="menu-2"><a href="#">PROFILE</a></li>
+    				<li class="active menu-1"><a href="#">PROFILE</a></li>
+    				<li class="menu-2"><a href="#">GAME</a></li>
     				<li class="menu-3"><a href="#">BADGES</a></li>
     				<li class="menu-4"><a href="#">LEADERBOARD</a></li>
     				<div id="menu-active"></div>
