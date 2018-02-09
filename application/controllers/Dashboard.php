@@ -436,38 +436,39 @@
 			$this->load->view('dashboard/bullies_block', $data);
 		}
 
-
-
 		public function save_add_avatar()
 		{
 			$this->__init();
 
-			// echo "<pre>";
-			// var_dump($_POST);
-			// echo "</pre>";
+			echo "<pre>";
+			var_dump($_POST);
+			var_dump($_FILES);
+			echo "</pre>";
+
+			$avtrId = $this->Avatar_model->gen_avatar_id($_POST['avatar-name']);
+
+			// $avatar_count = count($this->Avatar_model->get_avatars($count_levels_params));
+			// $avatar_count++;
+
+			// $avtrId = md5($_POST['stage'].$level_count.$_POST['level-name']);
+			// $avtrId = $avatarcount;
+			// echo $avatarId;
 			// exit();
-
-			$count_levels_params['AVATAR'] = $_POST['avtrId'];
-
-			$avatar_count = count($this->Avatar_model->get_avatars($count_levels_params));
-			$avatar_count++;
-
-			$map_size = getimagesize($_FILES['imgMap']['tmp_name']);
-			$startPt = array((int)$_POST['startPtX'],(int)$_POST['startPtY']);
-			$lvlId = md5($_POST['stage'].$level_count.$_POST['level-name']);
-
-			$level_params = array(
+			$avatar_params = array(
 				'AVTR_ID' => $avtrId,
-				'AVTR_NAME' => $_POST['mapCol'],
-				'AVTR_SPRITE_FILENAME' => $_POST['level-name'],
-				'AVTR_FRONTVIEW_FILENAME' => json_encode($startPt),
-				'AVTR_THUMBNAIL_FILENAME' => (int)$_POST['numCols']
+				'AVTR_NAME' => $_POST['avatar-name'],
+				'AVTR_SPRITE_FILENAME' => $_FILES['imgSprite']['name'],
+				'AVTR_FRONTVIEW_FILENAME' => $_FILES['imgFront']['name'],
+				'AVTR_THUMBNAIL_FILENAME' => $_FILES['imgThumb']['name']
 			);
-			
-			if($_FILES['imgMap']['tmp_name'] != '')
+			// $upload_params = array(
+			// 	''=>
+			// );
+			// $this->upload_img();
+			if($_FILES['imgSprite']['name'] != '')
 			{
-				$config['upload_path'] = './assets/images/avatars/sprite';
-				$config['allowed_types'] = 'gif|jpg|png';
+				$config['upload_path'] = './assets/images/avatars/SPRITES';
+				$config['allowed_types'] = 'png';
 				$config['max_size'] = '2048';
 				$config['max_width'] = '2000';
 				$config['max_height'] = '2000';
@@ -475,29 +476,97 @@
 				
 				$this->load->library('upload', $config);
 				
-				if(!$this->upload->do_upload('imgMap'))
+				if(!$this->upload->do_upload('imgSprite'))
 				{
 					$errors = array('error' => $this->upload->display_errors());
 				}
 				else {
 					$data = array('upload_data' => $this->upload->data());
 
-					$level_params['LVL_FILENAME'] =  $lvlId.$data['upload_data']['file_ext'];
+					$avatar_params['AVTR_SPRITE_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
+				}
+			}
+			if($_FILES['imgFront']['name'] != '')
+			{
+				$config['upload_path'] = './assets/images/avatars/FRONTVIEW';
+				$config['allowed_types'] = 'png';
+				$config['max_size'] = '2048';
+				$config['max_width'] = '2000';
+				$config['max_height'] = '2000';
+				$config['file_name'] = $avtrId;
+				
+				$this->load->library('upload', $config);
+				
+				if(!$this->upload->do_upload('imgFront'))
+				{
+					$errors = array('error' => $this->upload->display_errors());
+				}
+				else {
+					$data = array('upload_data' => $this->upload->data());
+
+					$avatar_params['AVTR_FRONTVIEW_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
+				}
+			}
+			if($_FILES['imgThumb']['name'] != '')
+			{
+				$config['upload_path'] = './assets/images/avatars/THUMBNAIL';
+				$config['allowed_types'] = 'png';
+				$config['max_size'] = '2048';
+				$config['max_width'] = '2000';
+				$config['max_height'] = '2000';
+				$config['file_name'] = $avtrId;
+				
+				$this->load->library('upload', $config);
+				
+				if(!$this->upload->do_upload('imgThumb') )
+				{
+					$errors = array('error' => $this->upload->display_errors());
+				}
+				else {
+					$data = array('upload_data' => $this->upload->data());
+					$avatar_params['AVTR_THUMBNAIL_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
 				}
 			}
 
-			$new_level = $this->Game_model->add_level($level_params);
 
-			$return['lvlId'] = $lvlId;
+			$new_avatar = $this->Avatar_model->add_avatar($avatar_params);
+
+			// $return['avtr'] = $avtrId;
 
 			// echo "<pre>";
-			echo json_encode($return);
+			// echo json_encode($return);
 			// echo "</pre>";
 			// exit();
 
 			// redirect('Dashboard/level_list');
 
 		}
+
+		// public function upload_img($params){
+		// 	if($_FILES['imgSprite']['name'] != '' && $_FILES['imgFront']['name'] != '' && $_FILES['imgThumb']['name'] != '')
+		// 	{
+		// 		$config['upload_path'] = './assets/images/avatars/sprites';
+		// 		$config['allowed_types'] = 'png';
+		// 		$config['max_size'] = '2048';
+		// 		$config['max_width'] = '2000';
+		// 		$config['max_height'] = '2000';
+		// 		$config['file_name'] = $avtrId;
+				
+		// 		$this->load->library('upload', $config);
+				
+		// 		if(!$this->upload->do_upload('imgSprite') && !$this->upload->do_upload('imgFront') && !$this->upload->do_upload('imgThumb') )
+		// 		{
+		// 			$errors = array('error' => $this->upload->display_errors());
+		// 		}
+		// 		else {
+		// 			$data = array('upload_data' => $this->upload->data());
+
+		// 			$avatar_params['AVTR_SPRITE_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
+		// 			$avatar_params['AVTR_FRONTVIEW_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
+		// 			$avatar_params['AVTR_THUMBNAIL_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
+		// 		}
+		// 	}
+		// }
 
 		public function save_add_level()
 		{

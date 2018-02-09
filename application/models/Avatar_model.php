@@ -17,6 +17,11 @@
 			return $newId;
 		}
 
+		public function add_avatar($params)
+		{
+			return $this->db->insert('AVATAR', $params);
+		}
+
 		public function get_avatars($params = null)
 		{
 			$avatars = $this->db->query('SELECT * FROM AVATAR;');
