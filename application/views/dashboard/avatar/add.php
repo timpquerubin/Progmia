@@ -83,7 +83,8 @@
 						</div>
 					</div>
 				</div>
-							<button type="button" onclick="add_avatar()">Add</button>
+
+							<!-- <button type="button" onclick="add_avatar()">Add</button> -->
 				<input type="submit" class="btn btn-submit col-sm-2 col-sm-offset-5">
 			</form>
 
@@ -127,5 +128,4 @@
 				}
 			});
 		}
-		);
 	</script>

@@ -768,8 +768,9 @@ font-style: normal;
 /*div.bg > div.area {border: solid 3px #838c10;border: solid 2px #aaa;background: rgba(12,21,24,1);background: -moz-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(12,21,24,1)), color-stop(55%, rgba(22,40,47,1)), color-stop(100%, rgba(31,55,66,1)));background: -webkit-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -o-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: -ms-linear-gradient(top, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);background: linear-gradient(to bottom, rgba(12,21,24,1) 0%, rgba(22,40,47,1) 55%, rgba(31,55,66,1) 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c1518', endColorstr='#1f3742', GradientType=0 );}
 */
 #profile,#badges,#leaderboard{font-family: 'Barlow';color: #546f76;font-size: 25px;visibility: visible;-webkit-animation: fadeIn 1s;animation: fadeIn 1s;}
-#game {display:block;}
-#profile {display:none;}
+
+#profile {display:block;}
+#game {display:none;}
 #badges {display: none;}
 #leaderboard {display:none;}
 .badges, .profile, .leaderboard {padding:40px;}

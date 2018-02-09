@@ -163,7 +163,7 @@
 
 			return $objectives->num_rows();
 		}
-
+		
 		public function get_lvl_max_points() {
 			$lvl_max_pts = $this->db->query('SELECT LVL_ID, SUM(OBJ_POINTS) AS MAX_PTS FROM OBJECTIVE GROUP BY LVL_ID;');
 

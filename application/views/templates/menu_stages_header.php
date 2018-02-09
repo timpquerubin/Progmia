@@ -52,11 +52,11 @@
 				   		'left':'10%',
 				   		'transition':'.5s'
 				    });
-				    $('div#game').css({
+				    $('div#profile').css({
 				   		'display':'block',
 				   		'transition':'.5s'
 				    });
-				    $('div#profile').css({
+				    $('div#game').css({
 				   		'display':'none',
 				   		'transition':'.5s'
 				    });
@@ -75,11 +75,11 @@
 				   		'left':'34%',
 				   		'transition':'.5s'
 				    });
-				    $('#game').css({
+				    $('#profile').css({
 				   		'display':'none',
 				   		'transition':'.5s'
 				    });
-				    $('#profile').css({
+				    $('#game').css({
 				   		'display':'block',
 				   		'transition':'.5s'
 				    });
