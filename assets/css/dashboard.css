@@ -6,6 +6,8 @@ font-weight: normal;
 font-style: normal;
 }
 
+.modal {padding-top:20px !important;}
+
 @font-face {
 	font-family:BebasNeue;
 	src: url("../fonts/BebasNeue.otf");

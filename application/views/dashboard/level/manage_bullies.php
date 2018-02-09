@@ -1,4 +1,3 @@
-<div class="container">
 
 	<div id="question_modal" class="modal" style="display: none;">
 		<div class="modal-content" style=" width: auto !important; max-width: 1000px;">
@@ -185,7 +184,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 
 <script type="text/javascript">
 	
