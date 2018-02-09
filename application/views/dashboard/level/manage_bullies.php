@@ -7,7 +7,10 @@
 				</div>
 			</div>
 			<div class="questions-container" style="margin-top: 30; padding: 0px 20px">
-				<div class="view-questions-block"></div>
+				
+				<div class="view-questions-block">
+					
+				</div>
 
 				<form class="form-horizontal" id="question-form" name="question-form" method="post" action="add_question">
 					<input type="text" name="input-bully-id" id="input-bully-id">
@@ -105,9 +108,49 @@
 						</div>
 					</div>
 
+					<div class="operations-block" style="border: 1px solid #d9d9d9; padding-top: 20px; margin-top: 20px; padding-bottom: 10px;">
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="operation-info">
+									<div class="form-group">
+										<label class="control-label col-sm-5">Save To:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="opp_saveTo" id="opp_saveTo">
+										</div>
+									</div>
 
+									<div class="form-group">
+										<label class="control-label col-sm-5">Variable 1:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="opp_var1" id="opp_var1">
+										</div>
+									</div>
 
+									<div class="form-group">
+										<label class="control-label col-sm-5">Operation:</label>
+										<div class="col-sm-7">
+											<select class="form-control" id="opp_operation" name="opp_operation">
+												<option value="add">+</option>
+												<option value="subtract">-</option>
+												<option value="multiply">*</option>
+												<option value="divide">/</option>
+											</select>
+										</div>
+									</div>
 
+									<div class="form-group">
+										<label class="control-label col-sm-5">Variable 2:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="opp_var2" id="opp_var2">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-7">
+								<div class="operations-block"></div>
+							</div>
+						</div>
+					</div>
 
 					<div class="add-question-button row" style="padding-top: 15px; padding-bottom: 15px;">
 						<input type="submit" class="btn btn-default col-sm-4 col-sm-offset-4" value="Add Question">
@@ -192,8 +235,10 @@
 		var bully_list = {};
 		var question_list = {};
 		var variable_list = {};
+		var operation_list = {};
 
 		var varCtr = 0;
+		var opCtr = 0;
 
 		get_bully_list = function() {
 
@@ -288,6 +333,24 @@
 			});
 		}
 
+		load_operations_block = function() {
+
+			var data = {};
+			data["operation_list"] = operation_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_operations_block",
+				data: data,
+				success: function(res) {
+					$(".operations-block").html(res);
+				},
+				error: function(err) {
+					console.log("failed to load operation table due to some error");
+				}
+			});
+		}
+
 		append_variable = function() {
 
 			var dataType = document.getElementById("var_dataType").value;
@@ -349,6 +412,20 @@
 			}
 
 			load_variables_block();
+		}
+
+		append_operation = function() {
+
+			var save_to = document.getElementById("opp_saveTo").value;
+			var var_1 = document.getElementById("opp_var1").value;
+			var var_2 = document.getElementById("opp_var2").value;
+			var operation = document.getElementById("opp_operation").value;
+
+			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2};
+
+			opCtr++;
+
+			load_operations_block();
 		}
 
 		parseValue = function(dataType, value) {

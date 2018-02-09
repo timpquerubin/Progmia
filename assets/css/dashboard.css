@@ -6,7 +6,8 @@ font-weight: normal;
 font-style: normal;
 }
 
-.modal {padding-top:20px !important;}
+/*.modal {padding-top:20px !important;}*/
+.modal {overflow-y: auto !important;}
 
 @font-face {
 	font-family:BebasNeue;
