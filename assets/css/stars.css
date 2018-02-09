@@ -2,9 +2,9 @@
 fieldset label {margin: 0; padding: 0;}
 .stage-rating {border: none;}
 .stage-rating input {display: none;}
-/*.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;}*/ /*FFD700*/ 
-/*.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}*/
-/*input.no-score + label:before{ color: #aaa;}*/
+.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;} /*FFD700*/ 
+.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}
+input.no-score + label:before{ color: #aaa;}
 /*div.s1 > img {background-image: url(../images/stars/stars-01.png);background-size: 50px 50px;background-repeat: no-repeat;}
 div.s2 > img {background-image: url(../images/stars/stars-02.png);background-size: 50px 50px;background-repeat: no-repeat;}
 div.s3 > img {background-image: url(../images/stars/stars-03.png);background-size: 50px 50px;background-repeat: no-repeat;}

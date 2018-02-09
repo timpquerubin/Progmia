@@ -17,6 +17,7 @@
 						<div class="col-sm-2">
 							<select class="form-control" id="qstn_type" name="qstn_type">
 								<option value="variable">Variable</option>
+								<option value="array">Array</option>
 								<option value="command">Command</option>
 							</select>
 						</div>
@@ -29,7 +30,7 @@
 						</div>
 					</div>
 
-					<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px;">
+					<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px; display: none;">
 						<div class="row">
 							<div class="col-sm-5">
 								<div class="form-group">
@@ -66,6 +67,48 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="array-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px;">
+						<div class="row">
+							<div class="col-sm-5">
+								<div class="form-group">
+									<label class="control-label col-sm-5">Data Type:</label>
+									<div class="col-sm-5">
+										<select class="form-control" id="arr_dataType" name="arr_dataType">
+											<option value="int[]">Integer</option>
+											<option value="double[]">Double</option>
+											<option value="char[]">Character</option>
+											<option value="String[]">String</option>
+											<option value="bool[]">Boolean</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-5">Identifier:</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" name="arr_identifier" id="arr_identifier">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="control-label col-sm-5">Value:</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" name="arr_value" id="arr_value">
+									</div>
+								</div>
+
+								<input type="button" class="btn btn-default col-sm-12" value="Add Array" onclick="append_array()">
+							</div>
+							<div class="col-sm-7">
+								<div class="variables-block"></div>
+							</div>
+						</div>
+					</div>
+
+
+
+
 
 					<div class="add-question-button row" style="padding-top: 15px; padding-bottom: 15px;">
 						<input type="submit" class="btn btn-default col-sm-4 col-sm-offset-4" value="Add Question">
@@ -213,10 +256,23 @@
 
 			for(var key in bully_list) {
 
+				var bly_type = "";
+
+				if(bully_list[key].BLY_IMAGEURL == "BULLY-07.png") {
+					bly_type = "Green Bully";
+				} else if(bully_list[key].BLY_IMAGEURL == "BULLY-08.png") {
+					bly_type = "Yellow Bully";
+				} else if(bully_list[key].BLY_IMAGEURL == "BULLY-10.png") {
+					bly_type = "Red Bully";
+				} else if(bully_list[key].BLY_IMAGEURL == "BULLY-09.png") {
+					bly_type = "Blue Bully";
+				}
+
+
 				data['bully_list'][key] = {};
 
 				data['bully_list'][key].id = bully_list[key].BLY_ID;
-				data['bully_list'][key].type = "bully type 1";
+				data['bully_list'][key].type = bly_type;
 				data['bully_list'][key].spawnPt = bully_list[key].BLY_SPAWNPOINT;
 				data['bully_list'][key].maxHp = bully_list[key].BLY_MAXHP;
 			}
@@ -256,6 +312,47 @@
 			load_variables_block();
 		}
 
+		append_array = function() {
+
+			var isMismatch = false;
+
+			var dataType = document.getElementById("arr_dataType").value;
+			var identifier = document.getElementById("arr_identifier").value;
+			var value = document.getElementById("arr_value").value;
+
+			value = value.replace(/\{/g, "[");
+			value = value.replace(/\}/g, "]");
+			value = value.replace(/\'/g, "\"");
+
+			value = JSON.parse(value);
+
+			for(var key in value) {
+
+				if(dataType == "String[]") {
+					value[key] = "\"" + value[key] + "\"";
+				} else if(dataType == "char[]") {
+					value[key] = "\'" + value[key] + "\'";
+				}
+
+				if(parseValue(dataType.replace(/[\[\]]/g, ""), value[key].toString()) == false) {
+					isMismatch = true;
+					break;
+				} else {
+					value[key] = parseValue(dataType.replace(/[\[\]]/g, ""), value[key].toString());
+				}
+			}
+
+			if(isMismatch) {
+				console.log("error: dataType missmatch");
+			} else {
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value};
+				console.log(variable_list);
+				varCtr++;
+			}
+
+			load_variables_block();
+		}
+
 		parseValue = function(dataType, value) {
 
 		// console.log(value);
@@ -285,7 +382,7 @@
 			} else if(dataType == "String") {
 
 				if(/^\".*\"$/i.test(value)) {
-					value = value.replace(/\"/g, "");
+					// value = value.replace(/\"/g, "");
 					return value;
 				} else {
 					return false;
@@ -319,27 +416,27 @@
 			});
 		}
 
-		append_variable = function() {
+		// append_variable = function() {
 
-			var dataType = document.getElementById("var_dataType").value;
-			var identifier = document.getElementById("var_identifier").value;
-			var value = document.getElementById("var_value").value;
+		// 	var dataType = document.getElementById("var_dataType").value;
+		// 	var identifier = document.getElementById("var_identifier").value;
+		// 	var value = document.getElementById("var_value").value;
 
-			if(parseValue(dataType, value)) {
+		// 	if(parseValue(dataType, value)) {
 
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: parseValue(dataType, value)};
-				console.log(variable_list);
-				varCtr++;
-			} else {
-				console.log("datatype missmatch");
-			}
+		// 		variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: parseValue(dataType, value)};
+		// 		console.log(variable_list);
+		// 		varCtr++;
+		// 	} else {
+		// 		console.log("datatype missmatch");
+		// 	}
 
-			document.getElementById("var_dataType").value = "int";
-			document.getElementById("var_identifier").value = "";
-			document.getElementById("var_value").value = "";
+		// 	document.getElementById("var_dataType").value = "int";
+		// 	document.getElementById("var_identifier").value = "";
+		// 	document.getElementById("var_value").value = "";
 
-			load_variables_block();
-		}
+		// 	load_variables_block();
+		// }
 
 		$("#question-form").submit(function(e) {
 
@@ -444,6 +541,17 @@
 
 			$("#bly_max_hp").val(bullyHp);
 
+	    });
+
+	    $("#qstn_type").change(function() {
+
+	    	if($("#qstn_type").val() == "variable") {
+	    		$(".variable-info-block").css("display", "block");
+	    		$(".array-info-block").css("display", "none");
+	    	} else if($("#qstn_type").val() == "array") {
+	    		$(".variable-info-block").css("display", "none");
+	    		$(".array-info-block").css("display", "block");
+	    	}
 	    });
 
 		get_question_list();

@@ -60,7 +60,7 @@
 			</form>
 		</div>
 
-		<div class="manage-objective-container">
+		<!-- <div class="manage-objective-container">
 
 			<div class="manage-objectives">
 			
@@ -69,7 +69,7 @@
 				<div class="objective-block"></div>
 
 				
-				<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php base_url(); ?>dashboard/save_objectives">
+				<form class="form-horizontal" id="add_objective_form" name="add_objective_form" method="post" action="<?php // base_url(); ?>dashboard/save_objectives">
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">Objective:</label>
@@ -97,7 +97,7 @@
 
 				</form>
 			</div>
-		</div>
+		</div> -->
 
 	<script type="text/javascript">
 		$(document).ready(function() {

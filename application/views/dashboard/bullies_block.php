@@ -14,7 +14,7 @@
 					<tr>
 						<td><?php echo $ctr ?></td>
 						<td><?php echo $bully["type"] ?></td>
-						<td><?php echo json_encode($bully["spawnPt"]) ?></td>
+						<td><?php echo $bully["spawnPt"] ?></td>
 						<td><?php echo $bully["maxHp"] ?></td>
 						<td>
 							<button class="btn btn-default" type="button" onclick="load_questions('<?php echo $bully['id'] ?>')">Q</button>

@@ -23,6 +23,13 @@
 			return $levels->result_array();
 		}
 
+		public function get_next_level($params) {
+
+			$level_info = $this->db->query('SELECT * FROM LEVEL WHERE STG_ID=\''.$params['STG_ID'].'\' AND LVL_NUM=\''.$params['LVL_NUM'].'\';');
+
+			return $level_info->result_array();
+		}
+
 		public function get_current_level($lvl_ID)
 		{
 			$levels = $this->db->query('SELECT * FROM LEVEL WHERE LVL_ID=\''.$lvl_ID.'\';');

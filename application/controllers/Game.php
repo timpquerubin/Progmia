@@ -169,11 +169,24 @@
 			);
 
 			$level_info = $this->Game_model->get_level_details($level_params);
+			$objectives = $this->Game_model->get_objectives($level_params);
 
-			// var_dump($level_info[0]);
+			$next_level_params = array(
+				"STG_ID" => $level_info[0]["STG_ID"],
+				"LVL_NUM" => (((int) $level_info[0]["LVL_NUM"]) + 1),
+			);
+
+			$next_level_info = $this->Game_model->get_next_level($next_level_params);
+
+			// echo "<pre>";
+			// var_dump($next_level_info);
+			// echo "</pre>";
 			// exit();
 
+
 			$data['level_info'] = $level_info[0];
+			$data['objectives_list'] = $objectives;
+			$data['next_level_info'] = $next_level_info;
 
 			$this->load->view('templates/game_header');
 			$this->load->view('templates/load_init_links');

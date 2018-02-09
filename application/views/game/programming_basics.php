@@ -19,51 +19,92 @@
 		</nav>
 	</div>
 
-	<div class="canvas-container">
-		<div class="" style="margin: 0px; padding: 10px; background-color: #000">
-			<div class="hp-bar-container" style="">
-				<div class="player-hp" style="width: 50%;">
-					<div class="row">
-						<label class="col-sm-2 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
-						<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
-						 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+	<div class="row">
+		<div class="col-md-6 col-sm-12">
+			<div class="canvas-container">
+				<div class="" style="margin: 0px; padding: 10px; background-color: #000">
+					<div class="hp-bar-container" style="">
+						<div class="player-hp" style="width: 50%;">
+							<div class="row">
+								<label class="col-sm-2 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
+								<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
+								 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+								</div>
+							</div>
 						</div>
 					</div>
+
+					<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 				</div>
-			</div>
 
-			<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
-		</div>
-	</div>
-
-	<div class="dialog-container"></div>
-	
-	<!-- <div class="console-container">
-		<div class="console">
-			<textarea rows="5" id="console-area" style="margin: 0px; padding: 0px; width: 100%; resize: none;" disabled></textarea>
-		</div>
-	</div> -->
-
-	<div class="code-area-container">
-		<div class="row code_area">
-			<div class="line-number col-md-1 col-sm-1 col-xs-1">
-				<textarea rows="10" id="textarea1" disabled></textarea>
-			</div>
-			<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
-				<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+				<div class="dialog-container"></div>
 			</div>
 		</div>
-		<div class="row button-run-container">
-			<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-				<button class="btn btn-basic btn-block" onclick="runCode();">RUN</button>
+		<div class="col-md-6 col-sm-12">
+			<div class="code-area-container">
+				<div class="row code_area">
+					<div class="line-number col-md-1 col-sm-1 col-xs-1">
+						<textarea rows="10" id="textarea1" disabled></textarea>
+					</div>
+					<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
+						<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+					</div>
+				</div>
+				<div class="row button-run-container">
+					<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+						<button class="btn btn-basic btn-block" onclick="runCode();">RUN</button>
+					</div>
+				</div>
+				<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 			</div>
 		</div>
-		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 	</div>
 
 	<div id="finish-modal" class="modal" style="display: none;">
 		<div class="modal-content">
-			<h1>Finish</h1>
+			<!-- <h1>Finish</h1> -->
+			<div class="objectives container" style="margin-top: 30;">
+				<ul style="list-style-type: none;">
+					<?php foreach ($objectives_list as $obj): ?>
+						<li>
+							<div class="row">
+								<div class="obj-description col-md-8 col-sm-8 col-xs-8">
+									<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+								</div>
+								<div class="obj-status col-md-4 col-sm-4 col-xs-4">
+									<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" type="checkbox" name="obj_status">
+								</div>
+							</div>
+						</li>	
+					<?php endforeach ?>
+				</ul>
+			</div>
+
+			<div class="stars" style="text-align: center;">
+				<fieldset class="stage-rating" style="display: inline-block;">
+					<input type="radio" name="rating_stage" id="star1" value="1" disabled><label class="" for="star1" title="Good"></label>
+					<input type="radio" name="rating_stage" id="star2" value="2" disabled><label class="" for="star2" title="Excellent"></label>
+					<input type="radio" name="rating_stage" id="star3" value="3" disabled><label class="" for="star3" title="Perfect"></label>
+				</fieldset>
+			</div>
+
+			<div class="button-container" style="text-align: center; padding-top: 20px;">
+				<div class="row">
+					<div class="col-sm-4">
+						<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
+					</div>
+					<div  class="col-sm-4">
+						<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
+					</div>
+					<div class="col-sm-4">
+						<?php if(isset($next_level_info["LVL_ID"])) { ?>
+							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
+						<?php } else { ?>
+							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Stages">Stages</a>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -72,6 +113,34 @@
 			<h1>You Lost</h1>
 		</div>
 	</div>
+
+	<div id="obj_modal" class="modal" style="display: none;">
+	<div class="modal-content">
+		<div>
+			<div>
+				<button style="float: right;" id="obj_modal_close"><span>&times;</span></button>
+			</div>
+		</div>
+		<div class="objectives container" style="margin-top: 30;">
+			<ul style="list-style-type: none;">
+				<?php foreach ($objectives_list as $obj): ?>
+					<li>
+						<div class="row">
+							<div class="obj-description col-md-8 col-sm-8 col-xs-8">
+								<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+							</div>
+							<div class="obj-status col-md-4 col-sm-4 col-xs-4">
+								<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" type="checkbox" name="obj_status">
+							</div>
+						</div>
+					</li>	
+				<?php endforeach ?>
+			</ul>
+		</div>
+		
+	</div>
+	
+</div>
 </div>
 
 <script type="text/javascript">
@@ -87,9 +156,17 @@
 
 	var cmdNum = 0;
 	var vrbls = [];
+	var operations = [];
 	var zoomMultiplier = 0.75;
 	var TILE_SIZE = 16;
 	var isPaused = false;
+
+	var collectedCoins = 0;
+	var KilledBullies = 0;
+	var used_if = false;
+	var used_loop = false;
+	var isFinished = false;
+
 
 	var img = {};
 	img.map = new Image();
@@ -140,6 +217,14 @@
 	
 	enableTab('code_area');
 
+	$("#obj_modal_btn").click(function() {
+		document.getElementById('obj_modal').style.display = "block";
+	});
+
+	$("#obj_modal_close").click(function() {
+		document.getElementById('obj_modal').style.display = "none";
+	});
+
 	testCollisionRectRect = function(rect1,rect2){
 	return rect1.x <= rect2.x+rect2.width 
 		&& rect2.x <= rect1.x+rect1.width
@@ -184,7 +269,7 @@
 				});
 
 				console.log(vrbls);
-			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 
@@ -214,7 +299,7 @@
 					console.log("error: no value assigned");
 					return {status: false, message: "error: no value assigned"};
 				}
-			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9]*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9_]*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				tempLine = tempLine.replace(/\s+/g, " ");
@@ -307,7 +392,7 @@
 					if(/\[[0-9]*\]/g.test(var2_identifier) && /\[\]/g.test(var2.dataType)) {
 						
 						var var2_arrIndex = getConditions(var2_identifier, '[', ']');
-						valToTrans = var2.var_value[var2_arrIndex]
+						valToTrans = var2.var_value[var2_arrIndex];
 						console.log(valToTrans);	
 					} else {
 						valToTrans = var2.var_value
@@ -372,17 +457,14 @@
 					cmdNum++;
 				}
 
-			} while(!isEndOfCode);
+			} while(isEndOfCode(cmdNum));
 
 			for(var key in Question.list) {
 
 				if(Question.list[key].bully == bullyId) {
-					console.log(Question.list[key].isAsked);
 					if(Question.list[key].isAsked) {
 						if(Question.list[key].status == "current question") {
-							// console.log("here");
-							// console.log(vrbls);
-							// console.log(Question.list[key].answer)
+							
 							if(!hasErrors) {
 
 								var answers = Question.list[key].answer;
@@ -391,12 +473,43 @@
 
 								for(var akey in answers) {
 
-									for(var vkey in vrbls) {
+									if(Question.list[key].qstnType == "variable") {
 
-										if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value == vrbls[vkey].var_value) {
+										for(var vkey in vrbls) {
 
-											correctAns++;
+											if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value == vrbls[vkey].var_value) {
+
+												correctAns++;
+											}
 										}
+									} else if(Question.list[key].qstnType == "array") {
+
+										for(vkey in vrbls) {
+
+											if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value.length == vrbls[vkey].var_value.length) {
+
+												var arrVal = answers[akey].var_value;
+
+												var isWrongVal = false;
+												var arrIndexCtr = 0;
+
+												do {
+
+													if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
+														isWrongVal = true;
+													} else {
+														arrIndexCtr++;
+													}
+
+												} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
+
+												if(!isWrongVal) {
+													correctAns++;
+												}
+											}
+										}
+
+										console.log(answers[akey].var_value.length);
 									}
 								}
 
@@ -414,7 +527,15 @@
 							}
 
 							Question.closeDialog();
-							player.currentQuestion.questionNum++;
+
+							var questionStat = Question.statusCheck(bullyId);
+
+							if(questionStat.total_questions == (questionStat.correct_ans + questionStat.wrong_ans)) {
+								console.log("here");
+								player.currentQuestion = {};
+							} else {
+								player.currentQuestion.questionNum++;
+							}
 						}
 					}
 				}
@@ -541,6 +662,201 @@
 	// 	}
 	// }
 
+	Objective = function(id, status, desc, task, points)
+	{
+		var self = {
+			id: id,
+			status: status,
+			description: desc,
+			task: task,
+			points: points,
+		};
+
+		Objective.list[id] = self;
+	}
+
+	Objective.list = {};
+
+	Objective.init = function() {
+
+		var promise = new Promise(function(resolve, reject) {
+
+			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo base_url(); ?>Game/get_objectives',
+				data: {lvlId: lvlId},
+				dataType: 'json',
+				success: function(res) {
+					resolve(res);
+				},
+				error: function(err) {
+					console.log(err);
+				}
+			}).then(function(result) {
+
+				if(result.status) {
+					var objectives_list = result['objectives_list'];
+
+					for(var key in objectives_list) {
+
+						var taskObj = {};
+						var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
+						var objKey = Object.keys(jsonObj);
+
+						if(objKey[0] == "Finish") {
+
+							if(jsonObj['Finish'] == "True") {
+								taskObj = {finish: true};
+							} else {
+								taskObj = {finish: false};
+							}
+						} else if(objKey[0] == 'Defeat Bullies') {
+
+							taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
+
+						} else if(objKey[0] == 'Use command') {
+
+							taskObj = {use_command: jsonObj['Use command']};
+
+						} else if(objKey[0] == 'Collect Coins') {
+
+							taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
+
+						} else if(objKey[0] == 'Health') {
+
+							var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
+							taskObj = {health: healthPerc};
+						}
+						
+
+
+						Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
+					}
+
+					console.log(Objective.list);
+				} else {
+					console.log(result.message);
+				}
+			});
+		});
+	}
+
+	Objective.update = function() {
+
+		for(var key in Objective.list) {
+
+			var objKey = Object.keys(Objective.list[key].task);
+
+			if(objKey == 'health') {
+
+				var hpPerc = (player.hp / player.hpMax);
+
+				// console.log(hpPerc + " - " + Objective.list[key].task.health);
+				
+				if(hpPerc >= Objective.list[key].task.health) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				} else {
+					Objective.list[key].status = false;
+					$("#" + Objective.list[key].id + "_status").removeAttr('checked');
+				}
+			} else if(objKey == 'collect_coins') {
+
+				if(collectedCoins == Objective.list[key].task.collect_coins) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				}
+			} else if(objKey == 'defeat_bullies') {
+
+				if(KilledBullies >= Objective.list[key].task.defeat_bullies) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				}
+			} else if(objKey == 'use_command') {
+
+				if(Objective.list[key].task.use_command == 'Loop') {
+					if(used_loop) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				}
+
+				if(Objective.list[key].task.use_command == 'If') {
+					if(used_if) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				}
+			} else if(objKey == 'finish') {
+				if(isFinished) {
+					Objective.list[key].status = true;
+					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+				}
+			}
+			
+		}
+	}
+
+	Objective.computeScore = function() {
+
+		var totalScore = 0;
+		var perfect_score = 0;
+		var score_perc = 0;
+
+		for(var key in Objective.list) {
+
+			perfect_score += Objective.list[key].points;
+
+			if(Objective.list[key].status) {
+				totalScore += Objective.list[key].points;
+			}
+		}
+
+		score_perc = parseFloat((totalScore/perfect_score)*100);
+
+		console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
+
+		if(score_perc < 50 && score_perc > 0) {
+			$("#star1").attr("checked", true);
+		} else if(score_perc >= 50 && score_perc < 100) {
+			$("#star2").attr("checked", true);
+		} else if(score_perc == 100) {
+			$("#star3").attr("checked", true);
+		} else {
+			$("#star1").addClass("no-score");
+			$("#star2").addClass("no-score");
+			$("#star3").addClass("no-score");
+		}
+
+		return totalScore;
+	}
+
+	Objective.recordScore = function() {
+
+		var aquiredScore = Objective.computeScore();
+		var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+		var data = {
+			lvl_id: lvlId,
+			total_score: aquiredScore
+		}
+
+		$.ajax({
+			type: 'POST',
+			url: '<?php echo base_url(); ?>Game/record_progress',
+			data: data,
+			dataType: 'json',
+			success: function(res) {
+				console.log(res);
+			},
+			error: function(err) {
+				console.log(err);
+			}
+		});
+	}
+
 	Player = function(id, imgSrc, width, height, x, y, hpMax) {
 
 		var self = {
@@ -584,61 +900,40 @@
 			if(self.isEnemyInRange()) {
 
 				var bullyId = self.isEnemyInRange();
+				var question_id = "";
 
-				if(self.currentQuestion.questionNum) {
-
-					var questionId = bullyId + "_" + self.currentQuestion.questionNum;
-
-
+				if(self.currentQuestion.questionNum && self.currentQuestion.bully == bullyId) {
+					question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
 				} else {
-
+					console.log("set new bully");
 					self.currentQuestion = {bully: bullyId, questionNum: 1};
-
-					// console.log(self.currentQuestion.bully + "_" + self.currentQuestion.questionNum);
+					question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
 				}
 
-				if (Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum]) {
+				if (Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum] && !Question.list[question_id].isAsked && Question.list[question_id].status == "not answered") {
 
-					var question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
-					
-					// console.log(Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum]);
+					// var question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
 
-					if(!Question.list[question_id].isAsked) {
-						if(Question.list[question_id].status == "not answered") {
-
-							// if(prevQuestionStatus != "current question") {
+					// if(!Question.list[question_id].isAsked) {
+						
+						// if(Question.list[question_id].status == "not answered") {
+								
 								Question.list[question_id].showQuestion();
 								Question.list[question_id].isAsked = true;
 								Question.list[question_id].status = "current question";
-								// prevQuestionStatus = Question.list[question_id].status;
-							// }
-						}
-					}
+						// }
+					// }
 				} else if(Bully.list[bullyId].hp >= 0) {
-					// console.log("you lose");
 
-					Bully.list[bullyId].exit();
+					var questions_status = Question.statusCheck(bullyId);
+					// console.log(questions_status);
+
+					if((questions_status.total_questions == (questions_status.wrong_ans + questions_status.correct_ans)) && (questions_status.wrong_ans > 0)) {
+
+						Bully.list[bullyId].exit();
+					}
 				}
 
-				// var prevQuestionStatus = "";
-
-				// for(var key in Question.list) {
-
-				// 	if(Question.list[key].bully == bullyId) {
-
-				// 		if(!Question.list[key].isAsked) {
-				// 			if(Question.list[key].status == "not answered") {
-
-				// 				if(prevQuestionStatus != "current question") {
-				// 					Question.list[key].showQuestion();
-				// 					Question.list[key].isAsked = true;
-				// 					Question.list[key].status = "current question";
-				// 					prevQuestionStatus = Question.list[key].status;
-				// 				}
-				// 			}
-				// 		}
-				// 	}
-				// }
 			} else {
 
 				self.pressingRight = true;
@@ -662,10 +957,10 @@
 
 			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
 
-				// self.toRemove = true;
 				console.log("exit");
 				isPaused = true;
-				$("#finish-modal").css("display", "block");
+				isFinished = true;
+
 			} else {
 
 				if(self.moveCtr <= (96 * zoomMultiplier)) {
@@ -781,6 +1076,7 @@
 
 			if(self.hp <= 0) {
 				self.toRemove = true;
+				KilledBullies++;
 			}
 		}
 
@@ -917,6 +1213,8 @@
 
 						var bully_spawn = JSON.parse(bully_list[key].BLY_SPAWNPOINT);
 
+						img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/" + bully_list[key].BLY_IMAGEURL;
+
 						Bully.generate(bully_list[key].BLY_ID,img.bully.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
 					}
 
@@ -966,7 +1264,7 @@
 				if(self.testCollision(player))
 				{
 					self.toRemove = true;
-					player.hp -= 5;
+					player.hp -= 1;
 
 					var hpPercent = (player.hp/player.hpMax)*100;
 
@@ -1059,12 +1357,13 @@
 		Projectile(id, img.projectile.src, type, x, y, direction);
 	}
 
-	Question = function(id, qstnNum, bullyId, dialog, answer) {
+	Question = function(id, qstnType, qstnNum, bullyId, dialog, answer) {
 
 		// id, qstnNum, bullyId, dialog, answer
 
 		var self = {
 			id: id,
+			qstnType: qstnType,
 			qstnNum: qstnNum,
 			bully: bullyId,
 			dialog: dialog,
@@ -1137,9 +1436,26 @@
 							}
 
 							// console.log(answers);
+						} else if(question_list[key].QSTN_TYPE == "array") {
+
+							var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+							for(var akey in answers) {
+
+								var arrValue = answers[akey].var_value;
+
+								for(var vkey in arrValue) {
+
+									arrValue[vkey] = parseValue(answers[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
+								}
+
+								answers[akey].var_value = arrValue;
+							}
+
+							// console.log(answers);
 						}
 
-						Question(questionId, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
+						Question(questionId, question_list[key].QSTN_TYPE, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
 					}
 
 					console.log(Question.list);
@@ -1153,10 +1469,32 @@
 		// console.log("close dialog");
 	}
 
-	Question.isAllAnswered = function(bullyId) {
+	Question.statusCheck = function(bullyId) {
 
-		var qCtr = 0;
-		var qAns = 0;
+		var correct_ans = 0;
+		var wrong_ans = 0;
+		var total_questions = 0;
+
+		for(var key in Question.list) {
+
+			if(Question.list[key].bully == bullyId) {
+
+				total_questions++;
+
+				if(Question.list[key].isAsked) {
+
+					if(Question.list[key].status == "correct") {
+
+						correct_ans++;
+					} else if(Question.list[key].status == "wrong") {
+
+						wrong_ans++;
+					}
+				}
+			}
+		}
+
+		return {total_questions: total_questions, correct_ans: correct_ans, wrong_ans: wrong_ans};
 	}
 
 	Maps = function(id, imgSrc, height, width, grid) {
@@ -1259,11 +1597,13 @@
 	startNewGame = function() {
 
 		Bully.list = {};
+		Objective.list = {};
 		Question.list = {};
 		Projectile.list = {};
 		Maps.current = {};
 
 		Maps.init();
+		Objective.init();
 		Bully.init();
 		Question.init();
 
@@ -1293,6 +1633,13 @@
 			player.update();
 			Bully.update();
 			Projectile.update();
+			Objective.update();
+
+			if(isFinished) {
+				Objective.computeScore();
+				Objective.recordScore();
+				$("#finish-modal").css("display", "block");
+			}
 			// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
 		}
 

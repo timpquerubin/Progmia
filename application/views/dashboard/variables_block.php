@@ -14,7 +14,11 @@
 						<td><?php echo $ctr ?></td>
 						<td><?php echo $v["dataType"] ?></td>
 						<td><?php echo $v["var_identifier"] ?></td>
-						<td><?php echo $v["var_value"] ?></td>
+						<?php if($v["dataType"] == "String" || $v["dataType"] == "char" || $v["dataType"] == "int" || $v["dataType"] == "double" || $v["dataType"] == "bool") { ?>
+							<td><?php echo $v["var_value"] ?></td>
+						<?php } else { ?>
+							<td><?php echo json_encode($v["var_value"]) ?></td>
+						<?php } ?>
 					</tr>
 
 					<?php $ctr++; ?>

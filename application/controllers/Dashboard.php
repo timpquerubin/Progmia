@@ -108,8 +108,13 @@
 				'page' => 'level-objectives',
 				'lvlId' => $lvlId
 			);
+
 			$data['lvl_info'] = $this->Game_model->get_current_level($lvlId);
 			$data['lvlId'] = $lvlId;
+
+			// echo "<pre>";
+			// var_dump($data);
+			// echo "</pre>";
 
 			$this->load->view('templates/dashboard_header', $header_data);
 			$this->load->view('templates/load_init_links');
