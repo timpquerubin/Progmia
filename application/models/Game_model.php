@@ -23,6 +23,11 @@
 			return $levels->result_array();
 		}
 
+		public function get_user_avatar($user){
+			$avatar = $this->db->query('SELECT `AVATAR`.*,`USER`.`USER_ID` FROM `USER`, `AVATAR` WHERE `USER`.`USER_ID`=\''.$user.'\' AND `AVATAR`.`AVTR_ID`=`USER`.`AVTR_ID`;');
+			return $avatar->result_array();
+		}
+		
 		public function get_next_level($params) {
 
 			$level_info = $this->db->query('SELECT * FROM LEVEL WHERE STG_ID=\''.$params['STG_ID'].'\' AND LVL_NUM=\''.$params['LVL_NUM'].'\';');

@@ -46,7 +46,13 @@
 			$stages = $this->Game_model->get_stages($user);
 
 			//
-			
+			$avatar = $this->Game_model->get_user_avatar($userID);
+
+			// echo $avatar[0].value;
+			// var_dump($avatar);
+			// exit();
+
+
 			$user1 = $this->session->userdata('username');
 			$userinfo = $this->Profile_model->get_user_info($user1);
 			$progress = $this->Profile_model->get_progress($user1);
@@ -54,6 +60,8 @@
 			$levels = $this->Profile_model->get_levels($user1);
 			$total_points = $this->Profile_model->get_total_points($userID);
 			$badges = $this->Profile_model->get_badges($userID);
+
+			$data['avatar'] = $avatar;
 
 			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
 			$data['badges_list'] = $badges;
