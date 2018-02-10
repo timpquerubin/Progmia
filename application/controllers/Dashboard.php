@@ -465,59 +465,56 @@
 			// 	''=>
 			// );
 			// $this->upload_img();
-			if($_FILES['imgSprite']['name'] != '')
-			{
-				$config['upload_path'] = './assets/images/avatars/SPRITES';
-				$config['allowed_types'] = 'png';
-				$config['max_size'] = '2048';
-				$config['max_width'] = '2000';
-				$config['max_height'] = '2000';
-				$config['file_name'] = $avtrId;
-				
-				$this->load->library('upload', $config);
-				
-				if(!$this->upload->do_upload('imgSprite'))
-				{
-					$errors = array('error' => $this->upload->display_errors());
-				}
-				else {
-					$data = array('upload_data' => $this->upload->data());
-
-					$avatar_params['AVTR_SPRITE_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
-				}
-			}
 			if($_FILES['imgFront']['name'] != '')
 			{
-				$config['upload_path'] = './assets/images/avatars/FRONTVIEW';
-				$config['allowed_types'] = 'png';
-				$config['max_size'] = '2048';
-				$config['max_width'] = '2000';
-				$config['max_height'] = '2000';
-				$config['file_name'] = $avtrId;
-				
-				$this->load->library('upload', $config);
-				
+				$config1['upload_path'] = './assets/images/avatars/FRONTVIEW';
+				$config1['allowed_types'] = 'png';
+				$config1['max_size'] = '2048';
+				$config1['max_width'] = '2000';
+				$config1['max_height'] = '2000';
+				$config1['file_name'] = $avtrId;
+				$this->load->library('upload', $config1);
+				$this->upload->initialize($config1);
 				if(!$this->upload->do_upload('imgFront'))
 				{
 					$errors = array('error' => $this->upload->display_errors());
 				}
 				else {
 					$data = array('upload_data' => $this->upload->data());
-
 					$avatar_params['AVTR_FRONTVIEW_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
+				}
+			}
+			if($_FILES['imgSprite']['name'] != '')
+			{
+				$config2['upload_path'] = './assets/images/avatars/SPRITES';
+				$config2['allowed_types'] = 'png';
+				$config2['max_size'] = '2048';
+				$config2['max_width'] = '2000';
+				$config2['max_height'] = '2000';
+				$config2['file_name'] = $avtrId;
+				
+				$this->load->library('upload', $config2);
+				$this->upload->initialize($config2);
+				if(!$this->upload->do_upload('imgSprite'))
+				{
+					$errors = array('error' => $this->upload->display_errors());
+				}
+				else {
+					$data = array('upload_data' => $this->upload->data());
+					$avatar_params['AVTR_SPRITE_FILENAME'] =  $avtrId.$data['upload_data']['file_ext'];
 				}
 			}
 			if($_FILES['imgThumb']['name'] != '')
 			{
-				$config['upload_path'] = './assets/images/avatars/THUMBNAIL';
-				$config['allowed_types'] = 'png';
-				$config['max_size'] = '2048';
-				$config['max_width'] = '2000';
-				$config['max_height'] = '2000';
-				$config['file_name'] = $avtrId;
+				$config3['upload_path'] = './assets/images/avatars/THUMBNAIL';
+				$config3['allowed_types'] = 'png';
+				$config3['max_size'] = '2048';
+				$config3['max_width'] = '2000';
+				$config3['max_height'] = '2000';
+				$config3['file_name'] = $avtrId;
 				
-				$this->load->library('upload', $config);
-				
+				$this->load->library('upload', $config3);
+				$this->upload->initialize($config3);
 				if(!$this->upload->do_upload('imgThumb') )
 				{
 					$errors = array('error' => $this->upload->display_errors());
