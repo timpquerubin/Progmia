@@ -59,8 +59,8 @@ nav ul.right {
     border-bottom-left-radius: 30px;
     background:#273737;
 }
-.custom-1{background-color: #004a51;padding-top:20px;padding-bottom:20px;}
-.custom-2{background-color: #00363c;}
+.custom-1{background-color: #004a51;border-top:solid 2px #ffce12;margin-top:20px;padding-top:20px;padding-bottom:10px;}
+.custom-2{background-color: #00363c;border-top:solid 2px #ffce12;border-bottom:solid 2px #ffce12;}
 .coin {display:flex;justify-content: center;align-items: center;margin:0 auto !important;}
 .coin img {max-width:50px !important;max-height: 50px;margin-left: 5px;}
 .coin h4{font-family: 'ArcadeClassic';font-size:35px;color:#ffce12;}
@@ -348,7 +348,7 @@ span.unlocked {
     border-top:solid 1px #ffce12;
     border-bottom:solid 1px #ffce12;
 }
-.content {/*margin-top:200px;*/padding: 50px 7%;padding: 20px 0;
+.content {/*margin-top:200px;*/padding: 50px 7%;padding: 50px 0;
     /*margin: 0 5%;*/}
 .hexrow > div.hexagon:nth-child(odd) {
     top: 43.3px; /* ( width x cos(30) / 2 ) */
@@ -805,7 +805,8 @@ div.navbar-custom > nav ul.secondary-nav li.active {animation: createUnderline;}
 div.navbar-custom > nav > div.row > ul.nav li a {font-family:'Barlow';color:#fff;font-size:28px;}
 div.navbar-custom > nav > div.row > ul.nav li a.navbar-brand img {height: 100px;}
 
-
+div.user-progress{list-style: none;color:#ffce12;}
+div.user-progress div{margin-bottom:20px;}
 .content > .row {margin:20px 0px;}
 .content > .row > .col-md-6 {border:solid 1px #000;padding:20px 0;border:solid 1px #111;}
 .content .stage-progress {position:relative;border: solid 1px #000;margin:0 auto;width: auto;}
@@ -831,7 +832,7 @@ div.profile .joined h4{text-align: center;}
     padding: 10;
     background-color: #111;
 }
-.sidebar{display: block;background-color: #006c78;width: auto;height: auto;}
+.sidebar{position:fixed;display: block;background-color: #006c78;width: auto;height: auto;margin-top:30px;border:solid 3px #00353b;}
 .row {margin:0px;}
 
 .badges .badge-img{background-color:#050a0c; padding:5px;max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}

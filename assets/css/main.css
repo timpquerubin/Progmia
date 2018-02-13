@@ -39,6 +39,7 @@ hr.greetings{border-color:#ffce12;border-width: 7px;}
 	animation: slide 1 .6s;
 	font-size:20px;
 }
+
 .form-control{background-color: #004850;border-color:#439aaf;color:#fff !important;}
 .modal-dialog{border-radius: 5px !important;}
 .modal-content{border-radius: 20px;background-color: transparent !important;}

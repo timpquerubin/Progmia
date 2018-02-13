@@ -7,19 +7,18 @@
 							<?php foreach($avatar as $avtr){?>
 							<a href=""><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>"></a>
 							<?php } ?>
+					<div class="username">
+						<h2 style="margin:0 !important;font-family:'Barlow';font-size:30px;color:#ffce12;text-align:center;"><?php echo $this->session->userdata('username'); ?></h2>
+					</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12">
-						<h3>Total Points Earned</h3>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md-12 custom-2">
+							<h3 style="font-family: 'ArcadeClassic';font-size:20px;margin:10px auto 0 auto;color:#ffce12;">Total Points:</h3>
 						<div class="coin">
 							<?php if ($total_points == 0){ ?>0<?php } ?>
-							<h4><?php echo $total_points; ?></h4>
+							<h4 style="margin:0 !important;"><?php echo $total_points; ?></h4>
 							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/COIN.gif?>">
 						</div>
 					</div>
@@ -27,11 +26,8 @@
 				<div class="row">
 					<div class="col-md-12">
 					<?php foreach($user_info as $userinfo){ ?>
-					<div class="username">
-						<h2><?php echo $this->session->userdata('username'); ?></h2>
-					</div>
 					<div class="email-address">
-						<h3><?php echo $userinfo['USER_EMAIL'] ?></h3>
+						<!-- <h3><?php echo $userinfo['USER_EMAIL'] ?></h3> -->
 					</div>
 					<div class="joined">
 						<h4>Joined</h4>
@@ -46,7 +42,26 @@
 	<div class="content">
 		<div class="container-fluid">
 			<div id="profile" class="profile">
-				<div class="row">
+				<div class="user-progress">
+				<?php foreach($progress_list as $progress){?>
+					<div class="row">
+						<div class="col-md-3">
+						<?php echo $progress['STG_DESCRIPTION']; ?>
+						</div>
+						<div class="col-md-3">
+						<?php echo $progress['GAME_SCORE']; ?>
+						</div>
+						<div class="col-md-3">
+						<?php $date = date_create($progress['DATE_PLAYED']);
+						echo date_format($date,"M.dY");?>
+						</div>
+						<div class="col-md-3">
+							<a href="<?php echo base_url();?>/Play<?php echo $progress['LVL_ID']; ?>">PLAY</a>
+						</div>
+					</div>			
+				<?php } ?>
+				</div>
+				<!-- <div class="row">
 					<div class="col-md-4"><div>Total Points Earned <div><?php if ($total_points == 0){ ?>0<?php } ?>
 						<?php echo $total_points; ?></div></div></div>
 					<div class="col-md-4"><p>Joined </p></div>
@@ -99,7 +114,7 @@
 						</div>
 						<?php } ?>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div id="game" class="game">
 				<?php $stage1 = true; ?>

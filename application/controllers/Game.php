@@ -46,7 +46,6 @@
 			$stages = $this->Game_model->get_stages($user);
 
 			//
-			$avatar = $this->Game_model->get_user_avatar($userID);
 
 			// echo $avatar[0].value;
 			// var_dump($avatar);
@@ -60,9 +59,9 @@
 			$levels = $this->Profile_model->get_levels($user1);
 			$total_points = $this->Profile_model->get_total_points($userID);
 			$badges = $this->Profile_model->get_badges($userID);
+			$avatar = $this->Game_model->get_user_avatar($userID);
 
 			$data['avatar'] = $avatar;
-
 			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
 			$data['badges_list'] = $badges;
 			$data['user_info'] = $userinfo; 
@@ -143,17 +142,20 @@
 			$this->isLoggedIn();
 			$level_params = array(
 				'LVL_ID' => $lvlId,
-
 			);
 
+			$user1 = $this->session->userdata('username');
 			$stages = $this->Game_model->get_stages();
 			$current_level = $this->Game_model->get_current_level($lvlId);
 			$level_details = $this->Game_model->get_level_details($level_params);
 			$levels = $this->Game_model->get_levels();
 			$objectives = $this->Game_model->get_objectives($level_params);
 			
+			$userinfo = $this->Profile_model->get_user_info($user1);
+
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);
+			$data['userinfo'] = $userinfo;
 			$data['stage_list'] = $stages;
 	        $data['maxlevel_list']=$this->Game_model->get_max_level();
 			$data['level_list'] = $levels;
@@ -172,6 +174,8 @@
 			$this->_init();
 			$this->isLoggedIn();
 
+
+			$userID = $this->session->userdata('user_id');
 			$level_params = array(
 				"LVL_ID" => $lvlId
 			);
@@ -190,8 +194,9 @@
 			// var_dump($next_level_info);
 			// echo "</pre>";
 			// exit();
+			$avatar = $this->Game_model->get_user_avatar($userID);
 
-
+			$data['avatar'] = $avatar;
 			$data['level_info'] = $level_info[0];
 			$data['objectives_list'] = $objectives;
 			$data['next_level_info'] = $next_level_info;
