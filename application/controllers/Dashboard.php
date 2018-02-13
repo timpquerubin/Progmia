@@ -319,7 +319,7 @@
 					"QSTN_NUM" => $qstn_count,
 					"QSTN_DIALOG" => $question_info["qstn_dialog"],
 					"QSTN_ANSWER" => json_encode($question_info["qstn_ans"]),
-					"QSTN_TYPE" => $question_info["qstn_type"],
+					// "QSTN_TYPE" => $question_info["qstn_type"],
 				);
 
 				$this->Game_model->insert_question($question_params);

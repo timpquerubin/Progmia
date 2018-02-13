@@ -13,17 +13,7 @@
 				</div>
 
 				<form class="form-horizontal" id="question-form" name="question-form" method="post" action="add_question">
-					<input type="text" name="input-bully-id" id="input-bully-id">
-					<div class="form-group">
-						<label class="control-label col-sm-2">Question Type:</label>
-						<div class="col-sm-2">
-							<select class="form-control" id="qstn_type" name="qstn_type">
-								<option value="variable">Variable</option>
-								<option value="array">Array</option>
-								<option value="command">Command</option>
-							</select>
-						</div>
-					</div>
+					<input type="hidden" name="input-bully-id" id="input-bully-id">
 
 					<div class="form-group">
 						<label class="control-label col-sm-2">Question Dialog:</label>
@@ -32,37 +22,85 @@
 						</div>
 					</div>
 
-					<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px; display: block;">
+					<div class="answer-info-block" style="border: 1px solid #d9d9d9; padding: 20px 0px 20px 0px; display: block;">
 						<div class="row">
 							<div class="col-sm-5">
 								<div class="form-group">
-									<label class="control-label col-sm-5">Data Type:</label>
+									<label class="control-label col-sm-5">Storage Type:</label>
 									<div class="col-sm-5">
-										<select class="form-control" id="var_dataType" name="var_dataType">
-											<option value="int">Integer</option>
-											<option value="double">Double</option>
-											<option value="char">Character</option>
-											<option value="String">String</option>
-											<option value="bool">Boolean</option>
+										<select class="form-control" id="qstn_type" name="qstn_type">
+											<option value="variable">Variable</option>
+											<option value="array">Array</option>
+											<option value="command">Command</option>
 										</select>
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label class="control-label col-sm-5">Identifier:</label>
-									<div class="col-sm-7">
-										<input type="text" class="form-control" name="var_identifier" id="var_identifier">
+								<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: block;">
+									<div class="form-group">
+										<label class="control-label col-sm-5">Data Type:</label>
+										<div class="col-sm-5">
+											<select class="form-control" id="var_dataType" name="var_dataType">
+												<option value="int">Integer</option>
+												<option value="double">Double</option>
+												<option value="char">Character</option>
+												<option value="String">String</option>
+												<option value="bool">Boolean</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-5">Identifier:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="var_identifier" id="var_identifier">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-5">Value:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="var_value" id="var_value">
+										</div>
+									</div>
+
+									<div class="row">
+										<input type="button" class="btn btn-default col-sm-12" value="Add Variable" onclick="append_variable()">
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label class="control-label col-sm-5">Value:</label>
-									<div class="col-sm-7">
-										<input type="text" class="form-control" name="var_value" id="var_value">
+								<div class="array-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: none;">
+									<div class="form-group">
+										<label class="control-label col-sm-5">Data Type:</label>
+										<div class="col-sm-5">
+											<select class="form-control" id="arr_dataType" name="arr_dataType">
+												<option value="int[]">Integer</option>
+												<option value="double[]">Double</option>
+												<option value="char[]">Character</option>
+												<option value="String[]">String</option>
+												<option value="bool[]">Boolean</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-5">Identifier:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="arr_identifier" id="arr_identifier">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-sm-5">Value:</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="arr_value" id="arr_value">
+										</div>
+									</div>
+
+									<div class="row">
+										<input type="button" class="btn btn-default col-sm-12" value="Add Array" onclick="append_array()">
 									</div>
 								</div>
-
-								<input type="button" class="btn btn-default col-sm-12" value="Add Variable" onclick="append_variable()">
 							</div>
 							<div class="col-sm-7">
 								<div class="variables-block"></div>
@@ -70,45 +108,10 @@
 						</div>
 					</div>
 
-					<div class="array-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px; display: none">
-						<div class="row">
-							<div class="col-sm-5">
-								<div class="form-group">
-									<label class="control-label col-sm-5">Data Type:</label>
-									<div class="col-sm-5">
-										<select class="form-control" id="arr_dataType" name="arr_dataType">
-											<option value="int[]">Integer</option>
-											<option value="double[]">Double</option>
-											<option value="char[]">Character</option>
-											<option value="String[]">String</option>
-											<option value="bool[]">Boolean</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="control-label col-sm-5">Identifier:</label>
-									<div class="col-sm-7">
-										<input type="text" class="form-control" name="arr_identifier" id="arr_identifier">
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label class="control-label col-sm-5">Value:</label>
-									<div class="col-sm-7">
-										<input type="text" class="form-control" name="arr_value" id="arr_value">
-									</div>
-								</div>
-
-								<input type="button" class="btn btn-default col-sm-12" value="Add Array" onclick="append_array()">
-							</div>
-							<div class="col-sm-7">
-								<div class="variables-block"></div>
-							</div>
+					<div class="operations-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin-top: 20px; padding-bottom: 10px;">
+						<div class="opp-header" style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px; margin-bottom: 20px;">
+							<h4 style="padding: 0px 0px 0px 15px;">Operations</h4>
 						</div>
-					</div>
-
-					<div class="operations-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; margin-top: 20px; padding-bottom: 10px;">
 						<div class="row">
 							<div class="col-sm-5">
 								<div class="operation-info">
@@ -410,6 +413,12 @@
 			} else {
 				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value};
 				console.log(variable_list);
+
+				document.getElementById("arr_dataType").value = "int[]";
+				document.getElementById("arr_identifier").value = "";
+				document.getElementById("arr_value").value = "";
+
+
 				varCtr++;
 			}
 
@@ -426,6 +435,11 @@
 			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2};
 
 			opCtr++;
+
+			document.getElementById("opp_saveTo").value = "";
+			document.getElementById("opp_var1").value = "";
+			document.getElementById("opp_var2").value = "";
+			document.getElementById("opp_operation").value = "add";
 
 			load_operations_block();
 		}
@@ -520,7 +534,7 @@
 			var data = {};
 			data["question_info"] = {
 				bullyId: document.getElementById("input-bully-id").value,
-				qstn_type: document.getElementById("qstn_type").value,
+				// qstn_type: document.getElementById("qstn_type").value,
 				qstn_dialog: document.getElementById("qstn_dialog").value,
 				qstn_ans: {variables: variable_list, operations: operation_list},
 			};
