@@ -11,7 +11,12 @@
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	<div class="container-fluid" style="position: relative;max-width:1555px;">
-			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"></a>
-	</div>
+	<nav>
+		<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
+	</nav>
+	<header>
+		<div class="row">
+			<h1>SELECT AVATAR</h1>
+		</div>
+	</header>
 	

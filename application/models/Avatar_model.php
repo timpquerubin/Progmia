@@ -28,6 +28,7 @@
 
 			return $avatars->result_array();
 		}
+
 		/*
 		public function show_student_id($data){
 		$this->db->select('*');

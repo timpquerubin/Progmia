@@ -1,65 +1,48 @@
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="sidebar">
 			<div class="container-fluid">
-
 				<div class="row">
-					<div class="col-md-4"><div>Total Points Earned <div><?php if ($total_points == 0){ ?>0<?php } ?>
-						<?php echo $total_points; ?></div></div></div>
-					<div class="col-md-4"><p>Joined </p></div>
-					<div class="col-md-4"><p>Date Registered:</p></div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="row">
-							<div class="avatar">
-								<a href=""><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/avatar-1.png" ></a>
-							</div>
-						</div>
-						<div class="row">
-							<?php foreach($user_info as $userinfo){ ?>
-							<div class="username">
-								<h2><?php echo $this->session->userdata('username'); ?></h2>
-							</div>
-							<div class="email-address">
-								<h3><?php echo $userinfo['USER_EMAIL'] ?></h3>
-							</div>
-							<div class="joined">
-								<h4>Joined Month Year</h4>
-							</div>
+					<div class="col-md-12 custom-1">
+						<div class="avatar">
+							<?php foreach($avatar as $avtr){?>
+							<a href=""><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>"></a>
 							<?php } ?>
 						</div>
-
 					</div>
-					<div class="col-md-9">
-						<?php foreach($user_info as $userinfo){ ?>
-						<div class="col-md-6">
-							<div class=""><label>Username: </label><?php echo $userinfo['USER_USERNAME'] ?></div>
-							<div class=""><label>Firstname: </label><?php echo $userinfo['USER_FNAME'] ?></div>
-							<p>First name: <?php echo $userinfo['USER_FNAME'] ?>	</p>
-							<p>Middle name: <?php echo $userinfo['USER_MNAME'] ?>	</p>
-							<p>Last name: <?php echo $userinfo['USER_LNAME'] ?>	</p>
-							<p>Gender: <?php if($userinfo['USER_GENDER'] == 'M') { ?>M<?php } ?>
-								<?php if($userinfo['USER_GENDER'] == 'F') { ?>F<?php } ?>
-							</p>
-							<p>Birthdate: <?php echo $userinfo['USER_BDAY'] ?>	</p>
-							
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Total Points Earned</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 custom-2">
+						<div class="coin">
+							<?php if ($total_points == 0){ ?>0<?php } ?>
+							<h4><?php echo $total_points; ?></h4>
+							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/COIN.gif?>">
 						</div>
-
-						<div class="col-md-6">
-							<p>Email Address: <?php echo $userinfo['USER_EMAIL'] ?>	</p>
-							<p>Firstname:</p>
-							<p>Lastname:</p>
-							<p>Middlename:</p>
-							<p>Email Address:</p>
-							<p>Last played on:</p>
-						</div>
-						<?php } ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+					<?php foreach($user_info as $userinfo){ ?>
+					<div class="username">
+						<h2><?php echo $this->session->userdata('username'); ?></h2>
+					</div>
+					<div class="email-address">
+						<h3><?php echo $userinfo['USER_EMAIL'] ?></h3>
+					</div>
+					<div class="joined">
+						<h4>Joined</h4>
+					</div>
+					<?php } ?>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-10">
 	<div class="content">
 		<div class="container-fluid">
 			<div id="profile" class="profile">
