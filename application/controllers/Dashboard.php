@@ -436,6 +436,17 @@
 			$this->load->view('dashboard/bullies_block', $data);
 		}
 
+		public function load_operations_block() {
+
+			if(count($_POST) > 0) {
+				$data['operation_list'] = $_POST['operation_list'];
+			} else {
+				$data['operation_list'] = [];
+			}
+
+			$this->load->view('dashboard/operations_block', $data);
+		}
+
 		public function save_add_avatar()
 		{
 			$this->__init();

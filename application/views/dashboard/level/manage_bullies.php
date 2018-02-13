@@ -32,7 +32,7 @@
 						</div>
 					</div>
 
-					<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px; display: none;">
+					<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px; display: block;">
 						<div class="row">
 							<div class="col-sm-5">
 								<div class="form-group">
@@ -70,7 +70,7 @@
 						</div>
 					</div>
 
-					<div class="array-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px;">
+					<div class="array-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; padding-bottom: 10px; display: none">
 						<div class="row">
 							<div class="col-sm-5">
 								<div class="form-group">
@@ -108,7 +108,7 @@
 						</div>
 					</div>
 
-					<div class="operations-block" style="border: 1px solid #d9d9d9; padding-top: 20px; margin-top: 20px; padding-bottom: 10px;">
+					<div class="operations-info-block" style="border: 1px solid #d9d9d9; padding-top: 20px; margin-top: 20px; padding-bottom: 10px;">
 						<div class="row">
 							<div class="col-sm-5">
 								<div class="operation-info">
@@ -144,6 +144,8 @@
 											<input type="text" class="form-control" name="opp_var2" id="opp_var2">
 										</div>
 									</div>
+
+									<input type="button" class="btn btn-default col-sm-12" value="Add Operation" onclick="append_operation()">
 								</div>
 							</div>
 							<div class="col-sm-7">
@@ -520,7 +522,7 @@
 				bullyId: document.getElementById("input-bully-id").value,
 				qstn_type: document.getElementById("qstn_type").value,
 				qstn_dialog: document.getElementById("qstn_dialog").value,
-				qstn_ans: variable_list,
+				qstn_ans: {variables: variable_list, operations: operation_list},
 			};
 
 			console.log(variable_list);
@@ -545,8 +547,10 @@
 				if(result.status) {
 					load_questions(document.getElementById("input-bully-id").value);
 					variable_list = {};
+					operation_list = {};
 					varCtr = 0;
 					load_variables_block();
+					load_operations_block();
 				} else {
 					console.log(result.message);
 				}
@@ -634,6 +638,7 @@
 
 		//modal
 		load_variables_block();
+		load_operations_block();
 	});
 
 </script>
