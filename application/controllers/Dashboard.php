@@ -319,7 +319,7 @@
 					"QSTN_NUM" => $qstn_count,
 					"QSTN_DIALOG" => $question_info["qstn_dialog"],
 					"QSTN_ANSWER" => json_encode($question_info["qstn_ans"]),
-					"QSTN_TYPE" => $question_info["qstn_type"],
+					// "QSTN_TYPE" => $question_info["qstn_type"],
 				);
 
 				$this->Game_model->insert_question($question_params);
@@ -434,6 +434,17 @@
 			}
 
 			$this->load->view('dashboard/bullies_block', $data);
+		}
+
+		public function load_operations_block() {
+
+			if(count($_POST) > 0) {
+				$data['operation_list'] = $_POST['operation_list'];
+			} else {
+				$data['operation_list'] = [];
+			}
+
+			$this->load->view('dashboard/operations_block', $data);
 		}
 
 		public function save_add_avatar()
