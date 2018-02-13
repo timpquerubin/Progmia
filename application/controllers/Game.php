@@ -187,7 +187,7 @@
 				"STG_ID" => $level_info[0]["STG_ID"],
 				"LVL_NUM" => (((int) $level_info[0]["LVL_NUM"]) + 1),
 			);
-
+			
 			$next_level_info = $this->Game_model->get_next_level($next_level_params);
 
 			// echo "<pre>";

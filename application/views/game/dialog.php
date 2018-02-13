@@ -1,3 +1,11 @@
 <!-- <div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15; min-width:250px; padding:20px 40px;width:96%;margin:20px auto;height:100px;border:solid 5px #000000;"><p style="font-family:ArcadeClassic;font-size: 30px;color:#000000;"><?php echo isset($dialog) ? $dialog : '' ?></p></div>
  -->
-<div style="background:#ffffff;border-radius:20px;box-shadow:0px 0px 20px #ffce15;min-width:250px;padding: 23px 40px;width:96%;margin:20px auto;height: auto;border:solid 5px #000000;"><div class="avatar-dialog" style="display:inline-flex;"><img style="height:70px;width:70px;background:#121212;border-radius: 50%;" src="<?php echo base_url();?>assets/images/avatars/THUMBNAIL/AVATAR_THUMBNAIL-01.png"><h2 style="font-family:'ArcadeClassic';font-size:35px;margin-left:20px;color:#ffff00;text-shadow: 1px 1px 2px #121212;background:#121212;padding:5px 30px;border-radius: 25px;" class="name" value="">USER</h2></div><p style="font-family:ArcadeClassic;font-size: 30px;color: #222222;letter-spacing: 1px;word-spacing: 15px;text-shadow: 1px 1px 2px #77777799;line-height: 30px;"><?php echo isset($dialog) ? $dialog : '' ?></p></div>
+<div class="box">
+	<div class="head">
+		<img src="<?php echo base_url();?>assets/images/avatars/THUMBNAIL/AVATAR_THUMBNAIL-01.png">
+		<label>BULLY:</label>
+	</div>
+	<p class="dialog">
+		<?php echo isset($dialog) ? $dialog : '' ?>
+	</p>
+</div>

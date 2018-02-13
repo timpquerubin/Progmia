@@ -13,7 +13,7 @@
 					<h1><button id="obj_modal_btn" style="border: 1px solid #000; border-radius: 50%; width: 30px; height: 30px; background-color: #000; font-size: 20px; color: #fff"><span class="fa fa-question"></span></button></h1>
 				</li>
 				<li>
-					
+					<h1><button id="obj_modal_btn" style="border: 1px solid #000; border-radius: 50%; width: 30px; height: 30px; background-color: #000; font-size: 20px; color: #fff"><span class="fa fa-check"></span></button></h1>
 				</li>
 			</ul>
 		</nav>
@@ -62,8 +62,21 @@
 
 	<div id="finish-modal" class="modal" style="display: none;">
 		<div class="modal-content">
-			<!-- <h1>Finish</h1> -->
+			<h1>Finish</h1>
+
+			<ul style="display:flex;list-style: none;margin:0 auto !important;padding: 0px !important;justify-content: center;">
+				<li id="star1">
+					<label class="" for="star1" title="Good"><div></div></label>
+				</li>
+				<li id="star2">
+					<label class="" for="star1" title="Excellent"><div></div></label>
+				</li>
+				<li id="star3">
+					<label class="" for="star1" title="Perfect"><div></div></label>
+				</li>
+			</ul>
 			<div class="objectives container" style="margin-top: 30;">
+				<div class="goal">Goal</div>
 				<ul style="list-style-type: none;">
 					<?php foreach ($objectives_list as $obj): ?>
 						<li>
@@ -80,29 +93,31 @@
 				</ul>
 			</div>
 
-			<div class="stars" style="text-align: center;">
+			<!-- <div class="stars" style="text-align: center;">
 				<fieldset class="stage-rating" style="display: inline-block;">
 					<input type="radio" name="rating_stage" id="star1" value="1" disabled><label class="" for="star1" title="Good"></label>
 					<input type="radio" name="rating_stage" id="star2" value="2" disabled><label class="" for="star2" title="Excellent"></label>
 					<input type="radio" name="rating_stage" id="star3" value="3" disabled><label class="" for="star3" title="Perfect"></label>
 				</fieldset>
-			</div>
+			</div> -->
 
 			<div class="button-container" style="text-align: center; padding-top: 20px;">
 				<div class="row">
-					<div class="col-sm-4">
-						<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
-					</div>
-					<div  class="col-sm-4">
-						<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
-					</div>
-					<div class="col-sm-4">
-						<?php if(isset($next_level_info["LVL_ID"])) { ?>
-							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
-						<?php } else { ?>
-							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Stages">Stages</a>
-						<?php } ?>
-					</div>
+					<ul class="button" style="display:flex;justify-content: center;list-style: none;padding:0px !important;">
+						<li >
+							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
+						</li>
+						<li>
+							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
+						</li>
+						<li>
+							<?php if(isset($next_level_info["LVL_ID"])) { ?>
+								<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
+							<?php } else { ?>
+								<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Stages">Stages</a>
+							<?php } ?>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -175,9 +190,11 @@
 	img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
 	img.player = new Image();
 	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>";
-	
+
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png";
+	img.bullyThumb = new Image();
+	img.bullyThumb.src = "";
 	img.projectile = new Image();
 	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
 
@@ -819,17 +836,43 @@
 
 		console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
 
-		if(score_perc < 50 && score_perc > 0) {
-			$("#star1").attr("checked", true);
-		} else if(score_perc >= 50 && score_perc < 100) {
-			$("#star2").attr("checked", true);
-		} else if(score_perc == 100) {
-			$("#star3").attr("checked", true);
-		} else {
-			$("#star1").addClass("no-score");
-			$("#star2").addClass("no-score");
-			$("#star3").addClass("no-score");
-		}
+		// if(score_perc < 50 && score_perc > 0) {
+		// 	$("#star1").attr("checked", true);
+		// } else if(score_perc >= 50 && score_perc < 100) {
+		// 	$("#star2").attr("checked", true);
+		// } else if(score_perc == 100) {
+		// 	$("#star3").attr("checked", true);
+		// } else {
+		// 	$("#star1").addClass("no-score");
+		// 	$("#star2").addClass("no-score");
+		// 	$("#star3").addClass("no-score");
+		// }
+
+
+			if(score_perc < 50 && score_perc > 0) {
+				$("#star1").attr("checked", true);
+				$("#star1").addClass("s1");
+				$("#star2").addClass("no-score u2");
+				$("#star3").addClass("no-score u3");
+			} else if(score_perc >= 50 && score_perc < 100) {
+				$("#star1").attr("checked", true);
+				$("#star1").addClass("s1");
+				$("#star2").attr("checked", true);
+				$("#star2").addClass("s2");
+				$("#star3").addClass("no-score u2");
+
+			} else if(score_perc == 100) {
+				$("#star1").attr("checked", true);
+				$("#star1").addClass("s1");
+				$("#star2").attr("checked", true);
+				$("#star2").addClass("s2");
+				$("#star3").attr("checked", true);
+				$("#star3").addClass("s3");
+			} else {
+				$("#star1").addClass("no-score u1");
+				$("#star2").addClass("no-score u2");
+				$("#star3").addClass("no-score u3");
+			}
 
 		return totalScore;
 	}
@@ -1038,11 +1081,12 @@
 		return self;
 	}
 
-	Bully = function(id, imgSrc, height, width, x, y, hpMax) {
+	Bully = function(id, imgSrc, imgThumb, height, width, x, y, hpMax) {
 
 		var self = {
 			id: id,
 			img: new Image(),
+			thumb: new Image(),
 			height: height,
 			width: width,
 			x: x,
@@ -1061,7 +1105,7 @@
 		self.spriteAnimCtr = 0;
 
 		self.img.src = imgSrc;
-
+		self.thumb.src = imgThumb;
 		self.update = function() {
 
 			if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
@@ -1179,11 +1223,11 @@
 
 	Bully.list = {};
 
-	Bully.generate = function(id,imgSrc, height, width, x, y, hpMax) {
+	Bully.generate = function(id,imgSrc,imgThumb, height, width, x, y, hpMax) {
 
 		// var newId = "Bully_" + Math.random();
 
-		Bully(id, imgSrc, height, width, x, y, hpMax);
+		Bully(id, imgSrc, imgThumb, height, width, x, y, hpMax);
 	}
 
 	Bully.init = function() {
@@ -1215,8 +1259,9 @@
 						var bully_spawn = JSON.parse(bully_list[key].BLY_SPAWNPOINT);
 
 						img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/" + bully_list[key].BLY_IMAGEURL;
+						img.bullyThumb.src = "<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/" + bully_list[key].BLY_THUMB_FILENAME;
 
-						Bully.generate(bully_list[key].BLY_ID,img.bully.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+						Bully.generate(bully_list[key].BLY_ID,img.bully.src,img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
 					}
 
 				} else {
@@ -1364,6 +1409,7 @@
 
 		var self = {
 			id: id,
+			// thumb: new Image(),
 			qstnType: qstnType,
 			qstnNum: qstnNum,
 			bully: bullyId,

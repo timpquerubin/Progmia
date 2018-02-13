@@ -177,6 +177,17 @@ a.level-btn {
     margin:5px;
     font-size:25px;
     text-align: center;
+    border-top-color:#ffce12;
+    border-bottom-color:#ffce12;
+    border-right-color:#dd7900;
+    border-left-color:#dd7900;
+    background-color: #111 !important;
+
+}
+a.level-btn:hover {
+    transition: .3s;
+    color:#ffce12;
+
     background-color:#222 !important;
     box-shadow:1px 1px 5px #000;
     border-top:solid 5px #aaa;
@@ -184,17 +195,6 @@ a.level-btn {
     border-right:solid 5px #ccc;
     border-bottom:solid 5px #777;
 
-}
-a.level-btn:hover {
-    transition: .3s;
-    color:#ffce12;
-
-
-    border-top-color:#ffce12;
-    border-bottom-color:#ffce12;
-    border-right-color:#dd7900;
-    border-left-color:#dd7900;
-    background-color: #111 !important;
 }
 div.stage:before {
     content: '';
@@ -832,7 +832,7 @@ div.profile .joined h4{text-align: center;}
     padding: 10;
     background-color: #111;
 }
-.sidebar{position:fixed;display: block;background-color: #006c78;width: auto;height: auto;margin-top:30px;border:solid 3px #00353b;}
+.sidebar{position:fixed;display: block;background-color: #006c78;width: auto;height: auto;margin-top:30px;border:solid 3px #000;}
 .row {margin:0px;}
 
 .badges .badge-img{background-color:#050a0c; padding:5px;max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}

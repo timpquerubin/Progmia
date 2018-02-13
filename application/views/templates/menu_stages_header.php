@@ -15,7 +15,7 @@
 			<ul class="upper-nav">
 				<li>
 					<div class="logo">
-						<a class="navbar-brand" href="<?php echo base_url(); ?>/Game/Stages"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
+						<a class="navbar-brand" href="<?php echo base_url(); ?>/Game/Stages"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/logo.png"><!-- <img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"> --></a>
 					</div>
 				</li>
 				<li class="greetings">
