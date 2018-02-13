@@ -174,7 +174,8 @@
 	img.dialog.src = "<?php echo base_url(); ?>assets/images/BORDER-1.png";
 	img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
 	img.player = new Image();
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/PLAYER-04.png";
+	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>";
+	
 	img.bully = new Image();
 	img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png";
 	img.projectile = new Image();

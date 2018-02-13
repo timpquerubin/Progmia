@@ -195,8 +195,11 @@
 			// echo "</pre>";
 			// exit();
 			$avatar = $this->Game_model->get_user_avatar($userID);
-
-			$data['avatar'] = $avatar;
+			// echo "<pre>";
+			// var_dump($avatar);
+			// echo "</pre>";
+			// exit();
+			$data['avatar'] = $avatar[0];
 			$data['level_info'] = $level_info[0];
 			$data['objectives_list'] = $objectives;
 			$data['next_level_info'] = $next_level_info;
