@@ -1,4 +1,8 @@
 body{background-color: #006c78 !important;background-color: #121212!important;background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}
+@font-face {
+    font-family: 'ArcadeClassic';
+    src: url("../fonts/ARCADECLASSIC.ttf");
+}
 div.bg {position:relative;border-radius:10px;position:relative;min-width:250px;background-color:#00000080;box-shadow:0px 0px 5px #eaffff;padding:3px;border:solid 1px #eaffff;}
 
 /* HEADER */
@@ -32,7 +36,7 @@ input[type='range']::-ms-thumb {-webkit-appearance: none !important;background: 
 div.main-content {margin-top:20px;}
 div.profile-summary {padding:0px 15px;}
 div.main-menu,div.leaderboard {padding:20px;}
-div.main-menu,div.leaderboard,div.play {border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 1px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
+div.main-menu,div.play,div.leaderboard {border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 1px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 
 th {font-family: 'ArcadeClassic';font-size:30px;color:#eaffff;letter-spacing: 2px;}
 tr {}
