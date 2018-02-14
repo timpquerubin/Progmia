@@ -45,13 +45,6 @@
 			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
 
-			//
-
-			// echo $avatar[0].value;
-			// var_dump($avatar);
-			// exit();
-
-
 			$user1 = $this->session->userdata('username');
 			$userinfo = $this->Profile_model->get_user_info($user1);
 			$progress = $this->Profile_model->get_progress($user1);
@@ -69,7 +62,6 @@
 			$data['levels_list'] = $levels;
 			$data['stages_list'] = $stages;
 			$data['progress_list'] = $progress;
-			//
 			
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);

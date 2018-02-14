@@ -1,224 +1,246 @@
-	<div class="col-md-2">
-		<div class="sidebar">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12 custom-1">
-						<div class="avatar">
-							<?php foreach($avatar as $avtr){?>
-							<a href=""><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>"></a>
-							<?php } ?>
-					<div class="username">
-						<h2 style="margin:0 !important;font-family:'Barlow';font-size:30px;color:#ffce12;text-align:center;"><?php echo $this->session->userdata('username'); ?></h2>
-					</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 custom-2">
-							<h3 style="font-family: 'ArcadeClassic';font-size:20px;margin:10px auto 0 auto;color:#ffce12;">Total Points:</h3>
-						<div class="coin">
-							<?php if ($total_points == 0){ ?>0<?php } ?>
-							<h4 style="margin:0 !important;"><?php echo $total_points; ?></h4>
-							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/COIN.gif?>">
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-					<?php foreach($user_info as $userinfo){ ?>
-					<div class="email-address">
-						<!-- <h3><?php echo $userinfo['USER_EMAIL'] ?></h3> -->
-					</div>
-					<div class="joined">
-						<h4>Joined</h4>
-					</div>
-					<?php } ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-10">
-	<div class="content">
+<!-- <audio src="/assets/sounds/01 Space Cruise (Title).mp3" autoplay>
+<p>If you are reading this, it is because your browser does not support the audio element.     </p>
+<embed src="/assets/sounds/01 Space Cruise (Title).mp3" width="180" height="90" hidden="true" />
+</audio> -->
 		<div class="container-fluid">
-			<div id="profile" class="profile">
-				<div class="user-progress">
-				<?php foreach($progress_list as $progress){?>
-					<div class="row">
-						<div class="col-md-3">
-						<?php echo $progress['STG_DESCRIPTION']; ?>
-						</div>
-						<div class="col-md-3">
-						<?php echo $progress['GAME_SCORE']; ?>
-						</div>
-						<div class="col-md-3">
-						<?php $date = date_create($progress['DATE_PLAYED']);
-						echo date_format($date,"M.dY");?>
-						</div>
-						<div class="col-md-3">
-							<a href="<?php echo base_url();?>/Play<?php echo $progress['LVL_ID']; ?>">PLAY</a>
-						</div>
-					</div>			
-				<?php } ?>
-				</div>
-				<!-- <div class="row">
-					<div class="col-md-4"><div>Total Points Earned <div><?php if ($total_points == 0){ ?>0<?php } ?>
-						<?php echo $total_points; ?></div></div></div>
-					<div class="col-md-4"><p>Joined </p></div>
-					<div class="col-md-4"><p>Date Registered:</p></div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div class="row">
-							<div class="avatar">
-								<a href=""><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/avatar-1.png" ></a>
-							</div>
-						</div>
-						<div class="row">
-							<?php foreach($user_info as $userinfo){ ?>
-							<div class="username">
-								<h2><?php echo $this->session->userdata('username'); ?></h2>
-							</div>
-							<div class="email-address">
-								<h3><?php echo $userinfo['USER_EMAIL'] ?></h3>
-							</div>
-							<div class="joined">
-								<h4>Joined Month Year</h4>
-							</div>
+			<div class="main-content">
+		    	<!-- <div class="profile-summary">
+		    		<div class="row">
+						<div class="avatar">
+							<?php foreach($avatar as $avtr){ ?>
+								<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>">
 							<?php } ?>
 						</div>
-
 					</div>
-					<div class="col-md-9">
-						<?php foreach($user_info as $userinfo){ ?>
-						<div class="col-md-6">
-							<div class=""><label>Username: </label><?php echo $userinfo['USER_USERNAME'] ?></div>
-							<div class=""><label>Firstname: </label><?php echo $userinfo['USER_FNAME'] ?></div>
-							<p>First name: <?php echo $userinfo['USER_FNAME'] ?>	</p>
-							<p>Middle name: <?php echo $userinfo['USER_MNAME'] ?>	</p>
-							<p>Last name: <?php echo $userinfo['USER_LNAME'] ?>	</p>
-							<p>Gender: <?php if($userinfo['USER_GENDER'] == 'M') { ?>M<?php } ?>
-								<?php if($userinfo['USER_GENDER'] == 'F') { ?>F<?php } ?>
-							</p>
-							<p>Birthdate: <?php echo $userinfo['USER_BDAY'] ?>	</p>
-							
-						</div>
-
-						<div class="col-md-6">
-							<p>Email Address: <?php echo $userinfo['USER_EMAIL'] ?>	</p>
-							<p>Firstname:</p>
-							<p>Lastname:</p>
-							<p>Middlename:</p>
-							<p>Email Address:</p>
-							<p>Last played on:</p>
-						</div>
-						<?php } ?>
-					</div>
-				</div> -->
-			</div>
-			<div id="game" class="game">
-				<?php $stage1 = true; ?>
-				<?php $i = 0; ?>
-				<?php $ctr = 1; ?>
-				<?php $exist = true ?>
-
-				<?php foreach ($stage_list as $stage) { ?>
-					<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
-					<?php if ($exist == true){ ?>
-					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-						<div class="popup unlocked-stage">
-							<span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
-									<h2><?php echo "STAGE ".$ctr; ?></h2>
-									<!-- <h2><?php echo $stage['STG_NAME']; ?></h2> -->
-									<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
-					<!-- <p> -->
-							<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" class="level-btn btn btn-default" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a>
-						</div>
-					</div>
-					
-
-					<?php } else { ?>
-					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-						<div class="popup locked-stage">
-							<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
-									<h2><?php echo "STAGE ".$ctr; ?></h2>
-									<!-- <h2><?php echo $stage['STG_NAME']; ?></h2> -->
-									<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
-						</div>
-					</div>
-					<?php } ?>
-				<?php $ctr++;} ?>
-				<!--  -->
+		    	</div> -->
 				
-			</div>
-			<div id="badges" class="badges">
-				<div class="row">
 					<div class="col-md-3">
-						<h1>badges</h1>
+						<div class="main-menu">
+							<div class="row">
+								<div class="profile-summary">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="avatar">
+												<?php foreach($avatar as $avtr){ ?>
+													<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>">
+												<?php } ?>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="row">
+												<div class="username">
+													<h2 style="margin:0 !important;font-family:'Barlow';font-size:30px;color:#ffce12;text-align:left;"><?php echo $this->session->userdata('username'); ?></h2>
+												</div>
+											</div>
+											<div class="row">
+												<h3 style="font-family: 'ArcadeClassic';font-size:20px;margin:10px auto 0 auto;color:#ffce12;">Total Points:</h3>
+												<div class="coin">
+													<?php if ($total_points == 0){ ?>0<?php } ?><h4 style="margin:0 !important;"><?php echo $total_points; ?></h4>
+												</div>
+											</div>
+											<div class="row">
+												
+											</div>
+										</div>
+									</div>
+						    	</div>
+							</div>
+							<div class="row">
+								<div class="menu-container">
+							        <ul>
+							            <li>
+							            	<button id="play" class="active"><a class="nav-link js-scroll-trigger">Play</a></button>
+							            </li>
+							            <li>
+							            	<button id="profile"><a class="nav-link js-scroll-trigger">Profile</a></button>
+							            </li>
+							            <li>
+							            	<button id="leaderboard"><a class="nav-link js-scroll-trigger">Leaderboard</a></button>
+							            </li>
+							            <li>
+							            	<button id="badges"><a class="nav-link js-scroll-trigger">Badges</a></button>
+							            </li>
+							            <li>
+							            	<button><a class="nav-link js-scroll-trigger" href="<?php echo base_url(); ?>users/logout">Log Out</a></button>
+							            </li>
+							        </ul>
+							    </div>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-9">
-						<ul>
-							<li>
-								<input type="radio" id="all-option" value="All" checked="true" name="badges">
-								<label for="all-option">All Badges</label>
-								<div class="check"></div>
-							</li>
-							<li>
-								<input type="radio" id="acquired-option" value="Acquired" name="badges">
-								<label for="acquired-option">Acquired Badges</label>
-								<div class="check"></div>	
-							</li>
-						</ul>
+				    	<div id="play" class="play">
+							<h1>Stages</h1>
+							<?php $stage1 = true; ?>
+							<?php $i = 0; ?>
+							<?php $ctr = 1; ?>
+							<?php $exist = true ?>
+							<div class="row stages">
+							<?php foreach ($stage_list as $stage) { ?>
+								<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
+								<?php if ($exist == true){ ?>
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<div class="popup unlocked-stage">
+										<span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
+												<h2><?php echo "STAGE ".$ctr; ?></h2>
+												<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+										<button><a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a></button>
+									</div>
+								</div>
+								
+
+								<?php } else { ?>
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<div class="popup locked-stage">
+										<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
+										<h2><?php echo "STAGE ".$ctr; ?></h2>
+										<p><?php echo $stage['STG_DESCRIPTION']; ?></p>
+									</div>
+								</div>
+								<?php } ?>
+								<?php $ctr++;} ?>
+							</div>
+						</div>
+
+						<div id="profile" class="profile">
+						</div>
+
+				    	<div id="leaderboard" class="leaderboard">
+							<h1>LEADERBOARD</h1>
+							<table class="table">
+								<th>Ranking</th>
+								<th>User</th>
+								<th>Total Score</th>
+									<?php $ranking = 1; ?>
+									<?php foreach ($leaderboard_list as $leaderboard){ ?>
+									<tr class="<?php switch($ranking) {
+													case 1:?>rank-1"
+													<?php break; 
+													case 2:?>rank-2"
+													<?php break;
+													case 3:?>rank-3"
+													<?php break;
+													default:?>rank-n"
+													<?php 
+													break; } ?>>
+										<td>
+											<?php echo $ranking; ?>
+										</td>
+										<td>
+											<?php echo $leaderboard['USER']; ?>
+										</td>
+										<td>
+											<?php echo $leaderboard['TOTAL GAME SCORE']; ?>
+										</td>
+										<?php $ranking++; ?>
+									</tr>
+								<?php } ?>
+							</table>
+						</div>
+						<div id="badges" class="badges">
+						</div>
 					</div>
-				</div>
-				<!-- -->
-				<?php $ctr = 0 ;?>
-				<?php foreach ($badges_list as $badges) { ?>
-				<?php if ($ctr == 0) {?>
-				<div class="row">
-				<?php } ?>
-					<?php $ctr++; ?>
-							<div class="col-md-6"><img class="badge-img" src="<?php echo base_url(); ?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME']; ?>" /></div>
-				<?php if ($ctr == 2) { ?>
-				</div>
-				<?php $ctr = 0 ;?>
-				<?php } ?>
-				<?php } ?>
-				<!-- -->
-			</div>
-			<div id="leaderboard" class="leaderboard">
-				<div class="row">
-					<div class="col-md-3">
-						<h1>LEADERBOARD</h1>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">Ranking</div>
-					<div class="col-md-4">User</div>
-					<div class="col-md-4">Total Game Score</div>
-				</div>
-				<?php $ranking = 1; ?>
-				<?php foreach ($leaderboard_list as $leaderboard){ ?>
-				<div class="row">
-					<div class="col-md-4<?php switch($ranking) {
-								case 1:?> rank-1"
-								<?php break; 
-								case 2:?> rank-2"
-								<?php break;
-								case 3:?> rank-3"
-								<?php break;
-								default:?> rank-n"
-								<?php 
-								break; } ?>>
-							<?php echo $ranking; ?>
-					</div>
-					<div class="col-md-4"><?php echo $leaderboard['USER']; ?></div>
-					<div class="col-md-4"><?php echo $leaderboard['TOTAL GAME SCORE']; ?></div>
-					<?php $ranking++; ?>
-				</div>
-				<?php } ?>
-			</div>
-		
+	    	</div>
 		</div>
+		<script type="text/javascript">
+			$("button.playpausebtn").click(function() {
+				if(jQuery('#playpausebtn').hasClass('paused')){
+
+				      $("button").removeClass("paused");
+				}
+				else
+				{
+				      $(this).addClass("paused");
+				}
+			   });
+		</script>
+		<script type="text/javascript">
+				$(function() {
+				   $("div.main-menu ul li button").click(function() {
+				      // remove classes from all
+				      $("button").removeClass("active");
+				      // add class to the one we clicked
+				      $(this).addClass("active");
+				   });
+				   /* */
+				   $("div.main-menu ul li button#play").click(function() {
+				    $('div#play').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				    $('div#profile').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#leaderboard').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#badges').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				   });
+
+
+				   $("div.main-menu ul li button#profile").click(function() {
+				    $('div#play').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#profile').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				    $('div#leaderboard').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#badges').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				   });
+
+
+				   $("div.main-menu ul li button#leaderboard").click(function() {
+				    $('div#play').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#profile').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#leaderboard').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				    $('div#badges').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				   });
+
+
+				   $("div.main-menu ul li button#badges").click(function() {
+				    $('div#play').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#profile').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#leaderboard').css({
+				   		'display':'none',
+				   		'transition':'.5s'
+				    });
+				    $('div#badges').css({
+				   		'display':'block',
+				   		'transition':'.5s'
+				    });
+				   });
+				});
+		</script>
 	</div>
-</div>
