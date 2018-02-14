@@ -307,6 +307,7 @@
 			if(isset($_POST)) {
 
 				$data["dialog"] = $_POST["dialog"];
+				$data["thumb"] = $_POST["bully_thumb"];
 
 				$this->load->view('game/dialog.php', $data);
 

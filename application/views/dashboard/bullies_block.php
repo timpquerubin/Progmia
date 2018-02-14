@@ -69,7 +69,7 @@
 						var q = {
 							bully_id: question_list[key].BLY_ID,
 							qstn_num: question_list[key].QSTN_NUM,
-							qstn_type: question_list[key].QSTN_TYPE,
+							// qstn_type: question_list[key].QSTN_TYPE,
 							qstn_dialog: question_list[key].QSTN_DIALOG,
 							qstn_ans: JSON.parse(question_list[key].QSTN_ANSWER),
 						};

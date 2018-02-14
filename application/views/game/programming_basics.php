@@ -1106,6 +1106,7 @@
 
 		self.img.src = imgSrc;
 		self.thumb.src = imgThumb;
+
 		self.update = function() {
 
 			if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
@@ -1223,7 +1224,7 @@
 
 	Bully.list = {};
 
-	Bully.generate = function(id,imgSrc,imgThumb, height, width, x, y, hpMax) {
+	Bully.generate = function(id, imgSrc, imgThumb, height, width, x, y, hpMax) {
 
 		// var newId = "Bully_" + Math.random();
 
@@ -1261,7 +1262,7 @@
 						img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/" + bully_list[key].BLY_IMAGEURL;
 						img.bullyThumb.src = "<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/" + bully_list[key].BLY_THUMB_FILENAME;
 
-						Bully.generate(bully_list[key].BLY_ID,img.bully.src,img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+						Bully.generate(bully_list[key].BLY_ID,img.bully.src, img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
 					}
 
 				} else {
@@ -1430,7 +1431,7 @@
 			$.ajax({
 				type: 'post',
 				url: "<?php echo base_url(); ?>Game/display_dialog",
-				data: {dialog: self.dialog},
+				data: {dialog: self.dialog, bully_thumb: Bully.list[self.bully].thumb.src},
 				success: function(res) {
 					$('.dialog-container').html(res);
 				},

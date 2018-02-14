@@ -360,6 +360,7 @@
 					"BLY_ID" => $bly_id,
 					"LVL_ID" => $_POST["lvlId"],
 					"BLY_IMAGEURL" => $bully_info["bly_type"],
+					"BLY_THUMB_FILENAME" => $bully_info["bly_thumb"],
 					"BLY_SPAWNPOINT" => json_encode($spawnPt),
 					"BLY_MAXHP" => $bully_info["bly_maxHp"],
 					"BLY_NAME" => $bully_info["bly_name"],

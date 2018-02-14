@@ -576,6 +576,19 @@
 		$("#bully-form").submit(function(e) {
 
 			var lvlId = "<?php echo $lvl_Id ?>";
+			
+			var bully_thumb = "";
+			var bully_type = document.getElementById("bly_type").value;
+
+			if(bully_type == "BULLY-07.png") {
+				bully_thumb = "BULLY_THUMB-07.png";
+			} else if(bully_type == "BULLY-08.png") {
+				bully_thumb = "BULLY_THUMB-08.png";
+			} else if(bully_type == "BULLY-09.png") {
+				bully_thumb = "BULLY_THUMB-09.png";
+			} else if(bully_type == "BULLY-10.png") {
+				bully_thumb = "BULLY_THUMB-10.png";
+			}
 
 			var bully_info = {
 				lvl_Id: lvlId,
@@ -584,6 +597,7 @@
 				bly_spawn_y: document.getElementById("bly_spawn_y").value,
 				bly_name: document.getElementById("bly_name").value,
 				bly_type: document.getElementById("bly_type").value,
+				bly_thumb: bully_thumb,
 			}
 
 			var promise = new Promise(function(resolve, reject) {
