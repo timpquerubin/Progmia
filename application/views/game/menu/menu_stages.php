@@ -13,12 +13,11 @@
 						</div>
 					</div>
 		    	</div> -->
-				
-					<div class="col-md-3">
+				<div class="row">
+					<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
 						<div class="main-menu">
 							<div class="row">
 								<div class="profile-summary">
-									<div class="row">
 										<div class="col-md-6">
 											<div class="avatar">
 												<?php foreach($avatar as $avtr){ ?>
@@ -42,7 +41,6 @@
 												
 											</div>
 										</div>
-									</div>
 						    	</div>
 							</div>
 							<div class="row">
@@ -68,7 +66,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-9">
+					<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9">
 				    	<div id="play" class="play">
 							<h1>Stages</h1>
 							<?php $stage1 = true; ?>
@@ -79,7 +77,7 @@
 							<?php foreach ($stage_list as $stage) { ?>
 								<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
 								<?php if ($exist == true){ ?>
-								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
 									<div class="popup unlocked-stage">
 										<span class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></span>
 												<h2><?php echo "STAGE ".$ctr; ?></h2>
@@ -90,7 +88,7 @@
 								
 
 								<?php } else { ?>
-								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 									<div class="popup locked-stage">
 										<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
 										<h2><?php echo "STAGE ".$ctr; ?></h2>
@@ -140,6 +138,7 @@
 						<div id="badges" class="badges">
 						</div>
 					</div>
+				</div>
 	    	</div>
 		</div>
 		<script type="text/javascript">
@@ -166,19 +165,23 @@
 				   $("div.main-menu ul li button#play").click(function() {
 				    $('div#play').css({
 				   		'display':'block',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'0px'
 				    });
 				    $('div#profile').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#leaderboard').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#badges').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				   });
 
@@ -186,19 +189,23 @@
 				   $("div.main-menu ul li button#profile").click(function() {
 				    $('div#play').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#profile').css({
 				   		'display':'block',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'0px'
 				    });
 				    $('div#leaderboard').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#badges').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				   });
 
@@ -206,19 +213,23 @@
 				   $("div.main-menu ul li button#leaderboard").click(function() {
 				    $('div#play').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#profile').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#leaderboard').css({
 				   		'display':'block',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'0px'
 				    });
 				    $('div#badges').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				   });
 
@@ -226,19 +237,23 @@
 				   $("div.main-menu ul li button#badges").click(function() {
 				    $('div#play').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#profile').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#leaderboard').css({
 				   		'display':'none',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'-999999px'
 				    });
 				    $('div#badges').css({
 				   		'display':'block',
-				   		'transition':'.5s'
+				   		'transition':'.5s',
+				   		'margin-right':'0px'
 				    });
 				   });
 				});

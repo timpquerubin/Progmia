@@ -51,7 +51,7 @@ input[type='range']::-ms-thumb {-webkit-appearance: none !important;background: 
 /*div.profile-summary img.avtr-thumb{margin:0 auto;border:solid 5px #ffce12;padding:10px;}*/
 div.main-content {margin-top:20px;}
 div.profile-summary {padding:0px 15px;}
-div.main-menu,div.leaderboard {padding:20px;}
+div.main-menu,div.leaderboard {padding:10px;}
 div.main-menu,div.play,div.leaderboard {border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 1px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 
 th {font-family: 'ArcadeClassic';font-size:30px;color:#eaffff;letter-spacing: 2px;}
@@ -64,7 +64,7 @@ tr.rank-2 {color:#C0C0C0;}
 tr.rank-3 {color:#CD7F32;}
 tr.rank-n {color:#444444;}
 
-div.main-menu {height:500px;position:fixed;top:130px;margin:0 auto;}
+div.main-menu {height:500px;top:130px;margin:0 auto;}
 div.main-menu div.header {border-top:solid 1px #eaffff;border-bottom:solid 1px #eaffff;position: relative;background-color:#141414;display: block;height:60px;margin-top:35px;}
 div.main-menu div.header h1{position:absolute;top:10px;left:0;right:0;margin:0 auto;animation:floating 10s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow:0px 0px 1px #444;word-spacing:20px;color:#ffce12;text-align: center;}
 
@@ -75,7 +75,7 @@ div.profile-summary div.avatar > img.avtr-thumb {position:relative;background-co
 div.profile-summary div.avatar > img.avtr-thumb:before{position:absolute;content:'';transition:.3s;top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #ffce12 transparent transparent transparent;}
 div.profile-summary div.avatar > img.avtr-thumb:after{position:absolute;content:'';transition:.3s;bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #ffce12 transparent;}
 
-div.main-menu ul {position:absolute;top:20px;left:0;right:0;padding:0px !important;display:block; list-style: none;font-family: 'ArcadeClassic';margin:0 auto !important;text-align: center;}
+div.main-menu ul {position:absolute;top:160px;left:0;right:0;padding:0px !important;display:block; list-style: none;font-family: 'ArcadeClassic';margin:0 auto !important;text-align: center;}
 div.main-menu ul li {width: auto;}
 div.main-menu ul li button:first-child {}
 div.main-menu ul li button a{transition:.3s;font-size:23px;color:#eaffff;text-decoration: none;}
@@ -84,22 +84,24 @@ div.main-menu ul li button:hover a{color:#ffce12;}
 div.main-menu ul li:first-child button{margin-top: 0px;}
 div.main-menu ul li button.active{border-color:#ffce12;}
 div.main-menu ul li button.active a {color:#ffce12;}
-div.main-menu ul li button.active:before{position:absolute;content:'';transition:.3s;top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #ffce12 transparent transparent transparent;}
-div.main-menu ul li button.active:after{position:absolute;content:'';transition:.3s;bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #ffce12 transparent;}
+div.main-menu ul li button.active:before{position:absolute;content:'';transition:.2s;top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #ffce12 transparent transparent transparent;}
+div.main-menu ul li button.active:after{position:absolute;content:'';transition:.2s;bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #ffce12 transparent;}
 
-div.main-menu ul li button {transition:.3s;outline:0;position:relative;padding:3px;min-width:250px;margin-top:20px;background-color:#141414;box-shadow:0px 0px 5px #eaffff;border:solid 3px #eaffff;border-radius:10px;}
+div.main-menu ul li button {transition:.3s;outline:0;position:relative;padding:3px;min-width:220px;margin-top:20px;background-color:#141414;box-shadow:0px 0px 5px #eaffff;border:solid 3px #eaffff;border-radius:10px;}
 div.main-menu ul li button:after{position:absolute;content:'';bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #eaffff transparent;}
 div.main-menu ul li button:before{position:absolute;content:'';top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #eaffff transparent transparent transparent;}
 div.main-menu ul li button:hover {transform: scale(1.1); position:relative;background-color:#141414;padding:5px;border:solid 5px #ffce12;transition: .3s; animation: glow 6s infinite;}
-div.main-menu ul li button:hover:before{position:absolute;content:'';transition:.3s;top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #ffce12 transparent transparent transparent;}
-div.main-menu ul li button:hover:after{position:absolute;content:'';transition:.3s;bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #ffce12 transparent;}
+div.main-menu ul li button:hover:before{position:absolute;content:'';transition:.2s;top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #ffce12 transparent transparent transparent;}
+div.main-menu ul li button:hover:after{position:absolute;content:'';transition:.2s;bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #ffce12 transparent;}
 div.menu-container{}
 div.play {position:relative;padding:20px 1%;}
 div.play h1{position:absolute;z-index:9999;height:40px;top:30px;left:0;right:0;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;text-align: center;font-size: 40px;animation:floating 10s infinite;}
 div.play .popup .show,.popup {position:relative;visibility: visible;-webkit-animation: fadeIn 1s;animation: fadeIn 1s;text-align: center;border-radius: 10px;
     border: solid 3px #eaffff;width:90%;margin:0 auto;margin-bottom:20px;padding-bottom:20px;
     background-color: #006c78;}
-div.play span.unlocked {position:absolute;top:10px;right: 10px;font-size:28px;text-align:center;color:#fff100;color:#ffce12;} 
+div.play span.unlocked {position:absolute;top:10px;right: 10px;font-size:28px;text-align:center;color:#fff100;color:#ffce12;}
+div.leaderboard,div.badges,div.profile {display:none;}
+
 div.play div.stages {margin-top:80px !important;}
 div.play .popup h2{font-family: 'ArcadeClassic';font-size:45px;color:#fff;}
 div.play .popup p {background-color:#33a6b1;padding:20px 0;font-size:16px;font-weight: 800;margin:0 0 20px 0!important;color:#002428;}
