@@ -276,7 +276,7 @@
 			cmdLine = code[commandNum].trim();
 			if(cmdLine == "") {
 				console.log("blank line");
-			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				tempLine = tempLine.replace(/\s+/g, " ");
@@ -297,7 +297,7 @@
 				});
 
 
-			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 
@@ -339,7 +339,7 @@
 					console.log("error: no value assigned");
 					return {status: false, message: "error: no value assigned"};
 				}
-			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9_]*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				tempLine = tempLine.replace(/\s+/g, " ");
@@ -359,7 +359,7 @@
 					var_info: arrInfo,
 				});
 
-			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*\{[A-Za-z0-9,\"\'\s\.]*\}\s*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*(\{[A-Za-z0-9,\"\'\s\.]*\}|new\s*(int|double|char|String|Boolean)\[[0-9]*\])\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				var declareLine = tempLine.split(/=/i);
@@ -490,13 +490,11 @@
 				var opp = /[\+\-*/]/g.exec(opLine[1]);
 
 				var varList = opLine[1].split(/[\+\-*/]/g);
-				// console.log(opp[0]);
-				// console.log(varList);
 
 				var var_1 = varList[0].trim();
 				var var_2 = varList[1].trim();
 
-				console.log(save_to + " = " + var_1 + " " + opp[0] + " " + var_2);
+				// console.log(save_to + " = " + var_1 + " " + opp[0] + " " + var_2);
 
 				if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_1.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""))) {
 
@@ -505,7 +503,7 @@
 					var save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
 
 					var var_1_value = "";
-					var var2_value = "";
+					var var_2_value = "";
 
 					// console.log(var_1_obj);
 					// console.log(var_2_obj);
@@ -518,7 +516,7 @@
 							var arrIndex = getConditions(var_1, '[', ']');
 							if(var_1_obj.var_value[arrIndex]) {
 								
-								var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value[arrIndex]};
+								var_1_value = {dataType: var_1_obj.dataType.replace(/[\[\]]/g, ""), value: var_1_obj.var_value[arrIndex]};
 							} else {
 								return {status: false, message: "index out of range"};
 							}
@@ -531,7 +529,7 @@
 						if(/\[[0-9]*\]/g.test(var_1)) {
 							return {status: false, message: "variable is not an array"};
 						} else {
-							var_1_value = var_1_obj.var_value;
+							var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value};
 						}
 					}
 
@@ -542,7 +540,7 @@
 							var arrIndex = getConditions(var_2, '[', ']');
 							if(var_2_obj.var_value[arrIndex]) {
 								
-								var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value[arrIndex]};
+								var_2_value = {dataType: var_2_obj.dataType.replace(/[\[\]]/g, ""), value: var_2_obj.var_value[arrIndex]};
 							} else {
 								return {status: false, message: "index out of range"};
 							}
@@ -555,55 +553,82 @@
 						if(/\[[0-9]*\]/g.test(var_2)) {
 							return {status: false, message: "variable is not an array"};
 						} else {
-							var_2_value = var_2_obj.var_value;
+							var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value};
 						}
 					}
 
-					console.log(var_1_value);
-					
+					// console.log(var_1_value);
+					// console.log(var_2_value);
 
-					// if(opp == "+") {
+					// console.log(doOperation(opp, var_1_value, var_2_value));
+					var opRes = doOperation(opp, var_1_value, var_2_value);
 
-					// }
+					if(opRes.status) {
 
-					if(Array.isArray(save_to_obj.var_value)) {
+						if(Array.isArray(save_to_obj.var_value)) {
 
-						if(/\[[0-9]*\]/g.test(save_to)) {
+							if(/\[[0-9]*\]/g.test(save_to)) {
 
-							var arrIndex = getConditions(var_2, '[', ']');
-							if(save_to_obj.var_value[arrIndex]) {
+								var arrIndex = getConditions(var_2, '[', ']');
+								if(save_to_obj.var_value[arrIndex]) {
 
-								// if(opp == "+") {
+										var assign_param = {
+											saveTo_index: arrIndex,
+											dataType: opRes.dataType,
+											value: opRes.value,
+										};
 
+										save_to_obj = assignValueToVar(save_to_obj, assign_param);
 
-								// }
+								} else {
+									return {status: false, message: "index out of range"};
+								}
 
 							} else {
-								return {status: false, message: "index out of range"};
+								return {status: false, message: "variable is not an array"};
 							}
 
 						} else {
-							return {status: false, message: "variable is not an array"};
+
+							if(/\[[0-9]*\]/g.test(save_to)) {
+								return {status: false, message: "variable is not an array"};
+							} else {
+								
+								var assign_param = {
+									dataType: opRes.dataType,
+									value: opRes.value,
+								};
+
+								save_to_obj = assignValueToVar(save_to_obj, assign_param);
+							}
 						}
+
+						console.log(save_to_obj);
+
+						for(var key in vrbls) {
+
+							if(vrbls[key].var_identifier == save_to_obj.var_identifier) {
+
+								vrbls[key] = save_to_obj;
+								break;
+							}
+						}
+
+						code_log.push({
+							type: "op",
+							op_info: {
+								save_to: save_to,
+								operation: opp[0],
+								var_1: var_1,
+								var_2: var_2,
+							},
+						});
+
+						console.log(vrbls);
 
 					} else {
-
-						if(/\[[0-9]*\]/g.test(save_to)) {
-							return {status: false, message: "variable is not an array"};
-						} else {
-							var_2_value = var_2_obj.var_value;
-						}
+						return opRes;
 					}
-
-					code_log.push({
-						type: "op",
-						op_info: {
-							save_to: save_to,
-							operation: opp[0],
-							var_1: var_1,
-							var_2: var_2,
-						},
-					});
 
 				} else {
 					return {status: false, message: "variable does not exist"};
@@ -658,57 +683,12 @@
 								var correctAns = 0;
 
 								if(answers.variables && answers.operations) {
-
 									ansCount = answers.operations.length + answers.variables.length;
 								} else if(answers.variables) {
-
 									ansCount = answers.variables.length;
 								} else if(answers.operations) {
-
 									ansCount = answers.operations.length;
 								}
-
-								// for(var akey in answers) {
-
-								// 	if(Question.list[key].qstnType == "variable") {
-
-								// 		for(var vkey in vrbls) {
-
-								// 			if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value == vrbls[vkey].var_value) {
-
-								// 				correctAns++;
-								// 			}
-								// 		}
-								// 	} else if(Question.list[key].qstnType == "array") {
-
-								// 		for(vkey in vrbls) {
-
-								// 			if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value.length == vrbls[vkey].var_value.length) {
-
-								// 				var arrVal = answers[akey].var_value;
-
-								// 				var isWrongVal = false;
-								// 				var arrIndexCtr = 0;
-
-								// 				do {
-
-								// 					if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
-								// 						isWrongVal = true;
-								// 					} else {
-								// 						arrIndexCtr++;
-								// 					}
-
-								// 				} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
-
-								// 				if(!isWrongVal) {
-								// 					correctAns++;
-								// 				}
-								// 			}
-								// 		}
-
-								// 		console.log(answers[akey].var_value.length);
-								// 	}
-								// }
 
 								if(answers.variables) {
 
@@ -716,30 +696,41 @@
 
 										if(/\[\]/g.test(answers.variables[akey].dataType)) {
 
-											for(vkey in vrbls) {
+											if(code_log.length > 0) {
 
-												if(answers.variables[akey].dataType == vrbls.variables[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value.length == vrbls[vkey].var_value.length) {
+												for(var key in code_log) {
 
-													var arrVal = answers.variables[akey].var_value;
+													if(code_log.type == "dec-var" || code_log.type == "dec-arr") {
 
-													var isWrongVal = false;
-													var arrIndexCtr = 0;
-
-													do {
-
-														if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
-															isWrongVal = true;
-														} else {
-															arrIndexCtr++;
-														}
-
-													} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
-
-													if(!isWrongVal) {
-														correctAns++;
+														
 													}
 												}
 											}
+
+											// for(vkey in vrbls) {
+
+											// 	if(answers.variables[akey].dataType == vrbls.variables[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value.length == vrbls[vkey].var_value.length) {
+
+											// 		var arrVal = answers.variables[akey].var_value;
+
+											// 		var isWrongVal = false;
+											// 		var arrIndexCtr = 0;
+
+											// 		do {
+
+											// 			if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
+											// 				isWrongVal = true;
+											// 			} else {
+											// 				arrIndexCtr++;
+											// 			}
+
+											// 		} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
+
+											// 		if(!isWrongVal) {
+											// 			correctAns++;
+											// 		}
+											// 	}
+											// }
 										} else {
 
 											for(var vkey in vrbls) {
@@ -850,7 +841,7 @@
 			} else {
 				return {status: false, message: "value is not a String"};
 			}
-		} else if(dataType == "bool") {
+		} else if(dataType == "Boolean") {
 
 			value = value.toLowerCase();
 			if(/^(true|false)$/i.test(value)) {
@@ -859,6 +850,55 @@
 				return {status: false, message: "value is not a Boolean"};
 			}
 		}
+	}
+
+	assignValueToVar = function(saveTo_obj, assignParams) {
+
+		var saveTo_dataType = saveTo_obj.dataType.replace(/[\[\]]/g, "");
+
+		// if(Array.isArray(saveTo_obj.var_value)) {
+
+			if(saveTo_dataType == "int" || saveTo_dataType == "String" || saveTo_dataType == "char" || saveTo_dataType == "Boolean") {
+
+				if(assignParams.dataType == saveTo_dataType) {
+
+					if(Array.isArray(saveTo_obj.var_value)) {
+						saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
+					} else {
+						saveTo_obj.var_value = assignParams.value;
+					}
+
+					return saveTo_obj;
+				} else {
+					return {status: false, message: "cannot convert " + assignParams.dataType + " to " + saveTo_dataType};
+				}
+
+			} else if(saveTo_dataType == "double") {
+
+				if(assignParams.dataType == "double") {
+
+					if(Array.isArray(saveTo_obj.var_value)) {
+						saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
+					} else {
+						saveTo_obj.var_value = assignParams.value;
+					}
+
+					return saveTo_obj;
+				} else if(assignParams.dataType == "int") {
+					
+					if(Array.isArray(saveTo_obj.var_value)) {
+						saveTo_obj.var_value[assignParams.saveTo_index] = parseFloat(assignParams.value);
+					} else {
+						saveTo_obj.var_value = parseFloat(assignParams.value);
+					}
+
+					return saveTo_obj;
+				} else {
+					return {status: false, message: "cannot convert " + assignParams.dataType + " to " + saveTo_dataType};
+				}
+			}
+		// }
+
 	}
 
 	isVarExisting = function(var_identifier) {
@@ -885,15 +925,201 @@
 
 		if(operation == "+") {
 
-			// if(typeof val1 == "int")
+			if(val1.dataType == "int") {
+
+				if(val2.dataType == "int" || val2.dataType == "String" || val2.dataType == "double") {
+					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "double") {
+
+				if(val2.dataType == "int" || val2.dataType == "String" || val2.dataType == "double") {
+					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "String") {
+				return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+			} else if(val1.dataType == "char") {
+
+				if(val2.dataType == "String") {
+					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "int" || val2.dataType == "double") {
+					// return val1.value.charCodeAt(0);
+					return {status: true, value: (val1.value.charCodeAt(0) + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value.charCodeAt(0) + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "Boolean") {
+
+				if(val2.dataType == "String") {
+					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			}
 
 		} else if(operation == "-") {
 
+			if(val1.dataType == "int") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "double") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "String") {
+				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+			} else if(val1.dataType == "char") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value.charCodeAt(0) - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value.charCodeAt(0) - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "Boolean") {
+				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+			}
+
 		} else if(operation == "*") {
+
+			if(val1.dataType == "int") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "double") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "String") {
+				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+			} else if(val1.dataType == "char") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value.charCodeAt(0) * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value.charCodeAt(0) * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "Boolean") {
+				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+			}
 
 		} else if(operation == "/") {
 
+			if(val1.dataType == "int") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "double") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "String") {
+				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+			} else if(val1.dataType == "char") {
+
+				if(val2.dataType == "int" || val2.dataType == "double") {
+					return {status: true, value: (val1.value.charCodeAt(0) / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val2.dataType == "char") {
+					return {status: true, value: (val1.value.charCodeAt(0) / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+			} else if(val1.dataType == "Boolean") {
+				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+			}
+
 		}
+	}
+
+	parseOpResult = function(dataType_1, dataType_2) {
+
+		if(dataType_1 == "int") {
+
+			if(dataType_2 == "double") {
+				return "double";
+			} else if(dataType_2 == "String") {
+				return "String";
+			} else if(dataType_2 == "int") {
+				return "int";
+			} else if(dataType_2 == "char") {
+				return "int";
+			}
+		} else if(dataType_1 == "double") {
+
+			if(dataType_2 == "double") {
+				return "double";
+			} else if(dataType_2 == "String") {
+				return "String";
+			} else if(dataType_2 == "int") {
+				return "double";
+			} else if(dataType_2 == "char") {
+				return "double";
+			}
+		} else if(dataType_1 == "String") {
+
+			return "String";
+		} else if(dataType_1 == "char") {
+
+			if(dataType_2 == "String") {
+				return "String";
+			} else if(dataType_2 == "char") {
+				return "int";
+			} else if(dataType_2 == "int") {
+				return "int";
+			} else if(dataType_2 == "double") {
+				return "double";
+			}
+		} else if(dataType_1 == "Boolean") {
+
+			if(dataType_2 == "String") {
+				return "String";
+			}
+		}
+
+		return false;
 	}
 
 	// document.onkeydown = function(event){

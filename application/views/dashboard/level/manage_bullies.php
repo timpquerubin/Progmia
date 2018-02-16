@@ -45,7 +45,7 @@
 												<option value="double">Double</option>
 												<option value="char">Character</option>
 												<option value="String">String</option>
-												<option value="bool">Boolean</option>
+												<option value="Boolean">Boolean</option>
 											</select>
 										</div>
 									</div>
@@ -78,7 +78,7 @@
 												<option value="double[]">Double</option>
 												<option value="char[]">Character</option>
 												<option value="String[]">String</option>
-												<option value="bool[]">Boolean</option>
+												<option value="Boolean[]">Boolean</option>
 											</select>
 										</div>
 									</div>
