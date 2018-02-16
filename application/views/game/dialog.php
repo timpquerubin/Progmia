@@ -3,8 +3,8 @@
 <div class="box">
 	<div class="head">
 		<!-- <img src="<?php  // echo base_url();?>assets/images/avatars/THUMBNAIL/AVATAR_THUMBNAIL-01.png"> -->
-		<img src="<?php  echo base_url();?>assets/images/avatars/THUMBNAIL/<?php echo $thumb;?>">
-		<label>BULLY:</label>
+		<img src="<?php echo $thumb;?>">
+		<label>BULLY: <?php echo $bully_name ?></label>
 	</div>
 	<p class="dialog">
 		<?php echo isset($dialog) ? $dialog : '' ?>

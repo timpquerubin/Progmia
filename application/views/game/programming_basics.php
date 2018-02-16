@@ -170,8 +170,11 @@
 	var ctxHeight = canvas.height;
 
 	var cmdNum = 0;
+	
 	var vrbls = [];
 	var operations = [];
+	var code_log = [];
+
 	var zoomMultiplier = 0.75;
 	var TILE_SIZE = 16;
 	var isPaused = false;
@@ -273,7 +276,7 @@
 			cmdLine = code[commandNum].trim();
 			if(cmdLine == "") {
 				console.log("blank line");
-			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9]*\s*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				tempLine = tempLine.replace(/\s+/g, " ");
@@ -281,12 +284,19 @@
 
 				var declareLine = tempLine.split(' ');
 
-				vrbls.push({
+				var varInfo = {
 					dataType: declareLine[0],
 					var_identifier: declareLine[1],
+				};
+
+				vrbls.push(varInfo);
+
+				code_log.push({
+					type: "dec-var",
+					var_info: varInfo,
 				});
 
-				console.log(vrbls);
+
 			} else if(/^(int|double|char|String|bool)\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
@@ -296,19 +306,31 @@
 				
 				var value = declareLine[1].trim();
 				var var_info = declareLine[0].split(/\s+/g);
+
+				console.log(var_info + " " + value);
+
 				if(value) {
 
-					if(parseValue(var_info[0], value)) {
+					var checkValObj = parseValue(var_info[0], value);
 
-						var tempValue = parseValue(var_info[0], value);
+					if(checkValObj.status) {
 
-						vrbls.push({
+						var valObj = parseValue(var_info[0], value);
+						var tempValue = valObj.value;
+
+						var varInfo = {
 							dataType: var_info[0],
 							var_identifier: var_info[1],
 							var_value: tempValue,
-						});
+						};
 
-						console.log(vrbls);
+						vrbls.push(varInfo);
+
+						code_log.push({
+							type: "dec-var",
+							var_info: varInfo,
+						});
+						
 					} else {
 						console.log("error: data type missmatch");
 						return {status: false, message: "error: data type missmatch"};
@@ -325,13 +347,19 @@
 
 				var declareLine = tempLine.split(' ');
 
-				vrbls.push({
+				var arrInfo = {
 					dataType: declareLine[0],
 					var_identifier: declareLine[1],
+				};
+
+				vrbls.push(arrInfo);
+
+				code_log.push({
+					type: "dec-arr",
+					var_info: arrInfo,
 				});
 
-				console.log(vrbls);
-			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9]*\s*=\s*\{[A-Za-z0-9,\"\'\s\.]*\}\s*;$/g.test(cmdLine)) {
+			} else if(/^(int|double|char|String|bool)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*\{[A-Za-z0-9,\"\'\s\.]*\}\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				var declareLine = tempLine.split(/=/i);
@@ -359,11 +387,15 @@
 							arr_val[key] = "\'" + arr_val[key] + "\'";
 						}
 
-						if(parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString()) == false) {
+						var checkValObj = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
+
+						if(checkValObj.status == false) {
 							isMismatch = true;
 							break;
 						} else {
-							arr_val[key] = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
+
+							var valObj = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
+							arr_val[key] = valObj.value;
 						}
 					}
 
@@ -371,20 +403,26 @@
 						console.log("error: dataType missmatch");
 						return {status: false, message: "error: dataType missmatch"};
 					} else {
-						vrbls.push({
+
+						var arrayInfo = {
 							dataType: arrInfo[0],
 							var_identifier: arrInfo[1],
 							var_value: arr_val,
-						});
+						};
 
-						console.log(vrbls);
+						vrbls.push(arrayInfo);
+
+						code_log.push({
+							type: "dec-arr",
+							var_info: arrayInfo,
+						});
 					}
 				} catch(err) {
 					console.log("error: value assigned invalid");
 					return {status: false, message: "error: value assigned invalid"};
 				}
 
-			} else if(/^([A-Za-z][A-Za-z0-9]*|[A-Za-z][A-Za-z0-9]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9]*|[A-Za-z][A-Za-z0-9]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
+			} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
 
 				var tempLine = cmdLine.replace(";", "");
 				var assignLine = tempLine.split(/=/i);
@@ -443,6 +481,134 @@
 				}
 
 
+			} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
+
+				var tempLine = cmdLine.replace(";", "");
+				var opLine = tempLine.split(/=/i);
+				
+				var save_to = opLine[0].trim();
+				var opp = /[\+\-*/]/g.exec(opLine[1]);
+
+				var varList = opLine[1].split(/[\+\-*/]/g);
+				// console.log(opp[0]);
+				// console.log(varList);
+
+				var var_1 = varList[0].trim();
+				var var_2 = varList[1].trim();
+
+				console.log(save_to + " = " + var_1 + " " + opp[0] + " " + var_2);
+
+				if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_1.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""))) {
+
+					var var_1_obj = isVarExisting(var_1.replace(/\[[0-9]*\]/g, ""));
+					var var_2_obj = isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""));
+					var save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+
+					var var_1_value = "";
+					var var2_value = "";
+
+					// console.log(var_1_obj);
+					// console.log(var_2_obj);
+					// console.log(save_to_obj);
+
+					if(Array.isArray(var_1_obj.var_value)) {
+
+						if(/\[[0-9]*\]/g.test(var_1)) {
+
+							var arrIndex = getConditions(var_1, '[', ']');
+							if(var_1_obj.var_value[arrIndex]) {
+								
+								var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value[arrIndex]};
+							} else {
+								return {status: false, message: "index out of range"};
+							}
+
+						} else {
+							return {status: false, message: "indicate array index"};
+						}
+					} else {
+
+						if(/\[[0-9]*\]/g.test(var_1)) {
+							return {status: false, message: "variable is not an array"};
+						} else {
+							var_1_value = var_1_obj.var_value;
+						}
+					}
+
+					if(Array.isArray(var_2_obj.var_value)) {
+
+						if(/\[[0-9]*\]/g.test(var_2)) {
+
+							var arrIndex = getConditions(var_2, '[', ']');
+							if(var_2_obj.var_value[arrIndex]) {
+								
+								var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value[arrIndex]};
+							} else {
+								return {status: false, message: "index out of range"};
+							}
+
+						} else {
+							return {status: false, message: "indicate array index"};
+						}
+					} else {
+
+						if(/\[[0-9]*\]/g.test(var_2)) {
+							return {status: false, message: "variable is not an array"};
+						} else {
+							var_2_value = var_2_obj.var_value;
+						}
+					}
+
+					console.log(var_1_value);
+					
+
+					// if(opp == "+") {
+
+					// }
+
+					if(Array.isArray(save_to_obj.var_value)) {
+
+						if(/\[[0-9]*\]/g.test(save_to)) {
+
+							var arrIndex = getConditions(var_2, '[', ']');
+							if(save_to_obj.var_value[arrIndex]) {
+
+								// if(opp == "+") {
+
+
+								// }
+
+							} else {
+								return {status: false, message: "index out of range"};
+							}
+
+						} else {
+							return {status: false, message: "variable is not an array"};
+						}
+
+					} else {
+
+						if(/\[[0-9]*\]/g.test(save_to)) {
+							return {status: false, message: "variable is not an array"};
+						} else {
+							var_2_value = var_2_obj.var_value;
+						}
+					}
+
+					code_log.push({
+						type: "op",
+						op_info: {
+							save_to: save_to,
+							operation: opp[0],
+							var_1: var_1,
+							var_2: var_2,
+						},
+					});
+
+				} else {
+					return {status: false, message: "variable does not exist"};
+				}
+
 			} else {
 				console.log("error");
 				return {status: false, message: "syntax error"};
@@ -477,6 +643,8 @@
 
 			} while(isEndOfCode(cmdNum));
 
+			console.log(code_log);
+
 			for(var key in Question.list) {
 
 				if(Question.list[key].bully == bullyId) {
@@ -486,50 +654,113 @@
 							if(!hasErrors) {
 
 								var answers = Question.list[key].answer;
-								var ansCount = answers.length;
+								var ansCount = 0;
 								var correctAns = 0;
 
-								for(var akey in answers) {
+								if(answers.variables && answers.operations) {
 
-									if(Question.list[key].qstnType == "variable") {
+									ansCount = answers.operations.length + answers.variables.length;
+								} else if(answers.variables) {
 
-										for(var vkey in vrbls) {
+									ansCount = answers.variables.length;
+								} else if(answers.operations) {
 
-											if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value == vrbls[vkey].var_value) {
+									ansCount = answers.operations.length;
+								}
 
-												correctAns++;
-											}
-										}
-									} else if(Question.list[key].qstnType == "array") {
+								// for(var akey in answers) {
 
-										for(vkey in vrbls) {
+								// 	if(Question.list[key].qstnType == "variable") {
 
-											if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value.length == vrbls[vkey].var_value.length) {
+								// 		for(var vkey in vrbls) {
 
-												var arrVal = answers[akey].var_value;
+								// 			if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value == vrbls[vkey].var_value) {
 
-												var isWrongVal = false;
-												var arrIndexCtr = 0;
+								// 				correctAns++;
+								// 			}
+								// 		}
+								// 	} else if(Question.list[key].qstnType == "array") {
 
-												do {
+								// 		for(vkey in vrbls) {
 
-													if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
-														isWrongVal = true;
-													} else {
-														arrIndexCtr++;
+								// 			if(answers[akey].dataType == vrbls[vkey].dataType && answers[akey].var_identifier == vrbls[vkey].var_identifier && answers[akey].var_value.length == vrbls[vkey].var_value.length) {
+
+								// 				var arrVal = answers[akey].var_value;
+
+								// 				var isWrongVal = false;
+								// 				var arrIndexCtr = 0;
+
+								// 				do {
+
+								// 					if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
+								// 						isWrongVal = true;
+								// 					} else {
+								// 						arrIndexCtr++;
+								// 					}
+
+								// 				} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
+
+								// 				if(!isWrongVal) {
+								// 					correctAns++;
+								// 				}
+								// 			}
+								// 		}
+
+								// 		console.log(answers[akey].var_value.length);
+								// 	}
+								// }
+
+								if(answers.variables) {
+
+									for(var akey in answers.variables) {
+
+										if(/\[\]/g.test(answers.variables[akey].dataType)) {
+
+											for(vkey in vrbls) {
+
+												if(answers.variables[akey].dataType == vrbls.variables[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value.length == vrbls[vkey].var_value.length) {
+
+													var arrVal = answers.variables[akey].var_value;
+
+													var isWrongVal = false;
+													var arrIndexCtr = 0;
+
+													do {
+
+														if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
+															isWrongVal = true;
+														} else {
+															arrIndexCtr++;
+														}
+
+													} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
+
+													if(!isWrongVal) {
+														correctAns++;
 													}
+												}
+											}
+										} else {
 
-												} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
+											for(var vkey in vrbls) {
 
-												if(!isWrongVal) {
+												if(answers.variables[akey].dataType == vrbls[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value == vrbls[vkey].var_value) {
+
 													correctAns++;
 												}
 											}
 										}
-
-										console.log(answers[akey].var_value.length);
 									}
+
 								}
+
+								// if(answers.operations) {
+
+								// 	for(var okey in answers.operations) {
+
+
+								// 	}
+								// }
 
 								if(ansCount <= correctAns) {
 									Question.list[key].status = "correct";
@@ -545,6 +776,8 @@
 							}
 
 							Question.closeDialog();
+							vrbls = [];
+							code_log = [];
 
 							var questionStat = Question.statusCheck(bullyId);
 
@@ -589,40 +822,41 @@
 		if(dataType == "int") {
 			
 			if(/^[0-9]+$/i.test(value)) {
-				return parseInt(value);
+
+				return {status: true, value: parseInt(value)};
 			} else {
-				return false;
+				return {status: false, message: "value is not an integer"};
 			}
 		} else if(dataType == "double") {
 
 			if(/^[0-9\.]+$/i.test(value)) {
-				return parseFloat(value);
+				return {status: true, value: parseFloat(value)};
 			} else {
-				return false;
+				return {status: false, message: "value is not a double"};
 			}
 		} else if(dataType == "char") {
 
 			if(/^\'\w\'$/i.test(value)) {
 				value = value.replace(/\'/g, "");
-				return value;
+				return {status: true, value: value};
 			} else {
-				return false;
+				return {status: false, message: "value is not a character"};
 			}
 		} else if(dataType == "String") {
 
 			if(/^\".*\"$/i.test(value)) {
 				value = value.replace(/\"/g, "");
-				return value;
+				return {status: true, value: value};
 			} else {
-				return false;
+				return {status: false, message: "value is not a String"};
 			}
 		} else if(dataType == "bool") {
 
 			value = value.toLowerCase();
 			if(/^(true|false)$/i.test(value)) {
-				return value;
+				return {status: true, value: value};
 			} else {
-				return false;
+				return {status: false, message: "value is not a Boolean"};
 			}
 		}
 	}
@@ -645,6 +879,21 @@
 		}
 
 		return false;
+	}
+
+	doOperation = function(operation, val1, val2) {
+
+		if(operation == "+") {
+
+			// if(typeof val1 == "int")
+
+		} else if(operation == "-") {
+
+		} else if(operation == "*") {
+
+		} else if(operation == "/") {
+
+		}
 	}
 
 	// document.onkeydown = function(event){
@@ -1081,7 +1330,7 @@
 		return self;
 	}
 
-	Bully = function(id, imgSrc, imgThumb, height, width, x, y, hpMax) {
+	Bully = function(id, name, imgSrc, imgThumb, height, width, x, y, hpMax) {
 
 		var self = {
 			id: id,
@@ -1091,6 +1340,7 @@
 			width: width,
 			x: x,
 			y: y,
+			name: name,
 			hpMax: hpMax,
 			hp: hpMax,
 			type: "bully",
@@ -1224,11 +1474,11 @@
 
 	Bully.list = {};
 
-	Bully.generate = function(id, imgSrc, imgThumb, height, width, x, y, hpMax) {
+	Bully.generate = function(id, name, imgSrc, imgThumb, height, width, x, y, hpMax) {
 
 		// var newId = "Bully_" + Math.random();
 
-		Bully(id, imgSrc, imgThumb, height, width, x, y, hpMax);
+		Bully(id, name, imgSrc, imgThumb, height, width, x, y, hpMax);
 	}
 
 	Bully.init = function() {
@@ -1262,7 +1512,7 @@
 						img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/" + bully_list[key].BLY_IMAGEURL;
 						img.bullyThumb.src = "<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/" + bully_list[key].BLY_THUMB_FILENAME;
 
-						Bully.generate(bully_list[key].BLY_ID,img.bully.src, img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+						Bully.generate(bully_list[key].BLY_ID, bully_list[key].BLY_NAME, img.bully.src, img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
 					}
 
 				} else {
@@ -1431,7 +1681,7 @@
 			$.ajax({
 				type: 'post',
 				url: "<?php echo base_url(); ?>Game/display_dialog",
-				data: {dialog: self.dialog, bully_thumb: Bully.list[self.bully].thumb.src},
+				data: {dialog: self.dialog, bully_thumb: Bully.list[self.bully].thumb.src, bully_name: Bully.list[self.bully].name},
 				success: function(res) {
 					$('.dialog-container').html(res);
 				},
@@ -1475,33 +1725,62 @@
 
 						var questionId = question_list[key].BLY_ID + "_" + question_list[key].QSTN_NUM;
 
-						if(question_list[key].QSTN_TYPE == "variable") {
+						var answers = JSON.parse(question_list[key].QSTN_ANSWER);
 
-							var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+						// console.log(answers);
 
-							for(var akey in answers) {
-								answers[akey].var_value = parseValue(answers[akey].dataType, answers[akey].var_value);
-							}
+						if(answers.variables) {
 
-							// console.log(answers);
-						} else if(question_list[key].QSTN_TYPE == "array") {
+							for(var akey in answers.variables) {
 
-							var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+								if(/\[\]/g.test(answers.variables[akey].dataType)) {
+									
+									var arrValue = answers.variables[akey].var_value;
 
-							for(var akey in answers) {
+									for(var vkey in arrValue) {
 
-								var arrValue = answers[akey].var_value;
+										var valObj = parseValue(answers.variables[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
 
-								for(var vkey in arrValue) {
+										arrValue[vkey] = valObj.value;
+									}
 
-									arrValue[vkey] = parseValue(answers[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
+									answers.variables[akey].var_value = arrValue;
+
+								} else {
+									
+									var valObj = parseValue(answers.variables[akey].dataType, answers.variables[akey].var_value);
+									answers.variables[akey].var_value = valObj.value;
 								}
-
-								answers[akey].var_value = arrValue;
 							}
-
-							// console.log(answers);
 						}
+
+						// if(question_list[key].QSTN_TYPE == "variable") {
+
+						// 	var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+						// 	for(var akey in answers) {
+						// 		answers[akey].var_value = parseValue(answers[akey].dataType, answers[akey].var_value);
+						// 	}
+
+						// 	// console.log(answers);
+						// } else if(question_list[key].QSTN_TYPE == "array") {
+
+						// 	var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+						// 	for(var akey in answers) {
+
+						// 		var arrValue = answers[akey].var_value;
+
+						// 		for(var vkey in arrValue) {
+
+						// 			arrValue[vkey] = parseValue(answers[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
+						// 		}
+
+						// 		answers[akey].var_value = arrValue;
+						// 	}
+
+						// 	// console.log(answers);
+						// }
 
 						Question(questionId, question_list[key].QSTN_TYPE, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
 					}

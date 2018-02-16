@@ -308,6 +308,7 @@
 
 				$data["dialog"] = $_POST["dialog"];
 				$data["thumb"] = $_POST["bully_thumb"];
+				$data["bully_name"] = $_POST["bully_name"];
 
 				$this->load->view('game/dialog.php', $data);
 

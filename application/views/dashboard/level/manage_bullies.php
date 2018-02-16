@@ -362,9 +362,13 @@
 			var identifier = document.getElementById("var_identifier").value;
 			var value = document.getElementById("var_value").value;
 
-			if(parseValue(dataType, value)) {
+			var checkVarVal = parseValue(dataType, value);
 
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: parseValue(dataType, value)};
+			if(checkVarVal.status) {
+
+				var valObj = parseValue(dataType, value);
+
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: valObj.value};
 				console.log(variable_list);
 				varCtr++;
 			} else {
@@ -400,11 +404,15 @@
 					value[key] = "\'" + value[key] + "\'";
 				}
 
-				if(parseValue(dataType.replace(/[\[\]]/g, ""), value[key].toString()) == false) {
+				var checkVarVal = parseValue(dataType.replace(/[\[\]]/g, ""), value[key].toString());
+
+				if(checkVarVal.status == false) {
 					isMismatch = true;
 					break;
 				} else {
-					value[key] = parseValue(dataType.replace(/[\[\]]/g, ""), value[key].toString());
+
+					var valObj = parseValue(dataType.replace(/[\[\]]/g, ""), value[key].toString());
+					value[key] = valObj.value;
 				}
 			}
 
@@ -448,46 +456,47 @@
 
 		// console.log(value);
 
-			if(dataType == "int") {
-				
-				if(/^[0-9]+$/i.test(value)) {
-					return parseInt(value);
-				} else {
-					return false;
-				}
-			} else if(dataType == "double") {
+		if(dataType == "int") {
+			
+			if(/^[0-9]+$/i.test(value)) {
 
-				if(/^[0-9\.]+$/i.test(value)) {
-					return parseFloat(value);
-				} else {
-					return false;
-				}
-			} else if(dataType == "char") {
+				return {status: true, value: parseInt(value)};
+			} else {
+				return {status: false, message: "value is not an integer"};
+			}
+		} else if(dataType == "double") {
 
-				if(/^\'\w\'$/i.test(value)) {
-					value = value.replace(/\'/g, "");
-					return value;
-				} else {
-					return false;
-				}
-			} else if(dataType == "String") {
+			if(/^[0-9\.]+$/i.test(value)) {
+				return {status: true, value: parseFloat(value)};
+			} else {
+				return {status: false, message: "value is not a double"};
+			}
+		} else if(dataType == "char") {
 
-				if(/^\".*\"$/i.test(value)) {
-					// value = value.replace(/\"/g, "");
-					return value;
-				} else {
-					return false;
-				}
-			} else if(dataType == "bool") {
+			if(/^\'\w\'$/i.test(value)) {
+				value = value.replace(/\'/g, "");
+				return {status: true, value: value};
+			} else {
+				return {status: false, message: "value is not a character"};
+			}
+		} else if(dataType == "String") {
 
-				value = value.toLowerCase();
-				if(/^(true|false)$/i.test(value)) {
-					return value;
-				} else {
-					return false;
-				}
+			if(/^\".*\"$/i.test(value)) {
+				value = value.replace(/\"/g, "");
+				return {status: true, value: value};
+			} else {
+				return {status: false, message: "value is not a String"};
+			}
+		} else if(dataType == "bool") {
+
+			value = value.toLowerCase();
+			if(/^(true|false)$/i.test(value)) {
+				return {status: true, value: value};
+			} else {
+				return {status: false, message: "value is not a Boolean"};
 			}
 		}
+	}
 
 		load_variables_block = function() {
 
