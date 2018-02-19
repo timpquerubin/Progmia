@@ -159,2052 +159,2067 @@
 </div>
 
 <script type="text/javascript">
+
+	$(document).ready(function() {
+
+
 	
-	var ctx = document.getElementById("ctx").getContext("2d");
-	var canvas = document.getElementById("ctx");
-	code_area = document.getElementById("code_area");
+		var ctx = document.getElementById("ctx").getContext("2d");
+		var canvas = document.getElementById("ctx");
+		code_area = document.getElementById("code_area");
 
-	ctx.font = '30px Arial';
+		ctx.font = '30px Arial';
 
-	var ctxWidth = canvas.width;
-	var ctxHeight = canvas.height;
+		var ctxWidth = canvas.width;
+		var ctxHeight = canvas.height;
 
-	var cmdNum = 0;
-	
-	var vrbls = [];
-	var operations = [];
-	var code_log = [];
+		var cmdNum = 0;
+		
+		var vrbls = [];
+		var operations = [];
+		var code_log = [];
 
-	var zoomMultiplier = 0.75;
-	var TILE_SIZE = 16;
-	var isPaused = false;
+		var zoomMultiplier = 0.75;
+		var TILE_SIZE = 16;
+		var isPaused = false;
 
-	var collectedCoins = 0;
-	var KilledBullies = 0;
-	var used_if = false;
-	var used_loop = false;
-	var isFinished = false;
+		var collectedCoins = 0;
+		var KilledBullies = 0;
+		var used_if = false;
+		var used_loop = false;
+		var isFinished = false;
 
+		var img = {};
+		img.map = new Image();
+		img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
+		img.player = new Image();
+		img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>";
 
-	var img = {};
-	img.map = new Image();
-	img.dialog = new Image();
-	img.dialog.src = "<?php echo base_url(); ?>assets/images/BORDER-1.png";
-	img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
-	img.player = new Image();
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>";
+		img.bully = new Image();
+		img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png";
+		img.bullyThumb = new Image();
+		img.bullyThumb.src = "";
+		img.projectile = new Image();
+		img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
 
-	img.bully = new Image();
-	img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png";
-	img.bullyThumb = new Image();
-	img.bullyThumb.src = "";
-	img.projectile = new Image();
-	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
+		preloadImages = function(imgArr) {
 
-	document.getElementById('textarea1').value = '1';
+			var newImages = [];
+			var loadedImages = 0;
 
-	$("#code_area").keyup(function(event) {
-        var code = code_area.value.split("\n");
-        document.getElementById('textarea1').value = '';
-        for(var i = 0; i < code.length; i++)
-        {
-        	document.getElementById('textarea1').value += (i+1) + "\n";
-        }
-        event.preventDefault();
-	});
+			var postAction = function() {};
 
-	function enableTab(id) {
-    	var el = document.getElementById(id);
-	    el.onkeydown = function(e) {
-	        if (e.keyCode === 9) { // tab was pressed
+			imageLoadPost = function() {
+				loadedImages++;
 
-	            // get caret position/selection
-	            var val = this.value,
-	                start = this.selectionStart,
-	                end = this.selectionEnd;
+				if(loadedImages == imgArr.length) {
+					postAction();
+				}
+			}
 
-	            // set textarea value to: text before caret + tab + text after caret
-	            this.value = val.substring(0, start) + '\t' + val.substring(end);
+			for(var i = 0; i < imgArr.length; i++) {
 
-	            // put caret at right position again
-	            this.selectionStart = this.selectionEnd = start + 1;
+				newImages[i] = new Image();
+				newImages[i].src = imgArr[i];
+				
+				newImages[i].onload = function() {
+					imageLoadPost();
+				}
 
-	            // prevent the focus lose
-	            return false;
+				newImages[i].onerror = function()  {
+					imageLoadPost();
+				}
+			}
 
-	        }
-	    };
-	}
-	
-	enableTab('code_area');
-
-	$("#obj_modal_btn").click(function() {
-		document.getElementById('obj_modal').style.display = "block";
-	});
-
-	$("#obj_modal_close").click(function() {
-		document.getElementById('obj_modal').style.display = "none";
-	});
-
-	testCollisionRectRect = function(rect1,rect2){
-	return rect1.x <= rect2.x+rect2.width 
-		&& rect2.x <= rect1.x+rect1.width
-		&& rect1.y <= rect2.y + rect2.height
-		&& rect2.y <= rect1.y + rect1.height;
-	}
-
-	isEndOfCode = function(commandNum) {
-
-		var code_whole = code_area.value;
-		var code = code_whole.split('\n');
-
-		if(commandNum < code.length) {
-			return true;
-		} else {
-			console.log("end of code");
-			return false;
+			return {
+				done: function(f) {
+					postAction = f || postAction;
+				}
+			}
 		}
-	}
 
-	executeCommand = function(commandNum) {
+		
 
-		var code_whole = code_area.value;
-		var code = code_whole.split('\n');
+		document.getElementById('textarea1').value = '1';
 
-		if(commandNum < code.length) {
+		$("#code_area").keyup(function(event) {
+	        var code = code_area.value.split("\n");
+	        document.getElementById('textarea1').value = '';
+	        for(var i = 0; i < code.length; i++)
+	        {
+	        	document.getElementById('textarea1').value += (i+1) + "\n";
+	        }
+	        event.preventDefault();
+		});
 
-			cmdLine = code[commandNum].trim();
-			if(cmdLine == "") {
-				console.log("blank line");
-			} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
+		function enableTab(id) {
+	    	var el = document.getElementById(id);
+		    el.onkeydown = function(e) {
+		        if (e.keyCode === 9) { // tab was pressed
 
-				var tempLine = cmdLine.replace(";", "");
-				tempLine = tempLine.replace(/\s+/g, " ");
-				tempLine = tempLine.trim();
+		            // get caret position/selection
+		            var val = this.value,
+		                start = this.selectionStart,
+		                end = this.selectionEnd;
 
-				var declareLine = tempLine.split(' ');
+		            // set textarea value to: text before caret + tab + text after caret
+		            this.value = val.substring(0, start) + '\t' + val.substring(end);
 
-				var varInfo = {
-					dataType: declareLine[0],
-					var_identifier: declareLine[1],
-				};
+		            // put caret at right position again
+		            this.selectionStart = this.selectionEnd = start + 1;
 
-				vrbls.push(varInfo);
+		            // prevent the focus lose
+		            return false;
 
-				code_log.push({
-					type: "dec-var",
-					var_info: varInfo,
-				});
+		        }
+		    };
+		}
+		
+		enableTab('code_area');
+
+		$("#obj_modal_btn").click(function() {
+			document.getElementById('obj_modal').style.display = "block";
+		});
+
+		$("#obj_modal_close").click(function() {
+			document.getElementById('obj_modal').style.display = "none";
+		});
+
+		testCollisionRectRect = function(rect1,rect2){
+		return rect1.x <= rect2.x+rect2.width 
+			&& rect2.x <= rect1.x+rect1.width
+			&& rect1.y <= rect2.y + rect2.height
+			&& rect2.y <= rect1.y + rect1.height;
+		}
+
+		isEndOfCode = function(commandNum) {
+
+			var code_whole = code_area.value;
+			var code = code_whole.split('\n');
+
+			if(commandNum < code.length) {
+				return true;
+			} else {
+				console.log("end of code");
+				return false;
+			}
+		}
+
+		executeCommand = function(commandNum) {
+
+			var code_whole = code_area.value;
+			var code = code_whole.split('\n');
+
+			if(commandNum < code.length) {
+
+				cmdLine = code[commandNum].trim();
+				if(cmdLine == "") {
+					console.log("blank line");
+				} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
+
+					var tempLine = cmdLine.replace(";", "");
+					tempLine = tempLine.replace(/\s+/g, " ");
+					tempLine = tempLine.trim();
+
+					var declareLine = tempLine.split(' ');
+
+					var varInfo = {
+						dataType: declareLine[0],
+						var_identifier: declareLine[1],
+					};
+
+					vrbls.push(varInfo);
+
+					code_log.push({
+						type: "dec-var",
+						var_info: varInfo,
+					});
 
 
-			} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
+				} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[A-Za-z0-9_\W]+\s*;$/g.test(cmdLine)) {
 
-				var tempLine = cmdLine.replace(";", "");
+					var tempLine = cmdLine.replace(";", "");
 
-				var declareLine = tempLine.split(/=/i);
-				declareLine[0] = declareLine[0].trim();
-				
-				var value = declareLine[1].trim();
-				var var_info = declareLine[0].split(/\s+/g);
-
-				console.log(var_info + " " + value);
-
-				if(value) {
-
-					var checkValObj = parseValue(var_info[0], value);
-
-					if(checkValObj.status) {
-
-						var valObj = parseValue(var_info[0], value);
-						var tempValue = valObj.value;
-
-						var varInfo = {
-							dataType: var_info[0],
-							var_identifier: var_info[1],
-							var_value: tempValue,
-						};
-
-						vrbls.push(varInfo);
-
-						code_log.push({
-							type: "dec-var",
-							var_info: varInfo,
-						});
-						
-					} else {
-						console.log("error: data type missmatch");
-						return {status: false, message: "error: data type missmatch"};
-					}
-				} else {
-					console.log("error: no value assigned");
-					return {status: false, message: "error: no value assigned"};
-				}
-			} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*;$/g.test(cmdLine)) {
-
-				var tempLine = cmdLine.replace(";", "");
-				tempLine = tempLine.replace(/\s+/g, " ");
-				tempLine = tempLine.trim();
-
-				var declareLine = tempLine.split(' ');
-
-				var arrInfo = {
-					dataType: declareLine[0],
-					var_identifier: declareLine[1],
-				};
-
-				vrbls.push(arrInfo);
-
-				code_log.push({
-					type: "dec-arr",
-					var_info: arrInfo,
-				});
-
-			} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*(\{[A-Za-z0-9,\"\'\s\.]*\}|new\s*(int|double|char|String|Boolean)\[[0-9]*\])\s*;$/g.test(cmdLine)) {
-
-				var tempLine = cmdLine.replace(";", "");
-				var declareLine = tempLine.split(/=/i);
-				var isMismatch = false;
-
-				for(var key in declareLine) {
-					declareLine[key] = declareLine[key].trim();
-				}
-
-				var arrInfo = declareLine[0].split(/\s+/g);
-				declareLine[1] = declareLine[1].replace(/\{/g, "[");
-				declareLine[1] = declareLine[1].replace(/\}/g, "]");
-				declareLine[1] = declareLine[1].replace(/\'/g, "\"");
-
-				try {
-					var arr_val = JSON.parse(declareLine[1]);
+					var declareLine = tempLine.split(/=/i);
+					declareLine[0] = declareLine[0].trim();
 					
-					for(var key in arr_val) {
+					var value = declareLine[1].trim();
+					var var_info = declareLine[0].split(/\s+/g);
 
-						// console.log(arrInfo[0].replace(/[\[\]]/g, "") + " - " + arr_val[key].toString());
+					console.log(var_info + " " + value);
 
-						if(/^String/i.test(arrInfo[0]) && (typeof arr_val[key] == "string")) {
-							arr_val[key] = "\"" + arr_val[key] + "\"";
-						} else if(/^char/i.test(arrInfo[0])  && (typeof arr_val[key] == "string")) {
-							arr_val[key] = "\'" + arr_val[key] + "\'";
-						}
+					if(value) {
 
-						var checkValObj = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
+						var checkValObj = parseValue(var_info[0], value);
 
-						if(checkValObj.status == false) {
-							isMismatch = true;
-							break;
+						if(checkValObj.status) {
+
+							var valObj = parseValue(var_info[0], value);
+							var tempValue = valObj.value;
+
+							var varInfo = {
+								dataType: var_info[0],
+								var_identifier: var_info[1],
+								var_value: tempValue,
+							};
+
+							vrbls.push(varInfo);
+
+							code_log.push({
+								type: "dec-var",
+								var_info: varInfo,
+							});
+							
 						} else {
-
-							var valObj = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
-							arr_val[key] = valObj.value;
+							console.log("error: data type missmatch");
+							return {status: false, message: "error: data type missmatch"};
 						}
-					}
-
-					if(isMismatch) {
-						console.log("error: dataType missmatch");
-						return {status: false, message: "error: dataType missmatch"};
 					} else {
-
-						var arrayInfo = {
-							dataType: arrInfo[0],
-							var_identifier: arrInfo[1],
-							var_value: arr_val,
-						};
-
-						vrbls.push(arrayInfo);
-
-						code_log.push({
-							type: "dec-arr",
-							var_info: arrayInfo,
-						});
+						console.log("error: no value assigned");
+						return {status: false, message: "error: no value assigned"};
 					}
-				} catch(err) {
-					console.log("error: value assigned invalid");
-					return {status: false, message: "error: value assigned invalid"};
-				}
+				} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*;$/g.test(cmdLine)) {
 
-			} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
+					var tempLine = cmdLine.replace(";", "");
+					tempLine = tempLine.replace(/\s+/g, " ");
+					tempLine = tempLine.trim();
 
-				var tempLine = cmdLine.replace(";", "");
-				var assignLine = tempLine.split(/=/i);
+					var declareLine = tempLine.split(' ');
 
-				var var1_identifier = assignLine[0].trim();
-				var var2_identifier = assignLine[1].trim();
+					var arrInfo = {
+						dataType: declareLine[0],
+						var_identifier: declareLine[1],
+					};
 
-				console.log(var1_identifier + ", " + var2_identifier);
+					vrbls.push(arrInfo);
 
-				if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""))) {
+					code_log.push({
+						type: "dec-arr",
+						var_info: arrInfo,
+					});
 
-					// if(/^[A-Za-z0-9]*\[\]$/i.test(var1_identifier) && /^[A-Za-z0-9]*\[\]$/i.test(var2_identifier)) {
+				} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*(\{[A-Za-z0-9,\"\'\s\.]*\}|new\s*(int|double|char|String|Boolean)\[[0-9]*\])\s*;$/g.test(cmdLine)) {
+
+					var tempLine = cmdLine.replace(";", "");
+					var declareLine = tempLine.split(/=/i);
+					var isMismatch = false;
+
+					for(var key in declareLine) {
+						declareLine[key] = declareLine[key].trim();
+					}
+
+					var arrInfo = declareLine[0].split(/\s+/g);
+					declareLine[1] = declareLine[1].replace(/\{/g, "[");
+					declareLine[1] = declareLine[1].replace(/\}/g, "]");
+					declareLine[1] = declareLine[1].replace(/\'/g, "\"");
+
+					try {
+						var arr_val = JSON.parse(declareLine[1]);
 						
-					// } else {
-					// 	console.log("invalid");
-					// }
-					
-					var var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
-					var var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
+						for(var key in arr_val) {
 
-					var valToTrans;
+							// console.log(arrInfo[0].replace(/[\[\]]/g, "") + " - " + arr_val[key].toString());
 
-					if(/\[[0-9]*\]/g.test(var2_identifier) && /\[\]/g.test(var2.dataType)) {
-						
-						var var2_arrIndex = getConditions(var2_identifier, '[', ']');
-						valToTrans = var2.var_value[var2_arrIndex];
-						console.log(valToTrans);	
-					} else {
-						valToTrans = var2.var_value
-						console.log(valToTrans);
-					}
-
-					if(/\[[0-9]*\]/g.test(var1_identifier) && /\[\]/g.test(var1.dataType)) {
-
-						var var1_arrIndex = getConditions(var1_identifier, '[', ']');
-						var1.var_value[var1_arrIndex] = valToTrans;
-					} else {
-						var1.var_value = valToTrans;
-					}
-
-					console.log(var1);
-					console.log(var2);
-
-					// if(var1.dataType == var2.dataType) {
-					// 	var1.var_value = var2.var_value;
-
-					// 	console.log(var1);
-					// 	console.log(var2);
-					// } else {
-					// 	console.log("error: cannot implicitly convert " + var2.dataType + " value to " + var1.dataType);
-					// }
-
-				} else {
-					console.log(var1_identifier + " or " + var2_identifier + " variable does not exist");
-					return {status: false, message: var1_identifier + " or " + var2_identifier + " variable does not exist"};
-				}
-
-
-			} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
-
-				var tempLine = cmdLine.replace(";", "");
-				var opLine = tempLine.split(/=/i);
-				
-				var save_to = opLine[0].trim();
-				var opp = /[\+\-*/]/g.exec(opLine[1]);
-
-				var varList = opLine[1].split(/[\+\-*/]/g);
-
-				var var_1 = varList[0].trim();
-				var var_2 = varList[1].trim();
-
-				// console.log(save_to + " = " + var_1 + " " + opp[0] + " " + var_2);
-
-				if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_1.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""))) {
-
-					var var_1_obj = isVarExisting(var_1.replace(/\[[0-9]*\]/g, ""));
-					var var_2_obj = isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""));
-					var save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
-
-					var var_1_value = "";
-					var var_2_value = "";
-
-					// console.log(var_1_obj);
-					// console.log(var_2_obj);
-					// console.log(save_to_obj);
-
-					if(Array.isArray(var_1_obj.var_value)) {
-
-						if(/\[[0-9]*\]/g.test(var_1)) {
-
-							var arrIndex = getConditions(var_1, '[', ']');
-							if(var_1_obj.var_value[arrIndex]) {
-								
-								var_1_value = {dataType: var_1_obj.dataType.replace(/[\[\]]/g, ""), value: var_1_obj.var_value[arrIndex]};
-							} else {
-								return {status: false, message: "index out of range"};
+							if(/^String/i.test(arrInfo[0]) && (typeof arr_val[key] == "string")) {
+								arr_val[key] = "\"" + arr_val[key] + "\"";
+							} else if(/^char/i.test(arrInfo[0])  && (typeof arr_val[key] == "string")) {
+								arr_val[key] = "\'" + arr_val[key] + "\'";
 							}
 
-						} else {
-							return {status: false, message: "indicate array index"};
-						}
-					} else {
+							var checkValObj = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
 
-						if(/\[[0-9]*\]/g.test(var_1)) {
-							return {status: false, message: "variable is not an array"};
-						} else {
-							var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value};
-						}
-					}
-
-					if(Array.isArray(var_2_obj.var_value)) {
-
-						if(/\[[0-9]*\]/g.test(var_2)) {
-
-							var arrIndex = getConditions(var_2, '[', ']');
-							if(var_2_obj.var_value[arrIndex]) {
-								
-								var_2_value = {dataType: var_2_obj.dataType.replace(/[\[\]]/g, ""), value: var_2_obj.var_value[arrIndex]};
+							if(checkValObj.status == false) {
+								isMismatch = true;
+								break;
 							} else {
-								return {status: false, message: "index out of range"};
+
+								var valObj = parseValue(arrInfo[0].replace(/[\[\]]/g, ""), arr_val[key].toString());
+								arr_val[key] = valObj.value;
 							}
-
-						} else {
-							return {status: false, message: "indicate array index"};
 						}
-					} else {
 
-						if(/\[[0-9]*\]/g.test(var_2)) {
-							return {status: false, message: "variable is not an array"};
+						if(isMismatch) {
+							console.log("error: dataType missmatch");
+							return {status: false, message: "error: dataType missmatch"};
 						} else {
-							var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value};
+
+							var arrayInfo = {
+								dataType: arrInfo[0],
+								var_identifier: arrInfo[1],
+								var_value: arr_val,
+							};
+
+							vrbls.push(arrayInfo);
+
+							code_log.push({
+								type: "dec-arr",
+								var_info: arrayInfo,
+							});
 						}
+					} catch(err) {
+						console.log("error: value assigned invalid");
+						return {status: false, message: "error: value assigned invalid"};
 					}
 
-					// console.log(var_1_value);
-					// console.log(var_2_value);
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
 
-					// console.log(doOperation(opp, var_1_value, var_2_value));
-					var opRes = doOperation(opp, var_1_value, var_2_value);
+					var tempLine = cmdLine.replace(";", "");
+					var assignLine = tempLine.split(/=/i);
 
-					if(opRes.status) {
+					var var1_identifier = assignLine[0].trim();
+					var var2_identifier = assignLine[1].trim();
 
-						if(Array.isArray(save_to_obj.var_value)) {
+					console.log(var1_identifier + ", " + var2_identifier);
 
-							if(/\[[0-9]*\]/g.test(save_to)) {
+					if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""))) {
 
-								var arrIndex = getConditions(var_2, '[', ']');
-								if(save_to_obj.var_value[arrIndex]) {
+						// if(/^[A-Za-z0-9]*\[\]$/i.test(var1_identifier) && /^[A-Za-z0-9]*\[\]$/i.test(var2_identifier)) {
+							
+						// } else {
+						// 	console.log("invalid");
+						// }
+						
+						var var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
+						var var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
 
-										var assign_param = {
-											saveTo_index: arrIndex,
-											dataType: opRes.dataType,
-											value: opRes.value,
-										};
+						var valToTrans;
 
-										save_to_obj = assignValueToVar(save_to_obj, assign_param);
+						if(/\[[0-9]*\]/g.test(var2_identifier) && /\[\]/g.test(var2.dataType)) {
+							
+							var var2_arrIndex = getConditions(var2_identifier, '[', ']');
+							valToTrans = var2.var_value[var2_arrIndex];
+							console.log(valToTrans);	
+						} else {
+							valToTrans = var2.var_value
+							console.log(valToTrans);
+						}
 
+						if(/\[[0-9]*\]/g.test(var1_identifier) && /\[\]/g.test(var1.dataType)) {
+
+							var var1_arrIndex = getConditions(var1_identifier, '[', ']');
+							var1.var_value[var1_arrIndex] = valToTrans;
+						} else {
+							var1.var_value = valToTrans;
+						}
+
+						console.log(var1);
+						console.log(var2);
+
+						// if(var1.dataType == var2.dataType) {
+						// 	var1.var_value = var2.var_value;
+
+						// 	console.log(var1);
+						// 	console.log(var2);
+						// } else {
+						// 	console.log("error: cannot implicitly convert " + var2.dataType + " value to " + var1.dataType);
+						// }
+
+					} else {
+						console.log(var1_identifier + " or " + var2_identifier + " variable does not exist");
+						return {status: false, message: var1_identifier + " or " + var2_identifier + " variable does not exist"};
+					}
+
+
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
+
+					var tempLine = cmdLine.replace(";", "");
+					var opLine = tempLine.split(/=/i);
+					
+					var save_to = opLine[0].trim();
+					var opp = /[\+\-*/]/g.exec(opLine[1]);
+
+					var varList = opLine[1].split(/[\+\-*/]/g);
+
+					var var_1 = varList[0].trim();
+					var var_2 = varList[1].trim();
+
+					// console.log(save_to + " = " + var_1 + " " + opp[0] + " " + var_2);
+
+					if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_1.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""))) {
+
+						var var_1_obj = isVarExisting(var_1.replace(/\[[0-9]*\]/g, ""));
+						var var_2_obj = isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""));
+						var save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+
+						var var_1_value = "";
+						var var_2_value = "";
+
+						// console.log(var_1_obj);
+						// console.log(var_2_obj);
+						// console.log(save_to_obj);
+
+						if(Array.isArray(var_1_obj.var_value)) {
+
+							if(/\[[0-9]*\]/g.test(var_1)) {
+
+								var arrIndex = getConditions(var_1, '[', ']');
+								if(var_1_obj.var_value[arrIndex]) {
+									
+									var_1_value = {dataType: var_1_obj.dataType.replace(/[\[\]]/g, ""), value: var_1_obj.var_value[arrIndex]};
 								} else {
 									return {status: false, message: "index out of range"};
 								}
 
 							} else {
-								return {status: false, message: "variable is not an array"};
+								return {status: false, message: "indicate array index"};
 							}
-
 						} else {
 
-							if(/\[[0-9]*\]/g.test(save_to)) {
+							if(/\[[0-9]*\]/g.test(var_1)) {
 								return {status: false, message: "variable is not an array"};
 							} else {
-								
-								var assign_param = {
-									dataType: opRes.dataType,
-									value: opRes.value,
-								};
-
-								save_to_obj = assignValueToVar(save_to_obj, assign_param);
+								var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value};
 							}
 						}
 
-						console.log(save_to_obj);
+						if(Array.isArray(var_2_obj.var_value)) {
 
-						for(var key in vrbls) {
+							if(/\[[0-9]*\]/g.test(var_2)) {
 
-							if(vrbls[key].var_identifier == save_to_obj.var_identifier) {
+								var arrIndex = getConditions(var_2, '[', ']');
+								if(var_2_obj.var_value[arrIndex]) {
+									
+									var_2_value = {dataType: var_2_obj.dataType.replace(/[\[\]]/g, ""), value: var_2_obj.var_value[arrIndex]};
+								} else {
+									return {status: false, message: "index out of range"};
+								}
 
-								vrbls[key] = save_to_obj;
-								break;
+							} else {
+								return {status: false, message: "indicate array index"};
+							}
+						} else {
+
+							if(/\[[0-9]*\]/g.test(var_2)) {
+								return {status: false, message: "variable is not an array"};
+							} else {
+								var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value};
 							}
 						}
 
-						code_log.push({
-							type: "op",
-							op_info: {
-								save_to: save_to,
-								operation: opp[0],
-								var_1: var_1,
-								var_2: var_2,
-							},
-						});
+						// console.log(var_1_value);
+						// console.log(var_2_value);
 
-						console.log(vrbls);
+						// console.log(doOperation(opp, var_1_value, var_2_value));
+						var opRes = doOperation(opp, var_1_value, var_2_value);
+
+						if(opRes.status) {
+
+							if(Array.isArray(save_to_obj.var_value)) {
+
+								if(/\[[0-9]*\]/g.test(save_to)) {
+
+									var arrIndex = getConditions(var_2, '[', ']');
+									if(save_to_obj.var_value[arrIndex]) {
+
+											var assign_param = {
+												saveTo_index: arrIndex,
+												dataType: opRes.dataType,
+												value: opRes.value,
+											};
+
+											save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+									} else {
+										return {status: false, message: "index out of range"};
+									}
+
+								} else {
+									return {status: false, message: "variable is not an array"};
+								}
+
+							} else {
+
+								if(/\[[0-9]*\]/g.test(save_to)) {
+									return {status: false, message: "variable is not an array"};
+								} else {
+									
+									var assign_param = {
+										dataType: opRes.dataType,
+										value: opRes.value,
+									};
+
+									save_to_obj = assignValueToVar(save_to_obj, assign_param);
+								}
+							}
+
+							console.log(save_to_obj);
+
+							for(var key in vrbls) {
+
+								if(vrbls[key].var_identifier == save_to_obj.var_identifier) {
+
+									vrbls[key] = save_to_obj;
+									break;
+								}
+							}
+
+							code_log.push({
+								type: "op",
+								op_info: {
+									save_to: save_to,
+									operation: opp[0],
+									var_1: var_1,
+									var_2: var_2,
+								},
+							});
+
+							console.log(vrbls);
+
+						} else {
+							return opRes;
+						}
 
 					} else {
-						return opRes;
+						return {status: false, message: "variable does not exist"};
 					}
 
 				} else {
-					return {status: false, message: "variable does not exist"};
+					console.log("error");
+					return {status: false, message: "syntax error"};
 				}
 
-			} else {
-				console.log("error");
-				return {status: false, message: "syntax error"};
+				return {status: true, message: "execution was successful"};
 			}
-
-			return {status: true, message: "execution was successful"};
 		}
-	}
 
-	runCode = function() {
+		runCode = function() {
 
-		vrbls = [];
-		var hasErrors = false;
+			vrbls = [];
+			var hasErrors = false;
 
-		cmdNum = 0;
+			cmdNum = 0;
 
-		if(player.isEnemyInRange()) {
+			if(player.isEnemyInRange()) {
 
-			var bullyId = player.isEnemyInRange();
+				var bullyId = player.isEnemyInRange();
 
-			do {
-				
-				var exec_status = executeCommand(cmdNum);
+				do {
+					
+					var exec_status = executeCommand(cmdNum);
 
-				if(!exec_status.status) {
-					console.log(exec_status.message);
-					hasErrors = true;
-					break;
-				} else {
-					cmdNum++;
-				}
+					if(!exec_status.status) {
+						console.log(exec_status.message);
+						hasErrors = true;
+						break;
+					} else {
+						cmdNum++;
+					}
 
-			} while(isEndOfCode(cmdNum));
+				} while(isEndOfCode(cmdNum));
 
-			console.log(code_log);
+				console.log(code_log);
 
-			for(var key in Question.list) {
+				for(var key in Question.list) {
 
-				if(Question.list[key].bully == bullyId) {
-					if(Question.list[key].isAsked) {
-						if(Question.list[key].status == "current question") {
-							
-							if(!hasErrors) {
+					if(Question.list[key].bully == bullyId) {
+						if(Question.list[key].isAsked) {
+							if(Question.list[key].status == "current question") {
+								
+								if(!hasErrors) {
 
-								var answers = Question.list[key].answer;
-								var ansCount = 0;
-								var correctAns = 0;
+									var answers = Question.list[key].answer;
+									var ansCount = 0;
+									var correctAns = 0;
 
-								if(answers.variables && answers.operations) {
-									ansCount = answers.operations.length + answers.variables.length;
-								} else if(answers.variables) {
-									ansCount = answers.variables.length;
-								} else if(answers.operations) {
-									ansCount = answers.operations.length;
-								}
+									if(answers.variables && answers.operations) {
+										ansCount = answers.operations.length + answers.variables.length;
+									} else if(answers.variables) {
+										ansCount = answers.variables.length;
+									} else if(answers.operations) {
+										ansCount = answers.operations.length;
+									}
 
-								if(answers.variables) {
+									if(answers.variables) {
 
-									for(var akey in answers.variables) {
+										for(var akey in answers.variables) {
 
-										if(/\[\]/g.test(answers.variables[akey].dataType)) {
+											if(/\[\]/g.test(answers.variables[akey].dataType)) {
 
-											if(code_log.length > 0) {
+												if(code_log.length > 0) {
 
-												for(var key in code_log) {
+													for(var key in code_log) {
 
-													if(code_log.type == "dec-var" || code_log.type == "dec-arr") {
+														if(code_log.type == "dec-var" || code_log.type == "dec-arr") {
 
-														
+															
+														}
+													}
+												}
+
+												// for(vkey in vrbls) {
+
+												// 	if(answers.variables[akey].dataType == vrbls.variables[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value.length == vrbls[vkey].var_value.length) {
+
+												// 		var arrVal = answers.variables[akey].var_value;
+
+												// 		var isWrongVal = false;
+												// 		var arrIndexCtr = 0;
+
+												// 		do {
+
+												// 			if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
+												// 				isWrongVal = true;
+												// 			} else {
+												// 				arrIndexCtr++;
+												// 			}
+
+												// 		} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
+
+												// 		if(!isWrongVal) {
+												// 			correctAns++;
+												// 		}
+												// 	}
+												// }
+											} else {
+
+												for(var vkey in vrbls) {
+
+													if(answers.variables[akey].dataType == vrbls[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value == vrbls[vkey].var_value) {
+
+														correctAns++;
 													}
 												}
 											}
-
-											// for(vkey in vrbls) {
-
-											// 	if(answers.variables[akey].dataType == vrbls.variables[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value.length == vrbls[vkey].var_value.length) {
-
-											// 		var arrVal = answers.variables[akey].var_value;
-
-											// 		var isWrongVal = false;
-											// 		var arrIndexCtr = 0;
-
-											// 		do {
-
-											// 			if(!(arrVal[arrIndexCtr] == vrbls[vkey].var_value[arrIndexCtr])) {
-											// 				isWrongVal = true;
-											// 			} else {
-											// 				arrIndexCtr++;
-											// 			}
-
-											// 		} while((vrbls[vkey].var_value.length > arrIndexCtr) && !isWrongVal);
-
-											// 		if(!isWrongVal) {
-											// 			correctAns++;
-											// 		}
-											// 	}
-											// }
-										} else {
-
-											for(var vkey in vrbls) {
-
-												if(answers.variables[akey].dataType == vrbls[vkey].dataType && answers.variables[akey].var_identifier == vrbls[vkey].var_identifier && answers.variables[akey].var_value == vrbls[vkey].var_value) {
-
-													correctAns++;
-												}
-											}
 										}
+
 									}
 
-								}
+									// if(answers.operations) {
 
-								// if(answers.operations) {
-
-								// 	for(var okey in answers.operations) {
+									// 	for(var okey in answers.operations) {
 
 
-								// 	}
-								// }
+									// 	}
+									// }
 
-								if(ansCount <= correctAns) {
-									Question.list[key].status = "correct";
-									Projectile.generate(player, "right");
+									if(ansCount <= correctAns) {
+										Question.list[key].status = "correct";
+										Projectile.generate(player, "right");
+									} else {
+										Question.list[key].status = "wrong";
+										Projectile.generate(Bully.list[bullyId], "left");
+									}
+
 								} else {
 									Question.list[key].status = "wrong";
 									Projectile.generate(Bully.list[bullyId], "left");
 								}
 
-							} else {
-								Question.list[key].status = "wrong";
-								Projectile.generate(Bully.list[bullyId], "left");
-							}
+								Question.closeDialog();
+								vrbls = [];
+								code_log = [];
 
-							Question.closeDialog();
-							vrbls = [];
-							code_log = [];
+								var questionStat = Question.statusCheck(bullyId);
 
-							var questionStat = Question.statusCheck(bullyId);
-
-							if(questionStat.total_questions == (questionStat.correct_ans + questionStat.wrong_ans)) {
-								console.log("here");
-								player.currentQuestion = {};
-							} else {
-								player.currentQuestion.questionNum++;
+								if(questionStat.total_questions == (questionStat.correct_ans + questionStat.wrong_ans)) {
+									console.log("here");
+									player.currentQuestion = {};
+								} else {
+									player.currentQuestion.questionNum++;
+								}
 							}
 						}
 					}
 				}
-			}
 
 
-		}		
+			}		
 
-	}
+		}
 
-	getConditions = function(statement, terminator1, terminator2) {
+		getConditions = function(statement, terminator1, terminator2) {
 
-		var startIndex = 0;
-		var lastIndex = 0;
+			var startIndex = 0;
+			var lastIndex = 0;
 
-		do {
-			
-			if(statement.indexOf(terminator2, startIndex) != -1) {
-				lastIndex = statement.indexOf(terminator2, startIndex);
-			}
+			do {
+				
+				if(statement.indexOf(terminator2, startIndex) != -1) {
+					lastIndex = statement.indexOf(terminator2, startIndex);
+				}
 
-			startIndex = statement.indexOf(terminator2, startIndex) + 1;
+				startIndex = statement.indexOf(terminator2, startIndex) + 1;
 
-		} while(startIndex != 0);
+			} while(startIndex != 0);
 
-		return statement.substr(statement.indexOf(terminator1) + 1, lastIndex - (statement.indexOf(terminator1) + 1));
-	}
+			return statement.substr(statement.indexOf(terminator1) + 1, lastIndex - (statement.indexOf(terminator1) + 1));
+		}
 
-	parseValue = function(dataType, value) {
+		parseValue = function(dataType, value) {
 
-		// console.log(value);
+			// console.log(value);
 
-		if(dataType == "int") {
-			
-			if(/^[0-9]+$/i.test(value)) {
+			if(dataType == "int") {
+				
+				if(/^[0-9]+$/i.test(value)) {
 
-				return {status: true, value: parseInt(value)};
-			} else {
-				return {status: false, message: "value is not an integer"};
-			}
-		} else if(dataType == "double") {
+					return {status: true, value: parseInt(value)};
+				} else {
+					return {status: false, message: "value is not an integer"};
+				}
+			} else if(dataType == "double") {
 
-			if(/^[0-9\.]+$/i.test(value)) {
-				return {status: true, value: parseFloat(value)};
-			} else {
-				return {status: false, message: "value is not a double"};
-			}
-		} else if(dataType == "char") {
+				if(/^[0-9\.]+$/i.test(value)) {
+					return {status: true, value: parseFloat(value)};
+				} else {
+					return {status: false, message: "value is not a double"};
+				}
+			} else if(dataType == "char") {
 
-			if(/^\'\w\'$/i.test(value)) {
-				value = value.replace(/\'/g, "");
-				return {status: true, value: value};
-			} else {
-				return {status: false, message: "value is not a character"};
-			}
-		} else if(dataType == "String") {
+				if(/^\'\w\'$/i.test(value)) {
+					value = value.replace(/\'/g, "");
+					return {status: true, value: value};
+				} else {
+					return {status: false, message: "value is not a character"};
+				}
+			} else if(dataType == "String") {
 
-			if(/^\".*\"$/i.test(value)) {
-				value = value.replace(/\"/g, "");
-				return {status: true, value: value};
-			} else {
-				return {status: false, message: "value is not a String"};
-			}
-		} else if(dataType == "Boolean") {
+				if(/^\".*\"$/i.test(value)) {
+					value = value.replace(/\"/g, "");
+					return {status: true, value: value};
+				} else {
+					return {status: false, message: "value is not a String"};
+				}
+			} else if(dataType == "Boolean") {
 
-			value = value.toLowerCase();
-			if(/^(true|false)$/i.test(value)) {
-				return {status: true, value: value};
-			} else {
-				return {status: false, message: "value is not a Boolean"};
+				value = value.toLowerCase();
+				if(/^(true|false)$/i.test(value)) {
+					return {status: true, value: value};
+				} else {
+					return {status: false, message: "value is not a Boolean"};
+				}
 			}
 		}
-	}
 
-	assignValueToVar = function(saveTo_obj, assignParams) {
+		assignValueToVar = function(saveTo_obj, assignParams) {
 
-		var saveTo_dataType = saveTo_obj.dataType.replace(/[\[\]]/g, "");
+			var saveTo_dataType = saveTo_obj.dataType.replace(/[\[\]]/g, "");
 
-		// if(Array.isArray(saveTo_obj.var_value)) {
+			// if(Array.isArray(saveTo_obj.var_value)) {
 
-			if(saveTo_dataType == "int" || saveTo_dataType == "String" || saveTo_dataType == "char" || saveTo_dataType == "Boolean") {
+				if(saveTo_dataType == "int" || saveTo_dataType == "String" || saveTo_dataType == "char" || saveTo_dataType == "Boolean") {
 
-				if(assignParams.dataType == saveTo_dataType) {
+					if(assignParams.dataType == saveTo_dataType) {
 
-					if(Array.isArray(saveTo_obj.var_value)) {
-						saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
+						if(Array.isArray(saveTo_obj.var_value)) {
+							saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
+						} else {
+							saveTo_obj.var_value = assignParams.value;
+						}
+
+						return saveTo_obj;
 					} else {
-						saveTo_obj.var_value = assignParams.value;
+						return {status: false, message: "cannot convert " + assignParams.dataType + " to " + saveTo_dataType};
 					}
 
-					return saveTo_obj;
-				} else {
-					return {status: false, message: "cannot convert " + assignParams.dataType + " to " + saveTo_dataType};
+				} else if(saveTo_dataType == "double") {
+
+					if(assignParams.dataType == "double") {
+
+						if(Array.isArray(saveTo_obj.var_value)) {
+							saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
+						} else {
+							saveTo_obj.var_value = assignParams.value;
+						}
+
+						return saveTo_obj;
+					} else if(assignParams.dataType == "int") {
+						
+						if(Array.isArray(saveTo_obj.var_value)) {
+							saveTo_obj.var_value[assignParams.saveTo_index] = parseFloat(assignParams.value);
+						} else {
+							saveTo_obj.var_value = parseFloat(assignParams.value);
+						}
+
+						return saveTo_obj;
+					} else {
+						return {status: false, message: "cannot convert " + assignParams.dataType + " to " + saveTo_dataType};
+					}
 				}
-
-			} else if(saveTo_dataType == "double") {
-
-				if(assignParams.dataType == "double") {
-
-					if(Array.isArray(saveTo_obj.var_value)) {
-						saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
-					} else {
-						saveTo_obj.var_value = assignParams.value;
-					}
-
-					return saveTo_obj;
-				} else if(assignParams.dataType == "int") {
-					
-					if(Array.isArray(saveTo_obj.var_value)) {
-						saveTo_obj.var_value[assignParams.saveTo_index] = parseFloat(assignParams.value);
-					} else {
-						saveTo_obj.var_value = parseFloat(assignParams.value);
-					}
-
-					return saveTo_obj;
-				} else {
-					return {status: false, message: "cannot convert " + assignParams.dataType + " to " + saveTo_dataType};
-				}
-			}
-		// }
-
-	}
-
-	isVarExisting = function(var_identifier) {
-
-		for(var key in vrbls) {
-
-			var cmp_identifier = "";
-
-			// if(/\[\]$/g.test(vrbls[key].dataType)) {
-			// 	cmp_identifier = vrbls[key].var_identifier + "[]";
-			// } else {
-			// 	cmp_identifier = vrbls[key].var_identifier;
 			// }
 
-			if(vrbls[key].var_identifier == var_identifier) {
-				return vrbls[key];
-			}
 		}
 
-		return false;
-	}
+		isVarExisting = function(var_identifier) {
 
-	doOperation = function(operation, val1, val2) {
+			for(var key in vrbls) {
 
-		if(operation == "+") {
+				var cmp_identifier = "";
 
-			if(val1.dataType == "int") {
+				// if(/\[\]$/g.test(vrbls[key].dataType)) {
+				// 	cmp_identifier = vrbls[key].var_identifier + "[]";
+				// } else {
+				// 	cmp_identifier = vrbls[key].var_identifier;
+				// }
 
-				if(val2.dataType == "int" || val2.dataType == "String" || val2.dataType == "double") {
-					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "double") {
-
-				if(val2.dataType == "int" || val2.dataType == "String" || val2.dataType == "double") {
-					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "String") {
-				return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-			} else if(val1.dataType == "char") {
-
-				if(val2.dataType == "String") {
-					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "int" || val2.dataType == "double") {
-					// return val1.value.charCodeAt(0);
-					return {status: true, value: (val1.value.charCodeAt(0) + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value.charCodeAt(0) + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "Boolean") {
-
-				if(val2.dataType == "String") {
-					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			}
-
-		} else if(operation == "-") {
-
-			if(val1.dataType == "int") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "double") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "String") {
-				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-			} else if(val1.dataType == "char") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value.charCodeAt(0) - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value.charCodeAt(0) - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "Boolean") {
-				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-			}
-
-		} else if(operation == "*") {
-
-			if(val1.dataType == "int") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "double") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "String") {
-				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-			} else if(val1.dataType == "char") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value.charCodeAt(0) * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value.charCodeAt(0) * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "Boolean") {
-				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-			}
-
-		} else if(operation == "/") {
-
-			if(val1.dataType == "int") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "double") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "String") {
-				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-			} else if(val1.dataType == "char") {
-
-				if(val2.dataType == "int" || val2.dataType == "double") {
-					return {status: true, value: (val1.value.charCodeAt(0) / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else if(val2.dataType == "char") {
-					return {status: true, value: (val1.value.charCodeAt(0) / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
-				} else {
-					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-				}
-			} else if(val1.dataType == "Boolean") {
-				return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
-			}
-
-		}
-	}
-
-	parseOpResult = function(dataType_1, dataType_2) {
-
-		if(dataType_1 == "int") {
-
-			if(dataType_2 == "double") {
-				return "double";
-			} else if(dataType_2 == "String") {
-				return "String";
-			} else if(dataType_2 == "int") {
-				return "int";
-			} else if(dataType_2 == "char") {
-				return "int";
-			}
-		} else if(dataType_1 == "double") {
-
-			if(dataType_2 == "double") {
-				return "double";
-			} else if(dataType_2 == "String") {
-				return "String";
-			} else if(dataType_2 == "int") {
-				return "double";
-			} else if(dataType_2 == "char") {
-				return "double";
-			}
-		} else if(dataType_1 == "String") {
-
-			return "String";
-		} else if(dataType_1 == "char") {
-
-			if(dataType_2 == "String") {
-				return "String";
-			} else if(dataType_2 == "char") {
-				return "int";
-			} else if(dataType_2 == "int") {
-				return "int";
-			} else if(dataType_2 == "double") {
-				return "double";
-			}
-		} else if(dataType_1 == "Boolean") {
-
-			if(dataType_2 == "String") {
-				return "String";
-			}
-		}
-
-		return false;
-	}
-
-	// document.onkeydown = function(event){
-	// 	if(event.keyCode === 68)	//d
-	// 		player.pressingRight = true;
-	// 	else if(event.keyCode === 83)	//s
-	// 		player.pressingDown = true;
-	// 	else if(event.keyCode === 65) //a
-	// 		player.pressingLeft = true;
-	// 	else if(event.keyCode === 87) // w
-	// 		player.pressingUp = true;
-			
-	// 	else if(event.keyCode === 80) //p
-	// 		paused = !paused;
-	// }
-
-	// document.onkeyup = function(event){
-	// 	if(event.keyCode === 68)	//d
-	// 		player.pressingRight = false;
-	// 	else if(event.keyCode === 83)	//s
-	// 		player.pressingDown = false;
-	// 	else if(event.keyCode === 65) //a
-	// 		player.pressingLeft = false;
-	// 	else if(event.keyCode === 87) // w
-	// 		player.pressingUp = false;
-	// }
-
-	// isEnemyInRange = function() {
-
-	// 	for(var key in Bully.list) {
-
-	// 		if((player.x))
-	// 	}
-	// }
-
-	Objective = function(id, status, desc, task, points)
-	{
-		var self = {
-			id: id,
-			status: status,
-			description: desc,
-			task: task,
-			points: points,
-		};
-
-		Objective.list[id] = self;
-	}
-
-	Objective.list = {};
-
-	Objective.init = function() {
-
-		var promise = new Promise(function(resolve, reject) {
-
-			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
-
-			$.ajax({
-				type: 'POST',
-				url: '<?php echo base_url(); ?>Game/get_objectives',
-				data: {lvlId: lvlId},
-				dataType: 'json',
-				success: function(res) {
-					resolve(res);
-				},
-				error: function(err) {
-					console.log(err);
-				}
-			}).then(function(result) {
-
-				if(result.status) {
-					var objectives_list = result['objectives_list'];
-
-					for(var key in objectives_list) {
-
-						var taskObj = {};
-						var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
-						var objKey = Object.keys(jsonObj);
-
-						if(objKey[0] == "Finish") {
-
-							if(jsonObj['Finish'] == "True") {
-								taskObj = {finish: true};
-							} else {
-								taskObj = {finish: false};
-							}
-						} else if(objKey[0] == 'Defeat Bullies') {
-
-							taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
-
-						} else if(objKey[0] == 'Use command') {
-
-							taskObj = {use_command: jsonObj['Use command']};
-
-						} else if(objKey[0] == 'Collect Coins') {
-
-							taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
-
-						} else if(objKey[0] == 'Health') {
-
-							var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
-							taskObj = {health: healthPerc};
-						}
-						
-
-
-						Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
-					}
-
-					console.log(Objective.list);
-				} else {
-					console.log(result.message);
-				}
-			});
-		});
-	}
-
-	Objective.update = function() {
-
-		for(var key in Objective.list) {
-
-			var objKey = Object.keys(Objective.list[key].task);
-
-			if(objKey == 'health') {
-
-				var hpPerc = (player.hp / player.hpMax);
-
-				// console.log(hpPerc + " - " + Objective.list[key].task.health);
-				
-				if(hpPerc >= Objective.list[key].task.health) {
-					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-				} else {
-					Objective.list[key].status = false;
-					$("#" + Objective.list[key].id + "_status").removeAttr('checked');
-				}
-			} else if(objKey == 'collect_coins') {
-
-				if(collectedCoins == Objective.list[key].task.collect_coins) {
-					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-				}
-			} else if(objKey == 'defeat_bullies') {
-
-				if(KilledBullies >= Objective.list[key].task.defeat_bullies) {
-					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-				}
-			} else if(objKey == 'use_command') {
-
-				if(Objective.list[key].task.use_command == 'Loop') {
-					if(used_loop) {
-						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-					}
-				}
-
-				if(Objective.list[key].task.use_command == 'If') {
-					if(used_if) {
-						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-					}
-				}
-			} else if(objKey == 'finish') {
-				if(isFinished) {
-					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-				}
-			}
-			
-		}
-	}
-
-	Objective.computeScore = function() {
-
-		var totalScore = 0;
-		var perfect_score = 0;
-		var score_perc = 0;
-
-		for(var key in Objective.list) {
-
-			perfect_score += Objective.list[key].points;
-
-			if(Objective.list[key].status) {
-				totalScore += Objective.list[key].points;
-			}
-		}
-
-		score_perc = parseFloat((totalScore/perfect_score)*100);
-
-		console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
-
-		// if(score_perc < 50 && score_perc > 0) {
-		// 	$("#star1").attr("checked", true);
-		// } else if(score_perc >= 50 && score_perc < 100) {
-		// 	$("#star2").attr("checked", true);
-		// } else if(score_perc == 100) {
-		// 	$("#star3").attr("checked", true);
-		// } else {
-		// 	$("#star1").addClass("no-score");
-		// 	$("#star2").addClass("no-score");
-		// 	$("#star3").addClass("no-score");
-		// }
-
-
-			if(score_perc < 50 && score_perc > 0) {
-				$("#star1").attr("checked", true);
-				$("#star1").addClass("s1");
-				$("#star2").addClass("no-score u2");
-				$("#star3").addClass("no-score u3");
-			} else if(score_perc >= 50 && score_perc < 100) {
-				$("#star1").attr("checked", true);
-				$("#star1").addClass("s1");
-				$("#star2").attr("checked", true);
-				$("#star2").addClass("s2");
-				$("#star3").addClass("no-score u2");
-
-			} else if(score_perc == 100) {
-				$("#star1").attr("checked", true);
-				$("#star1").addClass("s1");
-				$("#star2").attr("checked", true);
-				$("#star2").addClass("s2");
-				$("#star3").attr("checked", true);
-				$("#star3").addClass("s3");
-			} else {
-				$("#star1").addClass("no-score u1");
-				$("#star2").addClass("no-score u2");
-				$("#star3").addClass("no-score u3");
-			}
-
-		return totalScore;
-	}
-
-	Objective.recordScore = function() {
-
-		var aquiredScore = Objective.computeScore();
-		var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
-
-		var data = {
-			lvl_id: lvlId,
-			total_score: aquiredScore
-		}
-
-		$.ajax({
-			type: 'POST',
-			url: '<?php echo base_url(); ?>Game/record_progress',
-			data: data,
-			dataType: 'json',
-			success: function(res) {
-				console.log(res);
-			},
-			error: function(err) {
-				console.log(err);
-			}
-		});
-	}
-
-	Player = function(id, imgSrc, width, height, x, y, hpMax) {
-
-		var self = {
-			id: id,
-			img: new Image(),
-			width: width,
-			height: height,
-			x: x,
-			y: y,
-			hpMax: hpMax,
-			hp: hpMax,
-			moveCtr: 0,
-			type: "player",
-			currentQuestion: {},
-		}
-
-		self.img.src = imgSrc;
-
-		self.pressingUp = false;
-		self.pressingDown = false;
-		self.pressingRight = false;
-		self.pressingLeft = false;
-
-		self.spriteAnimCtr = 0;
-
-		self.update = function() {
-
-			if(self.hp <= 0) {
-				isPaused = true;
-				$("#lose-modal").css("display", "block");
-			}
-
-			if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
-			{
-				self.spriteAnimCtr += 0.25;
-				self.moveCtr += 3 * zoomMultiplier;
-			} else {
-				self.spriteAnimCtr = 0;
-			}
-
-			if(self.isEnemyInRange()) {
-
-				var bullyId = self.isEnemyInRange();
-				var question_id = "";
-
-				if(self.currentQuestion.questionNum && self.currentQuestion.bully == bullyId) {
-					question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
-				} else {
-					console.log("set new bully");
-					self.currentQuestion = {bully: bullyId, questionNum: 1};
-					question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
-				}
-
-				if (Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum] && !Question.list[question_id].isAsked && Question.list[question_id].status == "not answered") {
-
-					// var question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
-
-					// if(!Question.list[question_id].isAsked) {
-						
-						// if(Question.list[question_id].status == "not answered") {
-								
-								Question.list[question_id].showQuestion();
-								Question.list[question_id].isAsked = true;
-								Question.list[question_id].status = "current question";
-						// }
-					// }
-				} else if(Bully.list[bullyId].hp >= 0) {
-
-					var questions_status = Question.statusCheck(bullyId);
-					// console.log(questions_status);
-
-					if((questions_status.total_questions == (questions_status.wrong_ans + questions_status.correct_ans)) && (questions_status.wrong_ans > 0)) {
-
-						Bully.list[bullyId].exit();
-					}
-				}
-
-			} else {
-
-				self.pressingRight = true;
-			}
-
-			self.updatePosition();
-			self.draw();
-
-			
-		}
-
-		self.updatePosition = function() {
-
-			var actHeight = self.height/2 * zoomMultiplier;
-			var actWidth = self.width/2 * zoomMultiplier;
-
-			var topBumper = {x: self.x, y: self.y - actHeight};
-			var bottomBumper = {x: self.x, y: self.y + actHeight};
-			var leftBumper = {x: self.x - actWidth, y: self.y};
-			var rightBumper = {x: self.x + actWidth, y: self.y};
-
-			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
-
-				console.log("exit");
-				isPaused = true;
-				isFinished = true;
-
-			} else {
-
-				if(self.moveCtr <= (96 * zoomMultiplier)) {
-				
-					if(self.pressingUp)
-						self.y -= (3);
-					if(self.pressingDown)
-						self.y += (3);
-					if(self.pressingLeft)
-						self.x -= (3);
-					if(self.pressingRight)
-						self.x += (3);
-				} else {
-
-					self.pressingUp = false;
-					self.pressingDown = false;
-					self.pressingRight = false;
-					self.pressingLeft = false;
-
-					self.moveCtr = 0;
-				}
-			}
-		}
-
-		self.draw = function() {
-
-			var x = (ctxWidth/2 - self.width/2) - 80;
-			var y = ctxHeight/2 - self.height/2;
-
-			var frameWidth = self.img.width/4;
-			var frameHeight = self.img.height/4;
-
-			var directionMod = 0;
-			var walkingMod = Math.floor(self.spriteAnimCtr) % 4;
-
-			if(self.pressingUp)
-				directionMod = 3;
-			if(self.pressingLeft)
-				directionMod = 1;
-			if(self.pressingRight)
-				directionMod = 2;
-
-			ctx.drawImage(self.img, walkingMod * frameWidth, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width * zoomMultiplier, self.height  * zoomMultiplier);
-		}
-
-		self.isEnemyInRange = function() {
-			
-			for(var key in Bully.list) {
-
-				if(Bully.list[key].x === self.x) {
-					if(((self.y - Bully.list[key].y) <= 120) && ((self.y - Bully.list[key].y) > 0)) {
-						return Bully.list[key].id;
-					} else if(((self.y - Bully.list[key].y) >= -120) && ((self.y - Bully.list[key].y) < 0)) {
-						return Bully.list[key].id;
-					}
-				} else if(Bully.list[key].y === self.y) {
-					if(((self.x - Bully.list[key].x) <= 120) && ((self.x - Bully.list[key].x) > 0)) {
-						return Bully.list[key].id;
-					} else if(((self.x - Bully.list[key].x) >= -120) && ((self.x - Bully.list[key].x) < 0)) {
-						return Bully.list[key].id;
-					}
-				} else {
-					return false;
+				if(vrbls[key].var_identifier == var_identifier) {
+					return vrbls[key];
 				}
 			}
 
 			return false;
 		}
 
-		self.interact = function() {
+		doOperation = function(operation, val1, val2) {
 
+			if(operation == "+") {
+
+				if(val1.dataType == "int") {
+
+					if(val2.dataType == "int" || val2.dataType == "String" || val2.dataType == "double") {
+						return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "double") {
+
+					if(val2.dataType == "int" || val2.dataType == "String" || val2.dataType == "double") {
+						return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "String") {
+					return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+				} else if(val1.dataType == "char") {
+
+					if(val2.dataType == "String") {
+						return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "int" || val2.dataType == "double") {
+						// return val1.value.charCodeAt(0);
+						return {status: true, value: (val1.value.charCodeAt(0) + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value.charCodeAt(0) + val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "Boolean") {
+
+					if(val2.dataType == "String") {
+						return {status: true, value: (val1.value + val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				}
+
+			} else if(operation == "-") {
+
+				if(val1.dataType == "int") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "double") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "String") {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				} else if(val1.dataType == "char") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value.charCodeAt(0) - val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value.charCodeAt(0) - val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "Boolean") {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+
+			} else if(operation == "*") {
+
+				if(val1.dataType == "int") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "double") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "String") {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				} else if(val1.dataType == "char") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value.charCodeAt(0) * val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value.charCodeAt(0) * val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "Boolean") {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+
+			} else if(operation == "/") {
+
+				if(val1.dataType == "int") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "double") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "String") {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				} else if(val1.dataType == "char") {
+
+					if(val2.dataType == "int" || val2.dataType == "double") {
+						return {status: true, value: (val1.value.charCodeAt(0) / val2.value), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else if(val2.dataType == "char") {
+						return {status: true, value: (val1.value.charCodeAt(0) / val2.value.charCodeAt(0)), dataType: parseOpResult(val1.dataType, val2.dataType)};
+					} else {
+						return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+					}
+				} else if(val1.dataType == "Boolean") {
+					return {status: false, message: "datatype missmatch, invalid operation for datatypes " + val1.dataType + " and " + val2.dataType + "."};
+				}
+
+			}
 		}
 
-		return self;
-	}
+		parseOpResult = function(dataType_1, dataType_2) {
 
-	Bully = function(id, name, imgSrc, imgThumb, height, width, x, y, hpMax) {
+			if(dataType_1 == "int") {
 
-		var self = {
-			id: id,
-			img: new Image(),
-			thumb: new Image(),
-			height: height,
-			width: width,
-			x: x,
-			y: y,
-			name: name,
-			hpMax: hpMax,
-			hp: hpMax,
-			type: "bully",
-			toRemove: false,
-		}
+				if(dataType_2 == "double") {
+					return "double";
+				} else if(dataType_2 == "String") {
+					return "String";
+				} else if(dataType_2 == "int") {
+					return "int";
+				} else if(dataType_2 == "char") {
+					return "int";
+				}
+			} else if(dataType_1 == "double") {
 
-		self.pressingUp = false;
-		self.pressingDown = false;
-		self.pressingRight = false;
-		self.pressingLeft = false;
+				if(dataType_2 == "double") {
+					return "double";
+				} else if(dataType_2 == "String") {
+					return "String";
+				} else if(dataType_2 == "int") {
+					return "double";
+				} else if(dataType_2 == "char") {
+					return "double";
+				}
+			} else if(dataType_1 == "String") {
 
-		self.spriteAnimCtr = 0;
+				return "String";
+			} else if(dataType_1 == "char") {
 
-		self.img.src = imgSrc;
-		self.thumb.src = imgThumb;
+				if(dataType_2 == "String") {
+					return "String";
+				} else if(dataType_2 == "char") {
+					return "int";
+				} else if(dataType_2 == "int") {
+					return "int";
+				} else if(dataType_2 == "double") {
+					return "double";
+				}
+			} else if(dataType_1 == "Boolean") {
 
-		self.update = function() {
-
-			if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
-			{
-				self.spriteAnimCtr += 0.25;
-				self.moveCtr += 6 * zoomMultiplier;
-			} else {
-				self.spriteAnimCtr = 0;
+				if(dataType_2 == "String") {
+					return "String";
+				}
 			}
 
-			self.updatePosition();
-			self.draw();
+			return false;
+		}
 
-			if(self.hp <= 0) {
-				self.toRemove = true;
-				KilledBullies++;
+		Objective = function(id, status, desc, task, points)
+		{
+			var self = {
+				id: id,
+				status: status,
+				description: desc,
+				task: task,
+				points: points,
+			};
+
+			Objective.list[id] = self;
+		}
+
+		Objective.list = {};
+
+		Objective.init = function() {
+
+			var promise = new Promise(function(resolve, reject) {
+
+				var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+				$.ajax({
+					type: 'POST',
+					url: '<?php echo base_url(); ?>Game/get_objectives',
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					success: function(res) {
+						resolve(res);
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				}).then(function(result) {
+
+					if(result.status) {
+						var objectives_list = result['objectives_list'];
+
+						for(var key in objectives_list) {
+
+							var taskObj = {};
+							var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
+							var objKey = Object.keys(jsonObj);
+
+							if(objKey[0] == "Finish") {
+
+								if(jsonObj['Finish'] == "True") {
+									taskObj = {finish: true};
+								} else {
+									taskObj = {finish: false};
+								}
+							} else if(objKey[0] == 'Defeat Bullies') {
+
+								taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
+
+							} else if(objKey[0] == 'Use command') {
+
+								taskObj = {use_command: jsonObj['Use command']};
+
+							} else if(objKey[0] == 'Collect Coins') {
+
+								taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
+
+							} else if(objKey[0] == 'Health') {
+
+								var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
+								taskObj = {health: healthPerc};
+							}
+							
+
+
+							Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
+						}
+
+						console.log(Objective.list);
+					} else {
+						console.log(result.message);
+					}
+				});
+			});
+		}
+
+		Objective.update = function() {
+
+			for(var key in Objective.list) {
+
+				var objKey = Object.keys(Objective.list[key].task);
+
+				if(objKey == 'health') {
+
+					var hpPerc = (player.hp / player.hpMax);
+
+					// console.log(hpPerc + " - " + Objective.list[key].task.health);
+					
+					if(hpPerc >= Objective.list[key].task.health) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					} else {
+						Objective.list[key].status = false;
+						$("#" + Objective.list[key].id + "_status").removeAttr('checked');
+					}
+				} else if(objKey == 'collect_coins') {
+
+					if(collectedCoins == Objective.list[key].task.collect_coins) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				} else if(objKey == 'defeat_bullies') {
+
+					if(KilledBullies >= Objective.list[key].task.defeat_bullies) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				} else if(objKey == 'use_command') {
+
+					if(Objective.list[key].task.use_command == 'Loop') {
+						if(used_loop) {
+							Objective.list[key].status = true;
+							document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						}
+					}
+
+					if(Objective.list[key].task.use_command == 'If') {
+						if(used_if) {
+							Objective.list[key].status = true;
+							document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						}
+					}
+				} else if(objKey == 'finish') {
+					if(isFinished) {
+						Objective.list[key].status = true;
+						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					}
+				}
+				
 			}
 		}
 
+		Objective.computeScore = function() {
 
-		self.draw = function() {
+			var totalScore = 0;
+			var perfect_score = 0;
+			var score_perc = 0;
 
-			var x = (ctxWidth/2 - player.x) - 80;
-			var y = ctxHeight/2 - player.y;
+			for(var key in Objective.list) {
 
-			x += self.x - self.width/2;
-			y += self.y - self.height/2;
+				perfect_score += Objective.list[key].points;
 
-			var frameWidth = self.img.width/4;
-			var frameHeight = self.img.height/4;
-
-			var directionMod = 0;
-			var walkingMod = Math.floor(self.spriteAnimCtr) % 4;
-
-			if(self.pressingUp) {
-				directionMod = 3;
-			} else if(self.pressingDown) {
-				directionMod = 0;
-			} else if(self.pressingRight) {
-				directionMod = 2;
-			} else if(self.pressingLeft) {
-				directionMod = 1;
-			} else {
-				var diffX = player.x - self.x;
-				var diffY = player.y - self.y;
-
-				var angleToUser = Math.atan2(diffY,diffX) / Math.PI * 180;
-
-				if(angleToUser < 0)
-					angleToUser = 360 + angleToUser;
-
-				var directionMod = 2; // right
-
-				if(angleToUser >= 45 && angleToUser < 135) // down
-					directionMod = 0;
-				if(angleToUser >= 135 && angleToUser < 225) // left
-					directionMod = 1;
-				if(angleToUser >= 225 && angleToUser < 315) // up
-					directionMod = 3;
+				if(Objective.list[key].status) {
+					totalScore += Objective.list[key].points;
+				}
 			}
 
-			ctx.drawImage(self.img, frameWidth * walkingMod, frameHeight * directionMod, frameWidth, frameHeight, x, y, self.width  * zoomMultiplier, self.height  * zoomMultiplier);
+			score_perc = parseFloat((totalScore/perfect_score)*100);
 
-			var HPx = x + self.width/2;
-			var HPy = y;
+			console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
 
-			ctx.fillStyle = 'red';
-			var width = 50 * (self.hp / self.hpMax);
+			// if(score_perc < 50 && score_perc > 0) {
+			// 	$("#star1").attr("checked", true);
+			// } else if(score_perc >= 50 && score_perc < 100) {
+			// 	$("#star2").attr("checked", true);
+			// } else if(score_perc == 100) {
+			// 	$("#star3").attr("checked", true);
+			// } else {
+			// 	$("#star1").addClass("no-score");
+			// 	$("#star2").addClass("no-score");
+			// 	$("#star3").addClass("no-score");
+			// }
 
-			if(width < 0)
-			{
-				width = 0;
-			}
 
-			ctx.fillRect(HPx-28, HPy-10, width, 6);
-			ctx.strokeStyle = 'black';
-			ctx.strokeRect(HPx-28, HPy-10, 50, 6);
+				if(score_perc < 50 && score_perc > 0) {
+					$("#star1").attr("checked", true);
+					$("#star1").addClass("s1");
+					$("#star2").addClass("no-score u2");
+					$("#star3").addClass("no-score u3");
+				} else if(score_perc >= 50 && score_perc < 100) {
+					$("#star1").attr("checked", true);
+					$("#star1").addClass("s1");
+					$("#star2").attr("checked", true);
+					$("#star2").addClass("s2");
+					$("#star3").addClass("no-score u2");
 
-			ctx.restore();
+				} else if(score_perc == 100) {
+					$("#star1").attr("checked", true);
+					$("#star1").addClass("s1");
+					$("#star2").attr("checked", true);
+					$("#star2").addClass("s2");
+					$("#star3").attr("checked", true);
+					$("#star3").addClass("s3");
+				} else {
+					$("#star1").addClass("no-score u1");
+					$("#star2").addClass("no-score u2");
+					$("#star3").addClass("no-score u3");
+				}
+
+			return totalScore;
 		}
 
-		self.updatePosition = function() {
+		Objective.recordScore = function() {
 
-			var actHeight = self.height/2 * zoomMultiplier;
-			var actWidth = self.width/2 * zoomMultiplier;
-
-			var topBumper = {x: self.x, y: self.y - actHeight};
-			var bottomBumper = {x: self.x, y: self.y + actHeight};
-			var leftBumper = {x: self.x - actWidth, y: self.y};
-			var rightBumper = {x: self.x + actWidth, y: self.y};
-
-			if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
-
-				self.toRemove = true;
-				// console.log("exit");
-			}
-
-				if(self.pressingUp)
-					self.y -= (6);
-				if(self.pressingDown)
-					self.y += (6);
-				if(self.pressingLeft)
-					self.x -= (6);
-				if(self.pressingRight)
-					self.x += (6);
-		}
-
-		self.exit = function() {
-
-			self.pressingRight = true;
-		}
-
-		Bully.list[id] = self;
-	}
-
-	Bully.list = {};
-
-	Bully.generate = function(id, name, imgSrc, imgThumb, height, width, x, y, hpMax) {
-
-		// var newId = "Bully_" + Math.random();
-
-		Bully(id, name, imgSrc, imgThumb, height, width, x, y, hpMax);
-	}
-
-	Bully.init = function() {
-
-		var promise = new Promise(function(resolve, reject) {
-
+			var aquiredScore = Objective.computeScore();
 			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
 
+			var data = {
+				lvl_id: lvlId,
+				total_score: aquiredScore
+			}
+
 			$.ajax({
-				type: 'post',
-				url: "<?php echo base_url(); ?>Game/get_bully_list",
-				data: {lvlId: lvlId},
+				type: 'POST',
+				url: '<?php echo base_url(); ?>Game/record_progress',
+				data: data,
 				dataType: 'json',
 				success: function(res) {
-					resolve(res);
+					console.log(res);
 				},
 				error: function(err) {
-					console.log("failed to retreive bully data");
+					console.log(err);
 				}
-			}).then(function(result) {
+			});
+		}
 
-				if(result['status']) {
-					// console.log(result['bully_list'][0].BLY_SPAWNPOINT);
+		Player = function(id, imgSrc, width, height, x, y, hpMax) {
 
-					var bully_list = result['bully_list'];
+			var self = {
+				id: id,
+				img: new Image(),
+				width: width,
+				height: height,
+				x: x,
+				y: y,
+				hpMax: hpMax,
+				hp: hpMax,
+				moveCtr: 0,
+				type: "player",
+				currentQuestion: {},
+			}
 
-					for(var key in bully_list) {
+			self.img.src = imgSrc;
 
-						var bully_spawn = JSON.parse(bully_list[key].BLY_SPAWNPOINT);
+			self.pressingUp = false;
+			self.pressingDown = false;
+			self.pressingRight = false;
+			self.pressingLeft = false;
 
-						img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/" + bully_list[key].BLY_IMAGEURL;
-						img.bullyThumb.src = "<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/" + bully_list[key].BLY_THUMB_FILENAME;
+			self.spriteAnimCtr = 0;
 
-						Bully.generate(bully_list[key].BLY_ID, bully_list[key].BLY_NAME, img.bully.src, img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+			self.update = function() {
+
+				if(self.hp <= 0) {
+					isPaused = true;
+					$("#lose-modal").css("display", "block");
+				}
+
+				if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
+				{
+					self.spriteAnimCtr += 0.25;
+					self.moveCtr += 3 * zoomMultiplier;
+				} else {
+					self.spriteAnimCtr = 0;
+				}
+
+				if(self.isEnemyInRange()) {
+
+					var bullyId = self.isEnemyInRange();
+					var question_id = "";
+
+					if(self.currentQuestion.questionNum && self.currentQuestion.bully == bullyId) {
+						question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
+					} else {
+						console.log("set new bully");
+						self.currentQuestion = {bully: bullyId, questionNum: 1};
+						question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
+					}
+
+					if (Question.list[self.currentQuestion.bully + "_" + self.currentQuestion.questionNum] && !Question.list[question_id].isAsked && Question.list[question_id].status == "not answered") {
+
+						// var question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
+
+						// if(!Question.list[question_id].isAsked) {
+							
+							// if(Question.list[question_id].status == "not answered") {
+									
+									Question.list[question_id].showQuestion();
+									Question.list[question_id].isAsked = true;
+									Question.list[question_id].status = "current question";
+							// }
+						// }
+					} else if(Bully.list[bullyId].hp >= 0) {
+
+						var questions_status = Question.statusCheck(bullyId);
+						// console.log(questions_status);
+
+						if((questions_status.total_questions == (questions_status.wrong_ans + questions_status.correct_ans)) && (questions_status.wrong_ans > 0)) {
+
+							Bully.list[bullyId].exit();
+						}
 					}
 
 				} else {
-					console.log(result['message']);
+
+					self.pressingRight = true;
 				}
-			});
-		});
-	}
 
-	Bully.update = function() {
+				self.updatePosition();
+				self.draw();
 
-		for(var key in Bully.list) {
-
-			Bully.list[key].update();
-
-			if(Bully.list[key].toRemove) {
-				delete Bully.list[key];
-			}
-		}
-	}
-
-	Projectile = function(id, imgSrc, type, x, y, dir) {
-
-		var self = {
-			id: id,
-			img: new Image(),
-			type: type,
-			x: x,
-			y: y,
-			direction: dir,
-			timer: 0,
-			toRemove: false,
-			height: 20,
-			width: 20,
-		}
-
-		self.img.src = imgSrc;
-
-		self.update = function() {
-
-			self.updatePosition();
-			self.draw();
-
-			if(self.type === "bully")
-			{
-				if(self.testCollision(player))
-				{
-					self.toRemove = true;
-					player.hp -= 1;
-
-					var hpPercent = (player.hp/player.hpMax)*100;
-
-					$(".player-hp-bar").css("width", hpPercent + "%");
-				}
+				
 			}
 
-			if(self.type === "player")
-			{
-				for(var key in Bully.list)
-				{
-					if(self.testCollision(Bully.list[key]))
-					{
-						self.toRemove = true;
-						Bully.list[key].hp -= 1;
+			self.updatePosition = function() {
+
+				var actHeight = self.height/2 * zoomMultiplier;
+				var actWidth = self.width/2 * zoomMultiplier;
+
+				var topBumper = {x: self.x, y: self.y - actHeight};
+				var bottomBumper = {x: self.x, y: self.y + actHeight};
+				var leftBumper = {x: self.x - actWidth, y: self.y};
+				var rightBumper = {x: self.x + actWidth, y: self.y};
+
+				if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
+
+					console.log("exit");
+					isPaused = true;
+					isFinished = true;
+
+				} else {
+
+					if(self.moveCtr <= (96 * zoomMultiplier)) {
+					
+						if(self.pressingUp)
+							self.y -= (3);
+						if(self.pressingDown)
+							self.y += (3);
+						if(self.pressingLeft)
+							self.x -= (3);
+						if(self.pressingRight)
+							self.x += (3);
+					} else {
+
+						self.pressingUp = false;
+						self.pressingDown = false;
+						self.pressingRight = false;
+						self.pressingLeft = false;
+
+						self.moveCtr = 0;
 					}
 				}
 			}
 
-			self.timer++;
+			self.draw = function() {
 
-			if(self.timer > 20)
-				self.toRemove = true;
-			// if(Maps.current.isPossitionWall(self) === 5)
-			// 	self.toRemove = true;
-		}
+				var x = (ctxWidth/2 - self.width/2) - 80;
+				var y = ctxHeight/2 - self.height/2;
 
-		self.draw = function() {
+				var frameWidth = self.img.width/4;
+				var frameHeight = self.img.height/4;
 
-			var x = (ctxWidth/2 - player.x) - 80;
-			var y = ctxHeight/2 - player.y;
+				var directionMod = 0;
+				var walkingMod = Math.floor(self.spriteAnimCtr) % 4;
 
-			x += (self.x - self.width/2);
-			y += (self.y - self.height/2);
+				if(self.pressingUp)
+					directionMod = 3;
+				if(self.pressingLeft)
+					directionMod = 1;
+				if(self.pressingRight)
+					directionMod = 2;
 
-			ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, x, y, self.width * zoomMultiplier, self.height * zoomMultiplier);
-		}
-
-		self.updatePosition = function() {
-
-			if(self.direction === "up")
-				self.y -= 8;
-			if(self.direction === "down")
-				self.y += 8;
-			if(self.direction === "left")
-				self.x -= 8;
-			if(self.direction === "right")
-				self.x += 8;
-		}
-
-		self.testCollision = function(entity2){	//return if colliding (true/false)
-			var rect1 = {
-				x:self.x-self.width/2,
-				y:self.y-self.height/2,
-				width:self.width,
-				height:self.height,
+				ctx.drawImage(self.img, walkingMod * frameWidth, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width * zoomMultiplier, self.height  * zoomMultiplier);
 			}
-			var rect2 = {
-				x:entity2.x-entity2.width/2,
-				y:entity2.y-entity2.height/2,
-				width:entity2.width,
-				height:entity2.height,
-			}
-			return testCollisionRectRect(rect1,rect2);
-		}
 
-		Projectile.list[id] = self;
-	}
+			self.isEnemyInRange = function() {
+				
+				for(var key in Bully.list) {
 
-	Projectile.list = {};
-
-	Projectile.update = function() {
-
-		for(var key in Projectile.list)
-		{
-			Projectile.list[key].update();
-			
-			if(Projectile.list[key].toRemove == true)
-				delete Projectile.list[key];
-		}
-	}
-
-	Projectile.generate = function(actor, direction) {
-		var x = actor.x;
-		var y = actor.y;
-
-		var id = Math.random();
-		var type = actor.type;
-
-		Projectile(id, img.projectile.src, type, x, y, direction);
-	}
-
-	Question = function(id, qstnType, qstnNum, bullyId, dialog, answer) {
-
-		// id, qstnNum, bullyId, dialog, answer
-
-		var self = {
-			id: id,
-			// thumb: new Image(),
-			qstnType: qstnType,
-			qstnNum: qstnNum,
-			bully: bullyId,
-			dialog: dialog,
-			answer: answer,
-			isAsked: false,
-			status: "not answered",
-		}
-
-		self.draw = function() {
-			//DIALOG
-			// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 10,img.dialog.width,img.dialog.height);
-			// Console.log(img.dialog);
-		}
-
-		self.showQuestion = function() {
-
-			$.ajax({
-				type: 'post',
-				url: "<?php echo base_url(); ?>Game/display_dialog",
-				data: {dialog: self.dialog, bully_thumb: Bully.list[self.bully].thumb.src, bully_name: Bully.list[self.bully].name},
-				success: function(res) {
-					$('.dialog-container').html(res);
-				},
-				error: function(err) {
-					console.log("cannot display dialog due to some error");
+					if(Bully.list[key].x === self.x) {
+						if(((self.y - Bully.list[key].y) <= 120) && ((self.y - Bully.list[key].y) > 0)) {
+							return Bully.list[key].id;
+						} else if(((self.y - Bully.list[key].y) >= -120) && ((self.y - Bully.list[key].y) < 0)) {
+							return Bully.list[key].id;
+						}
+					} else if(Bully.list[key].y === self.y) {
+						if(((self.x - Bully.list[key].x) <= 120) && ((self.x - Bully.list[key].x) > 0)) {
+							return Bully.list[key].id;
+						} else if(((self.x - Bully.list[key].x) >= -120) && ((self.x - Bully.list[key].x) < 0)) {
+							return Bully.list[key].id;
+						}
+					} else {
+						return false;
+					}
 				}
+
+				return false;
+			}
+
+			self.interact = function() {
+
+			}
+
+			return self;
+		}
+
+		Bully = function(id, name, imgSrc, imgThumb, height, width, x, y, hpMax) {
+
+			var self = {
+				id: id,
+				img: new Image(),
+				thumb: new Image(),
+				height: height,
+				width: width,
+				x: x,
+				y: y,
+				name: name,
+				hpMax: hpMax,
+				hp: hpMax,
+				type: "bully",
+				toRemove: false,
+			}
+
+			self.pressingUp = false;
+			self.pressingDown = false;
+			self.pressingRight = false;
+			self.pressingLeft = false;
+
+			self.spriteAnimCtr = 0;
+
+			self.img.src = imgSrc;
+			self.thumb.src = imgThumb;
+
+			self.update = function() {
+
+				if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
+				{
+					self.spriteAnimCtr += 0.25;
+					self.moveCtr += 6 * zoomMultiplier;
+				} else {
+					self.spriteAnimCtr = 0;
+				}
+
+				self.updatePosition();
+				self.draw();
+
+				if(self.hp <= 0) {
+					self.toRemove = true;
+					KilledBullies++;
+				}
+			}
+
+
+			self.draw = function() {
+
+				var x = (ctxWidth/2 - player.x) - 80;
+				var y = ctxHeight/2 - player.y;
+
+				x += self.x - self.width/2;
+				y += self.y - self.height/2;
+
+				var frameWidth = self.img.width/4;
+				var frameHeight = self.img.height/4;
+
+				var directionMod = 0;
+				var walkingMod = Math.floor(self.spriteAnimCtr) % 4;
+
+				if(self.pressingUp) {
+					directionMod = 3;
+				} else if(self.pressingDown) {
+					directionMod = 0;
+				} else if(self.pressingRight) {
+					directionMod = 2;
+				} else if(self.pressingLeft) {
+					directionMod = 1;
+				} else {
+					var diffX = player.x - self.x;
+					var diffY = player.y - self.y;
+
+					var angleToUser = Math.atan2(diffY,diffX) / Math.PI * 180;
+
+					if(angleToUser < 0)
+						angleToUser = 360 + angleToUser;
+
+					var directionMod = 2; // right
+
+					if(angleToUser >= 45 && angleToUser < 135) // down
+						directionMod = 0;
+					if(angleToUser >= 135 && angleToUser < 225) // left
+						directionMod = 1;
+					if(angleToUser >= 225 && angleToUser < 315) // up
+						directionMod = 3;
+				}
+
+				ctx.drawImage(self.img, frameWidth * walkingMod, frameHeight * directionMod, frameWidth, frameHeight, x, y, self.width  * zoomMultiplier, self.height  * zoomMultiplier);
+
+				var HPx = x + self.width/2;
+				var HPy = y;
+
+				ctx.fillStyle = 'red';
+				var width = 50 * (self.hp / self.hpMax);
+
+				if(width < 0)
+				{
+					width = 0;
+				}
+
+				ctx.fillRect(HPx-28, HPy-10, width, 6);
+				ctx.strokeStyle = 'black';
+				ctx.strokeRect(HPx-28, HPy-10, 50, 6);
+
+				ctx.restore();
+			}
+
+			self.updatePosition = function() {
+
+				var actHeight = self.height/2 * zoomMultiplier;
+				var actWidth = self.width/2 * zoomMultiplier;
+
+				var topBumper = {x: self.x, y: self.y - actHeight};
+				var bottomBumper = {x: self.x, y: self.y + actHeight};
+				var leftBumper = {x: self.x - actWidth, y: self.y};
+				var rightBumper = {x: self.x + actWidth, y: self.y};
+
+				if( (Maps.current.isPossitionWall(topBumper) === 4) || (Maps.current.isPossitionWall(leftBumper) === 4) || (Maps.current.isPossitionWall(bottomBumper) === 4) || (Maps.current.isPossitionWall(rightBumper) === 4)) {
+
+					self.toRemove = true;
+					// console.log("exit");
+				}
+
+					if(self.pressingUp)
+						self.y -= (6);
+					if(self.pressingDown)
+						self.y += (6);
+					if(self.pressingLeft)
+						self.x -= (6);
+					if(self.pressingRight)
+						self.x += (6);
+			}
+
+			self.exit = function() {
+
+				self.pressingRight = true;
+			}
+
+			Bully.list[id] = self;
+		}
+
+		Bully.list = {};
+
+		Bully.generate = function(id, name, imgSrc, imgThumb, height, width, x, y, hpMax) {
+
+			// var newId = "Bully_" + Math.random();
+
+			Bully(id, name, imgSrc, imgThumb, height, width, x, y, hpMax);
+		}
+
+		Bully.init = function() {
+
+			var promise = new Promise(function(resolve, reject) {
+
+				var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/get_bully_list",
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					success: function(res) {
+						resolve(res);
+					},
+					error: function(err) {
+						console.log("failed to retreive bully data");
+					}
+				}).then(function(result) {
+
+					if(result['status']) {
+						// console.log(result['bully_list'][0].BLY_SPAWNPOINT);
+
+						var bully_list = result['bully_list'];
+
+						for(var key in bully_list) {
+
+							var bully_spawn = JSON.parse(bully_list[key].BLY_SPAWNPOINT);
+
+							img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/" + bully_list[key].BLY_IMAGEURL;
+							img.bullyThumb.src = "<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/" + bully_list[key].BLY_THUMB_FILENAME;
+
+							Bully.generate(bully_list[key].BLY_ID, bully_list[key].BLY_NAME, img.bully.src, img.bullyThumb.src, img.bully.height/4, img.bully.width/4, bully_spawn[0], bully_spawn[1], parseInt(bully_list[key].BLY_MAXHP));
+						}
+
+					} else {
+						console.log(result['message']);
+					}
+				});
 			});
 		}
 
-		Question.list[id] = self;
-	}
+		Bully.update = function() {
 
-	Question.list = {};
+			for(var key in Bully.list) {
 
-	Question.init = function() {
+				Bully.list[key].update();
 
-		var promise = new Promise(function(resolve, reject) {
+				if(Bully.list[key].toRemove) {
+					delete Bully.list[key];
+				}
+			}
+		}
+
+		Projectile = function(id, imgSrc, type, x, y, dir) {
+
+			var self = {
+				id: id,
+				img: new Image(),
+				type: type,
+				x: x,
+				y: y,
+				direction: dir,
+				timer: 0,
+				toRemove: false,
+				height: 20,
+				width: 20,
+			}
+
+			self.img.src = imgSrc;
+
+			self.update = function() {
+
+				self.updatePosition();
+				self.draw();
+
+				if(self.type === "bully")
+				{
+					if(self.testCollision(player))
+					{
+						self.toRemove = true;
+						player.hp -= 1;
+
+						var hpPercent = (player.hp/player.hpMax)*100;
+
+						$(".player-hp-bar").css("width", hpPercent + "%");
+					}
+				}
+
+				if(self.type === "player")
+				{
+					for(var key in Bully.list)
+					{
+						if(self.testCollision(Bully.list[key]))
+						{
+							self.toRemove = true;
+							Bully.list[key].hp -= 1;
+						}
+					}
+				}
+
+				self.timer++;
+
+				if(self.timer > 20)
+					self.toRemove = true;
+				// if(Maps.current.isPossitionWall(self) === 5)
+				// 	self.toRemove = true;
+			}
+
+			self.draw = function() {
+
+				var x = (ctxWidth/2 - player.x) - 80;
+				var y = ctxHeight/2 - player.y;
+
+				x += (self.x - self.width/2);
+				y += (self.y - self.height/2);
+
+				ctx.drawImage(self.img, 0, 0, self.img.width, self.img.height, x, y, self.width * zoomMultiplier, self.height * zoomMultiplier);
+			}
+
+			self.updatePosition = function() {
+
+				if(self.direction === "up")
+					self.y -= 8;
+				if(self.direction === "down")
+					self.y += 8;
+				if(self.direction === "left")
+					self.x -= 8;
+				if(self.direction === "right")
+					self.x += 8;
+			}
+
+			self.testCollision = function(entity2){	//return if colliding (true/false)
+				var rect1 = {
+					x:self.x-self.width/2,
+					y:self.y-self.height/2,
+					width:self.width,
+					height:self.height,
+				}
+				var rect2 = {
+					x:entity2.x-entity2.width/2,
+					y:entity2.y-entity2.height/2,
+					width:entity2.width,
+					height:entity2.height,
+				}
+				return testCollisionRectRect(rect1,rect2);
+			}
+
+			Projectile.list[id] = self;
+		}
+
+		Projectile.list = {};
+
+		Projectile.update = function() {
+
+			for(var key in Projectile.list)
+			{
+				Projectile.list[key].update();
+				
+				if(Projectile.list[key].toRemove == true)
+					delete Projectile.list[key];
+			}
+		}
+
+		Projectile.generate = function(actor, direction) {
+			var x = actor.x;
+			var y = actor.y;
+
+			var id = Math.random();
+			var type = actor.type;
+
+			Projectile(id, img.projectile.src, type, x, y, direction);
+		}
+
+		Question = function(id, qstnType, qstnNum, bullyId, dialog, answer) {
+
+			// id, qstnNum, bullyId, dialog, answer
+
+			var self = {
+				id: id,
+				// thumb: new Image(),
+				qstnType: qstnType,
+				qstnNum: qstnNum,
+				bully: bullyId,
+				dialog: dialog,
+				answer: answer,
+				isAsked: false,
+				status: "not answered",
+			}
+
+			self.draw = function() {
+				//DIALOG
+				// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 10,img.dialog.width,img.dialog.height);
+				// Console.log(img.dialog);
+			}
+
+			self.showQuestion = function() {
+
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/display_dialog",
+					data: {dialog: self.dialog, bully_thumb: Bully.list[self.bully].thumb.src, bully_name: Bully.list[self.bully].name},
+					success: function(res) {
+						$('.dialog-container').html(res);
+					},
+					error: function(err) {
+						console.log("cannot display dialog due to some error");
+					}
+				});
+			}
+
+			Question.list[id] = self;
+		}
+
+		Question.list = {};
+
+		Question.init = function() {
+
+			var promise = new Promise(function(resolve, reject) {
+
+				var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url() ?>Game/get_question_list",
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					success: function(res) {
+						// console.log(res),
+						resolve(res);
+					},
+					error: function(err) {
+						console.log("failed to retreive question list due to some error");
+					}
+				}).then(function(result) {
+
+					if(result.status) {
+						// console.log(result.question_list);
+
+						var question_list = result.question_list;
+
+						for(var key in question_list) {
+
+							var questionId = question_list[key].BLY_ID + "_" + question_list[key].QSTN_NUM;
+
+							var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+							// console.log(answers);
+
+							if(answers.variables) {
+
+								for(var akey in answers.variables) {
+
+									if(/\[\]/g.test(answers.variables[akey].dataType)) {
+										
+										var arrValue = answers.variables[akey].var_value;
+
+										for(var vkey in arrValue) {
+
+											var valObj = parseValue(answers.variables[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
+
+											arrValue[vkey] = valObj.value;
+										}
+
+										answers.variables[akey].var_value = arrValue;
+
+									} else {
+										
+										var valObj = parseValue(answers.variables[akey].dataType, answers.variables[akey].var_value);
+										answers.variables[akey].var_value = valObj.value;
+									}
+								}
+							}
+
+							// if(question_list[key].QSTN_TYPE == "variable") {
+
+							// 	var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+							// 	for(var akey in answers) {
+							// 		answers[akey].var_value = parseValue(answers[akey].dataType, answers[akey].var_value);
+							// 	}
+
+							// 	// console.log(answers);
+							// } else if(question_list[key].QSTN_TYPE == "array") {
+
+							// 	var answers = JSON.parse(question_list[key].QSTN_ANSWER);
+
+							// 	for(var akey in answers) {
+
+							// 		var arrValue = answers[akey].var_value;
+
+							// 		for(var vkey in arrValue) {
+
+							// 			arrValue[vkey] = parseValue(answers[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
+							// 		}
+
+							// 		answers[akey].var_value = arrValue;
+							// 	}
+
+							// 	// console.log(answers);
+							// }
+
+							Question(questionId, question_list[key].QSTN_TYPE, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
+						}
+
+						console.log(Question.list);
+					}
+				});
+			});
+		}
+
+		Question.closeDialog = function() {
+			$('.dialog-container').html('');
+		}
+
+		Question.statusCheck = function(bullyId) {
+
+			var correct_ans = 0;
+			var wrong_ans = 0;
+			var total_questions = 0;
+
+			for(var key in Question.list) {
+
+				if(Question.list[key].bully == bullyId) {
+
+					total_questions++;
+
+					if(Question.list[key].isAsked) {
+
+						if(Question.list[key].status == "correct") {
+
+							correct_ans++;
+						} else if(Question.list[key].status == "wrong") {
+
+							wrong_ans++;
+						}
+					}
+				}
+			}
+
+			return {total_questions: total_questions, correct_ans: correct_ans, wrong_ans: wrong_ans};
+		}
+
+		Maps = function(id, imgSrc, height, width, grid) {
+
+			var self = {
+				id: id,
+				img: new Image(),
+				height: height,
+				width: width,
+				grid: grid,
+			};
+
+			self.img.src = imgSrc;
+
+			self.update = function() {
+				self.draw();
+			}
+
+			self.draw = function() {
+
+				var x = (ctxWidth/2 - player.x) - 80;
+				var y = ctxHeight/2 - player.y;
+
+				ctx.drawImage(self.img,0,0,self.img.width,self.img.height, x, y,self.width * 1,self.height * 1);
+			}
+
+			self.isPossitionWall = function(pt)
+			{
+				var gridX = Math.floor(pt.x / TILE_SIZE);
+				var gridY = Math.floor(pt.y / TILE_SIZE);
+
+				if(gridX < 0 || gridX >= self.grid[0].length)
+				{
+					return true;
+				}
+				if(gridY < 0 || gridY >= self.grid.length)
+				{
+					return true;
+				}
+
+				return self.grid[gridY][gridX];
+			};
+
+			Maps.current = self;
+			// return self;
+		}
+
+		Maps.current = {};
+
+		Maps.init = function() {
 
 			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
 
-			$.ajax({
-				type: 'post',
-				url: "<?php echo base_url() ?>Game/get_question_list",
-				data: {lvlId: lvlId},
-				dataType: 'json',
-				success: function(res) {
-					// console.log(res),
-					resolve(res);
-				},
-				error: function(err) {
-					console.log("failed to retreive question list due to some error");
-				}
+			var promise = new Promise(function(resolve, reject) {
+
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/get_level_info",
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					success: function(res) {
+						resolve(res);
+					},
+					error: function(err) {
+						console.log("cannot retreive level info due to some error");
+					}
+				});
 			}).then(function(result) {
 
 				if(result.status) {
-					// console.log(result.question_list);
+					
+					var collArray = JSON.parse(result.map_info['LVL_GRID']);
+					var rowTiles = parseInt(result.map_info['LVL_NUMCOLS']);
 
-					var question_list = result.question_list;
+					var mapGrid2d = [];
 
-					for(var key in question_list) {
-
-						var questionId = question_list[key].BLY_ID + "_" + question_list[key].QSTN_NUM;
-
-						var answers = JSON.parse(question_list[key].QSTN_ANSWER);
-
-						// console.log(answers);
-
-						if(answers.variables) {
-
-							for(var akey in answers.variables) {
-
-								if(/\[\]/g.test(answers.variables[akey].dataType)) {
-									
-									var arrValue = answers.variables[akey].var_value;
-
-									for(var vkey in arrValue) {
-
-										var valObj = parseValue(answers.variables[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
-
-										arrValue[vkey] = valObj.value;
-									}
-
-									answers.variables[akey].var_value = arrValue;
-
-								} else {
-									
-									var valObj = parseValue(answers.variables[akey].dataType, answers.variables[akey].var_value);
-									answers.variables[akey].var_value = valObj.value;
-								}
-							}
-						}
-
-						// if(question_list[key].QSTN_TYPE == "variable") {
-
-						// 	var answers = JSON.parse(question_list[key].QSTN_ANSWER);
-
-						// 	for(var akey in answers) {
-						// 		answers[akey].var_value = parseValue(answers[akey].dataType, answers[akey].var_value);
-						// 	}
-
-						// 	// console.log(answers);
-						// } else if(question_list[key].QSTN_TYPE == "array") {
-
-						// 	var answers = JSON.parse(question_list[key].QSTN_ANSWER);
-
-						// 	for(var akey in answers) {
-
-						// 		var arrValue = answers[akey].var_value;
-
-						// 		for(var vkey in arrValue) {
-
-						// 			arrValue[vkey] = parseValue(answers[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
-						// 		}
-
-						// 		answers[akey].var_value = arrValue;
-						// 	}
-
-						// 	// console.log(answers);
-						// }
-
-						Question(questionId, question_list[key].QSTN_TYPE, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
-					}
-
-					console.log(Question.list);
-				}
-			});
-		});
-	}
-
-	Question.closeDialog = function() {
-		$('.dialog-container').html('');
-		// console.log("close dialog");
-	}
-
-	Question.statusCheck = function(bullyId) {
-
-		var correct_ans = 0;
-		var wrong_ans = 0;
-		var total_questions = 0;
-
-		for(var key in Question.list) {
-
-			if(Question.list[key].bully == bullyId) {
-
-				total_questions++;
-
-				if(Question.list[key].isAsked) {
-
-					if(Question.list[key].status == "correct") {
-
-						correct_ans++;
-					} else if(Question.list[key].status == "wrong") {
-
-						wrong_ans++;
-					}
-				}
-			}
-		}
-
-		return {total_questions: total_questions, correct_ans: correct_ans, wrong_ans: wrong_ans};
-	}
-
-	Maps = function(id, imgSrc, height, width, grid) {
-
-		var self = {
-			id: id,
-			img: new Image(),
-			height: height,
-			width: width,
-			grid: grid,
-		};
-
-		self.img.src = imgSrc;
-
-		self.update = function() {
-			self.draw();
-		}
-
-		self.draw = function() {
-
-			var x = (ctxWidth/2 - player.x) - 80;
-			var y = ctxHeight/2 - player.y;
-
-			ctx.drawImage(self.img,0,0,self.img.width,self.img.height, x, y,self.width * 1,self.height * 1);
-		}
-
-		self.isPossitionWall = function(pt)
-		{
-			var gridX = Math.floor(pt.x / TILE_SIZE);
-			var gridY = Math.floor(pt.y / TILE_SIZE);
-
-			if(gridX < 0 || gridX >= self.grid[0].length)
-			{
-				return true;
-			}
-			if(gridY < 0 || gridY >= self.grid.length)
-			{
-				return true;
-			}
-
-			return self.grid[gridY][gridX];
-		};
-
-		Maps.current = self;
-		// return self;
-	}
-
-	Maps.current = {};
-
-	Maps.init = function() {
-
-		var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
-
-		var promise = new Promise(function(resolve, reject) {
-
-			$.ajax({
-				type: 'post',
-				url: "<?php echo base_url(); ?>Game/get_level_info",
-				data: {lvlId: lvlId},
-				dataType: 'json',
-				success: function(res) {
-					resolve(res);
-				},
-				error: function(err) {
-					console.log("cannot retreive level info due to some error");
-				}
-			});
-		}).then(function(result) {
-
-			if(result.status) {
-				
-				var collArray = JSON.parse(result.map_info['LVL_GRID']);
-				var rowTiles = parseInt(result.map_info['LVL_NUMCOLS']);
-
-				var mapGrid2d = [];
-
-				var ctr = 0;
-				var ctr2D = 0;
-				mapGrid2d[ctr2D] = [];
-				while(collArray[ctr] != null)
-				{
-					mapGrid2d[ctr2D][(ctr%rowTiles)] = collArray[ctr];
-
-					ctr++;
-
-					if(ctr%(rowTiles) == 0 && collArray[ctr] != null)
+					var ctr = 0;
+					var ctr2D = 0;
+					mapGrid2d[ctr2D] = [];
+					while(collArray[ctr] != null)
 					{
-						ctr2D++;
-						mapGrid2d[ctr2D] = [];
+						mapGrid2d[ctr2D][(ctr%rowTiles)] = collArray[ctr];
+
+						ctr++;
+
+						if(ctr%(rowTiles) == 0 && collArray[ctr] != null)
+						{
+							ctr2D++;
+							mapGrid2d[ctr2D] = [];
+						}
 					}
+
+					Maps('currentmap', img.map.src, img.map.height, img.map.width, mapGrid2d);
+				} else {
+					console.log(result.message);
 				}
-
-				Maps('currentmap', img.map.src, img.map.height, img.map.width, mapGrid2d);
-			} else {
-				console.log(result.message);
-			}
-		});
-	}
-
-	startNewGame = function() {
-
-		Bully.list = {};
-		Objective.list = {};
-		Question.list = {};
-		Projectile.list = {};
-		Maps.current = {};
-
-		Maps.init();
-		Objective.init();
-		Bully.init();
-		Question.init();
-
-		player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 56, 56, 10);
-
-
-
-		// cmdNum = 0;
-		// vrbls = [];
-
-		// while(isEndOfCode(cmdNum)) {
-		// 	executeCommand(cmdNum);
-		// 	cmdNum++;
-		// }
-
-		player.hp = player.hpMax;
-
-		// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 168, 56, 1);
-		// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 360, 56, 1);
-	}
-
-	update = function() {
-
-		if(!isPaused) {
-			ctx.clearRect(0,0,canvas.width,canvas.height);
-			Maps.current.update();
-			player.update();
-			Bully.update();
-			Projectile.update();
-			Objective.update();
-
-			if(isFinished) {
-				Objective.computeScore();
-				Objective.recordScore();
-				$("#finish-modal").css("display", "block");
-			}
-			// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
+			});
 		}
 
-	}
+		startNewGame = function() {
 
-	// var map_grid = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
+			Bully.list = {};
+			Objective.list = {};
+			Question.list = {};
+			Projectile.list = {};
+			Maps.current = {};
 
-	// var Maps = new Maps('currentmap', img.map.src, img.map.height, img.map.width, map_grid);
-	var question = new Question();
-	var player = {};
+			Maps.init();
+			Objective.init();
+			Bully.init();
+			Question.init();
 
-	startNewGame();
+			player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 56, 56, 10);
 
-	setInterval(update, 40);
+
+
+			// cmdNum = 0;
+			// vrbls = [];
+
+			// while(isEndOfCode(cmdNum)) {
+			// 	executeCommand(cmdNum);
+			// 	cmdNum++;
+			// }
+
+			player.hp = player.hpMax;
+
+			// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 168, 56, 1);
+			// Bully.generate(img.bully.src, (img.bully.height/4) * zoomMultiplier, (img.bully.width/4) * zoomMultiplier, 360, 56, 1);
+		}
+
+		update = function() {
+
+			if(!isPaused) {
+				ctx.clearRect(0,0,canvas.width,canvas.height);
+				Maps.current.update();
+				player.update();
+				Bully.update();
+				Projectile.update();
+				Objective.update();
+
+				if(isFinished) {
+					Objective.computeScore();
+					Objective.recordScore();
+					$("#finish-modal").css("display", "block");
+				}
+				// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
+			}
+
+		}
+
+		// var map_grid = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
+
+		// var Maps = new Maps('currentmap', img.map.src, img.map.height, img.map.width, map_grid);
+		var question = new Question();
+		var player = {};
+
+		preloadImages([
+			"<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>",
+			"<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>",
+			"<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png",
+			"<?php echo base_url(); ?>assets/images/projectile.png"
+		]).done(function(images) {
+
+			startNewGame();
+
+			setInterval(update, 40);
+		});
+
+	});
 </script>
