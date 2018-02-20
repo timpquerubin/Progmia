@@ -315,7 +315,7 @@
 
 				cmdLine = code[commandNum].trim();
 				if(cmdLine == "") {
-					console.log("blank line");
+					// console.log("blank line");
 				} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
@@ -331,13 +331,21 @@
 
 					if(code_stack.length > 0) {
 
-						code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
+						code_stack[code_stack.length - 1].statements.push({
 							type: "dec-var",
 							var_info: {
 								dataType: declareLine[0],
 								var_identifier: declareLine[1],
 							},
 						});
+
+						// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
+						// 	type: "dec-var",
+						// 	var_info: {
+						// 		dataType: declareLine[0],
+						// 		var_identifier: declareLine[1],
+						// 	},
+						// });
 
 						if(code_stack[code_stack.length - 1].status) {
 
@@ -374,7 +382,7 @@
 					var value = declareLine[1].trim();
 					var var_info = declareLine[0].split(/\s+/g);
 
-					console.log(var_info + " " + value);
+					// console.log(var_info + " " + value);
 
 					if(value) {
 
@@ -391,23 +399,62 @@
 								var_value: tempValue,
 							};
 
-							code_log.push({
-								type: "dec-var",
-								var_info: {
-									dataType: var_info[0],
-									var_identifier: var_info[1],
-									var_value: tempValue,
-								},
-							});
+							if(code_stack.length > 0) {
 
-							vrbls.push(varInfo);
+								code_stack[code_stack.length - 1].statements.push({
+									type: "dec-var",
+									var_info: {
+										dataType: var_info[0],
+										var_identifier: var_info[1],
+										var_value: tempValue,
+									},
+								});
+
+								// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
+								// 	type: "dec-var",
+								// 	var_info: {
+								// 		dataType: var_info[0],
+								// 		var_identifier: var_info[1],
+								// 		var_value: tempValue,
+								// 	},
+								// });
+
+								code_stack[code_stack.length - 1]
+
+								if(code_stack[code_stack.length - 1].status) {
+
+									code_log.push({
+										type: "dec-var",
+										var_info: {
+											dataType: var_info[0],
+											var_identifier: var_info[1],
+											var_value: tempValue,
+										},
+									});
+
+									vrbls.push(varInfo);
+								}
+
+							} else {
+
+								code_log.push({
+									type: "dec-var",
+									var_info: {
+										dataType: var_info[0],
+										var_identifier: var_info[1],
+										var_value: tempValue,
+									},
+								});
+
+								vrbls.push(varInfo);
+							}
 							
 						} else {
-							console.log("error: data type missmatch");
+							// console.log("error: data type missmatch");
 							return {status: false, message: "error: data type missmatch"};
 						}
 					} else {
-						console.log("error: no value assigned");
+						// console.log("error: no value assigned");
 						return {status: false, message: "error: no value assigned"};
 					}
 				} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*;$/g.test(cmdLine)) {
@@ -423,15 +470,48 @@
 						var_identifier: declareLine[1],
 					};
 
-					vrbls.push(arrInfo);
+					if(code_stack.length > 0) {
 
-					code_log.push({
-						type: "dec-arr",
-						var_info: {
-							dataType: declareLine[0],
-							var_identifier: declareLine[1],
-						},
-					});
+						code_stack[code_stack.length - 1].statements.push({
+							type: "dec-arr",
+							var_info: {
+								dataType: declareLine[0],
+								var_identifier: declareLine[1],
+							},
+						});
+
+						// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
+						// 	type: "dec-arr",
+						// 	var_info: {
+						// 		dataType: declareLine[0],
+						// 		var_identifier: declareLine[1],
+						// 	},
+						// });
+
+						if(code_stack[code_stack.length - 1].status) {
+
+							code_log.push({
+								type: "dec-arr",
+								var_info: {
+									dataType: declareLine[0],
+									var_identifier: declareLine[1],
+								},
+							});
+
+							vrbls.push(arrInfo);
+						}
+					} else {
+
+						code_log.push({
+							type: "dec-arr",
+							var_info: {
+								dataType: declareLine[0],
+								var_identifier: declareLine[1],
+							},
+						});
+
+						vrbls.push(arrInfo);
+					}
 
 				} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*(\{[A-Za-z0-9,\"\'\s\.]*\}|new\s*(int|double|char|String|Boolean)\[[0-9]*\])\s*;$/g.test(cmdLine)) {
 
@@ -474,7 +554,7 @@
 						}
 
 						if(isMismatch) {
-							console.log("error: dataType missmatch");
+							// console.log("error: dataType missmatch");
 							return {status: false, message: "error: dataType missmatch"};
 						} else {
 
@@ -484,16 +564,52 @@
 								var_value: arr_val,
 							};
 
-							vrbls.push(arrayInfo);
+							if(code_stack.length > 0) {
 
-							code_log.push({
-								type: "dec-arr",
-								var_info: {
-									dataType: arrInfo[0],
-									var_identifier: arrInfo[1],
-									var_value: arr_val,
-								},
-							});
+								code_stack[code_stack.length - 1].statements.push({
+									type: "dec-arr",
+									var_info: {
+										dataType: arrInfo[0],
+										var_identifier: arrInfo[1],
+										var_value: arr_val,
+									},
+								});
+
+								// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
+								// 	type: "dec-arr",
+								// 	var_info: {
+								// 		dataType: arrInfo[0],
+								// 		var_identifier: arrInfo[1],
+								// 		var_value: arr_val,
+								// 	},
+								// });
+
+								if(code_stack[code_stack.length - 1].status) {
+
+									code_log.push({
+										type: "dec-arr",
+										var_info: {
+											dataType: arrInfo[0],
+											var_identifier: arrInfo[1],
+											var_value: arr_val,
+										},
+									});
+
+									vrbls.push(arrayInfo);
+								}
+							} else {
+
+								code_log.push({
+									type: "dec-arr",
+									var_info: {
+										dataType: arrInfo[0],
+										var_identifier: arrInfo[1],
+										var_value: arr_val,
+									},
+								});
+
+								vrbls.push(arrayInfo);
+							}
 						}
 					} catch(err) {
 						console.log("error: value assigned invalid");
@@ -508,15 +624,7 @@
 					var var1_identifier = assignLine[0].trim();
 					var var2_identifier = assignLine[1].trim();
 
-					console.log(var1_identifier + ", " + var2_identifier);
-
 					if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""))) {
-
-						// if(/^[A-Za-z0-9]*\[\]$/i.test(var1_identifier) && /^[A-Za-z0-9]*\[\]$/i.test(var2_identifier)) {
-							
-						// } else {
-						// 	console.log("invalid");
-						// }
 						
 						var var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
 						var var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
@@ -527,31 +635,106 @@
 							
 							var var2_arrIndex = getConditions(var2_identifier, '[', ']');
 							valToTrans = var2.var_value[var2_arrIndex];
-							console.log(valToTrans);	
+							// console.log(valToTrans);	
 						} else {
 							valToTrans = var2.var_value
-							console.log(valToTrans);
+							// console.log(valToTrans);
 						}
 
 						if(/\[[0-9]*\]/g.test(var1_identifier) && /\[\]/g.test(var1.dataType)) {
 
 							var var1_arrIndex = getConditions(var1_identifier, '[', ']');
-							var1.var_value[var1_arrIndex] = valToTrans;
+
+							var assign_param = {
+								saveTo_index: var1_arrIndex,
+								dataType: var2.dataType.replace(/[\[\]]/g, ""),
+								value: valToTrans,
+							};
+
+							var1 = assignValueToVar(var1, assign_param);
+
+							// var1.var_value[var1_arrIndex] = valToTrans;
 						} else {
-							var1.var_value = valToTrans;
+
+							var assign_param = {
+								dataType: var2.dataType,
+								value: valToTrans,
+							};
+
+							var1 = assignValueToVar(var1, assign_param);
+
+							// var1.var_value = valToTrans;
 						}
 
-						console.log(var1);
-						console.log(var2);
+						if(var1.status == false) {
+							return var1;
+						} else {
 
-						// if(var1.dataType == var2.dataType) {
-						// 	var1.var_value = var2.var_value;
+							if(code_stack.length > 0) {
 
-						// 	console.log(var1);
-						// 	console.log(var2);
-						// } else {
-						// 	console.log("error: cannot implicitly convert " + var2.dataType + " value to " + var1.dataType);
-						// }
+								code_stack[code_stack.length - 1].statements.push({
+									type: "assign",
+									ass_info: {
+										var2_identifier: var2_identifier,
+										valToTrans: valToTrans,
+										var1_identifier: var1_identifier,
+									}
+								});
+
+								// code_log[code_stack[code_stack.length - 1].code_log].cmd_info.statements.push({
+								// 	type: "assign",
+								// 	ass_info: {
+								// 		var2_identifier: var2_identifier,
+								// 		valToTrans: valToTrans,
+								// 		var1_identifier: var1_identifier,
+								// 	}
+								// });
+
+								if(code_stack[code_stack.length - 1].status) {
+
+									code_log.push({
+										type: "assign",
+										ass_info: {
+											var2_identifier: var2_identifier,
+											valToTrans: valToTrans,
+											var1_identifier: var1_identifier,
+										}
+									});
+
+									for(var key in vrbls) {
+
+										if(vrbls[key].var_identifier == var1.var_identifier) {
+
+											vrbls[key] = var1;
+											break;
+										}
+									}
+								}
+							} else {
+
+								code_log.push({
+									type: "assign",
+									ass_info: {
+										var2_identifier: var2_identifier,
+										valToTrans: valToTrans,
+										var1_identifier: var1_identifier,
+									}
+								});
+
+								for(var key in vrbls) {
+
+									if(vrbls[key].var_identifier == var1.var_identifier) {
+
+										vrbls[key] = var1;
+										break;
+									}
+								}
+							}
+						}
+
+						// console.log(var1);
+						// console.log(var2);
+						// console.log(vrbls);
 
 					} else {
 						console.log(var1_identifier + " or " + var2_identifier + " variable does not exist");
@@ -640,6 +823,7 @@
 
 						// console.log(doOperation(opp, var_1_value, var_2_value));
 						var opRes = doOperation(opp, var_1_value, var_2_value);
+						var assign_params = {};
 
 						if(opRes.status) {
 
@@ -650,13 +834,13 @@
 									var arrIndex = getConditions(var_2, '[', ']');
 									if(save_to_obj.var_value[arrIndex]) {
 
-											var assign_param = {
+											assign_param = {
 												saveTo_index: arrIndex,
 												dataType: opRes.dataType,
 												value: opRes.value,
 											};
 
-											save_to_obj = assignValueToVar(save_to_obj, assign_param);
+											// save_to_obj = assignValueToVar(save_to_obj, assign_param);
 
 									} else {
 										return {status: false, message: "index out of range"};
@@ -672,50 +856,91 @@
 									return {status: false, message: "variable is not an array"};
 								} else {
 									
-									var assign_param = {
+									assign_param = {
 										dataType: opRes.dataType,
 										value: opRes.value,
 									};
 
+									// save_to_obj = assignValueToVar(save_to_obj, assign_param);
+								}
+							}
+
+							// console.log(save_to_obj);
+
+							if(code_stack.length > 0) {
+
+								code_stack[code_stack.length - 1].statements.push({
+									type: "op",
+									op_info: {
+										save_to: save_to,
+										operation: op_operand,
+										var_1: var_1,
+										var_2: var_2,
+									},
+								});
+
+								// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
+								// 	type: "op",
+								// 	op_info: {
+								// 		save_to: save_to,
+								// 		operation: op_operand,
+								// 		var_1: var_1,
+								// 		var_2: var_2,
+								// 	},
+								// });
+
+								if(code_stack[code_stack.length - 1].status) {
+
 									save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+									var op_operand = "";
+
+									if(opp[0] == "+")
+										op_operand = "add";
+									if(opp[0] == "-")
+										op_operand = "subtract";
+									if(opp[0] == "/")
+										op_operand = "divide";
+									if(opp[0] == "*")
+										op_operand = "multiply";
+
+									code_log.push({
+										type: "op",
+										op_info: {
+											save_to: save_to,
+											operation: op_operand,
+											var_1: var_1,
+											var_2: var_2,
+										},
+									});
 								}
+							} else {
+
+								save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+								var op_operand = "";
+
+								if(opp[0] == "+")
+									op_operand = "add";
+								if(opp[0] == "-")
+									op_operand = "subtract";
+								if(opp[0] == "/")
+									op_operand = "divide";
+								if(opp[0] == "*")
+									op_operand = "multiply";
+
+								code_log.push({
+									type: "op",
+									op_info: {
+										save_to: save_to,
+										operation: op_operand,
+										var_1: var_1,
+										var_2: var_2,
+									},
+								});
 							}
 
-							console.log(save_to_obj);
-
-							for(var key in vrbls) {
-
-								if(vrbls[key].var_identifier == save_to_obj.var_identifier) {
-
-									vrbls[key] = save_to_obj;
-									break;
-								}
-							}
-
-							var op_operand = "";
-
-							if(opp[0] == "+")
-								op_operand = "add";
-							if(opp[0] == "-")
-								op_operand = "subtract";
-							if(opp[0] == "/")
-								op_operand = "divide";
-							if(opp[0] == "*")
-								op_operand = "multiply";
-
-
-
-							code_log.push({
-								type: "op",
-								op_info: {
-									save_to: save_to,
-									operation: op_operand,
-									var_1: var_1,
-									var_2: var_2,
-								},
-							});
-
-							console.log(vrbls);
+							// console.log(vrbls);
 
 						} else {
 							return opRes;
@@ -726,10 +951,13 @@
 					}
 
 				} else if(/^if\s*\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{$/g.test(cmdLine)) {
-					console.log("used if statement");
+					// console.log("used if statement");
 
 					var if_condition = getConditions(cmdLine, "(", ")");
 					var cond_result = testCondition(if_condition);
+
+					// console.log(if_condition);
+					// console.log(cond_result);
 
 					if(cond_result.status) {
 
@@ -737,8 +965,9 @@
 							type: "if",
 							condition: if_condition,
 							status: cond_result.result,
-							start_line: commandNum,
+							start: commandNum,
 							log_id: code_log.length,
+							statements: [],
 						});
 
 						code_log.push({
@@ -746,13 +975,13 @@
 							cmd_info: {
 								condition: if_condition,
 								status: cond_result.result,
-								start_line: commandNum,
+								start: commandNum,
 								statements: [],
 							}
 						});
 
-						console.log(code_stack);
-						console.log(code_log);
+						// console.log(code_stack);
+						// console.log(code_log);
 					} else {
 
 						return cond_result;
@@ -761,6 +990,9 @@
 				} else if(/^\s*}\s*$/) {
 
 					var cmd_info = code_stack.pop();
+
+					code_log[cmd_info.log_id].cmd_info.end = commandNum;
+					code_log[cmd_info.log_id].cmd_info.statements = cmd_info.statements;
 
 					// var
 
@@ -799,6 +1031,7 @@
 				} while(isEndOfCode(cmdNum));
 
 				console.log(code_log);
+				console.log(vrbls);
 
 				for(var key in Question.list) {
 
@@ -949,6 +1182,7 @@
 								Question.closeDialog();
 								vrbls = [];
 								code_log = [];
+								code_stack = [];
 
 								var questionStat = Question.statusCheck(bullyId);
 
@@ -992,13 +1226,17 @@
 				return {status: true, result: true};
 			} else if(/^false$/g.test(cond)) {
 				return {status: true, result: false};
-			} else if(/^\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*==\s*[A-Za-z0-9_\W]+\s*$/g.test(cond)) {
+			} else if(/^\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*(==|<|>|<=|>=|<|>|!=)\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*$/g.test(cond)) {
 
-				var cond_arr = cond.split(/==/g);
-				console.log(cond_arr);
-
+				var split_param = cond.replace(/(==|<=|>=|<|>|!=)/g, ",");
+				var cond_arr = split_param.split(",");
+				var opp = /(==|<=|>=|<|>|!=)/g.exec(cond);
+				// console.log(opp[0]);
+				// console.log(cond_arr);
 				var cond_1 = cond_arr[0].trim();
 				var cond_2 = cond_arr[1].trim();
+
+				console.log(cond_1 + " - " + cond_2);
 
 				if(isVarExisting(cond_1.replace(/\[[0-9]*\]/g, ""))) {
 
@@ -1012,18 +1250,46 @@
 
 							if(var_1.var_value.length > arrIndex) {
 
-								var test_val = parseValue(var_1.dataType, cond_2);
+								var test_val;
 
-								if(test_val.status) {
+								if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_2)) {
 
-									if(test_val.value == var_1.var_value[arrIndex]) {
-										return {status: true, result: true}
+									if(isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""))) {
+
+										var cond_var = isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""));
+
+										if(/\[[0-9]*\]/g.test(cond_2)) {
+
+											var cond2_arrIndex = getConditions(cond_2, "[", "]");
+
+											if(Array.isArray(cond_var)) {
+
+												if(cond_var.var_value.length > cond2_arrIndex) {
+
+													test_val = parseValue(var_1.dataType.replace(/\[[0-9]*\]/g, ""), cond_var.var_value[cond2_arrIndex]);
+												}
+											} else {
+												return {status: false, message: cond_var.var_identifier + " is not an array"};
+											}
+										} else {
+											console.log("here");
+											test_val = parseValue(var_1.dataType.replace(/\[[0-9]*\]/g, ""), cond_var.var_value);
+										}
+
 									} else {
-										return {status: true, result: false}
+										return {status: false, message: "variable " + cond_2 + " is undefined"};
 									}
 
 								} else {
+									test_val = parseValue(var_1.dataType.replace(/\[[0-9]*\]/g, ""), cond_2);
+								}
 
+								// console.log(test_val);
+
+								if(test_val.status) {
+									return compareValues(var_1.var_value[arrIndex], test_val.value, opp[0]);
+								} else {
+									// console.log({status: false, message: "incomparable types"});
 									return {status: false, message: "incomparable types"};
 								}
 							}
@@ -1033,17 +1299,45 @@
 						}
 					} else {
 
-						var test_val = parseValue(var_1.dataType, cond_2);
+						var test_val;
+
+						if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_2)) {
+
+							if(isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""))) {
+
+								var cond_var = isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""));
+
+								if(/\[[0-9]*\]/g.test(cond_2)) {
+
+									var cond2_arrIndex = getConditions(cond_2, "[", "]");
+
+									if(Array.isArray(cond_var)) {
+
+										if(cond_var.var_value.length > cond2_arrIndex) {
+
+											test_val = parseValue(var_1.dataType, cond_var.var_value[cond2_arrIndex]);
+										}
+									} else {
+										return {status: false, message: cond_var.var_identifier + " is not an array"};
+									}
+								} else {
+									test_val = parseValue(var_1.dataType, cond_var.var_value);
+								}
+
+							} else {
+								return {status: false, message: "variable " + cond_2 + " is undefined"};
+							}
+
+						} else {
+							test_val = parseValue(var_1.dataType, cond_2);
+						}
+
+						// console.log(test_val);
 
 						if(test_val.status) {
-
-							if(test_val.value == var_1.var_value) {
-								return {status: true, result: true}
-							} else {
-								return {status: true, result: false}
-							}
+							return compareValues(var_1.var_value, test_val.value, opp[0]);
 						} else {
-
+							// console.log({status: false, message: "incomparable types"});
 							return {status: false, message: "incomparable types"};	
 						}
 					}
@@ -1054,6 +1348,59 @@
 				// if(/^$/) {}
 			} else {
 				return {status: false, message: "invalid condition"};
+			}
+		}
+
+		compareValues = function(val1, val2, op) {
+
+			try {
+
+				if(op == "==") {
+					if(val1 == val2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				} else if(op == ">") {
+
+					if(val1 > val2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				} else if(op == "<") {
+
+					if(val1 < val2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				} else if(op == ">=") {
+
+					if(val1 >= val2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				} else if(op == "<=") {
+
+					if(val1 <= val2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				} else if(op == "!=") {
+
+					if(val1 != val2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				}
+
+			} catch(err) {
+				console.log({status: false, message: "bad operand types for binary operator " + op});
+				return {status: false, message: "bad operand types for binary operator " + op};
 			}
 		}
 
@@ -1111,7 +1458,7 @@
 
 				if(saveTo_dataType == "int" || saveTo_dataType == "String" || saveTo_dataType == "char" || saveTo_dataType == "Boolean") {
 
-					if(assignParams.dataType == saveTo_dataType) {
+					if(assignParams.dataType.replace(/\[\]/g, "") == saveTo_dataType) {
 
 						if(Array.isArray(saveTo_obj.var_value)) {
 							saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
@@ -1126,7 +1473,7 @@
 
 				} else if(saveTo_dataType == "double") {
 
-					if(assignParams.dataType == "double") {
+					if(assignParams.dataType.replace(/\[\]/g, "") == "double") {
 
 						if(Array.isArray(saveTo_obj.var_value)) {
 							saveTo_obj.var_value[assignParams.saveTo_index] = assignParams.value;
@@ -1135,7 +1482,7 @@
 						}
 
 						return saveTo_obj;
-					} else if(assignParams.dataType == "int") {
+					} else if(assignParams.dataType.replace(/\[\]/g, "") == "int") {
 						
 						if(Array.isArray(saveTo_obj.var_value)) {
 							saveTo_obj.var_value[assignParams.saveTo_index] = parseFloat(assignParams.value);
