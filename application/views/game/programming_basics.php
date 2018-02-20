@@ -564,6 +564,13 @@
 								var_value: arr_val,
 							};
 
+							var passToLog = [];
+
+							for(var key in arr_val) {
+
+								passToLog.push(arr_val[key]);
+							}
+
 							if(code_stack.length > 0) {
 
 								code_stack[code_stack.length - 1].statements.push({
@@ -571,7 +578,7 @@
 									var_info: {
 										dataType: arrInfo[0],
 										var_identifier: arrInfo[1],
-										var_value: arr_val,
+										var_value: passToLog,
 									},
 								});
 
@@ -591,7 +598,7 @@
 										var_info: {
 											dataType: arrInfo[0],
 											var_identifier: arrInfo[1],
-											var_value: arr_val,
+											var_value: passToLog,
 										},
 									});
 
@@ -604,7 +611,7 @@
 									var_info: {
 										dataType: arrInfo[0],
 										var_identifier: arrInfo[1],
-										var_value: arr_val,
+										var_value: passToLog,
 									},
 								});
 
@@ -831,7 +838,7 @@
 
 								if(/\[[0-9]*\]/g.test(save_to)) {
 
-									var arrIndex = getConditions(var_2, '[', ']');
+									var arrIndex = getConditions(save_to, '[', ']');
 									if(save_to_obj.var_value[arrIndex]) {
 
 											assign_param = {
