@@ -46,7 +46,13 @@
               console.log(err);
             }
           });
-    return window.location.href = "<?php echo base_url()?>Game/Stages";
+          if (avatarId==null){
+            alert("Please Select Avatar");
+          }
+          else
+          {
+            return window.location.href = "<?php echo base_url()?>Game/Stages";
+          }
   }
 </script>
 <script type="text/javascript">

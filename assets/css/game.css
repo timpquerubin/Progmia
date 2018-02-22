@@ -38,7 +38,19 @@ div.button-run-container .btn {font-size:25px !important;margin:0 auto;font-fami
     border-left-color:#dd7900;
     background-color: #111 !important;
 animation: grow infinite 2s;}
-
+div.bg{position: relative;
+    padding: 10px 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    background-color: #1f3a4f90;
+    background-color: #006c7880;
+    box-shadow: 0px 0px 5px #eaffff;
+    border: solid 5px #eaffff;
+    -webkit-animation: appear 2s;
+    -moz-animation: appear 2s;
+    -ms-animation: appear 2s;
+    -o-animation: appear 2s;
+    animation: appear 2s;}
 @keyframes floating{
   0%,20%,40%,60%,80%,100%
   {

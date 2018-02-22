@@ -1,3 +1,4 @@
+<div id="page">
 <div class="container-fluid">
 	<div class="game-header">
 		<nav>
@@ -157,6 +158,7 @@
 	
 </div>
 </div>
+</div>
 
 <script type="text/javascript">
 
@@ -213,8 +215,31 @@
 			imageLoadPost = function() {
 				loadedImages++;
 
+
+				var loadPercent = (loadedImages/imgArr.length)*100;
+
+				$(".load-bar").css("width", loadPercent + "%");
 				if(loadedImages == imgArr.length) {
-					postAction();
+					function onReady(callback) {
+				    	var intervalID = window.setInterval(checkReady, 0);
+						// window.addEventListener("load", draw, true);
+					    function checkReady() {
+					        if (document.getElementsByTagName('canvas')[0] !== undefined) {
+					            window.clearInterval(intervalID);
+					            callback.call(this);
+					            isPaused = false;
+					        }
+					    }
+					}
+					function show(id, value) {
+						document.getElementById(id).style.transition = value ? '' : '.5s';
+					    document.getElementById(id).style.display = value ? 'block' : 'none';
+					}
+					onReady(function () {
+					    show('page', true);
+					    show('loading', false);
+					});
+						postAction();
 				}
 			}
 

@@ -1,4 +1,4 @@
-
+<div id="page">
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<div class="container-fluid">
 		<nav>
@@ -1555,4 +1555,5 @@
 	
 
 </script>
+</div>
 <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/Entities.js" ></script> -->

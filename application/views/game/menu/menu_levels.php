@@ -3,7 +3,7 @@
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 </style>
-
+<div class="container-fluid">
 <div class="game-level-menu-container">
 	<input type="hidden" name="level_num" id="level_num" value="<?php echo count($level_list); ?>">
 	<!--<?php //$stage = $_GET["link"];?>-->
@@ -14,6 +14,11 @@
 		<img class="stage" style="height:150px;" src="<?php echo base_url(); ?>assets/images/updated_stages/<?php echo $img['STG_FILENAME']; ?>"/>
 		<?php } ?>
 	</div> -->
+	<div class="row">
+		<?php foreach ($level_stages as $info) { ?>
+		<h1>Stage <?php echo $info['STG_NUM']; ?>
+		</h1><?php } ?>
+	</div>
 	<?php $array = array(); ?>
 	<?php $array = $level_list; ?>
 	<?php foreach ($level_list as $level) { ?>
@@ -39,7 +44,7 @@
 									<?php } ?>
 								<?php } ?>
 								<input type="hidden" name="level_<?php echo $i+1; ?>_score" id="level_<?php echo $i+1; ?>_score" value="<?php echo $score; ?>">
-								<ul style="display:inline-flex;list-style: none;margin:0 auto !important;padding: 0px !important;">
+								<ul style="display:inline-flex;list-style: none;margin:20px auto !important;padding: 0px !important;">
 									<!-- <?php // if($score == 0 || $score == null){ ?> -->
 									<li id="level_<?php echo $i+1; ?>_star1">
 										<label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"><div></div></label>
@@ -55,6 +60,7 @@
 										<!-- <input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star3" value="3" disabled><label class="" for="level_<?php echo $i+1; ?>_star3" title="Perfect"></label> -->
 									</li>
 								</ul>
+								<label class="finish-description" id="description-<?php echo $i+1; ?>"></label>
 							</div>
 						</a>
 					</div>
@@ -65,6 +71,7 @@
 			<?php $rowCtr = 0; ?>
 		<?php } else { $rowCtr++; } ?>
 	<?php } ?>
+</div>
 </div>
 
 	<!-- <fieldset class="rating">
@@ -81,7 +88,7 @@
 	</fieldset> -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+		var $level_desc
 		var num_levels = document.getElementById("level_num").value;
 
 		for(var i = 1; i <= num_levels; i++) {
@@ -98,18 +105,20 @@
 			// 	$("#level_"+ i + "_star2").addClass("no-score");
 			// 	$("#level_"+ i + "_star3").addClass("no-score");
 			// }
-
+			var level_desc; 
 			if(level_score < 50 && level_score > 0) {
 				$("#level_"+ i + "_star1").attr("checked", true);
 				$("#level_"+ i + "_star1").addClass("s1");
 				$("#level_"+ i + "_star2").addClass("no-score u2");
 				$("#level_"+ i + "_star3").addClass("no-score u3");
+				level_desc = "Good!";
 			} else if(level_score >= 50 && level_score < 100) {
 				$("#level_"+ i + "_star1").attr("checked", true);
 				$("#level_"+ i + "_star1").addClass("s1");
 				$("#level_"+ i + "_star2").attr("checked", true);
 				$("#level_"+ i + "_star2").addClass("s2");
 				$("#level_"+ i + "_star3").addClass("no-score u2");
+				level_desc = "Excellent!!";
 
 			} else if(level_score == 100) {
 				$("#level_"+ i + "_star1").attr("checked", true);
@@ -118,11 +127,16 @@
 				$("#level_"+ i + "_star2").addClass("s2");
 				$("#level_"+ i + "_star3").attr("checked", true);
 				$("#level_"+ i + "_star3").addClass("s3");
+				level_desc = "Perfect!!!";
 			} else {
 				$("#level_"+ i + "_star1").addClass("no-score u1");
 				$("#level_"+ i + "_star2").addClass("no-score u2");
 				$("#level_"+ i + "_star3").addClass("no-score u3");
+				level_desc = "";
 			}
+
+			document.getElementById("description-"+ i).innerHTML = level_desc;
+			// document.getElementById("description-"+ i).value = level_desc;
 		}
 	});
 </script>

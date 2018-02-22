@@ -16,7 +16,7 @@
 		public function get_leaderboard()
 		{
 			// $leaderboard = $this->db->query('SELECT `user`.`USER_USERNAME` as `USER`, MAX(`TOTAL GAME SCORE`) as `TOTAL GAME SCORE` FROM (SELECT `user`.`USER_USERNAME`, SUM(`progress`.`GAME_SCORE`) as `TOTAL GAME SCORE` FROM `user`,`progress` WHERE `user`.`user_id` = `progress`.`user_id` GROUP BY `progress`.`GAME_SCORE`) `user`,`progress` GROUP BY `USER` ORDER BY `TOTAL GAME SCORE` DESC;');
-			$leaderboard = $this->db->query('SELECT U.USER_USERNAME as `USER`, U.AVTR_ID, SUM(M.MAX_SCORE) as `TOTAL GAME SCORE` FROM (SELECT USER_ID, LVL_ID, MAX(GAME_SCORE) AS MAX_SCORE FROM progress GROUP BY USER_ID, LVL_ID) AS M, USER AS U WHERE U.USER_ID=M.USER_ID GROUP BY M.USER_ID');
+			$leaderboard = $this->db->query('SELECT U.USER_USERNAME as `USER`, U.AVTR_ID, SUM(M.MAX_SCORE) as `TOTAL GAME SCORE`,A.* FROM (SELECT USER_ID, LVL_ID, MAX(GAME_SCORE) AS MAX_SCORE FROM progress GROUP BY USER_ID, LVL_ID) AS M, AVATAR AS A,USER AS U WHERE U.USER_ID=M.USER_ID AND U.AVTR_ID = A.AVTR_ID GROUP BY M.USER_ID ORDER BY `TOTAL GAME SCORE` desc;');
 
 			return $leaderboard->result_array();
 		}

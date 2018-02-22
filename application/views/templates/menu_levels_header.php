@@ -15,4 +15,6 @@
 	<div class="container-fluid" style="position: relative;max-width:1555px;">
 		<nav>
 			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
+			<a href="<?php echo base_url();?>Game/Stages"><i class="fa fa-long-arrow-left">Back</i></a>
+		</nav>
 	</div>
