@@ -637,6 +637,7 @@
 						var var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
 
 						var valToTrans;
+						var assign_param = {};
 
 						if(/\[[0-9]*\]/g.test(var2_identifier) && /\[\]/g.test(var2.dataType)) {
 							
@@ -658,8 +659,6 @@
 								value: valToTrans,
 							};
 
-							var1 = assignValueToVar(var1, assign_param);
-
 							// var1.var_value[var1_arrIndex] = valToTrans;
 						} else {
 
@@ -668,36 +667,27 @@
 								value: valToTrans,
 							};
 
-							var1 = assignValueToVar(var1, assign_param);
-
 							// var1.var_value = valToTrans;
 						}
 
-						if(var1.status == false) {
-							return var1;
-						} else {
+						if(code_stack.length > 0) {
 
-							if(code_stack.length > 0) {
+							code_stack[code_stack.length - 1].statements.push({
+								type: "assign",
+								ass_info: {
+									var2_identifier: var2_identifier,
+									valToTrans: valToTrans,
+									var1_identifier: var1_identifier,
+								}
+							});
 
-								code_stack[code_stack.length - 1].statements.push({
-									type: "assign",
-									ass_info: {
-										var2_identifier: var2_identifier,
-										valToTrans: valToTrans,
-										var1_identifier: var1_identifier,
-									}
-								});
+							if(code_stack[code_stack.length - 1].status) {
 
-								// code_log[code_stack[code_stack.length - 1].code_log].cmd_info.statements.push({
-								// 	type: "assign",
-								// 	ass_info: {
-								// 		var2_identifier: var2_identifier,
-								// 		valToTrans: valToTrans,
-								// 		var1_identifier: var1_identifier,
-								// 	}
-								// });
+								var1 = assignValueToVar(var1, assign_param);
 
-								if(code_stack[code_stack.length - 1].status) {
+								if(var1.status == false) {
+									return var1;
+								} else {
 
 									code_log.push({
 										type: "assign",
@@ -707,16 +697,14 @@
 											var1_identifier: var1_identifier,
 										}
 									});
-
-									for(var key in vrbls) {
-
-										if(vrbls[key].var_identifier == var1.var_identifier) {
-
-											vrbls[key] = var1;
-											break;
-										}
-									}
 								}
+							}
+						} else {
+
+							var1 = assignValueToVar(var1, assign_param);
+
+							if(var1.status == false) {
+									return var1;
 							} else {
 
 								code_log.push({
@@ -727,15 +715,6 @@
 										var1_identifier: var1_identifier,
 									}
 								});
-
-								for(var key in vrbls) {
-
-									if(vrbls[key].var_identifier == var1.var_identifier) {
-
-										vrbls[key] = var1;
-										break;
-									}
-								}
 							}
 						}
 
@@ -1233,7 +1212,7 @@
 				return {status: true, result: true};
 			} else if(/^false$/g.test(cond)) {
 				return {status: true, result: false};
-			} else if(/^\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*(==|<|>|<=|>=|<|>|!=)\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*$/g.test(cond)) {
+			} else if(/^\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]|true|false)\s*(==|<|>|<=|>=|<|>|!=)\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]|true|false)\s*$/g.test(cond)) {
 
 				var split_param = cond.replace(/(==|<=|>=|<|>|!=)/g, ",");
 				var cond_arr = split_param.split(",");
@@ -1245,116 +1224,136 @@
 
 				console.log(cond_1 + " - " + cond_2);
 
-				if(isVarExisting(cond_1.replace(/\[[0-9]*\]/g, ""))) {
+				var testVal_1 = 0;
+				var testVal_2 = 0;
 
-					var var_1 = isVarExisting(cond_1.replace(/\[[0-9]*\]/g, ""));
+				if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|true|false)$/g.test(cond_1)) {
 
-					if(/\[[0-9]*\]/g.test(cond_1)) {
+					if(/^[0-9]+$/g.test(cond_1)) {
+						testVal_1 = parseValue("int", cond_1);
+					} else if(/^[0-9]*\.?[0-9]*$/g.test(cond_1)) {
+						testVal_1 = parseValue("double", cond_1);
+					} else if(/^\'[A-Za-z0-9]\'$/g.test(cond_1)) {
+						testVal_1 = parseValue("char", cond_1);
+					} else if(/^\"[A-Za-z0-9_\W]*\"$/g.test(cond_1)) {
+						testVal_1 = parseValue("String", cond_1);
+					} else if(/^(true|false)$/g.test(cond_1)) {
+						testVal_1 = parseValue("Boolean", cond_1);
+					}
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_1)) {
 
-						var arrIndex = getConditions(cond_1, "[", "]");
+					if(isVarExisting(cond_1.replace(/\[[0-9]*\]/g, ""))) {
 
-						if(Array.isArray(var_1.var_value)) {
+						var var_1 = isVarExisting(cond_1.replace(/\[[0-9]*\]/g, ""));
 
-							if(var_1.var_value.length > arrIndex) {
+						if(/\[[0-9]*\]/g.test(cond_1)) {
 
-								var test_val;
+							var arrIndex = getConditions(cond_1, "[", "]");
 
-								if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_2)) {
+							if(Array.isArray(var_1.var_value)) {
 
-									if(isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""))) {
+								if(var_1.var_value.length > arrIndex) {
 
-										var cond_var = isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""));
-
-										if(/\[[0-9]*\]/g.test(cond_2)) {
-
-											var cond2_arrIndex = getConditions(cond_2, "[", "]");
-
-											if(Array.isArray(cond_var)) {
-
-												if(cond_var.var_value.length > cond2_arrIndex) {
-
-													test_val = parseValue(var_1.dataType.replace(/\[[0-9]*\]/g, ""), cond_var.var_value[cond2_arrIndex]);
-												}
-											} else {
-												return {status: false, message: cond_var.var_identifier + " is not an array"};
-											}
-										} else {
-											console.log("here");
-											test_val = parseValue(var_1.dataType.replace(/\[[0-9]*\]/g, ""), cond_var.var_value);
-										}
-
+									if(var_1.dataType == "char[]") {
+										testVal_1 = parseValue(var_1.dataType.replace(/[\[\]]/g, ""), var_1.var_value[arrIndex].replace(/\"/g, "\'"));
 									} else {
-										return {status: false, message: "variable " + cond_2 + " is undefined"};
+										testVal_1 = parseValue(var_1.dataType.replace(/[\[\]]/g, ""), var_1.var_value[arrIndex]);
 									}
 
 								} else {
-									test_val = parseValue(var_1.dataType.replace(/\[[0-9]*\]/g, ""), cond_2);
+									return {status: false, message: "index out of range"};
 								}
-
-								// console.log(test_val);
-
-								if(test_val.status) {
-									return compareValues(var_1.var_value[arrIndex], test_val.value, opp[0]);
-								} else {
-									// console.log({status: false, message: "incomparable types"});
-									return {status: false, message: "incomparable types"};
-								}
+							} else {
+								return {status: false, message: var_1.var_identifier + " is not an array"};
 							}
-
 						} else {
-							return {status: false, message: var_1.var_identifier + " is not an array"};
-						}
-					} else {
 
-						var test_val;
+							if(!(Array.isArray(var_1.var_value))) {
 
-						if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_2)) {
-
-							if(isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""))) {
-
-								var cond_var = isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""));
-
-								if(/\[[0-9]*\]/g.test(cond_2)) {
-
-									var cond2_arrIndex = getConditions(cond_2, "[", "]");
-
-									if(Array.isArray(cond_var)) {
-
-										if(cond_var.var_value.length > cond2_arrIndex) {
-
-											test_val = parseValue(var_1.dataType, cond_var.var_value[cond2_arrIndex]);
-										}
-									} else {
-										return {status: false, message: cond_var.var_identifier + " is not an array"};
-									}
+								if(var_1.dataType == "char") {
+									testVal_1 = parseValue(var_1.dataType.replace(/[\[\]]/g, ""), var_1.var_value.replace(/\"/g, "\'"));
 								} else {
-									test_val = parseValue(var_1.dataType, cond_var.var_value);
+									testVal_1 = parseValue(var_1.dataType.replace(/[\[\]]/g, ""), var_1.var_value);
 								}
 
 							} else {
-								return {status: false, message: "variable " + cond_2 + " is undefined"};
+								return {status: false, message: "specify array index"};
 							}
-
-						} else {
-							test_val = parseValue(var_1.dataType, cond_2);
 						}
+					} else {
 
-						// console.log(test_val);
-
-						if(test_val.status) {
-							return compareValues(var_1.var_value, test_val.value, opp[0]);
-						} else {
-							// console.log({status: false, message: "incomparable types"});
-							return {status: false, message: "incomparable types"};	
-						}
+						return {status: false, message: "undefined variable " + cond_1.replace(/\[[0-9]*\]/g, "")};
 					}
 
-				} else {
-					return {status: false, message: "invalid condition"};
 				}
-				// if(/^$/) {}
-			} else {
-				return {status: false, message: "invalid condition"};
+
+				if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|true|false)$/g.test(cond_2)) {
+
+					if(/^[0-9]+$/g.test(cond_2)) {
+						testVal_2 = parseValue("int", cond_2);
+					} else if(/^[0-9]*\.?[0-9]*$/g.test(cond_2)) {
+						testVal_2 = parseValue("double", cond_2);
+					} else if(/^\'[A-Za-z0-9]\'$/g.test(cond_2)) {
+						testVal_2 = parseValue("char", cond_2);
+					} else if(/^\"[A-Za-z0-9_\W]*\"$/g.test(cond_2)) {
+						testVal_2 = parseValue("String", cond_2);
+					} else if(/^(true|false)$/g.test(cond_2)) {
+						testVal_2 = parseValue("Boolean", cond_2);
+					}
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_2)) {
+
+					if(isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""))) {
+
+						var var_2 = isVarExisting(cond_2.replace(/\[[0-9]*\]/g, ""));
+
+						if(/\[[0-9]*\]/g.test(cond_2)) {
+
+							var arrIndex = getConditions(cond_2, "[", "]");
+
+							if(Array.isArray(var_2.var_value)) {
+
+								if(var_2.var_value.length > arrIndex) {
+
+									if(var_2.dataType == "char[]") {
+										testVal_2 = parseValue(var_2.dataType.replace(/[\[\]]/g, ""), var_2.var_value[arrIndex].replace(/\"/g, "\'"));
+									} else {
+										testVal_2 = parseValue(var_2.dataType.replace(/[\[\]]/g, ""), var_2.var_value[arrIndex]);
+									}
+								} else {
+									return {status: false, message: "index out of range"};
+								}
+							} else {
+								return {status: false, message: var_2.var_identifier + " is not an array"};
+							}
+						} else {
+
+							if(!(Array.isArray(var_2.var_value))) {
+
+								if(var_2.dataType == "char") {
+									testVal_2 = parseValue(var_2.dataType.replace(/[\[\]]/g, ""), var_2.var_value.replace(/\"/g, "\'"));
+								} else {
+									testVal_2 = parseValue(var_2.dataType.replace(/[\[\]]/g, ""), var_2.var_value);
+								}
+							} else {
+								return {status: false, message: "specify array index"};
+							}
+						}
+					} else {
+
+						return {status: false, message: "undefined variable " + cond_2.replace(/\[[0-9]*\]/g, "")};
+					}
+
+				}
+
+				// console.log(testVal_1);
+				// console.log(testVal_2);
+
+				if(testVal_1.status && testVal_2.status) {
+					console.log(compareValues(testVal_1.value, testVal_2.value, opp[0]));
+					return compareValues(testVal_1.value, testVal_2.value, opp[0]);
+				} else {
+					return {status: false, message: "incomparable types"}
+				}
 			}
 		}
 
@@ -1449,8 +1448,10 @@
 			} else if(dataType == "Boolean") {
 
 				value = value.toLowerCase();
-				if(/^(true|false)$/i.test(value)) {
-					return {status: true, value: value};
+				if(/^true$/i.test(value)) {
+					return {status: true, value: true};
+				} else if(/^false$/i.test(value)) {
+					return {status: true, value: false};
 				} else {
 					return {status: false, message: "value is not a Boolean"};
 				}
