@@ -415,6 +415,17 @@
 			$this->load->view('dashboard/questions_block', $data);
 		}
 
+		public function load_commands_block() {
+
+			if(count($_POST) > 0) {
+				$data['command_list'] = $_POST['command_list'];
+			} else {
+				$data['command_list'] = [];
+			}
+
+			$this->load->view('dashboard/commands_block', $data);
+		}
+
 		public function load_variables_block() {
 
 			if(count($_POST) > 0) {
