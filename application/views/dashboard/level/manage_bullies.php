@@ -8,9 +8,7 @@
 			</div>
 			<div class="questions-container" style="margin-top: 30; padding: 0px 20px">
 				
-				<div class="view-questions-block">
-					
-				</div>
+				<div class="view-questions-block"></div>
 
 				<form class="form-horizontal" id="question-form" name="question-form" method="post" action="add_question">
 					<input type="hidden" name="input-bully-id" id="input-bully-id">
@@ -22,139 +20,317 @@
 						</div>
 					</div>
 
-					<div class="answer-info-block" style="border: 1px solid #d9d9d9; padding: 20px 0px 20px 0px; display: block;">
-						<div class="row">
-							<div class="col-sm-5">
-								<div class="form-group">
-									<label class="control-label col-sm-5">Storage Type:</label>
-									<div class="col-sm-5">
-										<select class="form-control" id="qstn_type" name="qstn_type">
-											<option value="variable">Variable</option>
-											<option value="array">Array</option>
-											<option value="command">Command</option>
-										</select>
-									</div>
-								</div>
+					<div class="code-type-container">
+						<label class="radio-inline"><input type="radio" name="code_type" id="code_type_varop" value="var_and_opp" checked>Variables and Operations</label>
+						<label class="radio-inline"><input type="radio" name="code_type" id="code_type_cmd" value="cmd">Commands</label>
+						<!-- <input type="radio" name="code_type_else" id="code_type" value="cmd">
+						<input type="radio" name="code_type_else" id="code_type" value="cmd"> -->
+					</div>
 
-								<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: block;">
+					<div class="var-op-block-container" style="display: block;">
+						<div class="answer-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
+							<div class="row">
+								<div class="col-sm-5">
 									<div class="form-group">
-										<label class="control-label col-sm-5">Data Type:</label>
+										<label class="control-label col-sm-5">Storage Type:</label>
 										<div class="col-sm-5">
-											<select class="form-control" id="var_dataType" name="var_dataType">
-												<option value="int">Integer</option>
-												<option value="double">Double</option>
-												<option value="char">Character</option>
-												<option value="String">String</option>
-												<option value="Boolean">Boolean</option>
+											<select class="form-control" id="qstn_type" name="qstn_type">
+												<option value="variable">Variable</option>
+												<option value="array">Array</option>
+												<option value="command">Command</option>
 											</select>
 										</div>
 									</div>
 
-									<div class="form-group">
-										<label class="control-label col-sm-5">Identifier:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="var_identifier" id="var_identifier">
+									<div class="variable-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: block;">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Data Type:</label>
+											<div class="col-sm-5">
+												<select class="form-control" id="var_dataType" name="var_dataType">
+													<option value="int">Integer</option>
+													<option value="double">Double</option>
+													<option value="char">Character</option>
+													<option value="String">String</option>
+													<option value="Boolean">Boolean</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Identifier:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="var_identifier" id="var_identifier">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Value:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="var_value" id="var_value">
+											</div>
+										</div>
+
+										<div class="row">
+											<input type="button" class="btn btn-default col-sm-12" value="Add Variable" onclick="append_variable()">
 										</div>
 									</div>
 
-									<div class="form-group">
-										<label class="control-label col-sm-5">Value:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="var_value" id="var_value">
+									<div class="array-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: none;">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Data Type:</label>
+											<div class="col-sm-5">
+												<select class="form-control" id="arr_dataType" name="arr_dataType">
+													<option value="int[]">Integer</option>
+													<option value="double[]">Double</option>
+													<option value="char[]">Character</option>
+													<option value="String[]">String</option>
+													<option value="Boolean[]">Boolean</option>
+												</select>
+											</div>
 										</div>
-									</div>
 
-									<div class="row">
-										<input type="button" class="btn btn-default col-sm-12" value="Add Variable" onclick="append_variable()">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Identifier:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="arr_identifier" id="arr_identifier">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Value:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="arr_value" id="arr_value">
+											</div>
+										</div>
+
+										<div class="row">
+											<input type="button" class="btn btn-default col-sm-12" value="Add Array" onclick="append_array()">
+										</div>
 									</div>
 								</div>
-
-								<div class="array-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: none;">
-									<div class="form-group">
-										<label class="control-label col-sm-5">Data Type:</label>
-										<div class="col-sm-5">
-											<select class="form-control" id="arr_dataType" name="arr_dataType">
-												<option value="int[]">Integer</option>
-												<option value="double[]">Double</option>
-												<option value="char[]">Character</option>
-												<option value="String[]">String</option>
-												<option value="Boolean[]">Boolean</option>
-											</select>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="control-label col-sm-5">Identifier:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="arr_identifier" id="arr_identifier">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="control-label col-sm-5">Value:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="arr_value" id="arr_value">
-										</div>
-									</div>
-
-									<div class="row">
-										<input type="button" class="btn btn-default col-sm-12" value="Add Array" onclick="append_array()">
-									</div>
+								<div class="col-sm-7">
+									<div class="variables-block"></div>
 								</div>
 							</div>
-							<div class="col-sm-7">
-								<div class="variables-block"></div>
+						</div>
+
+						<div class="operations-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
+							<div class="opp-header" style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px; margin-bottom: 20px;">
+								<h4 style="padding: 0px 0px 0px 15px;">Operations</h4>
+							</div>
+							<div class="row">
+								<div class="col-sm-5">
+									<div class="operation-info">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Save To:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="opp_saveTo" id="opp_saveTo">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Variable 1:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="opp_var1" id="opp_var1">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Operation:</label>
+											<div class="col-sm-7">
+												<select class="form-control" id="opp_operation" name="opp_operation">
+													<option value="add">+</option>
+													<option value="subtract">-</option>
+													<option value="multiply">*</option>
+													<option value="divide">/</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Variable 2:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="opp_var2" id="opp_var2">
+											</div>
+										</div>
+
+										<input type="button" class="btn btn-default col-sm-12" value="Add Operation" onclick="append_operation()">
+									</div>
+								</div>
+								<div class="col-sm-7">
+									<div class="operations-block"></div>
+								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="operations-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin-top: 20px; padding-bottom: 10px;">
-						<div class="opp-header" style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px; margin-bottom: 20px;">
-							<h4 style="padding: 0px 0px 0px 15px;">Operations</h4>
+					<div class="commands-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin-top: 20px; padding-bottom: 10px; display: none;">
+						<div class="cmd-header" style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px; margin-bottom: 20px;">
+							<h4 style="padding: 0px 0px 0px 15px;">Commands</h4>
 						</div>
+
+						<div class="commands-block" style="padding: 0px 10px;"></div>
+
 						<div class="row">
 							<div class="col-sm-5">
-								<div class="operation-info">
-									<div class="form-group">
-										<label class="control-label col-sm-5">Save To:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="opp_saveTo" id="opp_saveTo">
-										</div>
+								<div class="form-group">
+									<label class="control-label col-sm-5">Type: </label>
+									<div class="col-sm-7">
+										<select class="form-control" id="cmd_type" name="cmd_type">
+											<!-- <option value="none" selected>None</option> -->
+											<option value="cmd-if">If</option>
+											<option value="cmd-while">While</option>
+										</select>
 									</div>
-
-									<div class="form-group">
-										<label class="control-label col-sm-5">Variable 1:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="opp_var1" id="opp_var1">
-										</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-5">Condition: </label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" name="cmd_cond" id="cmd_cond">
 									</div>
+								</div>
+							</div>
+						</div>
 
+						<div class="cmdvar-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
+							<div class="row">
+								<div class="col-sm-5">
 									<div class="form-group">
-										<label class="control-label col-sm-5">Operation:</label>
-										<div class="col-sm-7">
-											<select class="form-control" id="opp_operation" name="opp_operation">
-												<option value="add">+</option>
-												<option value="subtract">-</option>
-												<option value="multiply">*</option>
-												<option value="divide">/</option>
+										<label class="control-label col-sm-5">Storage Type:</label>
+										<div class="col-sm-5">
+											<select class="form-control" id="cmdvar_type" name="cmdvar_type">
+												<option value="variable">Variable</option>
+												<option value="array">Array</option>
+												<option value="command">Command</option>
 											</select>
 										</div>
 									</div>
 
-									<div class="form-group">
-										<label class="control-label col-sm-5">Variable 2:</label>
-										<div class="col-sm-7">
-											<input type="text" class="form-control" name="opp_var2" id="opp_var2">
+									<div class="cmdvariable-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: block;">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Data Type:</label>
+											<div class="col-sm-5">
+												<select class="form-control" id="cmdvar_dataType" name="cmdvar_dataType">
+													<option value="int">Integer</option>
+													<option value="double">Double</option>
+													<option value="char">Character</option>
+													<option value="String">String</option>
+													<option value="Boolean">Boolean</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Identifier:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdvar_identifier" id="cmdvar_identifier">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Value:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdvar_value" id="cmdvar_value">
+											</div>
+										</div>
+
+										<div class="row">
+											<input type="button" class="btn btn-default col-sm-12" value="Add Variable" onclick="append_variable()">
 										</div>
 									</div>
 
-									<input type="button" class="btn btn-default col-sm-12" value="Add Operation" onclick="append_operation()">
+									<div class="cmdarray-info-block" style="border: 1px solid #d9d9d9; padding: 20px; display: none;">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Data Type:</label>
+											<div class="col-sm-5">
+												<select class="form-control" id="cmdarr_dataType" name="cmdarr_dataType">
+													<option value="int[]">Integer</option>
+													<option value="double[]">Double</option>
+													<option value="char[]">Character</option>
+													<option value="String[]">String</option>
+													<option value="Boolean[]">Boolean</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Identifier:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdarr_identifier" id="cmdarr_identifier">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Value:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdarr_value" id="cmdarr_value">
+											</div>
+										</div>
+
+										<div class="row">
+											<input type="button" class="btn btn-default col-sm-12" value="Add Array" onclick="append_array()">
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-7">
+									<div class="cmd_variables-block"></div>
 								</div>
 							</div>
-							<div class="col-sm-7">
-								<div class="operations-block"></div>
+						</div>
+
+						<div class="cmdoperations-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
+							<div class="opp-header" style="border-bottom: 1px solid #d9d9d9; padding-bottom: 10px; margin-bottom: 20px;">
+								<h4 style="padding: 0px 0px 0px 15px;">Operations</h4>
+							</div>
+							<div class="row">
+								<div class="col-sm-5">
+									<div class="cmdoperation-info">
+										<div class="form-group">
+											<label class="control-label col-sm-5">Save To:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdopp_saveTo" id="cmdopp_saveTo">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Variable 1:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdopp_var1" id="cmdopp_var1">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Operation:</label>
+											<div class="col-sm-7">
+												<select class="form-control" id="cmdopp_operation" name="cmdopp_operation">
+													<option value="add">+</option>
+													<option value="subtract">-</option>
+													<option value="multiply">*</option>
+													<option value="divide">/</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label col-sm-5">Variable 2:</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" name="cmdopp_var2" id="cmdopp_var2">
+											</div>
+										</div>
+
+										<input type="button" class="btn btn-default col-sm-12" value="Add Operation" onclick="append_operation()">
+									</div>
+								</div>
+								<div class="col-sm-7">
+									<div class="cmdoperations-block"></div>
+								</div>
 							</div>
 						</div>
+
+						<div class="add-command-button row" style="padding-top: 15px; padding-bottom: 15px; display: block;">
+							<input type="button" class="btn btn-default col-sm-4 col-sm-offset-4" id="add_cmd_btn" value="Add Command" onclick="append_command()">
+						</div>
+
 					</div>
 
 					<div class="add-question-button row" style="padding-top: 15px; padding-bottom: 15px;">
@@ -237,13 +413,17 @@
 	
 	$(document).ready(function() {
 
+		var code_type = "varop";
+
 		var bully_list = {};
 		var question_list = {};
+		var command_list = {};
 		var variable_list = {};
 		var operation_list = {};
 
 		var varCtr = 0;
 		var opCtr = 0;
+		var cmdCtr = 0;
 
 		get_bully_list = function() {
 
@@ -338,17 +518,48 @@
 			});
 		}
 
-		load_operations_block = function() {
+		load_commands_block = function() {
 
 			var data = {};
-			data["operation_list"] = operation_list;
+			data["command_list"] = command_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_commands_block",
+				data: data,
+				success: function(res) {
+					$(".commands-block").html(res);
+				},
+				error: function(err) {
+					console.log("failed to load command table due to some error");
+				}
+			});
+		}
+
+		load_operations_block = function() {
+
+			var curr_codeType = code_type;
+			var data = {};
+			data["operation_list"] = {};
+
+			for(var key in operation_list) {
+
+				if(operation_list[key].code_type == curr_codeType) {
+					data["operation_list"][key] = operation_list[key];
+				}
+			}
 
 			$.ajax({
 				type: 'post',
 				url: "<?php echo base_url(); ?>dashboard/load_operations_block",
 				data: data,
 				success: function(res) {
-					$(".operations-block").html(res);
+					
+					if(curr_codeType == "varop") {
+						$(".operations-block").html(res);
+					} else if(curr_codeType == "cmd") {
+						$(".cmdoperations-block").html(res);
+					}
 				},
 				error: function(err) {
 					console.log("failed to load operation table due to some error");
@@ -356,11 +567,52 @@
 			});
 		}
 
+		append_command = function() {
+
+			var cmd_type = document.getElementById("cmd_type").value;
+			var cmd_cond = document.getElementById("cmd_cond").value;
+
+			var cmd_obj = {type: cmd_type, condition: cmd_cond, statements: [],};
+
+			for(var key in variable_list) {
+
+				if(variable_list[key].code_type == "cmd") {
+					cmd_obj.statements.push(variable_list[key]);
+					// delete variable_list[key];
+				}
+			}
+
+			for(var key in operation_list) {
+
+				if(operation_list[key].code_type == "cmd") {
+					cmd_obj.statements.push(operation_list[key]);
+				}
+			}
+
+			command_list[cmdCtr] = cmd_obj;
+			cmdCtr++;
+
+			console.log(command_list);
+			load_commands_block();
+		}
+
 		append_variable = function() {
 
-			var dataType = document.getElementById("var_dataType").value;
-			var identifier = document.getElementById("var_identifier").value;
-			var value = document.getElementById("var_value").value;
+			var dataType;
+			var identifier;
+			var value;
+
+			if(code_type == "varop") {
+
+				dataType = document.getElementById("var_dataType").value;
+				identifier = document.getElementById("var_identifier").value;
+				value = document.getElementById("var_value").value;
+			} else if(code_type == "cmd") {
+
+				dataType = document.getElementById("cmdvar_dataType").value;
+				identifier = document.getElementById("cmdvar_identifier").value;
+				value = document.getElementById("cmdvar_value").value;
+			}
 
 			var checkVarVal = parseValue(dataType, value);
 
@@ -368,7 +620,7 @@
 
 				var valObj = parseValue(dataType, value);
 
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: valObj.value};
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: valObj.value, code_type: code_type};
 				console.log(variable_list);
 				varCtr++;
 			} else {
@@ -378,17 +630,33 @@
 			document.getElementById("var_dataType").value = "int";
 			document.getElementById("var_identifier").value = "";
 			document.getElementById("var_value").value = "";
+			document.getElementById("cmdvar_dataType").value = "int";
+			document.getElementById("cmdvar_identifier").value = "";
+			document.getElementById("cmdvar_value").value = "";
 
 			load_variables_block();
 		}
 
+
+
 		append_array = function() {
 
+			var curr_codeType = code_type;
 			var isMismatch = false;
 
-			var dataType = document.getElementById("arr_dataType").value;
-			var identifier = document.getElementById("arr_identifier").value;
-			var value = document.getElementById("arr_value").value;
+			var dataType;
+			var identifier;
+			var value;
+
+			if(curr_codeType == "varop") {
+				dataType = document.getElementById("arr_dataType").value;
+				identifier = document.getElementById("arr_identifier").value;
+				value = document.getElementById("arr_value").value;
+			} else if(curr_codeType == "cmd") {
+				dataType = document.getElementById("cmdarr_dataType").value;
+				identifier = document.getElementById("cmdarr_identifier").value;
+				value = document.getElementById("cmdarr_value").value;
+			}
 
 			value = value.replace(/\{/g, "[");
 			value = value.replace(/\}/g, "]");
@@ -419,12 +687,15 @@
 			if(isMismatch) {
 				console.log("error: dataType missmatch");
 			} else {
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value};
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value, code_type: curr_codeType};
 				console.log(variable_list);
 
 				document.getElementById("arr_dataType").value = "int[]";
 				document.getElementById("arr_identifier").value = "";
 				document.getElementById("arr_value").value = "";
+				document.getElementById("cmdarr_dataType").value = "int[]";
+				document.getElementById("cmdarr_identifier").value = "";
+				document.getElementById("cmdarr_value").value = "";
 
 
 				varCtr++;
@@ -435,12 +706,28 @@
 
 		append_operation = function() {
 
-			var save_to = document.getElementById("opp_saveTo").value;
-			var var_1 = document.getElementById("opp_var1").value;
-			var var_2 = document.getElementById("opp_var2").value;
-			var operation = document.getElementById("opp_operation").value;
+			var curr_codeType = code_type;
 
-			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2};
+			var save_to;
+			var var_1;
+			var var_2;
+			var operation;
+
+			if(curr_codeType == "varop") {
+
+				save_to = document.getElementById("opp_saveTo").value;
+				var_1 = document.getElementById("opp_var1").value;
+				var_2 = document.getElementById("opp_var2").value;
+				operation = document.getElementById("opp_operation").value;
+			} else if(curr_codeType == "cmd") {
+
+				save_to = document.getElementById("cmdopp_saveTo").value;
+				var_1 = document.getElementById("cmdopp_var1").value;
+				var_2 = document.getElementById("cmdopp_var2").value;
+				operation = document.getElementById("cmdopp_operation").value;
+			}
+
+			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2, code_type: curr_codeType};
 
 			opCtr++;
 
@@ -449,66 +736,87 @@
 			document.getElementById("opp_var2").value = "";
 			document.getElementById("opp_operation").value = "add";
 
+			document.getElementById("cmdopp_saveTo").value = "";
+			document.getElementById("cmdopp_var1").value = "";
+			document.getElementById("cmdopp_var2").value = "";
+			document.getElementById("cmdopp_operation").value = "add";
+
 			load_operations_block();
 		}
 
 		parseValue = function(dataType, value) {
 
-		// console.log(value);
+			// console.log(value);
 
-		if(dataType == "int") {
-			
-			if(/^[0-9]+$/i.test(value)) {
+			if(dataType == "int") {
+				
+				if(/^[0-9]+$/i.test(value)) {
 
-				return {status: true, value: parseInt(value)};
-			} else {
-				return {status: false, message: "value is not an integer"};
-			}
-		} else if(dataType == "double") {
+					return {status: true, value: parseInt(value)};
+				} else {
+					return {status: false, message: "value is not an integer"};
+				}
+			} else if(dataType == "double") {
 
-			if(/^[0-9\.]+$/i.test(value)) {
-				return {status: true, value: parseFloat(value)};
-			} else {
-				return {status: false, message: "value is not a double"};
-			}
-		} else if(dataType == "char") {
+				if(/^[0-9\.]+$/i.test(value)) {
+					return {status: true, value: parseFloat(value)};
+				} else {
+					return {status: false, message: "value is not a double"};
+				}
+			} else if(dataType == "char") {
 
-			if(/^\'\w\'$/i.test(value)) {
-				value = value.replace(/\'/g, "");
-				return {status: true, value: value};
-			} else {
-				return {status: false, message: "value is not a character"};
-			}
-		} else if(dataType == "String") {
+				if(/^\'\w\'$/i.test(value)) {
+					value = value.replace(/\'/g, "");
+					return {status: true, value: value};
+				} else {
+					return {status: false, message: "value is not a character"};
+				}
+			} else if(dataType == "String") {
 
-			if(/^\".*\"$/i.test(value)) {
-				value = value.replace(/\"/g, "");
-				return {status: true, value: value};
-			} else {
-				return {status: false, message: "value is not a String"};
-			}
-		} else if(dataType == "bool") {
+				if(/^\".*\"$/i.test(value)) {
+					value = value.replace(/\"/g, "");
+					return {status: true, value: value};
+				} else {
+					return {status: false, message: "value is not a String"};
+				}
+			} else if(dataType == "Boolean") {
 
-			value = value.toLowerCase();
-			if(/^(true|false)$/i.test(value)) {
-				return {status: true, value: value};
-			} else {
-				return {status: false, message: "value is not a Boolean"};
+				value = value.toLowerCase();
+				if(/^true$/i.test(value)) {
+					return {status: true, value: true};
+				} else if(/^false$/i.test(value)) {
+					return {status: true, value: false};
+				} else {
+					return {status: false, message: "value is not a Boolean"};
+				}
 			}
 		}
-	}
 
 		load_variables_block = function() {
 
+			var curr_codeType = code_type;
 			var data = {};
-			data['variables'] = variable_list;
+			data['variables'] = {};
+
+			for(var key in variable_list) {
+
+				if(variable_list[key].code_type == curr_codeType) {
+
+					data['variables'][key] = variable_list[key];
+				}
+			}
 
 			$.ajax({
 				type: 'post',
 				url: "<?php echo base_url(); ?>dashboard/load_variables_block",
 				data: data,
 				success: function(data) {
-					$(".variables-block").html(data);
+					
+					if(curr_codeType == "varop") {
+						$(".variables-block").html(data);
+					} else if(curr_codeType == "cmd") {
+						$(".cmd_variables-block").html(data);
+					}
 				},
 				error: function(err) {
 					console.log(err);
@@ -670,12 +978,56 @@
 	    	}
 	    });
 
+	    $("#cmdvar_type").change(function() {
+
+	    	if($("#cmdvar_type").val() == "variable") {
+	    		$(".cmdvariable-info-block").css("display", "block");
+	    		$(".cmdarray-info-block").css("display", "none");
+	    	} else if($("#cmdvar_type").val() == "array") {
+	    		$(".cmdvariable-info-block").css("display", "none");
+	    		$(".cmdarray-info-block").css("display", "block");
+	    	}
+	    });
+
+	    $("#cmd_type").change(function() {
+
+	    	if(this.value == "none") {
+	    		$(".add-command-button").css("display", "none");
+	    	} else if(this.value == "cmd-if" || this.value == "cmd-while") {
+	    		$(".add-command-button").css("display", "block");
+	    	}
+	    });
+
+	    $("#code_type_varop").click(function() {
+
+	    	code_type = "varop";
+
+	    	$(".var-op-block-container").css("display", "block");
+	    	$(".commands-info-block").css("display", "none");
+
+	    	load_variables_block();
+	    	load_operations_block();
+	    });
+
+	    $("#code_type_cmd").click(function() {
+
+	    	code_type = "cmd";
+
+	    	$(".var-op-block-container").css("display", "none");
+	    	$(".commands-info-block").css("display", "block");
+
+	    	load_variables_block();
+	    	load_operations_block();
+	    	load_commands_block();
+	    });
+
 		get_question_list();
 		get_bully_list();
 
 		//modal
 		load_variables_block();
 		load_operations_block();
+		load_commands_block();
 	});
 
 </script>
