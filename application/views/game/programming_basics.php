@@ -23,18 +23,24 @@
 		<div class="row">
 			<div class="col-md-6 col-sm-12">
 				<div class="canvas-container">
-					<div class="">
+					<div class="game-area">
 						<div class="hp-bar-container" style="">
-							<div class="player-hp" style="width: 50%;">
+							<div class="player-hp">
 								<div class="row">
-									<label class="col-sm-2 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
-									<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
-									 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+									<div class="col-sm-5 col-xs-5 col-md-5 col-lg-5">
+										<div class="avatar">
+											<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avatar['AVTR_THUMBNAIL_FILENAME']?>">
+										</div>
+									</div>
+									<!-- <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+										<label class="hp-lbl">HP:</label>
+									</div> -->
+									<div class="progress col-sm-7 col-xs-7 col-md-7 col-lg-7" style="padding: 0px;">
+									 	<div class="progress-bar progress-bar-danger player-hp-bar" id="hp-bar" role="progressbar" style="width: 100%"></div>
 									</div>
 								</div>
 							</div>
 						</div>
-
 						<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 					</div>
 
@@ -2389,8 +2395,19 @@
 						player.hp -= 1;
 
 						var hpPercent = (player.hp/player.hpMax)*100;
+						alert(hpPercent);
+						if(hpPercent >= 90)
+						{
+							document.getElementById('hp-bar').style.background = '#67c636';
+						}
+						else
+						{
+							document.getElementById('hp-bar').style.background = '#ffce12';
 
+						}
+							document.getElementById('hp-bar').style.content = hpPercent + '%';
 						$(".player-hp-bar").css("width", hpPercent + "%");
+						// $(".player-hp-bar:after").css("content", hpPercent + "%");
 					}
 				}
 

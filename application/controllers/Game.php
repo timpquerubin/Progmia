@@ -181,7 +181,6 @@
 			);
 			
 			$next_level_info = $this->Game_model->get_next_level($next_level_params);
-
 			// echo "<pre>";
 			// var_dump($next_level_info);
 			// echo "</pre>";

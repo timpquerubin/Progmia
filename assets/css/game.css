@@ -3,14 +3,34 @@
 	font-family: 'ArcadeClassic';
 	src: url("../fonts/ARCADECLASSIC.ttf");
 }
+@font-face {
+    font-family: 'ArcadeAlternate';
+    src: url("../fonts/ArcadeAlternate.ttf");
+}
+.game-area {}
+.avatar img {border:outset 3px #eaffff;border-radius:100%;padding:2px;background-color:#006c7880;}
 nav ul li.bg-volume {float:right; padding-right: 15px;}
 body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}
 
 nav {height: 110px;}
 nav ul {list-style: none;display:block;}
 nav ul li .logo a img{height: 80px;}
-.player-hp .progress{border-radius: 20px !important;}
+.hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
+.player-hp {padding-right:50px}
+.player-hp .progress-bar-danger{border-top-left-radius:7px !important;border-bottom-left-radius:7px !important;border-bottom-right-radius: 37px !important;border-top-right-radius: 8px !important;border-color:#000;background-color:#67c636;height:30px !important;}
+.player-hp .progress {background-color: transparent;border:outset 2px #fff;border-radius:20px;border-bottom-right-radius:40px !important;height:30px !important;}
 .margin-top{padding:20px;}
+div.canvas-container {box-shadow: 2px 3px #333;
+    border-radius: 30px;border-top: solid 5px #fff;
+    border-bottom: solid 5px #777;
+    border-left: solid 5px #bbb;
+    border-right: solid 5px #999;
+    -webkit-animation: appear 2s;
+    -moz-animation: appear 2s;
+    -ms-animation: appear 2s;
+    -o-animation: appear 2s;
+    animation: appear 2s;
+padding:5px 20px;}
 div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;padding-bottom:30px;width: 100%; background-color: #17232b;background-color: #06151c;}
 div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
 div.player-hp {margin-top: 10px;}
