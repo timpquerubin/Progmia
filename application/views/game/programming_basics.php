@@ -6,7 +6,7 @@
 				<li>
 					<div class="logo">
 						<a class="navbar-brand" href="<?php echo base_url(); ?>">
-							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/finalest_logo2.png">
+							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XXS.png">
 						</a>
 					</div>
 				</li>
@@ -19,47 +19,48 @@
 			</ul>
 		</nav>
 	</div>
-
-	<div class="row">
-		<div class="col-md-6 col-sm-12">
-			<div class="canvas-container">
-				<div class="" style="margin: 0px; padding: 10px; background-color: #000">
-					<div class="hp-bar-container" style="">
-						<div class="player-hp" style="width: 50%;">
-							<div class="row">
-								<label class="col-sm-2 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
-								<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
-								 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+	<div class="margin-top">
+		<div class="row">
+			<div class="col-md-6 col-sm-12">
+				<div class="canvas-container">
+					<div class="">
+						<div class="hp-bar-container" style="">
+							<div class="player-hp" style="width: 50%;">
+								<div class="row">
+									<label class="col-sm-2 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
+									<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
+									 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+									</div>
 								</div>
 							</div>
 						</div>
+
+						<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
 					</div>
 
-					<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
+					<div class="dialog-container"></div>
 				</div>
-
-				<div class="dialog-container"></div>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<div class="code-area-container">
+					<div class="row code_area">
+						<div class="line-number col-md-1 col-sm-1 col-xs-1">
+							<textarea rows="10" id="textarea1" disabled></textarea>
+						</div>
+						<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
+							<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+						</div>
+					</div>
+					<div class="row button-run-container">
+						<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+							<button class="btn btn-basic btn-block" onclick="runCode();">RUN</button>
+						</div>
+					</div>
+					<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
+				</div>
 			</div>
 		</div>
-		<div class="col-md-6 col-sm-12">
-			<div class="code-area-container">
-				<div class="row code_area">
-					<div class="line-number col-md-1 col-sm-1 col-xs-1">
-						<textarea rows="10" id="textarea1" disabled></textarea>
-					</div>
-					<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
-						<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
-					</div>
-				</div>
-				<div class="row button-run-container">
-					<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-						<button class="btn btn-basic btn-block" onclick="runCode();">RUN</button>
-					</div>
-				</div>
-				<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
-			</div>
-		</div>
-	</div>
+</div>
 
 	<div id="finish-modal" class="modal" style="display: none;">
 		<div class="modal-content">

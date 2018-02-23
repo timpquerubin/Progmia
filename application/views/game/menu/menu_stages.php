@@ -14,7 +14,7 @@
 					</div>
 		    	</div> -->
 				<div class="row changing">
-					<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-xs-4 col-sm-4 col-md-9 col-lg-4">
+					<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-xs-4 col-sm-4 col-md-4 col-lg-4">
 						<div class="main-menu">
 							<!-- <div class="row">
 								<div class="profile-summary">
@@ -43,11 +43,39 @@
 										</div>
 						    	</div>
 							</div> -->
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 profile-summary">
+								<div class="row">
+									<div class="avatar">
+										<?php foreach($avatar as $avtr){ ?>
+											<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>">
+										<?php } ?>
+									</div>
+									<div class="username">
+										<h2><?php echo $this->session->userdata('username'); ?></h2>
+									</div>
+								</div>
+								<svg height="0">
+								    <filter id="drop-shadow">
+								        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+								        <feOffset dx="4" dy="4" result="offsetblur"/>
+								        <feFlood flood-color="rgba(0,0,0,0.5)"/>
+								        <feComposite in2="offsetblur" operator="in"/>
+								        <feMerge>
+								            <feMergeNode/>
+								            <feMergeNode in="SourceGraphic"/>
+								        </feMerge>
+								    </filter>
+								</svg>
+								<div class="row" style="margin-top:-20px;">
+								</div>
+							</div>
 							<div class="row">
 								<div class="menu-container">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									
 							        <ul>
 							            <li>
-							            	<button id="play" class="active"><a class="nav-link js-scroll-trigger">Play</a></button>
+							            	<button id="play"><a class="nav-link js-scroll-trigger">Play</a></button>
 							            </li>
 							            <li>
 							            	<button id="profile"><a class="nav-link js-scroll-trigger">Profile</a></button>
@@ -63,6 +91,7 @@
 							            </li> -->
 							        </ul>
 							    </div>
+								</div>
 							</div>
 						</div>
 					</div>

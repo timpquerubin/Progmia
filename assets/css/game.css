@@ -4,13 +4,13 @@
 	src: url("../fonts/ARCADECLASSIC.ttf");
 }
 nav ul li.bg-volume {float:right; padding-right: 15px;}
-body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;padding:30px 50px;}
+body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}
 
-nav {height: 110px;background-color: #1b94bf;}
+nav {height: 110px;}
 nav ul {list-style: none;display:block;}
 nav ul li .logo a img{height: 80px;}
-
-
+.player-hp .progress{border-radius: 20px !important;}
+.margin-top{padding:20px;}
 div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;padding-bottom:30px;width: 100%; background-color: #17232b;background-color: #06151c;}
 div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
 div.player-hp {margin-top: 10px;}
