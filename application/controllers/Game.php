@@ -187,15 +187,15 @@
 			// exit();
 			$avatar = $this->Game_model->get_user_avatar($userID);
 			// echo "<pre>";
-			// var_dump($avatar);
+			// var_dump($level_info[0]);
 			// echo "</pre>";
 			// exit();
 			$data['avatar'] = $avatar[0];
 			$data['level_info'] = $level_info[0];
 			$data['objectives_list'] = $objectives;
 			$data['next_level_info'] = $next_level_info;
-
-			$this->load->view('templates/game_header');
+			$header_data['stgId'] = $level_info[0]['STG_ID'];
+			$this->load->view('templates/game_header',$header_data);
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/programming_basics.php', $data);
 			$this->load->view('templates/game_footer');

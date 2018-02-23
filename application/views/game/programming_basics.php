@@ -1,33 +1,14 @@
 <div id="page">
 <div class="container-fluid">
-	<div class="game-header">
-		<nav>
-			<ul>
-				<li>
-					<div class="logo">
-						<a class="navbar-brand" href="<?php echo base_url(); ?>">
-							<img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XXS.png">
-						</a>
-					</div>
-				</li>
-				<li class="bg-volume">
-					<h1><button id="obj_modal_btn" style="border: 1px solid #000; border-radius: 50%; width: 30px; height: 30px; background-color: #000; font-size: 20px; color: #fff"><span class="fa fa-question"></span></button></h1>
-				</li>
-				<li>
-					<h1><button id="obj_modal_btn" style="border: 1px solid #000; border-radius: 50%; width: 30px; height: 30px; background-color: #000; font-size: 20px; color: #fff"><span class="fa fa-check"></span></button></h1>
-				</li>
-			</ul>
-		</nav>
-	</div>
 	<div class="margin-top">
 		<div class="row">
 			<div class="col-md-6 col-sm-12">
 				<div class="canvas-container">
 					<div class="game-area">
 						<div class="hp-bar-container" style="">
-							<div class="player-hp">
+							<div class="player-status">
 								<div class="row">
-									<div class="col-sm-5 col-xs-5 col-md-5 col-lg-5">
+									<div class="col-xs-2 col-sm-2 col-md-3 col-lg-3">
 										<div class="avatar">
 											<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avatar['AVTR_THUMBNAIL_FILENAME']?>">
 										</div>
@@ -35,9 +16,18 @@
 									<!-- <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
 										<label class="hp-lbl">HP:</label>
 									</div> -->
-									<div class="progress col-sm-7 col-xs-7 col-md-7 col-lg-7" style="padding: 0px;">
-									 	<div class="progress-bar progress-bar-danger player-hp-bar" id="hp-bar" role="progressbar" style="width: 100%"></div>
+									<div class="col-sm-10 col-xs-10 col-md-9 col-lg-9" style="margin-left:-30px;">
+										<div class="row" style="display:flex;flex-direction: column;">
+											<?php $user = $this->session->userdata('username');?>
+											<label class="user"><?php echo $user;?></label>
+											<div class="progress" style="padding: 0px;">
+											 	<div class="progress-bar progress-bar-danger player-hp-bar" id="hp-bar" role="progressbar" style="width: 100%">
+											 	</div>
+											</div>
+										</div>
+										
 									</div>
+										
 								</div>
 							</div>
 						</div>
@@ -48,13 +38,14 @@
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12">
-				<div class="code-area-container">
+				<div class="code-area-container wrapper-1">
+					<div class="row"><h1 class="title">Type Here</h1></div>
 					<div class="row code_area">
 						<div class="line-number col-md-1 col-sm-1 col-xs-1">
-							<textarea rows="10" id="textarea1" disabled></textarea>
+							<textarea rows="15" id="textarea1" disabled></textarea>
 						</div>
-						<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
-							<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+						<div class="code-area-container border-custom col-md-11 col-sm-11 col-xs-11">
+							<textarea class="code_area" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 						</div>
 					</div>
 					<div class="row button-run-container">
