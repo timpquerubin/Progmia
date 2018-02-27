@@ -195,7 +195,7 @@
 			$data['objectives_list'] = $objectives;
 			$data['next_level_info'] = $next_level_info;
 			$header_data['stgId'] = $level_info[0]['STG_ID'];
-			$this->Game_model->get_tutorial($);
+			// $$this->Game_model->get_tutorial($level_params);
 			$this->load->view('templates/game_header',$header_data);
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/programming_basics.php', $data);
