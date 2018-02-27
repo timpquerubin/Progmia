@@ -53,7 +53,7 @@
 			$total_points = $this->Profile_model->get_total_points($userID);
 			$badges = $this->Profile_model->get_badges($userID);
 			$avatar = $this->Game_model->get_user_avatar($userID);
-
+			$badges = $this->Game_model->get_badges();
 			$data['avatar'] = $avatar;
 			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
 			$data['badges_list'] = $badges;
@@ -195,13 +195,15 @@
 			$data['objectives_list'] = $objectives;
 			$data['next_level_info'] = $next_level_info;
 			$header_data['stgId'] = $level_info[0]['STG_ID'];
+			$this->Game_model->get_tutorial($);
 			$this->load->view('templates/game_header',$header_data);
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/programming_basics.php', $data);
 			$this->load->view('templates/game_footer');
-
 		}
-
+		public function load_tutorial(){
+			$this->load->view($_POST['link']);
+		}
 		public function get_level_info() {
 
 			$this->_init();

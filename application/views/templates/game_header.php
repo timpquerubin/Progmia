@@ -24,20 +24,21 @@
                     </li>
                 </ul>
                 <ul class="pull-right">
-                    <li class="music-control">
-                        <button id="playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button>
-                        <input id="volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1">
-                    </li>
+                    <li><i class="fa fa-question"></i></li>
+                    <li><i class="fa fa-cog"></i></li>
                     <li>
                         <a class="logout" href="<?php echo base_url()?>users/logout">Log Out</a>
                     </li>
                 </ul>
                     
                 </div>
-            <!-- <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <img class="img-responsive logo" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png">
-            </a> -->
         </nav>
+       <!--  <div class="modal-settings">
+            <div class="modal-content">
+                <button id="playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button>
+                <input id="volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1">
+            </div>
+        </div> -->
         <script>
             var audio, playbtn, mutebtn, seekslider, volumeslider, seeking=false, seekto;
             function initAudioPlayer(){
@@ -57,7 +58,7 @@
                             audio.play();
                         } else {
                             audio.pause();
-                        }
+                        }   
                     }
                     function setvolume(){
                         audio.volume = volumeslider.value / 100;

@@ -10,47 +10,40 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/drag-on.js"></script>
 </head>
 <body>
-	<div class="cloud-bg">
-		<div class="moving-1">
-			<?php foreach($avatar as $avtr){ ?>
-	        <?php $sprite = $avtr['AVTR_SPRITE_FILENAME'];?>
-	        <!-- <img src="<?php echo base_url();?>assets/images/avatars/sprites/<?php echo $sprite;?>"> -->
-			<div class="user-avtr" style="background-image:url('<?php echo base_url();?>assets/images/avatars/sprites/<?php echo $sprite;?>');">
+		<div class="cloud-bg">
+			<div class="moving-1">
+				<?php foreach($avatar as $avtr){ ?>
+		        <?php $sprite = $avtr['AVTR_SPRITE_FILENAME'];?>
+				<div class="user-avtr" style="background-image:url('<?php echo base_url();?>assets/images/avatars/sprites/<?php echo $sprite;?>');">
+				</div>
+				<?php } ?>
 			</div>
-			<?php } ?>
-		</div>
-		<div class="moving-2">
-	        <div class="bully">
+			<div class="moving-2">
+		        <div class="bully">
+				</div>
 			</div>
 		</div>
-	</div>
-		<!-- <div class="container-fluid">
-			<nav class="navbar navbar-expand-lg fixed-top navbar-custom" id="mainNav">
-			</nav>
-		</div> -->
 		<nav id="mainNav">
 			<div class="container-fluid">
-					<div class="col-xs-4 col-md-4 col-md-4">
-						<div class="logo">
-							<img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
-						</div>
+				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4">
+					<div class="logo">
+						<img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
 					</div>
-					<div class="col-md-4">
-						<ul class="">
-							<li class="music-control">
-								<button id="playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button>
-								<input id="volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1">
-							</li>
-							<li>
-								<a class="logout" href="<?php echo base_url()?>users/logout">Log Out</a>
-							</li>
-						</ul>
-					</div>
-					
 				</div>
-			<!-- <a class="navbar-brand js-scroll-trigger" href="#page-top">
-				<img class="img-responsive logo" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png">
-			</a> -->
+				<div class="col-md-6 col-lg-6 col-xs-4 col-sm-4">
+				</div>
+				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4">
+					<ul class="">
+						<li class="music-control">
+							<button id="playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button>
+							<input id="volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1">
+						</li>
+						<li>
+							<a class="logout" href="<?php echo base_url()?>users/logout">Log Out</a>
+						</li>
+					</ul>
+				</div>
+				
 			</div>
 		</nav>
 		<script>

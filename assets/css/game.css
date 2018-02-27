@@ -9,8 +9,8 @@
 }
 .game-area {}
 nav ul li.bg-volume {float:right; padding-right: 15px;}
-body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}
-
+/*body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}*/
+.modal-settings{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;display:none;}
 nav {height: 110px;}
 nav ul {list-style: none;display:block;}
 nav ul li .logo a img{height: 80px;}

@@ -27,6 +27,10 @@
 			$avatar = $this->db->query('SELECT `AVATAR`.*,`USER`.`USER_ID` FROM `USER`, `AVATAR` WHERE `USER`.`USER_ID`=\''.$user.'\' AND `AVATAR`.`AVTR_ID`=`USER`.`AVTR_ID`;');
 			return $avatar->result_array();
 		}
+		public function get_badges(){
+			$bdg = $this->db->query('SELECT * FROM BADGES ORDER BY BDG_ORDER;');
+			return $bdg->result_array();
+		}
 
 		public function get_next_level($params) {
 
