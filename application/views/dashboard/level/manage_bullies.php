@@ -20,6 +20,8 @@
 						</div>
 					</div>
 
+					<div class="codes-block"></div>
+
 					<div class="code-type-container">
 						<label class="radio-inline"><input type="radio" name="code_type" id="code_type_varop" value="var_and_opp" checked>Variables and Operations</label>
 						<label class="radio-inline"><input type="radio" name="code_type" id="code_type_cmd" value="cmd">Commands</label>
@@ -421,6 +423,8 @@
 		var variable_list = {};
 		var operation_list = {};
 
+		var code_list = [];
+
 		var varCtr = 0;
 		var opCtr = 0;
 		var cmdCtr = 0;
@@ -577,37 +581,49 @@
 			for(var key in variable_list) {
 
 				if(variable_list[key].code_type == "cmd") {
+					variable_list[key].type = "dec-var";
 					cmd_obj.statements.push(variable_list[key]);
-					// delete variable_list[key];
+					delete variable_list[key];
 				}
 			}
 
 			for(var key in operation_list) {
 
 				if(operation_list[key].code_type == "cmd") {
+					operation_list[key].type = "op";
 					cmd_obj.statements.push(operation_list[key]);
+					delete operation_list[key];
 				}
 			}
 
 			command_list[cmdCtr] = cmd_obj;
-			cmdCtr++;
+			code_list.push(command_list[cmdCtr]);
 
 			console.log(command_list);
+			console.log(code_list);
+
+			cmdCtr++;
+
+			load_codes_block();
 			load_commands_block();
+			load_operations_block();
+			load_variables_block();
 		}
 
 		append_variable = function() {
+
+			var curr_codeType = code_type
 
 			var dataType;
 			var identifier;
 			var value;
 
-			if(code_type == "varop") {
+			if(curr_codeType == "varop") {
 
 				dataType = document.getElementById("var_dataType").value;
 				identifier = document.getElementById("var_identifier").value;
 				value = document.getElementById("var_value").value;
-			} else if(code_type == "cmd") {
+			} else if(curr_codeType == "cmd") {
 
 				dataType = document.getElementById("cmdvar_dataType").value;
 				identifier = document.getElementById("cmdvar_identifier").value;
@@ -620,8 +636,15 @@
 
 				var valObj = parseValue(dataType, value);
 
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: valObj.value, code_type: code_type};
-				console.log(variable_list);
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: valObj.value, code_type: curr_codeType, type: "dec-var"};
+
+				if(curr_codeType == "varop") {
+
+					code_list.push(variable_list[varCtr]);
+					// console.log(variable_list);
+					console.log(code_list);
+				}
+
 				varCtr++;
 			} else {
 				console.log("datatype missmatch");
@@ -635,6 +658,7 @@
 			document.getElementById("cmdvar_value").value = "";
 
 			load_variables_block();
+			load_codes_block();
 		}
 
 
@@ -687,8 +711,14 @@
 			if(isMismatch) {
 				console.log("error: dataType missmatch");
 			} else {
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value, code_type: curr_codeType};
-				console.log(variable_list);
+				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value, code_type: curr_codeType, type: "dec-arr"};
+				
+				if(curr_codeType == "varop") {
+
+					code_list.push(variable_list[varCtr]);
+					// console.log(variable_list);
+					console.log(code_list);
+				}
 
 				document.getElementById("arr_dataType").value = "int[]";
 				document.getElementById("arr_identifier").value = "";
@@ -702,6 +732,7 @@
 			}
 
 			load_variables_block();
+			load_codes_block();
 		}
 
 		append_operation = function() {
@@ -727,7 +758,12 @@
 				operation = document.getElementById("cmdopp_operation").value;
 			}
 
-			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2, code_type: curr_codeType};
+			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2, code_type: curr_codeType, type: "op"};
+
+			if(curr_codeType == "varop") {
+				code_list.push(operation_list[opCtr]);
+				console.log(code_list);
+			}
 
 			opCtr++;
 
@@ -742,6 +778,7 @@
 			document.getElementById("cmdopp_operation").value = "add";
 
 			load_operations_block();
+			load_codes_block();
 		}
 
 		parseValue = function(dataType, value) {
@@ -766,7 +803,7 @@
 			} else if(dataType == "char") {
 
 				if(/^\'\w\'$/i.test(value)) {
-					value = value.replace(/\'/g, "");
+					// value = value.replace(/\'/g, "");
 					return {status: true, value: value};
 				} else {
 					return {status: false, message: "value is not a character"};
@@ -774,7 +811,7 @@
 			} else if(dataType == "String") {
 
 				if(/^\".*\"$/i.test(value)) {
-					value = value.replace(/\"/g, "");
+					// value = value.replace(/\"/g, "");
 					return {status: true, value: value};
 				} else {
 					return {status: false, message: "value is not a String"};
@@ -824,6 +861,24 @@
 			});
 		}
 
+		load_codes_block = function() {
+
+			var data = {};
+			data["code_list"] = code_list;
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_codes_block",
+				data: data,
+				success: function(res) {
+					$(".codes-block").html(res);
+				},
+				error: function(err) {
+					console.log("failed to load code table due to some error");
+				}
+			});
+		}
+
 		// append_variable = function() {
 
 		// 	var dataType = document.getElementById("var_dataType").value;
@@ -853,7 +908,7 @@
 				bullyId: document.getElementById("input-bully-id").value,
 				// qstn_type: document.getElementById("qstn_type").value,
 				qstn_dialog: document.getElementById("qstn_dialog").value,
-				qstn_ans: {variables: variable_list, operations: operation_list},
+				qstn_ans: {variables: variable_list, operations: operation_list, commands: command_list},
 			};
 
 			console.log(variable_list);
@@ -879,9 +934,13 @@
 					load_questions(document.getElementById("input-bully-id").value);
 					variable_list = {};
 					operation_list = {};
+					command_list = {};
 					varCtr = 0;
+					opCtr = 0;
+					cmdCtr = 0;
 					load_variables_block();
 					load_operations_block();
+					load_commands_block();
 				} else {
 					console.log(result.message);
 				}
@@ -1025,6 +1084,7 @@
 		get_bully_list();
 
 		//modal
+		load_codes_block();
 		load_variables_block();
 		load_operations_block();
 		load_commands_block();

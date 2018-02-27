@@ -162,8 +162,6 @@
 
 	$(document).ready(function() {
 
-
-	
 		var ctx = document.getElementById("ctx").getContext("2d");
 		var canvas = document.getElementById("ctx");
 		code_area = document.getElementById("code_area");
@@ -172,6 +170,16 @@
 
 		var ctxWidth = canvas.width;
 		var ctxHeight = canvas.height;
+
+		var preloadProgCtr = 0;
+		var gameData = {};
+		
+		var gameImgArr = [
+			"<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>",
+			"<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>",
+			"<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png",
+			"<?php echo base_url(); ?>assets/images/projectile.png"
+		];
 
 		var cmdNum = 0;
 		
@@ -182,7 +190,7 @@
 
 		var zoomMultiplier = 0.75;
 		var TILE_SIZE = 16;
-		var isPaused = false;
+		var isPaused = true;
 
 		var collectedCoins = 0;
 		var KilledBullies = 0;
@@ -203,64 +211,280 @@
 		img.projectile = new Image();
 		img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
 
-		preloadImages = function(imgArr) {
+		updateLoadProgBar = function() {
 
-			var newImages = [];
-			var loadedImages = 0;
+			// console.log(preloadProgCtr/(gameImgArr.length + 4));
 
-			var postAction = function() {};
-
-			imageLoadPost = function() {
-				loadedImages++;
-
-
-				var loadPercent = (loadedImages/imgArr.length)*100;
-
-				$(".load-bar").css("width", loadPercent + "%");
-				if(loadedImages == imgArr.length) {
-					function onReady(callback) {
-				    	var intervalID = window.setInterval(checkReady, 0);
-						// window.addEventListener("load", draw, true);
-					    function checkReady() {
-					        if (document.getElementsByTagName('canvas')[0] !== undefined) {
-					            window.clearInterval(intervalID);
-					            callback.call(this);
-					            isPaused = false;
-					        }
-					    }
-					}
-					function show(id, value) {
-						document.getElementById(id).style.transition = value ? '' : '.5s';
-					    document.getElementById(id).style.display = value ? 'block' : 'none';
-					}
-					onReady(function () {
-					    show('page', true);
-					    show('loading', false);
-					});
-						postAction();
-				}
-			}
-
-			for(var i = 0; i < imgArr.length; i++) {
-
-				newImages[i] = new Image();
-				newImages[i].src = imgArr[i];
-				
-				newImages[i].onload = function() {
-					imageLoadPost();
-				}
-
-				newImages[i].onerror = function()  {
-					imageLoadPost();
-				}
-			}
-
-			return {
-				done: function(f) {
-					postAction = f || postAction;
-				}
-			}
+			var loadPercent = (preloadProgCtr/(gameImgArr.length + 4))*100;
+			$(".load-bar").css("width", loadPercent + "%");
 		}
+
+		preloadGameData = function() {
+
+			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+
+			var postAction = function() {
+
+				startNewGame();
+				setInterval(update, 40);
+			};
+
+			var promise = new Promise(function(resolve, reject) {
+
+				return $.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/get_level_info",
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					error: function(err) {
+						console.log("cannot retreive level info due to some error");
+					},
+					complete: function(comp) {
+						preloadProgCtr++;
+						console.log("progress: " + preloadProgCtr);
+						// console.log(preloadProgCtr/(gameImgArr.length + 4));
+						updateLoadProgBar();
+
+						gameData.map_info = comp.responseJSON;
+						console.log(gameData);
+
+						if(gameData.map_info.status) {
+							resolve({status: true});
+						} else {
+							alert("failed to retreive game data, reloading page");
+							window.location = "<?php echo base_url(); ?>Game/play_basics/" + lvlId;
+						}
+					}
+				})
+			}).then(function(loadStatus) {
+					
+				 return $.ajax({
+					type: 'POST',
+					url: '<?php echo base_url(); ?>Game/get_objectives',
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					error: function(err) {
+						console.log(err);
+					},
+					complete: function(comp) {
+						preloadProgCtr++;
+						console.log("progress: " + preloadProgCtr);
+						// console.log(preloadProgCtr/(gameImgArr.length + 4));
+						updateLoadProgBar();
+
+						gameData.objectives_list = comp.responseJSON;
+						console.log(gameData);
+
+						if(gameData.objectives_list.status) {
+							return {status: true};
+						} else {
+							alert("failed to retreive game data, reloading page");
+							window.location = "<?php echo base_url(); ?>Game/play_basics/" + lvlId;
+						}
+					}
+				});
+			}).then(function(loadStatus) {
+
+				return $.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/get_bully_list",
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					error: function(err) {
+						console.log("failed to retreive bully data");
+					},
+					complete: function(comp) {
+						preloadProgCtr++;
+						console.log("progress: " + preloadProgCtr);
+						// console.log(preloadProgCtr/(gameImgArr.length + 4));
+						updateLoadProgBar();
+
+						gameData.bully_list = comp.responseJSON;
+						console.log(gameData);
+
+						if(gameData.bully_list.status) {
+							return {status: true};
+						} else {
+							alert("failed to retreive game data, reloading page");
+							window.location = "<?php echo base_url(); ?>Game/play_basics/" + lvlId;
+						}
+					}
+				});
+			}).then(function(loadStatus) {
+
+				return $.ajax({
+					type: 'post',
+					url: "<?php echo base_url() ?>Game/get_question_list",
+					data: {lvlId: lvlId},
+					dataType: 'json',
+					error: function(err) {
+						console.log("failed to retreive question list due to some error");
+					},
+					complete: function(comp) {
+						preloadProgCtr++;
+						console.log("progress: " + preloadProgCtr);
+						// console.log(preloadProgCtr/(gameImgArr.length + 4));
+						updateLoadProgBar();
+
+						gameData.question_list = comp.responseJSON;
+						console.log(gameData);
+
+						if(gameData.question_list.status) {
+							console.log("here");
+							return {status: true};
+						} else {
+							alert("failed to retreive game data, reloading page");
+							window.location = "<?php echo base_url(); ?>Game/play_basics/" + lvlId;
+						}
+					}
+				});
+
+
+			}).then(function(loadStatus) {
+
+				console.log(loadStatus);
+
+				if(loadStatus.status) {
+
+					var newImages = [];
+					var loadedImages = 0;
+
+					imageLoadPost = function() {
+					
+						preloadProgCtr++;
+						loadedImages++;
+						updateLoadProgBar();
+
+
+
+						if((loadedImages) >= (gameImgArr.length)) {
+							function onReady(callback) {
+						    	var intervalID = window.setInterval(checkReady, 1000);
+								// window.addEventListener("load", draw, true);
+							    function checkReady() {
+							        if (document.getElementsByTagName('canvas')[0] !== undefined) {
+							            window.clearInterval(intervalID);
+							            callback.call(this);
+							        }
+							    }
+							}
+							function show(id, value) {
+								document.getElementById(id).style.transition = value ? '' : '.5s';
+							    document.getElementById(id).style.display = value ? 'block' : 'none';
+							}
+							onReady(function () {
+							    show('page', true);
+							    show('loading', false);
+							    isPaused = false;
+							});
+							
+							postAction();
+
+							// return({status: true});
+						}
+					}
+
+					for(var i = 0; i < gameImgArr.length; i++) {
+
+						newImages[i] = new Image();
+						newImages[i].src = gameImgArr[i];
+						
+						newImages[i].onload = function() {
+							imageLoadPost();
+						}
+
+						newImages[i].onerror = function()  {
+							imageLoadPost();
+							console.log("errorloading image");
+						}
+
+						// preloadProgCtr++;
+						// console.log("progress: " + preloadProgCtr);
+
+						// loadedImages++;
+						// updateLoadProgBar();
+					}
+
+					// return {
+					// 	done: function(f) {
+					// 		postAction = f || postAction;
+					// 	}
+					// }
+				} 
+
+			});
+			// .then(function(loadStatus) {
+
+			// 	// if(loadStatus.status) {
+			// 		// console.log("here");
+			// 		// startNewGame();
+			// 		// setInterval(update, 40);
+
+			// 	// } else {
+			// 	// 	alert("failed to retreive game data, reloading page");
+			// 	// 	window.location = "<?php echo base_url(); ?>Game/play_basics/" + lvlId;
+			// 	// }
+
+			// });
+		}
+
+		// preloadImages = function(imgArr) {
+
+		// 	var newImages = [];
+		// 	var loadedImages = 0;
+
+		// 	var postAction = function() {};
+
+		// 	imageLoadPost = function() {
+				
+		// 		preloadProgCtr++;
+		// 		loadedImages++;
+		// 		updateLoadProgBar();
+
+		// 		if(loadedImages == imgArr.length) {
+		// 			function onReady(callback) {
+		// 		    	var intervalID = window.setInterval(checkReady, 0);
+		// 				// window.addEventListener("load", draw, true);
+		// 			    function checkReady() {
+		// 			        if (document.getElementsByTagName('canvas')[0] !== undefined) {
+		// 			            window.clearInterval(intervalID);
+		// 			            callback.call(this);
+		// 			            isPaused = false;
+		// 			        }
+		// 			    }
+		// 			}
+		// 			function show(id, value) {
+		// 				document.getElementById(id).style.transition = value ? '' : '.5s';
+		// 			    document.getElementById(id).style.display = value ? 'block' : 'none';
+		// 			}
+		// 			onReady(function () {
+		// 			    show('page', true);
+		// 			    show('loading', false);
+		// 			});
+		// 				postAction();
+		// 		}
+		// 	}
+
+		// 	for(var i = 0; i < imgArr.length; i++) {
+
+		// 		newImages[i] = new Image();
+		// 		newImages[i].src = imgArr[i];
+				
+		// 		newImages[i].onload = function() {
+		// 			imageLoadPost();
+		// 		}
+
+		// 		newImages[i].onerror = function()  {
+		// 			imageLoadPost();
+		// 		}
+		// 	}
+
+		// 	return {
+		// 		done: function(f) {
+		// 			postAction = f || postAction;
+		// 		}
+		// 	}
+		// }
 
 		
 
@@ -996,12 +1220,65 @@
 						return cond_result;
 					}
 
+				} else if(/^while\s*\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{$/g.test(cmdLine)) {
+
+					var loop_condition = getConditions(cmdLine, "(", ")");
+					var cond_result = testCondition(loop_condition);
+
+					if(cond_result.status) {
+
+						code_stack.push({
+							type: "loop-while",
+							condition: loop_condition,
+							status: cond_result.result,
+							start: commandNum,
+							log_id: code_log.length,
+							statements: [],
+						});
+
+						code_log.push({
+							type: "cmd-loop-while",
+							cmd_info: {
+								condition: loop_condition,
+								status: cond_result.result,
+								start: commandNum,
+								statements: [],
+							},
+						});
+					} else {
+						return cond_result;
+					}
+
 				} else if(/^\s*}\s*$/) {
 
-					var cmd_info = code_stack.pop();
+					if(code_stack.length > 0) {
 
-					code_log[cmd_info.log_id].cmd_info.end = commandNum;
-					code_log[cmd_info.log_id].cmd_info.statements = cmd_info.statements;
+						var stack_lastIndex = code_stack.length - 1;
+						var curr_cmd = code_stack[stack_lastIndex];
+
+						if(curr_cmd.type == "if") {
+							var cmd_info = code_stack.pop();
+
+							code_log[cmd_info.log_id].cmd_info.end = commandNum;
+							code_log[cmd_info.log_id].cmd_info.statements = cmd_info.statements;
+						} else if(curr_cmd.type == "loop-while") {
+
+							code_log[curr_cmd.log_id].cmd_info.end = commandNum;
+
+							var cond_result = testCondition(curr_cmd.condition);
+
+							if(cond_result.status) {
+
+								if(cond_result.result) {
+									cmdNum = curr_cmd.start;
+								}
+							} else {
+								return cond_result;
+							}
+						}
+					} else {
+						return {status: false, message: "unexpected '}'"};
+					}
 
 					// var
 
@@ -1074,7 +1351,11 @@
 
 														if(/\[\]/g.test(answers.variables[akey].dataType)) {
 
-															if(code_log[ckey].type == "dec_arr") {
+															console.log(code_log[ckey].type);
+
+															if(code_log[ckey].type == "dec-arr") {
+
+																console.log("check array val");
 
 																if(code_log[ckey].var_info.dataType == answers.variables[akey].dataType && code_log[ckey].var_info.var_identifier == answers.variables[akey].var_identifier && code_log[ckey].var_info.var_value.length == answers.variables[akey].var_value.length) {
 
@@ -1087,8 +1368,10 @@
 
 																		if(arrVal[arrIndexCtr] == code_log[ckey].var_info.var_value[arrIndexCtr]) {
 																			arrIndexCtr++;
+																			console.log("correct value");
 																		} else {
 																			isWrongVal = true;
+																			console.log("wrong value");
 																		}
 																	} while((arrVal.length > arrIndexCtr) && !isWrongVal);
 
@@ -1101,7 +1384,7 @@
 														} else {
 
 															if(answers.variables[akey].dataType == code_log[ckey].var_info.dataType && answers.variables[akey].var_identifier == code_log[ckey].var_info.var_identifier && answers.variables[akey].var_value == code_log[ckey].var_info.var_value) {
-																console.log("correct declaration");
+																// console.log("correct declaration");
 																correctAns++;
 															}
 														}
@@ -1157,7 +1440,7 @@
 																console.log(code_log[ckey].op_info.var_2 == answers.operations[okey].var_2);
 
 																if((code_log[ckey].op_info.var_1 == answers.operations[okey].var_1) && (code_log[ckey].op_info.var_2 == answers.operations[okey].var_2)) {
-																	console.log("correct operation");
+																	// console.log("correct operation");
 
 																	correctAns++;
 																}
@@ -1192,6 +1475,9 @@
 								vrbls = [];
 								code_log = [];
 								code_stack = [];
+
+								document.getElementById("code_area").value = "";
+								document.getElementById("textarea1").value = "1";
 
 								var questionStat = Question.statusCheck(bullyId);
 
@@ -1770,65 +2056,106 @@
 
 			var promise = new Promise(function(resolve, reject) {
 
-				var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+				// var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
 
-				$.ajax({
-					type: 'POST',
-					url: '<?php echo base_url(); ?>Game/get_objectives',
-					data: {lvlId: lvlId},
-					dataType: 'json',
-					success: function(res) {
-						resolve(res);
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				}).then(function(result) {
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '<?php echo base_url(); ?>Game/get_objectives',
+				// 	data: {lvlId: lvlId},
+				// 	dataType: 'json',
+				// 	success: function(res) {
+				// 		resolve(res);
+				// 	},
+				// 	error: function(err) {
+				// 		console.log(err);
+				// 	}
+				// }).then(function(result) {
 
-					if(result.status) {
-						var objectives_list = result['objectives_list'];
+				// 	if(result.status) {
+				// 		var objectives_list = result['objectives_list'];
 
-						for(var key in objectives_list) {
+				// 		for(var key in objectives_list) {
 
-							var taskObj = {};
-							var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
-							var objKey = Object.keys(jsonObj);
+				// 			var taskObj = {};
+				// 			var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
+				// 			var objKey = Object.keys(jsonObj);
 
-							if(objKey[0] == "Finish") {
+				// 			if(objKey[0] == "Finish") {
 
-								if(jsonObj['Finish'] == "True") {
-									taskObj = {finish: true};
-								} else {
-									taskObj = {finish: false};
-								}
-							} else if(objKey[0] == 'Defeat Bullies') {
+				// 				if(jsonObj['Finish'] == "True") {
+				// 					taskObj = {finish: true};
+				// 				} else {
+				// 					taskObj = {finish: false};
+				// 				}
+				// 			} else if(objKey[0] == 'Defeat Bullies') {
 
-								taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
+				// 				taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
 
-							} else if(objKey[0] == 'Use command') {
+				// 			} else if(objKey[0] == 'Use command') {
 
-								taskObj = {use_command: jsonObj['Use command']};
+				// 				taskObj = {use_command: jsonObj['Use command']};
 
-							} else if(objKey[0] == 'Collect Coins') {
+				// 			} else if(objKey[0] == 'Collect Coins') {
 
-								taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
+				// 				taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
 
-							} else if(objKey[0] == 'Health') {
+				// 			} else if(objKey[0] == 'Health') {
 
-								var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
-								taskObj = {health: healthPerc};
-							}
+				// 				var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
+				// 				taskObj = {health: healthPerc};
+				// 			}
 							
 
 
-							Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
-						}
+				// 			Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
+				// 		}
 
-						console.log(Objective.list);
-					} else {
-						console.log(result.message);
+				// 		console.log(Objective.list);
+				// 	} else {
+				// 		console.log(result.message);
+				// 	}
+				// });
+
+				var objectives_list = gameData.objectives_list.objectives_list;
+				console.log(gameData);
+
+				for(var key in objectives_list) {
+
+					var taskObj = {};
+					var jsonObj = JSON.parse(objectives_list[key].OBJ_JSONVAL);
+					var objKey = Object.keys(jsonObj);
+
+					if(objKey[0] == "Finish") {
+
+						if(jsonObj['Finish'] == "True") {
+							taskObj = {finish: true};
+						} else {
+							taskObj = {finish: false};
+						}
+					} else if(objKey[0] == 'Defeat Bullies') {
+
+						taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
+
+					} else if(objKey[0] == 'Use command') {
+
+						taskObj = {use_command: jsonObj['Use command']};
+
+					} else if(objKey[0] == 'Collect Coins') {
+
+						taskObj = {collect_coins: parseInt(jsonObj['Collect Coins'])};
+
+					} else if(objKey[0] == 'Health') {
+
+						var healthPerc = parseFloat(parseInt(jsonObj['Health'])/100);
+						taskObj = {health: healthPerc};
 					}
-				});
+					
+
+
+					Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
+				}
+
+				console.log(Objective.list);
 			});
 		}
 
@@ -1988,7 +2315,7 @@
 				currentQuestion: {},
 			}
 
-			self.img.src = imgSrc;
+			self.img = imgSrc;
 
 			self.pressingUp = false;
 			self.pressingDown = false;
@@ -2386,8 +2713,8 @@
 						player.hp -= 1;
 
 						var hpPercent = (player.hp/player.hpMax)*100;
-						alert(hpPercent);
-						if(hpPercent >= 90)
+						// alert(hpPercent);
+						if(hpPercent >= 70)
 						{
 							document.getElementById('hp-bar').style.background = '#67c636';
 						}
@@ -2575,6 +2902,7 @@
 											var valObj = parseValue(answers.variables[akey].dataType.replace(/[\[\]]/g, ""), arrValue[vkey]);
 
 											arrValue[vkey] = valObj.value;
+											// console.log(valObj);
 										}
 
 										answers.variables[akey].var_value = arrValue;
@@ -2583,6 +2911,7 @@
 										
 										var valObj = parseValue(answers.variables[akey].dataType, answers.variables[akey].var_value);
 										answers.variables[akey].var_value = valObj.value;
+										// console.log(valObj);
 									}
 								}
 							}
@@ -2755,6 +3084,8 @@
 
 		startNewGame = function() {
 
+			// isPaused = false;
+
 			Bully.list = {};
 			Objective.list = {};
 			Question.list = {};
@@ -2766,7 +3097,7 @@
 			Bully.init();
 			Question.init();
 
-			player = new Player('myPlayer1', img.player.src, img.player.width/4, img.player.height/4, 56, 56, 10);
+			player = new Player('myPlayer1', img.player, img.player.width/4, img.player.height/4, 56, 56, 10);
 
 
 
@@ -2810,17 +3141,26 @@
 		var question = new Question();
 		var player = {};
 
-		preloadImages([
-			"<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>",
-			"<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>",
-			"<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png",
-			"<?php echo base_url(); ?>assets/images/projectile.png"
-		]).done(function(images) {
+		preloadGameData().done(function(images) {
 
-			startNewGame();
-
-			setInterval(update, 40);
+			console.log("done preloading");
 		});
+
+		// preloadImages([
+		// 	"<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>",
+		// 	"<?php echo base_url(); ?>assets/images/avatars/sprites/<?php echo $avatar['AVTR_SPRITE_FILENAME']?>",
+		// 	"<?php echo base_url(); ?>assets/images/avatars/sprites/BULLY-10.png",
+		// 	"<?php echo base_url(); ?>assets/images/projectile.png"
+		// ]).done(function(images) {
+
+		// 	startNewGame();
+
+		// 	setInterval(update, 40);
+		// });
+
+		// startNewGame();
+
+		// setInterval(update, 40);
 
 	});
 </script>

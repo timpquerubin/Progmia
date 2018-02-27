@@ -426,6 +426,17 @@
 			$this->load->view('dashboard/commands_block', $data);
 		}
 
+		public function load_codes_block() {
+
+			if(count($_POST) > 0) {
+				$data['code_list'] = $_POST['code_list'];
+			} else {
+				$data['code_list'] = [];
+			}
+
+			$this->load->view('dashboard/codes_block', $data);
+		}
+
 		public function load_variables_block() {
 
 			if(count($_POST) > 0) {
