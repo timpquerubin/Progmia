@@ -437,6 +437,16 @@
 			$this->load->view('dashboard/codes_block', $data);
 		}
 
+		public function load_print_block() {
+			if(count($_POST) > 0) {
+				$data['print_list'] = $_POST['print_list'];
+			} else {
+				$data['print_list'] = [];
+			}
+
+			$this->load->view('dashboard/print_block', $data);
+		}
+
 		public function load_variables_block() {
 
 			if(count($_POST) > 0) {

@@ -30,6 +30,27 @@
 					</div>
 
 					<div class="var-op-block-container" style="display: block;">
+						<div class="print-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
+							
+							<div class="form-group">
+								<label class="control-label col-sm-2">Print Text:</label>
+								<div class="col-sm-8">
+									<div class="row">
+										<div class="col-sm-10">
+											<input class="form-control" type="text" name="print_txt" id="print_txt">
+										</div>
+										<div class="col-sm-2">
+											<div class="add-print-btn">
+												<input class="btn btn-default" type="button" name="add_print" onclick="append_print();" value="Add Print">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="print-block" style="padding: 0px 20px"></div>
+						</div>
+
 						<div class="answer-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
 							<div class="row">
 								<div class="col-sm-5">
@@ -192,6 +213,27 @@
 									</div>
 								</div>
 							</div>
+						</div>
+
+						<div class="cmdprint-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
+							
+							<div class="form-group">
+								<label class="control-label col-sm-2">Print Text:</label>
+								<div class="col-sm-8">
+									<div class="row">
+										<div class="col-sm-10">
+											<input class="form-control" type="text" name="cmdprint_txt" id="cmdprint_txt">
+										</div>
+										<div class="col-sm-2">
+											<div class="add-print-btn">
+												<input class="btn btn-default" type="button" name="add_print" onclick="append_print();" value="Add Print">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="cmdprint-block" style="padding: 0px 20px"></div>
 						</div>
 
 						<div class="cmdvar-info-block" style="border: 1px solid #d9d9d9; padding-top: 10px; margin: 20px 15px; padding-bottom: 10px;">
@@ -422,12 +464,14 @@
 		var command_list = {};
 		var variable_list = {};
 		var operation_list = {};
+		var print_list = {};
 
 		var code_list = [];
 
 		var varCtr = 0;
 		var opCtr = 0;
 		var cmdCtr = 0;
+		var printCtr = 0;
 
 		get_bully_list = function() {
 
@@ -571,6 +615,38 @@
 			});
 		}
 
+		load_print_block = function() {
+
+			var curr_codeType = code_type;
+			var data = {};
+			data["print_list"] = {};
+
+			for(var key in print_list) {
+
+				if(print_list[key].code_type == curr_codeType) {
+
+					data["print_list"][key] = print_list[key];
+				}
+			}
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>dashboard/load_print_block",
+				data: data,
+				success: function(res) {
+					
+					if(curr_codeType == "varop") {
+						$(".print-block").html(res);
+					} else if(curr_codeType == "cmd") {
+						$(".cmdprint-block").html(res);
+					}
+				},
+				error: function(err) {
+					console.log("failed to load print table due to some error");
+				}
+			});
+		}
+
 		append_command = function() {
 
 			var cmd_type = document.getElementById("cmd_type").value;
@@ -608,6 +684,33 @@
 			load_commands_block();
 			load_operations_block();
 			load_variables_block();
+		}
+
+		append_print = function() {
+
+			var curr_codeType = code_type;
+
+			var print_txt;
+
+			if(curr_codeType == "varop") {
+				print_txt = document.getElementById("print_txt").value;
+			} else if(curr_codeType == "cmd") {
+				print_txt = document.getElementById("cmdprint_txt").value;
+			}
+
+			print_list[printCtr] = {txt: print_txt, code_type: curr_codeType, type: "print"};
+
+			code_list.push(print_list[printCtr]);
+
+			printCtr++;
+
+			console.log(print_list);
+
+			document.getElementById("print_txt").value = "";
+			document.getElementById("cmdprint_txt").value = "";
+
+			load_variables_block();
+			load_print_block();
 		}
 
 		append_variable = function() {
@@ -935,12 +1038,16 @@
 					variable_list = {};
 					operation_list = {};
 					command_list = {};
+					print_list = {};
 					varCtr = 0;
 					opCtr = 0;
 					cmdCtr = 0;
+					printCtr = 0;
 					load_variables_block();
 					load_operations_block();
 					load_commands_block();
+					load_codes_block();
+					load_print_block();
 				} else {
 					console.log(result.message);
 				}
@@ -1066,6 +1173,7 @@
 
 	    	load_variables_block();
 	    	load_operations_block();
+	    	load_print_block();
 	    });
 
 	    $("#code_type_cmd").click(function() {
@@ -1078,6 +1186,7 @@
 	    	load_variables_block();
 	    	load_operations_block();
 	    	load_commands_block();
+	    	load_print_block();
 	    });
 
 		get_question_list();
@@ -1088,6 +1197,7 @@
 		load_variables_block();
 		load_operations_block();
 		load_commands_block();
+		load_print_block();
 	});
 
 </script>

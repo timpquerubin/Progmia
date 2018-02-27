@@ -45,7 +45,7 @@
 							<textarea rows="15" id="textarea1" disabled></textarea>
 						</div>
 						<div class="code-area-container border-custom col-md-11 col-sm-11 col-xs-11">
-							<textarea class="code_area" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 						</div>
 					</div>
 					<div class="row button-run-container">
@@ -563,6 +563,23 @@
 				cmdLine = code[commandNum].trim();
 				if(cmdLine == "") {
 					// console.log("blank line");
+				} else if(/^System\.out\.println\(\s*[A-Za-z0-9=<>()\[\]\+\-*/\s\W]*\s*\)\s*;$/g.test(cmdLine)) {
+
+					//\"[A-Za-z0-9_\W]*\"
+
+					var cond = getConditions(cmdLine, "(", ")");
+
+					if(/\"[A-Za-z0-9_\W]*\"/g.test(cond)) {
+						console.log(cond);
+					}
+
+					code_log.push({
+						type: "print",
+						print_info: {
+							txt: cond,
+						}
+					});
+
 				} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
@@ -760,7 +777,7 @@
 						vrbls.push(arrInfo);
 					}
 
-				} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*(\{[A-Za-z0-9,\"\'\s\.]*\}|new\s*(int|double|char|String|Boolean)\[[0-9]*\])\s*;$/g.test(cmdLine)) {
+				} else if(/^(int|double|char|String|Boolean)\[\]\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*(\{[A-Za-z0-9,\"\'\s\.\-\_]*\}|new\s*(int|double|char|String|Boolean)\[[0-9]*\])\s*;$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
 					var declareLine = tempLine.split(/=/i);
@@ -870,7 +887,7 @@
 						return {status: false, message: "error: value assigned invalid"};
 					}
 
-				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
 					var assignLine = tempLine.split(/=/i);
@@ -878,46 +895,115 @@
 					var var1_identifier = assignLine[0].trim();
 					var var2_identifier = assignLine[1].trim();
 
-					if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""))) {
-						
-						var var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
-						var var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
+					var var1 = {};
+					var var2 = {};
 
-						var valToTrans;
-						var assign_param = {};
+					var valToTrans;
+					var assign_param = {};
+
+					if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\')$/g.test(assignLine[1].trim())) {
+
+						if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""))) {
+
+							var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
+							var parsedVal = parseValue(var1.dataType.replace(/[\[\]]/g, ""), assignLine[1].trim());
+
+							if(parsedVal.status) {
+								valToTrans = parsedVal.value;
+							} else {
+								return parsedVal;
+							}
+
+							if(/\[[0-9]*\]/g.test(var1_identifier)) {
+
+								if(Array.isArray(var1.var_value)) {
+
+									var var1_arrIndex = getConditions(var1_identifier, '[', ']');
+
+									assign_param = {
+										saveTo_index: var1_arrIndex,
+										dataType: var1.dataType.replace(/[\[\]]/g, ""),
+										value: valToTrans,
+									};
+								} else {
+									return {status: false, message: var1.var_identifier + " is not an Array"};
+								}
+							} else {
+
+								if(!Array.isArray(var1.var_value)) {
+
+									assign_param = {
+										dataType: var1.dataType.replace(/[\[\]]/g, ""),
+										value: valToTrans,
+									};
+								} else {
+									return {status: false, message: "specify array index of " + var1.var_identifier};
+								}
+							}
+						}
+					} else if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""))) {
+						
+						var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
+						var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
+
+						// var valToTrans;
+						// var assign_param = {};
 
 						if(/\[[0-9]*\]/g.test(var2_identifier) && /\[\]/g.test(var2.dataType)) {
-							
-							var var2_arrIndex = getConditions(var2_identifier, '[', ']');
-							valToTrans = var2.var_value[var2_arrIndex];
-							// console.log(valToTrans);	
+
+							if(Array.isArray(var2.var_value)) {
+								var var2_arrIndex = getConditions(var2_identifier, '[', ']');
+								valToTrans = var2.var_value[var2_arrIndex];
+								// console.log(valToTrans);	
+							} else {
+								return {status: false, message: var2.var_identifier + " is not an Array"};
+							}
 						} else {
-							valToTrans = var2.var_value
-							// console.log(valToTrans);
+
+							if(!Array.isArray(var2.var_value)) {
+								valToTrans = var2.var_value
+								// console.log(valToTrans);
+							} else {
+								return {status: false, message: "specify array index of " + var2.var_identifier};
+							}
 						}
 
 						if(/\[[0-9]*\]/g.test(var1_identifier) && /\[\]/g.test(var1.dataType)) {
 
-							var var1_arrIndex = getConditions(var1_identifier, '[', ']');
+							if(Array.isArray(var1.var_value)) {
 
-							var assign_param = {
-								saveTo_index: var1_arrIndex,
-								dataType: var2.dataType.replace(/[\[\]]/g, ""),
-								value: valToTrans,
-							};
+								var var1_arrIndex = getConditions(var1_identifier, '[', ']');
 
-							// var1.var_value[var1_arrIndex] = valToTrans;
+								assign_param = {
+									saveTo_index: var1_arrIndex,
+									dataType: var2.dataType.replace(/[\[\]]/g, ""),
+									value: valToTrans,
+								};
+
+								// var1.var_value[var1_arrIndex] = valToTrans;
+							} else {
+								return {status: false, message: var1.var_identifier + " is not an Array"};
+							}
+							
 						} else {
 
-							var assign_param = {
-								dataType: var2.dataType,
-								value: valToTrans,
-							};
+							if(!Array.isArray(var1.var_value)) {
+								assign_param = {
+									dataType: var2.dataType,
+									value: valToTrans,
+								};
 
-							// var1.var_value = valToTrans;
+								// var1.var_value = valToTrans;
+							} else {
+								return {status: false, message: "specify array index of " + var1.var_identifier};
+							}
 						}
+					} else {
+						console.log(var1_identifier + " or " + var2_identifier + " variable does not exist");
+						return {status: false, message: var1_identifier + " or " + var2_identifier + " variable does not exist"};
+					}
 
-						if(code_stack.length > 0) {
+					if(code_stack.length > 0) {
 
 							code_stack[code_stack.length - 1].statements.push({
 								type: "assign",
@@ -968,11 +1054,6 @@
 						// console.log(var1);
 						// console.log(var2);
 						// console.log(vrbls);
-
-					} else {
-						console.log(var1_identifier + " or " + var2_identifier + " variable does not exist");
-						return {status: false, message: var1_identifier + " or " + var2_identifier + " variable does not exist"};
-					}
 
 
 				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
@@ -1351,11 +1432,11 @@
 
 														if(/\[\]/g.test(answers.variables[akey].dataType)) {
 
-															console.log(code_log[ckey].type);
+															// console.log(code_log[ckey].type);
 
 															if(code_log[ckey].type == "dec-arr") {
 
-																console.log("check array val");
+																// console.log("check array val");
 
 																if(code_log[ckey].var_info.dataType == answers.variables[akey].dataType && code_log[ckey].var_info.var_identifier == answers.variables[akey].var_identifier && code_log[ckey].var_info.var_value.length == answers.variables[akey].var_value.length) {
 
@@ -1368,10 +1449,10 @@
 
 																		if(arrVal[arrIndexCtr] == code_log[ckey].var_info.var_value[arrIndexCtr]) {
 																			arrIndexCtr++;
-																			console.log("correct value");
+																			// console.log("correct value");
 																		} else {
 																			isWrongVal = true;
-																			console.log("wrong value");
+																			// console.log("wrong value");
 																		}
 																	} while((arrVal.length > arrIndexCtr) && !isWrongVal);
 
@@ -1433,11 +1514,11 @@
 
 															if(answers.operations[okey].operation == "add") {
 
-																console.log(answers.operations[okey]);
-																console.log(code_log[ckey].op_info);
+																// console.log(answers.operations[okey]);
+																// console.log(code_log[ckey].op_info);
 
-																console.log(code_log[ckey].op_info.var_1 == answers.operations[okey].var_1);
-																console.log(code_log[ckey].op_info.var_2 == answers.operations[okey].var_2);
+																// console.log(code_log[ckey].op_info.var_1 == answers.operations[okey].var_1);
+																// console.log(code_log[ckey].op_info.var_2 == answers.operations[okey].var_2);
 
 																if((code_log[ckey].op_info.var_1 == answers.operations[okey].var_1) && (code_log[ckey].op_info.var_2 == answers.operations[okey].var_2)) {
 																	// console.log("correct operation");
@@ -1482,7 +1563,7 @@
 								var questionStat = Question.statusCheck(bullyId);
 
 								if(questionStat.total_questions == (questionStat.correct_ans + questionStat.wrong_ans)) {
-									console.log("here");
+									// console.log("here");
 									player.currentQuestion = {};
 								} else {
 									player.currentQuestion.questionNum++;
