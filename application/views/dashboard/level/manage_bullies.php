@@ -709,7 +709,7 @@
 			document.getElementById("print_txt").value = "";
 			document.getElementById("cmdprint_txt").value = "";
 
-			load_variables_block();
+			load_codes_block();
 			load_print_block();
 		}
 
@@ -1011,7 +1011,7 @@
 				bullyId: document.getElementById("input-bully-id").value,
 				// qstn_type: document.getElementById("qstn_type").value,
 				qstn_dialog: document.getElementById("qstn_dialog").value,
-				qstn_ans: {variables: variable_list, operations: operation_list, commands: command_list},
+				qstn_ans: {variables: variable_list, operations: operation_list, commands: command_list, prints: print_list},
 			};
 
 			console.log(variable_list);
@@ -1048,6 +1048,8 @@
 					load_commands_block();
 					load_codes_block();
 					load_print_block();
+
+					document.getElementById("qstn_dialog").value = "";
 				} else {
 					console.log(result.message);
 				}

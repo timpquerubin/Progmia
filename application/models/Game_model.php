@@ -80,6 +80,16 @@
 
 			return $progress->result_array();
 		}
+		public function get_profileprogress($user){
+			// if($user === null) {
+			// 	$profileprogress = $this->db->query('SELECT P.PROG_ID,L.LVL_NUM, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID=\''.$user.'\' AND P.LVL_ID=L.LVL_ID;');
+			// }
+			// else if(isset($user)) {
+				$profileprogress = $this->db->query('SELECT P.PROG_ID,P.DATE_PLAYED,L.LVL_NUM,S.STG_DESCRIPTION, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L, STAGE S WHERE P.USER_ID=\''.$user.'\' AND P.LVL_ID=L.LVL_ID GROUP BY P.PROG_ID ORDER BY P.DATE_PLAYED DESC;');
+			// }
+
+			return $profileprogress->result_array();
+		}
 
 		public function insert_progress($params) {
 			return $this->db->insert('PROGRESS', $params);

@@ -7,13 +7,115 @@
     font-family: 'ArcadeAlternate';
     src: url("../fonts/ArcadeAlternate.ttf");
 }
+
+  #page {
+    display: none;
+}
+.test {position: relative;
+    margin: 0 auto;
+    width:  100%;
+    height:  100%;}
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom: 0;
+    padding-top:5%;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    width: 100%;
+    height: 100%;
+    background-color: #004e55;
+}
+.test {display:block;
+}
+
+.loading-container {position: relative;width:80%;margin:30px auto 0 auto;background-color: #003333;height: 50px;border-radius:10px;}
+.loading-container:after{position:absolute;top:4px;left:0;right:0;bottom:0;text-align:center;font-family:'ArcadeClassic';content: "LOADING";z-index: 0;font-size:30px;color:#003333;}
+.loading-container #load{    border: solid 5px #033;height: 50px;background-color: #33accc;z-index: 1;border-radius:10px;}
+canvas#ctx{width:100%;margin: 0px auto 15px auto !important; padding: 0px;}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 3rem;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+}
+.slider-output {
+  display: block;
+  position: absolute;
+  bottom: -8px;
+  left: 100%;
+  padding-left:5px;
+  box-sizing: border-box;
+  transform: translateX(-100%);
+  color:#ffffff;
+  text-shadow: 0px 1px 0px #000000;
+  font-family: 'ArcadeClassic';
+  font-size:25px;
+}
+.slider-input {
+  -webkit-appearance: none;
+  background-color: transparent;
+  position: absolute;
+  width: 105%;
+  margin-left: -2.5%;
+  height: 2rem;
+  outline: none;
+}
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 2rem;
+  height: 8rem;
+}
+.slider-thumb,
+.top-thumb,
+.tail-thumb {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 1rem;
+  position: absolute;
+  top: -0.75rem;
+  background-color: #002125;
+}
+.slider-thumb {
+  left: 100%;
+  margin-left: -1rem;
+}
+.top-thumb {
+  left: 0;
+  margin-left: -1rem;
+}
+.tail-thumb {
+  right: 0;
+  margin-right: -1rem;
+}
+.slider-track {
+  height: 0.5rem;
+  background-color: #0f5561;
+  border-radius: 0.25rem;
+}
+.slider-level {
+  height: 0.5rem;
+  background-color: #00363c;
+  width: 100%;
+  border-radius: 1rem;
+}
+.fa .fa-arrow-left{}
 .game-area {}
 nav ul li.bg-volume {float:right; padding-right: 15px;}
+#bgmvolume, #sfxvolume{position: relative;}
 /*body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}*/
-.modal-settings{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;display:none;}
+
 nav {height: 110px;}
 nav ul {list-style: none;display:block;}
-nav ul li .logo a img{height: 80px;}
+nav ul li .logo a img{height: 50px;}
+.navbar-brand img {height:50px;}
 .hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
 
 div.player-status {padding:20px 5px;    background-color: #013243;
@@ -24,19 +126,9 @@ div.player-status {padding:20px 5px;    background-color: #013243;
 .player-status {}
 label.user { font-family: 'ArcadeAlternate';font-size:24px;margin:0px;color:#ffce12;letter-spacing: 3px;text-shadow:0 0 1px #111;}
 .avatar img {text-align:right;margin:0 auto;    border: outset 4px #eaffff;border-radius:100%;padding:2px;background-color:#006c7880;height:60px;}
-
+#mainNav{background-color: #111212;}
 .margin-top{padding:20px;}
-div.canvas-container {box-shadow: 2px 3px #333;
-    border-radius: 30px;border-top: solid 5px #fff;
-    border-bottom: solid 5px #777;
-    border-left: solid 5px #bbb;
-    border-right: solid 5px #999;
-    -webkit-animation: appear 2s;
-    -moz-animation: appear 2s;
-    -ms-animation: appear 2s;
-    -o-animation: appear 2s;
-    animation: appear 2s;
-background-color: #121212;}
+div.canvas-container {padding-bottom:5%;background-color: #121212;box-shadow: 2px 3px #333;border-radius: 30px;border-top: solid 5px #fff;border-bottom: solid 5px #777;border-left: solid 5px #bbb;border-right: solid 5px #999;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 #ctx{background-color: #000;}
 div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;padding-bottom:30px;width: 100%; background-color: #17232b;background-color: #06151c;}
 div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
@@ -71,28 +163,35 @@ div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-rig
 div.line-number:after {content:'';position: absolute;top:0;left:0;right:0;border-top:solid 1px #b0b0b0;}
 div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #000000;text-align: right;border: none;}
 div.button-run-container {border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;margin: 0px; padding: 0px; border-top: 1px solid #737373;height:92px;background-color: #121c1d;}
-div.button-run-container .btn {font-size:25px !important;margin:0 auto;font-family: 'ArcadeClassic';background:#d3c61e;border:solid 5px #0f0f0f;border-radius:0;
-    transition: .3s;
-    color:#ffce12;
-    border-top-color:#ffce12;
-    border-bottom-color:#ffce12;
-    border-right-color:#dd7900;
-    border-left-color:#dd7900;
-    background-color: #111 !important;
-animation: grow infinite 2s;}
-div.bg{position: relative;
-    padding: 10px 20px;
-    margin: 20px auto;
-    border-radius: 10px;
-    background-color: #1f3a4f90;
-    background-color: #006c7880;
-    box-shadow: 0px 0px 5px #eaffff;
-    border: solid 5px #eaffff;
-    -webkit-animation: appear 2s;
-    -moz-animation: appear 2s;
-    -ms-animation: appear 2s;
-    -o-animation: appear 2s;
-    animation: appear 2s;}
+div.button-run-container .btn {font-size:25px !important;margin:0 auto;font-family: 'ArcadeClassic';background:#d3c61e;border:solid 5px #0f0f0f;border-radius:0;transition: .3s;color:#ffce12;border-top-color:#ffce12;border-bottom-color:#ffce12;border-right-color:#dd7900;border-left-color:#dd7900;background-color: #111 !important;animation: grow infinite 2s;}
+div.bg{position: relative;padding: 10px 20px;margin: 20px auto;border-radius: 10px;background-color: #1f3a4f90;background-color: #006c7880;box-shadow: 0px 0px 5px #eaffff;border: solid 5px #eaffff;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
+div.button-run-container div.button-run {padding: 20px 0px; }
+
+.objectives p {color:#fff;}
+
+.goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';}
+.modal {display: none;position: fixed;z-index: 1;left: 0;top: 0; width: 100%;height: 100%;overflow: auto;background-color: rgba(0,0,0,.4);}
+.modal-content {animation:appear .3s 1;transition: 2s;background-color: #333333 !important;margin: 12% auto;border: 3px solid #ffce12; width: 80%; }
+#settings-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
+.modal-content h1{text-shadow:0px 2px 0px #000;color:#ffce12;font-family: 'ArcadeClassic'; font-size:50px;text-align: center;margin:0 !important;}
+.modal-content h2{text-shadow:0px 2px 0px #000;color:#ffce12;font-family: 'ArcadeClassic'; margin:0 !important;padding:20px 0;background-color:#00363c;font-size:30px;text-align: center;margin:0 !important;}
+
+#settings-modal .modal-content{}
+#settings-modal .modal-content ul {padding: 30px;list-style: none;}
+#settings-modal .modal-content ul li {padding:0 20px;}
+#settings-modal .modal-content ul li h4{font-family: 'ArcadeAlternate';margin:5px auto 30px auto;color:#ffffff;font-size:28px;text-align: center;text-shadow: 0px 2px 0px #000;}
+#settings-modal .modal-content {border-radius:0px;background-color: #297780 !important;margin: 12% auto;border: solid 3px #00272b; width:46%;position: relative; }
+.close {color: #aaa;float: right;font-size: 28px;font-weight: bold;}
+.close:hover,.close:focus {color: black;text-decoration: none;cursor: pointer;}
+ul.button li {margin:0 10px;}
+ul.button li a {width:110px !important;font-family: 'ArcadeClassic';}
+
+
+@keyframes appear{
+    0% { transform: scale(.99); opacity: .6;}
+    100%   { transform: scale(1); opacity: 1;}
+}
 @keyframes floating{
   0%,20%,40%,60%,80%,100%
   {
@@ -103,9 +202,9 @@ div.bg{position: relative;
   }
 }
 @keyframes grow {
-	0%{box-shadow: 0px 0px 0px #ffff00;}
-	30%{box-shadow: 0px 0px 10px #ffff00;}
-	100%{box-shadow: 0px 0px 0px #ffff00;;}
+    0%{box-shadow: 0px 0px 0px #ffff00;}
+    30%{box-shadow: 0px 0px 10px #ffff00;}
+    100%{box-shadow: 0px 0px 0px #ffff00;;}
 }
 
 
@@ -137,15 +236,3 @@ div.bg{position: relative;
     from { transform: scale(.5); opacity: 0;}
     to   { transform: scale(1); opacity: 1;}
 }
-div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
-div.button-run-container div.button-run {padding: 20px 0px; }
-
-.objectives p {color:#fff;}
-.modal-content h1{color:#ffce12;font-family: 'ArcadeClassic'; font-size:50px;text-align: center;margin:0 !important;}
-.goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';}
-.modal {display: none;position: fixed;z-index: 1;left: 0;top: 0; width: 100%;height: 100%;overflow: auto;background-color: rgba(0,0,0,.4);}
-.modal-content {background-color: #333333 !important;margin: 15% auto; /* 15% from the top and centered */padding: 20px;border: 3px solid #ffce12; width: 80%; /* Could be more or less, depending on screen size */}
-.close {color: #aaa;float: right;font-size: 28px;font-weight: bold;}
-.close:hover,.close:focus {color: black;text-decoration: none;cursor: pointer;}
-ul.button li {margin:0 10px;}
-ul.button li a {width:110px !important;font-family: 'ArcadeClassic';}

@@ -1,4 +1,4 @@
 <div class="container-fluid">
-	<h1>VARIABLES</h1>
-	<p>CONTENT LOREM IPSUM</p>
+	<h1></h1>
+	<p></p>
 </div>

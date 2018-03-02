@@ -44,9 +44,9 @@
 			$user = $this->session->userdata('username');
 			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
-
+			$profile = $this->Game_model->get_profileprogress($userID);
 			$user1 = $this->session->userdata('username');
-			$userinfo = $this->Profile_model->get_user_info($user1);
+			$userinfo = $this->Profile_model->get_user_info($userID);
 			$progress = $this->Profile_model->get_progress($user1);
 			$stages = $this->Profile_model->get_stages($user1);
 			$levels = $this->Profile_model->get_levels($user1);
@@ -54,20 +54,23 @@
 			$badges = $this->Profile_model->get_badges($userID);
 			$avatar = $this->Game_model->get_user_avatar($userID);
 			$badges = $this->Game_model->get_badges();
+
 			$data['avatar'] = $avatar;
 			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
 			$data['badges_list'] = $badges;
-			$data['user_info'] = $userinfo; 
+			$data['user_info'] = $userinfo;
         	$data['total_points'] = $total_points;
 			$data['levels_list'] = $levels;
 			$data['stages_list'] = $stages;
 			$data['progress_list'] = $progress;
-			
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
 			$data['stage_list'] = $stages;
 			$data['progress_list'] = $progress;
 
+			$data['profileprogress'] = $profile;
+			// var_dump($profile);
+			// exit();
 			$this->load->view('templates/menu_stages_header', $data);
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_stages', $data);
