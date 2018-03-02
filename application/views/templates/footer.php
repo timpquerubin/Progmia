@@ -92,9 +92,6 @@
 
 		<script type="text/javascript">
 			$('.alert').delay(2500).fadeOut();
-		</script>
-		
-		<script type="text/javascript">
 
 			$(document).ready(function(){
 
@@ -227,6 +224,9 @@
 			// }
 
 		</script>
+		<div class="road">
+			
+		</div>
 	</body>
 	<footer>
 		<div class="container-fluid">

@@ -31,7 +31,7 @@
 								</div>
 							</div>
 						</div>
-						<canvas id="ctx" height="200" width="500" style="width:100%;margin: 0px auto; padding: 0px;"></canvas>
+						<canvas id="ctx" height="200" width="500"></canvas>
 					</div>
 
 					<div class="dialog-container"></div>
@@ -84,12 +84,80 @@
 									<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
 								</div>
 								<div class="obj-status col-md-4 col-sm-4 col-xs-4">
-									<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" type="checkbox" name="obj_status">
+									<!-- <label class="objective-container">
+									<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"></label> -->
+									<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status">
 								</div>
 							</div>
 						</li>	
 					<?php endforeach ?>
 				</ul>
+				<!-- <style type="text/css">
+					label.objective-container {
+					    display: block;
+					    position: relative;
+					    padding-left: 35px;
+					    margin-bottom: 12px;
+					    cursor: pointer;
+					    font-size: 22px;
+					    -webkit-user-select: none;
+					    -moz-user-select: none;
+					    -ms-user-select: none;
+					    user-select: none;
+					}
+
+					/* Hide the browser's default checkbox */
+					label.objective-container input {
+					    position: absolute;
+					    opacity: 0;
+					    cursor: pointer;
+					}
+
+					/* Create a custom checkbox */
+					.checkmark {
+					    position: absolute;
+					    top: 0;
+					    left: 0;
+					    height: 25px;
+					    width: 25px;
+					    background-color: #eee;
+					}
+
+					/* On mouse-over, add a grey background color */
+					.container:hover input ~ .checkmark {
+					    background-color: #ccc;
+					}
+
+					/* When the checkbox is checked, add a blue background */
+					.container input:checked ~ .checkmark {
+					    background-color: #2196F3;
+					}
+
+					/* Create the checkmark/indicator (hidden when not checked) */
+					.checkmark:after {
+					    content: "";
+					    position: absolute;
+					    display: none;
+					}
+
+					/* Show the checkmark when checked */
+					.container input:checked ~ .checkmark:after {
+					    display: block;
+					}
+
+					/* Style the checkmark/indicator */
+					.container .checkmark:after {
+					    left: 9px;
+					    top: 5px;
+					    width: 5px;
+					    height: 10px;
+					    border: solid white;
+					    border-width: 0 3px 3px 0;
+					    -webkit-transform: rotate(45deg);
+					    -ms-transform: rotate(45deg);
+					    transform: rotate(45deg);
+					}
+				</style> -->
 			</div>
 
 			<!-- <div class="stars" style="text-align: center;">
@@ -197,7 +265,6 @@
 		var used_if = false;
 		var used_loop = false;
 		var isFinished = false;
-
 		var img = {};
 		img.map = new Image();
 		img.map.src = "<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>";
@@ -1539,12 +1606,16 @@
 										}
 									}
 
+									sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/throw.wav";
 									if(ansCount <= correctAns) {
 										Question.list[key].status = "correct";
 										Projectile.generate(player, "right");
+									sfxAudio.play();
+
 									} else {
 										Question.list[key].status = "wrong";
 										Projectile.generate(Bully.list[bullyId], "left");
+									sfxAudio.play();
 									}
 
 								} else {
@@ -2315,19 +2386,6 @@
 
 			console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
 
-			// if(score_perc < 50 && score_perc > 0) {
-			// 	$("#star1").attr("checked", true);
-			// } else if(score_perc >= 50 && score_perc < 100) {
-			// 	$("#star2").attr("checked", true);
-			// } else if(score_perc == 100) {
-			// 	$("#star3").attr("checked", true);
-			// } else {
-			// 	$("#star1").addClass("no-score");
-			// 	$("#star2").addClass("no-score");
-			// 	$("#star3").addClass("no-score");
-			// }
-
-
 				if(score_perc < 50 && score_perc > 0) {
 					$("#star1").attr("checked", true);
 					$("#star1").addClass("s1");
@@ -2404,7 +2462,6 @@
 			self.pressingLeft = false;
 
 			self.spriteAnimCtr = 0;
-
 			self.update = function() {
 
 				if(self.hp <= 0) {
@@ -2460,6 +2517,8 @@
 				} else {
 
 					self.pressingRight = true;
+					sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/footsteps-2.wav";
+					sfxAudio.play();
 				}
 
 				self.updatePosition();
@@ -2527,6 +2586,7 @@
 					directionMod = 2;
 
 				ctx.drawImage(self.img, walkingMod * frameWidth, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width * zoomMultiplier, self.height  * zoomMultiplier);
+
 			}
 
 			self.isEnemyInRange = function() {
@@ -3181,7 +3241,6 @@
 			player = new Player('myPlayer1', img.player, img.player.width/4, img.player.height/4, 56, 56, 10);
 
 
-
 			// cmdNum = 0;
 			// vrbls = [];
 
@@ -3207,6 +3266,9 @@
 				Objective.update();
 
 				if(isFinished) {
+					sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/success.ogg";
+					sfxAudio.play();
+                    bgmAudio.pause();
 					Objective.computeScore();
 					Objective.recordScore();
 					$("#finish-modal").css("display", "block");

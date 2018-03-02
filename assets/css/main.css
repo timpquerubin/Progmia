@@ -1,16 +1,7 @@
 
 body{background-image: url(../images/Untitled-3.jpg);background-size:cover;background-position: center;padding:60px 0px 0px 0px;}
 div.logo {/*padding:10px 0;*/margin-top:10px;}
-@font-face {
-	font-family: AdventPro;
-	src: url("fonts/AdventPro-Regular.ttf");
-}
 
-@font-face {
-	font-family: AdventPro;
-	src: url("fonts/AdventPro-Bold.ttf");
-	font-weight: bold;
-}
 @font-face {
 	font-family:BebasNeue;
 	src: url("../fonts/BebasNeue.otf");
