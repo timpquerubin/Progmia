@@ -23,7 +23,7 @@
     right:0;
     bottom: 0;
     padding-top:5%;
-    z-index: 100;
+    z-index: 99999999;
     width: 100vw;
     height: 100vh;
     width: 100%;
@@ -110,6 +110,7 @@ canvas#ctx{width:100%;margin: 0px auto 15px auto !important; padding: 0px;}
 .game-area {}
 nav ul li.bg-volume {float:right; padding-right: 15px;}
 #bgmvolume, #sfxvolume{position: relative;}
+paddin
 /*body{background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;}*/
 
 nav {height: 110px;}
@@ -152,7 +153,7 @@ div.code_area {font-family: "Courier New";padding: 0 15px !important;}
 div.border-custom {border-left:solid 1px #b0b0b0;border-top:solid 1px #b0b0b0;background-color:#dededd;}
 textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #000000;}
 textarea.code_area:focus {outline: none;}
-div.box {position:relative;padding:10px 20px;margin:20px 5%;border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
+div.box {position:relative;padding:10px 20px;margin:-60px 5% 20px 5%;border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 div.box:before{position:absolute;content:'';top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #eaffff transparent transparent transparent;}
 div.box:after{position:absolute;content:'';bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #eaffff transparent;}
 div.box > div.head{height:60px;position:absolute;top:10px;left:20px;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;text-align: center;font-size: 40px;/*animation:floating 10s infinite;*/}
@@ -171,7 +172,8 @@ div.button-run-container div.button-run {padding: 20px 0px; }
 .objectives p {color:#fff;}
 
 .goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';}
-.modal {display: none;position: fixed;z-index: 1;left: 0;top: 0; width: 100%;height: 100%;overflow: auto;background-color: rgba(0,0,0,.4);}
+
+.modal {display: none;position: fixed;z-index: 1;left: 0;top: 0; width: 100%;height: 100%;overflow: auto;}
 .modal-content {animation:appear .3s 1;transition: 2s;background-color: #333333 !important;margin: 12% auto;border: 3px solid #ffce12; width: 80%; }
 #settings-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
 .modal-content h1{text-shadow:0px 2px 0px #000;color:#ffce12;font-family: 'ArcadeClassic'; font-size:50px;text-align: center;margin:0 !important;}
@@ -181,13 +183,37 @@ div.button-run-container div.button-run {padding: 20px 0px; }
 #settings-modal .modal-content ul {padding: 30px;list-style: none;}
 #settings-modal .modal-content ul li {padding:0 20px;}
 #settings-modal .modal-content ul li h4{font-family: 'ArcadeAlternate';margin:5px auto 30px auto;color:#ffffff;font-size:28px;text-align: center;text-shadow: 0px 2px 0px #000;}
-#settings-modal .modal-content {border-radius:0px;background-color: #297780 !important;margin: 12% auto;border: solid 3px #00272b; width:46%;position: relative; }
+#settings-modal .modal-content {position: relative;border-radius:0px;background-color: #297780 !important;margin: 12% auto;border: solid 3px #00272b; width:46%; }
+#tutorial-modal .modal-content{position: relative;border-radius:0px;background-color: #297780 !important;margin: 12% auto;border: solid 3px #00272b;}
 .close {color: #aaa;float: right;font-size: 28px;font-weight: bold;}
 .close:hover,.close:focus {color: black;text-decoration: none;cursor: pointer;}
 ul.button li {margin:0 10px;}
 ul.button li a {width:110px !important;font-family: 'ArcadeClassic';}
+#tutorial-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
+#tutorial-moda:after{position: absolute;width:100%;height: 100%;background-color:rgba(0,0,0,.7);}
+#tutorial-modal button#close{font-size:25px;border-radius: 25px !important;padding:5px 7px;position: absolute;top:-22px;right:-22px;}
 
+#tutorial-modal pre#typewriter span.var-comment{color:#048e45;}
+#tutorial-modal pre#typewriter h4.line-num{margin-right:20px;background-color:#e7e7e7;display:inline-flex;align-items: center; border-right: 2px solid #ccc;font-size:1em;margin:0px 20px -15px 0px;padding:0 20px;animation-delay: 0;height: 50px;}
+#tutorial-modal pre#typewriter span.var-highlight{color: #ba3092;}
+#tutorial-modal pre#typewriter span.string-highlight{color: #474a9e;}
+#tutorial-modal pre#typewriter{resize: both;overflow: auto;border: 1px solid black;border-left: 1px solid #ccc !important;border-bottom:0px;line-height: 20px;padding: 0px;font-size: 20px;margin: 50px 0 0 0;font-family: "Courier New";}
+#tutorial-modal pre#typewriter:after{content: "|";animation: blink 500ms linear infinite alternate;}
 
+@-webkit-keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@-moz-keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
 @keyframes appear{
     0% { transform: scale(.99); opacity: .6;}
     100%   { transform: scale(1); opacity: 1;}
@@ -236,3 +262,5 @@ ul.button li a {width:110px !important;font-family: 'ArcadeClassic';}
     from { transform: scale(.5); opacity: 0;}
     to   { transform: scale(1); opacity: 1;}
 }
+body{padding-right: -17px !important;}
+body.modal-open{padding-right: -17px !important;}

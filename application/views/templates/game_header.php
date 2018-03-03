@@ -20,41 +20,41 @@
                 </div>
             </div>  
         </div>
-            <nav id="mainNav">
-        <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <ul style="list-style: none;display:flex;justify-content: space-around;">
-                            <li>
-                                <a class="font-1" href="<?php echo base_url();?>Game/Levels/<?php echo $stgId;?>"><i class="fa fa-arrow-left" style="font-size: 30px !important;padding-top:20px !important;"></i></a></li>
-                            <li>
-                                <a class="navbar-brand" href="<?php echo base_url();?>Game/Stages">
-                                    <img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <div class="title">
-                            <h1>Level X</h1>
-                            <p>Topic XXX</p>
+        <nav id="mainNav">
+            <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <ul style="list-style: none;display:flex;justify-content: space-around;">
+                                <li>
+                                    <a class="font-1" href="<?php echo base_url();?>Game/Levels/<?php echo $stgId;?>"><i class="fa fa-arrow-left" style="font-size: 30px !important;padding-top:20px !important;"></i></a></li>
+                                <li>
+                                    <a class="navbar-brand" href="<?php echo base_url();?>Game/Stages">
+                                        <img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="title">
+                                <h1>Level X</h1>
+                                <p>Topic XXX</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <ul class="" style="display:flex;justify-content: space-around;padding:0px;font-size: 30px;padding-top:20px;">
+                                <li><button data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
+                                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+                                <!-- <li><a class="logout" href="<?php echo base_url()?>users/logout"><i class="fa fa-sign-out"></i></a></li> -->
+                            </ul>
                         </div>
                     </div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <ul class="" style="display:flex;justify-content: space-around;padding:0px;font-size: 30px;padding-top:20px;">
-                            <li><a href=""><i class="fa fa-question"></i></a></li>
-                            <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
-                            <!-- <li><a class="logout" href="<?php echo base_url()?>users/logout"><i class="fa fa-sign-out"></i></a></li> -->
-                        </ul>
-                    </div>
-                </div>
-        </div>
-            </nav>
-       <div id="settings-modal" class="modal fade" style="display: none;">
+            </div>
+        </nav>
+        <div id="settings-modal" class="modal fade" style="display: none;">
             <div class="modal-content">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2><i class="fa fa-sliders"></i> Volume Settings</h2>
+                        <h2><i class="fa fa-sliders"></i>  Volume Settings</h2>
                         
                     </div>
                 </div>
@@ -96,6 +96,9 @@
             </div>
         </div>
         <script>
+            $("#tutorial").click(function() {
+                document.getElementById('tutorial-modal').style.display = "block";
+            });
             var sfxvolumeSlider = document.getElementById('sfxvolume');
             var bgmvolumeSlider = document.getElementById('bgmvolume');
             var sliders = [sfxvolumeSlider,bgmvolumeSlider];

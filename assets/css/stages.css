@@ -14,7 +14,6 @@ div.land-bg:after{position: absolute;content:'';background-position:center;heigh
   from { background-position: 0 0; }
   to { background-position: 100% 100%; }
 }
-
 .badges .badge-img{background-color:#050a0c; padding:5px;max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}
 .badges ul{list-style: none;margin: 0;padding: 0;display:flex;}
 
