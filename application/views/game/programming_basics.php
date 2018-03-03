@@ -635,15 +635,118 @@
 					//\"[A-Za-z0-9_\W]*\"
 
 					var cond = getConditions(cmdLine, "(", ")");
+					var display_txt = "";
 
-					if(/\"[A-Za-z0-9_\W]*\"/g.test(cond)) {
-						console.log(cond);
+					if(/^\s*(\"[A-Za-z0-9_\W]*\"|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*\+\s*(\"[A-Za-z0-9_\W]*\"|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*$/g.test(cond)) {
+
+						var print_param = cond.split("+");
+
+						console.log(print_param);
+
+						var display_list = [];
+
+						for(var key in print_param) {
+
+							print_param[key] = print_param[key].trim();
+
+							console.log(print_param[key]);
+
+							if(/^\"[A-Za-z0-9_\W]*\"$/g.test(print_param[key])) {
+								display_list.push(print_param[key]);
+							} else if(/^[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]$/g.test(print_param[key])) {
+
+								if(isVarExisting(print_param[key].replace(/\[[0-9]+\]/g, ""))) {
+
+									var var_obj = isVarExisting(print_param[key].replace(/\[[0-9]+\]/g, ""));
+
+									if(/\[[0-9]+\]/g.test(print_param[key])) {
+									
+										var arrIndex = getConditions(print_param[key], "[", "]");
+										
+										if(Array.isArray(var_obj.var_value)) {
+
+											// console.log(var_obj.var_value.length);
+
+											if((var_obj.var_value.length > arrIndex) && (arrIndex >= 0)) {
+												display_list.push(var_obj.var_value[arrIndex]);
+											} else {
+												return {status: false, message: "index out of range"};
+											}
+										} else {
+											return {status: false, message: var_obj.var_identifier + " is not an array"};
+										}
+									} else {
+
+										if(!Array.isArray(var_obj.var_value)) {
+
+											display_list.push(var_obj.var_value);
+										} else {
+											return {status: false, message: var_obj.var_identifier + " is an array"};
+										}
+									}
+
+								} else {
+									return {status: false, message: "undefined variable" + print_param};
+								}
+							} else {
+								return {status: false, message: "invalid parameter for print statement"};
+							}
+						}
+
+						for(var key in display_list) {
+
+							display_txt += display_list[key].toString().replace(/[\"\']/g, "");
+							// .replace(/[\"\']/g, "")
+						}
+
+						console.log(display_txt);
+					} else if(/^\s*(\"[A-Za-z0-9_\W]*\"|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*$/g.test(cond)) {
+						
+						if(/^\"[A-Za-z0-9_\W]*\"$/g.test(cond)) {
+							display_txt = cond;
+							console.log(display_txt);
+						} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond)) {
+
+							if(isVarExisting(cond.replace(/\[[0-9]+\]/g, ""))) {
+
+								var var_obj = isVarExisting(cond.replace(/\[[0-9]+\]/g, ""));
+
+								if(/\[[0-9]+\]/g.test(cond)) {
+								
+									var arrIndex = getConditions(cond, "[", "]");
+									
+									if(Array.isArray(var_obj.var_value)) {
+
+										if((var_obj.var_value.length > arrIndex) && (arrIndex >= 0)) {
+											display_txt = var_obj.var_value[arrIndex];
+										} else {
+											return {status: false, message: "index out of range"};
+										}
+									} else {
+										return {status: false, message: var_obj.var_identifier + " is not an array"};
+									}
+								} else {
+
+									if(!Array.isArray(var_obj.var_value)) {
+										display_txt = var_obj.var_value;
+									} else {
+										return {status: false, message: var_obj.var_identifier + " is an array"};
+									}
+								}
+
+							} else {
+								return {status: false, message: "undefined variable" + print_param};
+							}
+						}
+					} else {
+						return {status: false, message: "invalid argument for print statement"};
 					}
 
 					code_log.push({
 						type: "print",
 						print_info: {
-							txt: cond,
+							txt: display_txt.toString(),
+							param: cond,
 						}
 					});
 
@@ -1479,12 +1582,20 @@
 									var ansCount = 0;
 									var correctAns = 0;
 
-									if(answers.variables && answers.operations) {
-										ansCount = answers.operations.length + answers.variables.length;
-									} else if(answers.variables) {
-										ansCount = answers.variables.length;
-									} else if(answers.operations) {
-										ansCount = answers.operations.length;
+									// if(answers.variables && answers.operations) {
+									// 	ansCount = answers.operations.length + answers.variables.length;
+									// }
+									if(answers.commands) {
+										ansCount += answers.commands.length;
+									}
+									if(answers.variables) {
+										ansCount += answers.variables.length;
+									}
+									if(answers.operations) {
+										ansCount += answers.operations.length;
+									}
+									if(answers.prints) {
+										ansCount += answers.prints.length;
 									}
 
 									if(answers.variables) {
@@ -1606,21 +1717,87 @@
 										}
 									}
 
-									sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/throw.wav";
+									// System.out.println("Hello World!");
+
+									if(answers.prints) {
+										if(code_log.length > 0) {
+
+											for(var pkey in answers.prints) {
+
+												for(var ckey in code_log) {
+
+													if(code_log[ckey].type == "print") {
+														// console.log(code_log[ckey].print_info.param + " - " + answers.prints[pkey].txt);
+														if(code_log[ckey].print_info.param == answers.prints[pkey].txt) {
+															correctAns++;
+															// console.log("here");
+														}
+													}
+												}
+											}
+										}
+									}
+
+									if(answers.commands) {
+										if(code_log.length > 0) {
+
+											for(var cmdKey in answers.commands) {
+
+												for(var ckey in code_log) {
+
+													if(code_log[ckey].type == answers.commands[cmdKey].type) {
+
+														if(code_log[ckey].type == "cmd-if") {
+
+															var compareCondArr = [code_log[ckey].cmd_info.condition, answers.commands[cmdKey].condition];
+															var condCompObj = [];
+															// console.log(compareCondArr);
+															console.log(code_log[ckey].cmd_info);
+															console.log(answers.commands[cmdKey]);
+
+															for(var ctr = 0; ctr < compareCondArr.length; ctr++) {
+
+																var condOp = /(==|!=|>=|<=|>|<)/i.exec(compareCondArr[ctr]);
+																console.log(condOp);
+
+																var condVal = compareCondArr[ctr].split(condOp[0]);
+
+																var condObj = {
+																	op: condOp[0],
+																	values: condVal,
+																};
+
+																condCompObj.push(condObj);
+															}
+
+
+
+
+														}
+													}
+												}
+											}
+										}
+									}
+
 									if(ansCount <= correctAns) {
 										Question.list[key].status = "correct";
 										Projectile.generate(player, "right");
-									sfxAudio.play();
+										sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/throw.wav";
+										sfxAudio.play();
 
 									} else {
 										Question.list[key].status = "wrong";
 										Projectile.generate(Bully.list[bullyId], "left");
-									sfxAudio.play();
+										sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/throw.wav";
+										sfxAudio.play();
 									}
 
 								} else {
 									Question.list[key].status = "wrong";
 									Projectile.generate(Bully.list[bullyId], "left");
+									sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/throw.wav";
+									sfxAudio.play();
 								}
 
 								Question.closeDialog();
@@ -2511,10 +2688,13 @@
 						if((questions_status.total_questions == (questions_status.wrong_ans + questions_status.correct_ans)) && (questions_status.wrong_ans > 0)) {
 
 							Bully.list[bullyId].exit();
+							sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/footsteps-2.wav";
+							sfxAudio.play();
+
 						}
 					}
 
-				} else {
+				} else if(!(self.pressingUp || self.pressingDown || self.pressingLeft || self.pressingRight)) {
 
 					self.pressingRight = true;
 					sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/footsteps-2.wav";

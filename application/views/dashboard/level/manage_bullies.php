@@ -672,6 +672,15 @@
 				}
 			}
 
+			for(var key in print_list) {
+
+				if(print_list[key].code_type == "cmd") {
+					print_list[key].type = "print";
+					cmd_obj.statements.push(print_list[key]);
+					delete print_list[key];
+				}
+			}
+
 			command_list[cmdCtr] = cmd_obj;
 			code_list.push(command_list[cmdCtr]);
 

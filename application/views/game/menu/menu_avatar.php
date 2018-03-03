@@ -34,28 +34,33 @@
   document.getElementById("submit-avtr").onclick = function () { }
     function insert_avatar(){
           var test = {avatarId : document.querySelector('li.selected #avatar-input').value, userID : '<?php echo $userID; ?>'};
-          $.ajax({
-          type: 'POST',
-          url: '<?php echo base_url(); ?>Avatar/update',
-          data: test,
-          encode: true,
-          success: function(res){
-            console.log(res);
-            },
-            error: function(err) {
-              console.log(err);
-            }
-          });
-          if (avatarId==null){
+
+          console.log(test);
+          
+          if (test.avatarId == null){
             alert("Please Select Avatar");
           }
           else
           {
-            return window.location.href = "<?php echo base_url()?>Game/Stages";
+
+            $.ajax({
+              type: 'POST',
+              url: '<?php echo base_url(); ?>Avatar/update',
+              data: test,
+              encode: true,
+              success: function(res){
+                console.log(res);
+                window.location = "<?php echo base_url()?>Game/Stages";
+                },
+                error: function(err) {
+                  console.log(err);
+                }
+              });
+            // return window.location.href = "<?php echo base_url()?>Game/Stages";
           }
   }
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(function(){
 					$("#btn").click(function(){
 						$.ajax({
@@ -74,4 +79,4 @@
 
 
 			});
-</script>
+</script> -->

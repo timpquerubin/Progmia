@@ -33,6 +33,8 @@
 			$this->_init();
 			$avatars = $this->Avatar_model->update_user_avatar($_POST["avatarId"],$_POST["userID"]);
 
+			echo json_encode($avatars);
+
 		}
 
 	}
