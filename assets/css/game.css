@@ -108,6 +108,7 @@ canvas#ctx{width:100%;margin: 0px auto 15px auto !important; padding: 0px;}
 }
 .fa .fa-arrow-left{}
 .game-area {}
+nav div.row {display: flex;align-items: center;}
 nav ul li.bg-volume {float:right; padding-right: 15px;}
 #bgmvolume, #sfxvolume{position: relative;}
 paddin
@@ -115,8 +116,9 @@ paddin
 
 nav {height: 110px;}
 nav ul {list-style: none;display:block;}
-nav ul li .logo a img{height: 50px;}
-.navbar-brand img {height:50px;}
+/*nav ul li .logo a img{height: 50px;}*/
+.navbar-brand{padding: 0px !important;}
+.navbar-brand img {height:94px;}
 .hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
 
 div.player-status {padding:20px 5px;    background-color: #013243;
@@ -153,13 +155,15 @@ div.code_area {font-family: "Courier New";padding: 0 15px !important;}
 div.border-custom {border-left:solid 1px #b0b0b0;border-top:solid 1px #b0b0b0;background-color:#dededd;}
 textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #000000;}
 textarea.code_area:focus {outline: none;}
-div.box {position:relative;padding:10px 20px;margin:-60px 5% 20px 5%;border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
+div.box {position:relative;padding:10px 20px;margin:20px 5%;border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 div.box:before{position:absolute;content:'';top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #eaffff transparent transparent transparent;}
 div.box:after{position:absolute;content:'';bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #eaffff transparent;}
-div.box > div.head{height:60px;position:absolute;top:10px;left:20px;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;text-align: center;font-size: 40px;/*animation:floating 10s infinite;*/}
-div.box > div.head > img {height:50px;width:50px;background:#121212;border-radius: 50%;}
-div.box > div.head > label {margin-left:20px;font-family:'ArcadeClassic';letter-spacing:2px;font-size:30px;color:#ffce12;}
-div.box p.dialog {margin:40px auto 0px auto;text-align:center;padding-top:20px;font-size:25px;color:#eaffff;text-shadow: 1px 1px 1px #333;}
+div.box div.head{height:60px;position:absolute;top:10px;left:20px;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;text-align: center;font-size: 40px;/*animation:floating 10s infinite;*/}
+div.box div.head > img {height:50px;width:50px;background:#121212;border-radius: 50%;}
+div.box div.head > label {margin-left:20px;font-family:'ArcadeClassic';letter-spacing:2px;font-size:30px;color:#ffce12;}
+div.box p.dialog {position:relative;margin:40px auto 0px auto;text-align:center;padding-top:20px;font-size:25px;color:#eaffff;text-shadow: 1px 1px 1px #333;}
+div.box .dialog-arrow{position: absolute;bottom:40px;right: 40px;}
+div.box .dialog-arrow:after{position: absolute;content: '\f078';font-size:25px;font-family:'FontAwesome';animation: floating 8s infinite;color: #eaffff;}
 div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-right: 20px;position:relative;}
 div.line-number:after {content:'';position: absolute;top:0;left:0;right:0;border-top:solid 1px #b0b0b0;}
 div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #000000;text-align: right;border: none;}
@@ -168,7 +172,9 @@ div.button-run-container .btn {font-size:25px !important;margin:0 auto;font-fami
 div.bg{position: relative;padding: 10px 20px;margin: 20px auto;border-radius: 10px;background-color: #1f3a4f90;background-color: #006c7880;box-shadow: 0px 0px 5px #eaffff;border: solid 5px #eaffff;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 div.button-run-container {margin: 0px; padding: 0px; border-top: 1px solid #737373;}
 div.button-run-container div.button-run {padding: 20px 0px; }
-
+div.title{text-align: center;background-color: #ffffff36;padding: 10px;}
+div.title h1{font-family: 'ArcadeClassic';font-size:40px;color: #eaffff;}
+div.title p {font-family: 'ArcadeAlternate';font-size:20px;color:#ffce12;}
 .objectives p {color:#fff;}
 
 .goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';}
@@ -189,9 +195,9 @@ div.button-run-container div.button-run {padding: 20px 0px; }
 .close:hover,.close:focus {color: black;text-decoration: none;cursor: pointer;}
 ul.button li {margin:0 10px;}
 ul.button li a {width:110px !important;font-family: 'ArcadeClassic';}
-#tutorial-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
+#tutorial-modal{position:fixed;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
 #tutorial-moda:after{position: absolute;width:100%;height: 100%;background-color:rgba(0,0,0,.7);}
-#tutorial-modal button#close{font-size:25px;border-radius: 25px !important;padding:5px 7px;position: absolute;top:-22px;right:-22px;}
+#tutorial-modal button#close{font-size:25px;border-radius: 25px !important;padding:5px 7px;position: absolute;top:-15px;right:-15px;}
 
 #tutorial-modal pre#typewriter span.var-comment{color:#048e45;}
 #tutorial-modal pre#typewriter h4.line-num{margin-right:20px;background-color:#e7e7e7;display:inline-flex;align-items: center; border-right: 2px solid #ccc;font-size:1em;margin:0px 20px -15px 0px;padding:0 20px;animation-delay: 0;height: 50px;}

@@ -34,7 +34,7 @@
 						<canvas id="ctx" height="200" width="500"></canvas>
 					</div>
 
-					<div class="dialog-container"></div>
+					<div class="dialog-container" id="dialog-container"></div>
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12">
@@ -58,7 +58,12 @@
 			</div>
 		</div>
 </div>
-
+	<div id="tutorial">
+		<div id="tutorial-modal" class="modal fade" style="display: none;"">
+			<div class="tutorial-container modal-content">
+			</div>
+		</div>
+	</div>
 	<div id="finish-modal" class="modal" style="display: none;">
 		<div class="modal-content">
 			<h1>Finish</h1>
@@ -230,6 +235,27 @@
 
 	$(document).ready(function() {
 
+		load_tutorial = function(){
+			var data = {
+				link:"game/tutorial/variable_tutorial"
+			}
+			$.ajax({
+				type:"POST",
+				url: "<?php echo base_url();?>Game/load_tutorial",
+				data: data,
+				success: function(res){
+					$(".tutorial-container").html(res);
+				},
+				error: function(res){
+					console.log(res);
+				}
+
+			});
+
+		}
+		
+		load_tutorial();
+
 		var ctx = document.getElementById("ctx").getContext("2d");
 		var canvas = document.getElementById("ctx");
 		code_area = document.getElementById("code_area");
@@ -294,6 +320,7 @@
 
 				startNewGame();
 				setInterval(update, 40);
+		        $('#tutorial-modal').modal('show');
 			};
 
 			var promise = new Promise(function(resolve, reject) {

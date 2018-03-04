@@ -24,7 +24,7 @@
             <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <ul style="list-style: none;display:flex;justify-content: space-around;">
+                            <ul style="list-style: none;display: flex;align-items: center;">
                                 <li>
                                     <a class="font-1" href="<?php echo base_url();?>Game/Levels/<?php echo $stgId;?>"><i class="fa fa-arrow-left" style="font-size: 30px !important;padding-top:20px !important;"></i></a></li>
                                 <li>
