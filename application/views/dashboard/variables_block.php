@@ -5,6 +5,7 @@
 			<th>Data Type</th>
 			<th>Identifier</th>
 			<th>Value</th>
+			<th>Statement Type</th>
 		</thead>
 		<tbody>
 			<?php if(sizeof($var_list) > 0) { ?>
@@ -19,13 +20,14 @@
 						<?php } else { ?>
 							<td><?php echo json_encode($v["var_value"]) ?></td>
 						<?php } ?>
+						<td><?php echo ($v["stmnt_type"] != "") ? ($v["stmnt_type"]) : "N.A."; ?></td>
 					</tr>
 
 					<?php $ctr++; ?>
 				<?php } ?>
 			<?php } else { ?>
 				<tr>
-					<td colspan="4" style="text-align: center;">No Variables</td>
+					<td colspan="5" style="text-align: center;">No Variables</td>
 				</tr>
 			<?php } ?>
 		</tbody>

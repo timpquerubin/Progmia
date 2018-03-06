@@ -212,6 +212,15 @@
 										<input type="text" class="form-control" name="cmd_cond" id="cmd_cond">
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-5">Statement Type:</label>
+									<div class="col-sm-7">
+										<select class="form-control" id="cmd_stat_type" name="cmd_stat_type">
+											<option value="if-statement">If-statement</option>
+											<option value="else-statement">Else-statement</option>
+										</select>
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -693,6 +702,9 @@
 			load_commands_block();
 			load_operations_block();
 			load_variables_block();
+
+			document.getElementById("cmd_cond").value = "";
+			document.getElementById("cmd_stat_type").value = "if-statement";
 		}
 
 		append_print = function() {
@@ -700,14 +712,23 @@
 			var curr_codeType = code_type;
 
 			var print_txt;
+			var stmnt_type = "";
 
 			if(curr_codeType == "varop") {
 				print_txt = document.getElementById("print_txt").value;
 			} else if(curr_codeType == "cmd") {
 				print_txt = document.getElementById("cmdprint_txt").value;
+				stmnt_type = document.getElementById("cmd_stat_type").value;
 			}
 
-			print_list[printCtr] = {txt: print_txt, code_type: curr_codeType, type: "print"};
+			print_list[printCtr] = {
+				txt: print_txt, 
+				code_type: curr_codeType, 
+				type: "print",
+				stmnt_type: ((stmnt_type != "")?(stmnt_type):""),
+			};
+
+			// if(curr_codeType == "cmd")
 
 			code_list.push(print_list[printCtr]);
 
@@ -729,6 +750,7 @@
 			var dataType;
 			var identifier;
 			var value;
+			var stmnt_type = "";
 
 			if(curr_codeType == "varop") {
 
@@ -740,6 +762,7 @@
 				dataType = document.getElementById("cmdvar_dataType").value;
 				identifier = document.getElementById("cmdvar_identifier").value;
 				value = document.getElementById("cmdvar_value").value;
+				stmnt_type = document.getElementById("cmd_stat_type").value;
 			}
 
 			var checkVarVal = parseValue(dataType, value);
@@ -748,7 +771,14 @@
 
 				var valObj = parseValue(dataType, value);
 
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: valObj.value, code_type: curr_codeType, type: "dec-var"};
+				variable_list[varCtr] = {
+					dataType: dataType, 
+					var_identifier: identifier, 
+					var_value: valObj.value, 
+					code_type: curr_codeType, 
+					type: "dec-var",
+					stmnt_type: ((stmnt_type != "")?(stmnt_type):""),
+				};
 
 				if(curr_codeType == "varop") {
 
@@ -783,6 +813,7 @@
 			var dataType;
 			var identifier;
 			var value;
+			var stmnt_type = "";
 
 			if(curr_codeType == "varop") {
 				dataType = document.getElementById("arr_dataType").value;
@@ -792,6 +823,7 @@
 				dataType = document.getElementById("cmdarr_dataType").value;
 				identifier = document.getElementById("cmdarr_identifier").value;
 				value = document.getElementById("cmdarr_value").value;
+				stmnt_type = document.getElementById("cmd_stat_type").value;
 			}
 
 			value = value.replace(/\{/g, "[");
@@ -823,7 +855,13 @@
 			if(isMismatch) {
 				console.log("error: dataType missmatch");
 			} else {
-				variable_list[varCtr] = {dataType: dataType, var_identifier: identifier, var_value: value, code_type: curr_codeType, type: "dec-arr"};
+				variable_list[varCtr] = {dataType: dataType, 
+					var_identifier: identifier, 
+					var_value: value, 
+					code_type: curr_codeType, 
+					type: "dec-arr",
+					stmnt_type: ((stmnt_type != "")?(stmnt_type):""),
+				};
 				
 				if(curr_codeType == "varop") {
 
@@ -855,6 +893,7 @@
 			var var_1;
 			var var_2;
 			var operation;
+			var stmnt_type;
 
 			if(curr_codeType == "varop") {
 
@@ -868,9 +907,18 @@
 				var_1 = document.getElementById("cmdopp_var1").value;
 				var_2 = document.getElementById("cmdopp_var2").value;
 				operation = document.getElementById("cmdopp_operation").value;
+				stmnt_type = document.getElementById("cmd_stat_type").value;
 			}
 
-			operation_list[opCtr] = {save_to: save_to, operation: operation, var_1: var_1, var_2: var_2, code_type: curr_codeType, type: "op"};
+			operation_list[opCtr] = {
+				save_to: save_to, 
+				operation: operation, 
+				var_1: var_1, 
+				var_2: var_2, 
+				code_type: curr_codeType, 
+				type: "op",
+				stmnt_type: ((stmnt_type != "")?(stmnt_type):""),
+			};
 
 			if(curr_codeType == "varop") {
 				code_list.push(operation_list[opCtr]);
@@ -899,7 +947,7 @@
 
 			if(dataType == "int") {
 				
-				if(/^[0-9]+$/i.test(value)) {
+				if(/^-?[0-9]+$/i.test(value)) {
 
 					return {status: true, value: parseInt(value)};
 				} else {
@@ -1048,6 +1096,7 @@
 					operation_list = {};
 					command_list = {};
 					print_list = {};
+					code_list = {};
 					varCtr = 0;
 					opCtr = 0;
 					cmdCtr = 0;

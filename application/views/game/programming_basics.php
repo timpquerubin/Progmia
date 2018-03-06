@@ -58,12 +58,13 @@
 			</div>
 		</div>
 </div>
+
 	<div id="tutorial">
 		<div id="tutorial-modal" class="modal fade" style="display: none;"">
-			<div class="tutorial-container modal-content">
-			</div>
+			<div class="tutorial-container modal-content"></div>
 		</div>
 	</div>
+
 	<div id="finish-modal" class="modal" style="display: none;">
 		<div class="modal-content">
 			<h1>Finish</h1>
@@ -236,24 +237,24 @@
 	$(document).ready(function() {
 
 		load_tutorial = function(){
+			
 			var data = {
 				link:"game/tutorial/variable_tutorial"
 			}
+
 			$.ajax({
 				type:"POST",
 				url: "<?php echo base_url();?>Game/load_tutorial",
 				data: data,
-				success: function(res){
+				success: function(res){	
 					$(".tutorial-container").html(res);
 				},
 				error: function(res){
 					console.log(res);
-				}
-
-			});
-
+				}	
+			});	
 		}
-		
+				
 		load_tutorial();
 
 		var ctx = document.getElementById("ctx").getContext("2d");
@@ -320,7 +321,7 @@
 
 				startNewGame();
 				setInterval(update, 40);
-		        $('#tutorial-modal').modal('show');
+				// $('#tutorial-modal').modal('show');
 			};
 
 			var promise = new Promise(function(resolve, reject) {
@@ -340,7 +341,7 @@
 						updateLoadProgBar();
 
 						gameData.map_info = comp.responseJSON;
-						console.log(gameData);
+						// console.log(gameData);
 
 						if(gameData.map_info.status) {
 							resolve({status: true});
@@ -367,7 +368,7 @@
 						updateLoadProgBar();
 
 						gameData.objectives_list = comp.responseJSON;
-						console.log(gameData);
+						// console.log(gameData);
 
 						if(gameData.objectives_list.status) {
 							return {status: true};
@@ -394,7 +395,7 @@
 						updateLoadProgBar();
 
 						gameData.bully_list = comp.responseJSON;
-						console.log(gameData);
+						// console.log(gameData);
 
 						if(gameData.bully_list.status) {
 							return {status: true};
@@ -421,10 +422,10 @@
 						updateLoadProgBar();
 
 						gameData.question_list = comp.responseJSON;
-						console.log(gameData);
+						// console.log(gameData);
 
 						if(gameData.question_list.status) {
-							console.log("here");
+							// console.log("here");
 							return {status: true};
 						} else {
 							alert("failed to retreive game data, reloading page");
@@ -436,7 +437,7 @@
 
 			}).then(function(loadStatus) {
 
-				console.log(loadStatus);
+				// console.log(loadStatus);
 
 				if(loadStatus.status) {
 
@@ -769,13 +770,57 @@
 						return {status: false, message: "invalid argument for print statement"};
 					}
 
-					code_log.push({
-						type: "print",
-						print_info: {
-							txt: display_txt.toString(),
-							param: cond,
+					if(code_stack.length > 0) {
+
+						if(code_stack[code_stack.length - 1].else) {
+
+							code_stack[code_stack.length - 1].else.push({
+								type: "print",
+								print_info: {
+									txt: display_txt.toString(),
+									param: cond,
+								}
+							});
+						} else {
+
+							code_stack[code_stack.length - 1].statements.push({
+								type: "print",
+								print_info: {
+									txt: display_txt.toString(),
+									param: cond,
+								}
+							});
 						}
-					});
+
+						if(code_stack[code_stack.length - 1].status && (!code_stack[code_stack.length - 1].else)) {
+
+							code_log.push({
+								type: "print",
+								print_info: {
+									txt: display_txt.toString(),
+									param: cond,
+								}
+							});
+						} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
+
+							code_log.push({
+								type: "print",
+								print_info: {
+									txt: display_txt.toString(),
+									param: cond,
+								}
+							});
+						}
+					} else {
+
+						code_log.push({
+							type: "print",
+							print_info: {
+								txt: display_txt.toString(),
+								param: cond,
+							}
+						});
+					}
 
 				} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
 
@@ -1378,42 +1423,59 @@
 
 							// console.log(save_to_obj);
 
+							var op_operand = "";
+
+							if(opp[0] == "+")
+								op_operand = "add";
+							if(opp[0] == "-")
+								op_operand = "subtract";
+							if(opp[0] == "/")
+								op_operand = "divide";
+							if(opp[0] == "*")
+								op_operand = "multiply";
+
 							if(code_stack.length > 0) {
 
-								code_stack[code_stack.length - 1].statements.push({
-									type: "op",
-									op_info: {
-										save_to: save_to,
-										operation: op_operand,
-										var_1: var_1,
-										var_2: var_2,
-									},
-								});
+								if(code_stack[code_stack.length - 1].else) {
 
-								// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
-								// 	type: "op",
-								// 	op_info: {
-								// 		save_to: save_to,
-								// 		operation: op_operand,
-								// 		var_1: var_1,
-								// 		var_2: var_2,
-								// 	},
-								// });
+									code_stack[code_stack.length - 1].else.push({
+										type: "op",
+										op_info: {
+											save_to: save_to,
+											operation: op_operand,
+											var_1: var_1,
+											var_2: var_2,
+										},
+									});
+								} else {
 
-								if(code_stack[code_stack.length - 1].status) {
+									code_stack[code_stack.length - 1].statements.push({
+										type: "op",
+										op_info: {
+											save_to: save_to,
+											operation: op_operand,
+											var_1: var_1,
+											var_2: var_2,
+										},
+									});
+								}
+
+								if(code_stack[code_stack.length - 1].status && (!code_stack[code_stack.length - 1].else)) {
 
 									save_to_obj = assignValueToVar(save_to_obj, assign_param);
 
-									var op_operand = "";
+									code_log.push({
+										type: "op",
+										op_info: {
+											save_to: save_to,
+											operation: op_operand,
+											var_1: var_1,
+											var_2: var_2,
+										},
+									});
+								} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
 
-									if(opp[0] == "+")
-										op_operand = "add";
-									if(opp[0] == "-")
-										op_operand = "subtract";
-									if(opp[0] == "/")
-										op_operand = "divide";
-									if(opp[0] == "*")
-										op_operand = "multiply";
+									save_to_obj = assignValueToVar(save_to_obj, assign_param);
 
 									code_log.push({
 										type: "op",
@@ -1428,17 +1490,6 @@
 							} else {
 
 								save_to_obj = assignValueToVar(save_to_obj, assign_param);
-
-								var op_operand = "";
-
-								if(opp[0] == "+")
-									op_operand = "add";
-								if(opp[0] == "-")
-									op_operand = "subtract";
-								if(opp[0] == "/")
-									op_operand = "divide";
-								if(opp[0] == "*")
-									op_operand = "multiply";
 
 								code_log.push({
 									type: "op",
@@ -1498,6 +1549,11 @@
 						return cond_result;
 					}
 
+				} else if(/^}\s*else\s*{\s*$/g.test(cmdLine)) {
+
+					code_stack[code_stack.length - 1].else = [];
+					console.log("has else");
+
 				} else if(/^while\s*\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{$/g.test(cmdLine)) {
 
 					var loop_condition = getConditions(cmdLine, "(", ")");
@@ -1527,7 +1583,7 @@
 						return cond_result;
 					}
 
-				} else if(/^\s*}\s*$/) {
+				} else if(/^\s*}\s*$/g.test(cmdLine)) {
 
 					if(code_stack.length > 0) {
 
@@ -1537,8 +1593,14 @@
 						if(curr_cmd.type == "if") {
 							var cmd_info = code_stack.pop();
 
+							// console.log(cmd_info);
+
 							code_log[cmd_info.log_id].cmd_info.end = commandNum;
 							code_log[cmd_info.log_id].cmd_info.statements = cmd_info.statements;
+
+							if(cmd_info.else) {
+								code_log[cmd_info.log_id].cmd_info.else = cmd_info.else;
+							}
 						} else if(curr_cmd.type == "loop-while") {
 
 							code_log[curr_cmd.log_id].cmd_info.end = commandNum;
@@ -1779,13 +1841,13 @@
 															var compareCondArr = [code_log[ckey].cmd_info.condition, answers.commands[cmdKey].condition];
 															var condCompObj = [];
 															// console.log(compareCondArr);
-															console.log(code_log[ckey].cmd_info);
-															console.log(answers.commands[cmdKey]);
+															// console.log(code_log[ckey].cmd_info);
+															// console.log(answers.commands[cmdKey]);
 
 															for(var ctr = 0; ctr < compareCondArr.length; ctr++) {
 
 																var condOp = /(==|!=|>=|<=|>|<)/i.exec(compareCondArr[ctr]);
-																console.log(condOp);
+																// console.log(condOp);
 
 																var condVal = compareCondArr[ctr].split(condOp[0]);
 
@@ -1798,7 +1860,128 @@
 															}
 
 
+															// console.log(condCompObj);
 
+															var corrCondCtr = 0;
+
+															if((condCompObj[0].op == condCompObj[1].op)) {
+
+																for(var compKey1 in condCompObj[1].values) {
+
+																	for(var compKey0 in condCompObj[0].values) {
+
+																		if(condCompObj[1].values[compKey1] == condCompObj[0].values[compKey0]) {
+																			corrCondCtr++;
+																		}
+																	}	
+																}
+
+																if(corrCondCtr >= condCompObj[1].values.length) {
+
+																	var cmd_log_stat = code_log[ckey].cmd_info.statements;
+																	var cmd_ans_stat = answers.commands[cmdKey].statements;
+																	var cmd_log_else = {};
+
+																	if(code_log[ckey].cmd_info.else) {
+																		cmd_log_else = code_log[ckey].cmd_info.else;
+																	}
+
+																	var corrStatAnsCtr = 0;
+
+																	for(var statAnsKey in cmd_ans_stat) {
+
+																		if(cmd_ans_stat[statAnsKey].stmnt_type) {
+
+																			// console.log(cmd_ans_stat[statAnsKey].stmnt_type);
+
+																			if(cmd_ans_stat[statAnsKey].stmnt_type == "if-statement") {
+
+																				for(var statLogKey in cmd_log_stat) {
+
+																					if(cmd_ans_stat[statAnsKey].type == cmd_log_stat[statLogKey].type) {
+
+																						if(cmd_ans_stat[statAnsKey].type == "print") {
+																							// console.log("is print statement");
+																							// console.log(cmd_ans_stat[statAnsKey].txt);
+																							// console.log(cmd_log_stat[statLogKey].print_info.param.replace(/\"/g, ""));
+
+																							if(cmd_ans_stat[statAnsKey].txt.replace(/\"/g, "") == cmd_log_stat[statLogKey].print_info.param.replace(/\"/g, "")) {
+
+																								// console.log("if statement correct");
+																								corrStatAnsCtr++;
+																							}
+																						} else if(cmd_ans_stat[statAnsKey].type == "op") {
+
+																							var checkRes = {};
+
+																							checkRes = check_operation(cmd_ans_stat[statAnsKey], cmd_log_stat[statLogKey].op_info);
+
+																							if(checkRes.status && checkRes.result) {
+																								corrStatAnsCtr++;
+																							}
+																						}
+																					}
+																				}
+																			} else if(cmd_ans_stat[statAnsKey].stmnt_type == "else-statement") {
+
+																				for(var elseLogKey in cmd_log_else) {
+																					console.log();
+																					if(cmd_ans_stat[statAnsKey].type == cmd_log_else[elseLogKey].type) {
+																						console.log(cmd_ans_stat[statAnsKey].type);
+																						if(cmd_ans_stat[statAnsKey].type == "print") {
+																							console.log("is print statement else");
+																							if(cmd_ans_stat[statAnsKey].txt.replace(/\"/g, "") == cmd_log_else[elseLogKey].print_info.param.replace(/\"/g, "")) {
+																								console.log("else statement correct");
+																								corrStatAnsCtr++;
+																							}
+																						} else if(cmd_ans_stat[statAnsKey].type == "op") {
+
+																							var checkRes = {};
+
+																							checkRes = check_operation(cmd_ans_stat[statAnsKey], cmd_log_else[elseLogKey].op_info);
+
+																							if(checkRes.status && checkRes.result) {
+																								corrStatAnsCtr++;
+																							}
+																						}
+																					}
+																				}
+																			}
+																		} else {
+
+																			for(var statLogKey in cmd_log_stat) {
+
+																				// console.log(cmd_ans_stat[statAnsKey]);
+																				// console.log(cmd_log_stat[statLogKey]);
+
+																				if(cmd_ans_stat[statAnsKey].type == cmd_log_stat[statLogKey].type) {
+
+																					if(cmd_ans_stat[statAnsKey].type == "print") {
+
+																						if(cmd_ans_stat[statAnsKey].txt == cmd_log_stat[statLogKey].print_info.param.replace(/\"/g, "")) {
+																							corrStatAnsCtr++;
+																						}
+																					} else if(cmd_ans_stat[statAnsKey].type == "op") {
+
+																						var checkRes = {};
+
+																						checkRes = check_operation(cmd_ans_stat[statAnsKey], cmd_log_stat[statLogKey].op_info);
+
+																						if(checkRes.status && checkRes.result) {
+																							corrStatAnsCtr++;
+																						}
+																					}
+																				}
+																			}
+																		}
+
+																	}
+
+																	if(corrStatAnsCtr >= cmd_ans_stat.length) {
+																		correctAns++;
+																	}
+																}
+															}
 
 														}
 													}
@@ -1853,6 +2036,33 @@
 
 		}
 
+		check_operation = function(ans_statement, log_statement) {
+
+			// console.log(ans_statement);
+			// console.log(log_statement);
+
+			if(ans_statement.save_to == log_statement.save_to && log_statement.operation == ans_statement.operation) {
+
+				if(ans_statement.operation == "add") {
+
+					if(((log_statement.var_1 == ans_statement.var_1) || (log_statement.var_1 == ans_statement.var_2)) && ((log_statement.var_2 == ans_statement.var_1) || (log_statement.var_2 == ans_statement.var_2))) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				} else {
+
+					if(log_statement.var_1 == ans_statement.var_1 && log_statement.var_2 == ans_statement.var_2) {
+						return {status: true, result: true};
+					} else {
+						return {status: true, result: false};
+					}
+				}															
+			} else {
+				return {status: true, result: false};
+			}
+		}
+
 		getConditions = function(statement, terminator1, terminator2) {
 
 			var startIndex = 0;
@@ -1903,7 +2113,7 @@
 					} else if(/^\"[A-Za-z0-9_\W]*\"$/g.test(cond_1)) {
 						testVal_1 = parseValue("String", cond_1);
 					} else if(/^(true|false)$/g.test(cond_1)) {
-						testVal_1 = parseValue("Boolean", cond_1);
+						testVal_1 = parseValue("Boolean", cond_1.toString());
 					}
 				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond_1)) {
 
@@ -2081,7 +2291,7 @@
 
 			if(dataType == "int") {
 				
-				if(/^[0-9]+$/i.test(value)) {
+				if(/^-?[0-9]+$/i.test(value)) {
 
 					return {status: true, value: parseInt(value)};
 				} else {
@@ -2112,7 +2322,7 @@
 				}
 			} else if(dataType == "Boolean") {
 
-				value = value.toLowerCase();
+				value = value.toString().toLowerCase();
 				if(/^true$/i.test(value)) {
 					return {status: true, value: true};
 				} else if(/^false$/i.test(value)) {
@@ -2473,7 +2683,7 @@
 				// });
 
 				var objectives_list = gameData.objectives_list.objectives_list;
-				console.log(gameData);
+				// console.log(gameData);
 
 				for(var key in objectives_list) {
 
@@ -2511,7 +2721,7 @@
 					Objective('obj_' + objectives_list[key].OBJ_NUM, false, objectives_list[key].OBJ_DESC, taskObj, parseInt(objectives_list[key].OBJ_POINTS));
 				}
 
-				console.log(Objective.list);
+				// console.log(Objective.list);
 			});
 		}
 
@@ -2689,7 +2899,7 @@
 					if(self.currentQuestion.questionNum && self.currentQuestion.bully == bullyId) {
 						question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
 					} else {
-						console.log("set new bully");
+						// console.log("set new bully");
 						self.currentQuestion = {bully: bullyId, questionNum: 1};
 						question_id = self.currentQuestion.bully + "_" + self.currentQuestion.questionNum;
 					}
@@ -2714,9 +2924,20 @@
 
 						if((questions_status.total_questions == (questions_status.wrong_ans + questions_status.correct_ans)) && (questions_status.wrong_ans > 0)) {
 
-							Bully.list[bullyId].exit();
-							sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/footsteps-2.wav";
-							sfxAudio.play();
+							setTimeout(function() {
+								
+							  	if(Bully.list[bullyId]) {
+							  		Bully.list[bullyId].exit();	
+							  	}
+							  	
+							}, 500);
+
+							// if(Projectile.list[0]) {
+
+							// 	Bully.list[bullyId].exit();
+							// 	sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/footsteps-2.wav";
+							// 	sfxAudio.play();
+							// }
 
 						}
 					}
@@ -2849,6 +3070,8 @@
 			self.pressingRight = false;
 			self.pressingLeft = false;
 
+			self.sfx_footstep_flag = false;
+
 			self.spriteAnimCtr = 0;
 
 			self.img.src = imgSrc;
@@ -2964,6 +3187,13 @@
 			self.exit = function() {
 
 				self.pressingRight = true;
+
+				if(!self.sfx_footstep_flag) {
+					sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/footsteps-2.wav";
+					sfxAudio.play();
+
+					self.sfx_footstep_flag = true;
+				}
 			}
 
 			Bully.list[id] = self;
@@ -3206,28 +3436,30 @@
 
 		Question.init = function() {
 
+			// console.log(gameData.question_list);
+
 			var promise = new Promise(function(resolve, reject) {
 
-				var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
+				// var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
 
-				$.ajax({
-					type: 'post',
-					url: "<?php echo base_url() ?>Game/get_question_list",
-					data: {lvlId: lvlId},
-					dataType: 'json',
-					success: function(res) {
-						// console.log(res),
-						resolve(res);
-					},
-					error: function(err) {
-						console.log("failed to retreive question list due to some error");
-					}
-				}).then(function(result) {
+				// $.ajax({
+				// 	type: 'post',
+				// 	url: "<?php echo base_url() ?>Game/get_question_list",
+				// 	data: {lvlId: lvlId},
+				// 	dataType: 'json',
+				// 	success: function(res) {
+				// 		// console.log(res),
+				// 		resolve(res);
+				// 	},
+				// 	error: function(err) {
+				// 		console.log("failed to retreive question list due to some error");
+				// 	}
+				// }).then(function(result) {
 
-					if(result.status) {
+					// if(result.status) {
 						// console.log(result.question_list);
 
-						var question_list = result.question_list;
+						var question_list = gameData.question_list.question_list;
 
 						for(var key in question_list) {
 
@@ -3295,9 +3527,9 @@
 							Question(questionId, question_list[key].QSTN_TYPE, parseInt(question_list[key].QSTN_NUM), question_list[key].BLY_ID, question_list[key].QSTN_DIALOG, answers);
 						}
 
-						console.log(Question.list);
-					}
-				});
+						// console.log(Question.list);
+					// }
+				// });
 			});
 		}
 
