@@ -202,7 +202,7 @@
 										<select class="form-control" id="cmd_type" name="cmd_type">
 											<!-- <option value="none" selected>None</option> -->
 											<option value="cmd-if">If</option>
-											<option value="cmd-while">While</option>
+											<option value="cmd-loop-while">While</option>
 										</select>
 									</div>
 								</div>
@@ -766,6 +766,8 @@
 			}
 
 			var checkVarVal = parseValue(dataType, value);
+
+			console.log(checkVarVal);
 
 			if(checkVarVal.status) {
 

@@ -45,7 +45,7 @@
 							<textarea rows="15" id="textarea1" disabled></textarea>
 						</div>
 						<div class="code-area-container border-custom col-md-11 col-sm-11 col-xs-11">
-							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" spellcheck="false" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 						</div>
 					</div>
 					<div class="row button-run-container">
@@ -658,7 +658,7 @@
 				cmdLine = code[commandNum].trim();
 				if(cmdLine == "") {
 					// console.log("blank line");
-				} else if(/^System\.out\.println\(\s*[A-Za-z0-9=<>()\[\]\+\-*/\s\W]*\s*\)\s*;$/g.test(cmdLine)) {
+				} else if(/^System\.out\.println\(\s*[A-Za-z0-9=<>()\[\]\+\-*/\s_\W]*\s*\)\s*;$/g.test(cmdLine)) {
 
 					//\"[A-Za-z0-9_\W]*\"
 
@@ -783,13 +783,16 @@
 							});
 						} else {
 
-							code_stack[code_stack.length - 1].statements.push({
-								type: "print",
-								print_info: {
-									txt: display_txt.toString(),
-									param: cond,
-								}
-							});
+							if(!code_stack[code_stack.length - 1].stat_recorded) {
+
+								code_stack[code_stack.length - 1].statements.push({
+									type: "print",
+									print_info: {
+										txt: display_txt.toString(),
+										param: cond,
+									}
+								});
+							}
 						}
 
 						if(code_stack[code_stack.length - 1].status && (!code_stack[code_stack.length - 1].else)) {
@@ -1129,7 +1132,7 @@
 						return {status: false, message: "error: value assigned invalid"};
 					}
 
-				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*;$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
 					var assignLine = tempLine.split(/=/i);
@@ -1143,7 +1146,7 @@
 					var valToTrans;
 					var assign_param = {};
 
-					if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.?[0-9]*|\'[A-Za-z0-9]\')$/g.test(assignLine[1].trim())) {
+					if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\')$/g.test(assignLine[1].trim())) {
 
 						if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""))) {
 
@@ -1298,7 +1301,7 @@
 						// console.log(vrbls);
 
 
-				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
 					var opLine = tempLine.split(/=/i);
@@ -1312,142 +1315,103 @@
 					var var_2 = varList[1].trim();
 
 					// console.log(save_to + " = " + var_1 + " " + opp[0] + " " + var_2);
+					var val_list = [];
 
-					if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_1.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""))) {
+					for(var key in varList) {
 
-						var var_1_obj = isVarExisting(var_1.replace(/\[[0-9]*\]/g, ""));
-						var var_2_obj = isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""));
-						var save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+						var val_obj = extract_data(varList[key].trim());
 
-						var var_1_value = "";
-						var var_2_value = "";
+						if(val_obj.status) {
+							val_list.push(val_obj);
+						} else {
+							return val_obj;
+						}
+					}
 
-						// console.log(var_1_obj);
-						// console.log(var_2_obj);
+					// console.log(val_list);
+					// console.log(doOperation(opp, val_list[0], val_list[1]));
+
+					var op_result = doOperation(opp, val_list[0], val_list[1]);
+
+					var assign_params = {};
+
+					if(op_result.status) {
+
+						var save_to_obj = {};
+
+						if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""))) {
+							save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+						} else {
+							return {status: false, message: save_to.replace(/\[[0-9]*\]/g, "") + "is undefined"}
+						}
+
+						if(Array.isArray(save_to_obj.var_value)) {
+
+							if(/\[[0-9]*\]/g.test(save_to)) {
+
+								var arrIndex = getConditions(save_to, '[', ']');
+								if(save_to_obj.var_value[arrIndex]) {
+
+										assign_param = {
+											saveTo_index: arrIndex,
+											dataType: op_result.dataType,
+											value: op_result.value,
+										};
+
+										// save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+								} else {
+									return {status: false, message: "index out of range"};
+								}
+
+							} else {
+								return {status: false, message:  save_to_obj.var_identifier + " is not an array"};
+							}
+
+						} else {
+
+							if(/\[[0-9]*\]/g.test(save_to)) {
+								return {status: false, message: save_to_obj.var_identifier + " is not an array"};
+							} else {
+								
+								assign_param = {
+									dataType: op_result.dataType,
+									value: op_result.value,
+								};
+
+								// save_to_obj = assignValueToVar(save_to_obj, assign_param);
+							}
+						}
+
 						// console.log(save_to_obj);
 
-						if(Array.isArray(var_1_obj.var_value)) {
+						var op_operand = "";
 
-							if(/\[[0-9]*\]/g.test(var_1)) {
+						if(opp[0] == "+")
+							op_operand = "add";
+						if(opp[0] == "-")
+							op_operand = "subtract";
+						if(opp[0] == "/")
+							op_operand = "divide";
+						if(opp[0] == "*")
+							op_operand = "multiply";
 
-								var arrIndex = getConditions(var_1, '[', ']');
-								if(var_1_obj.var_value[arrIndex]) {
-									
-									var_1_value = {dataType: var_1_obj.dataType.replace(/[\[\]]/g, ""), value: var_1_obj.var_value[arrIndex]};
-								} else {
-									return {status: false, message: "index out of range"};
-								}
+						if(code_stack.length > 0) {
 
-							} else {
-								return {status: false, message: "indicate array index"};
-							}
-						} else {
+							if(code_stack[code_stack.length - 1].else) {
 
-							if(/\[[0-9]*\]/g.test(var_1)) {
-								return {status: false, message: "variable is not an array"};
-							} else {
-								var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value};
-							}
-						}
-
-						if(Array.isArray(var_2_obj.var_value)) {
-
-							if(/\[[0-9]*\]/g.test(var_2)) {
-
-								var arrIndex = getConditions(var_2, '[', ']');
-								if(var_2_obj.var_value[arrIndex]) {
-									
-									var_2_value = {dataType: var_2_obj.dataType.replace(/[\[\]]/g, ""), value: var_2_obj.var_value[arrIndex]};
-								} else {
-									return {status: false, message: "index out of range"};
-								}
-
-							} else {
-								return {status: false, message: "indicate array index"};
-							}
-						} else {
-
-							if(/\[[0-9]*\]/g.test(var_2)) {
-								return {status: false, message: "variable is not an array"};
-							} else {
-								var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value};
-							}
-						}
-
-						// console.log(var_1_value);
-						// console.log(var_2_value);
-
-						// console.log(doOperation(opp, var_1_value, var_2_value));
-						var opRes = doOperation(opp, var_1_value, var_2_value);
-						var assign_params = {};
-
-						if(opRes.status) {
-
-							if(Array.isArray(save_to_obj.var_value)) {
-
-								if(/\[[0-9]*\]/g.test(save_to)) {
-
-									var arrIndex = getConditions(save_to, '[', ']');
-									if(save_to_obj.var_value[arrIndex]) {
-
-											assign_param = {
-												saveTo_index: arrIndex,
-												dataType: opRes.dataType,
-												value: opRes.value,
-											};
-
-											// save_to_obj = assignValueToVar(save_to_obj, assign_param);
-
-									} else {
-										return {status: false, message: "index out of range"};
-									}
-
-								} else {
-									return {status: false, message: "variable is not an array"};
-								}
-
+								code_stack[code_stack.length - 1].else.push({
+									type: "op",
+									op_info: {
+										save_to: save_to,
+										operation: op_operand,
+										var_1: var_1,
+										var_2: var_2,
+									},
+								});
 							} else {
 
-								if(/\[[0-9]*\]/g.test(save_to)) {
-									return {status: false, message: "variable is not an array"};
-								} else {
-									
-									assign_param = {
-										dataType: opRes.dataType,
-										value: opRes.value,
-									};
-
-									// save_to_obj = assignValueToVar(save_to_obj, assign_param);
-								}
-							}
-
-							// console.log(save_to_obj);
-
-							var op_operand = "";
-
-							if(opp[0] == "+")
-								op_operand = "add";
-							if(opp[0] == "-")
-								op_operand = "subtract";
-							if(opp[0] == "/")
-								op_operand = "divide";
-							if(opp[0] == "*")
-								op_operand = "multiply";
-
-							if(code_stack.length > 0) {
-
-								if(code_stack[code_stack.length - 1].else) {
-
-									code_stack[code_stack.length - 1].else.push({
-										type: "op",
-										op_info: {
-											save_to: save_to,
-											operation: op_operand,
-											var_1: var_1,
-											var_2: var_2,
-										},
-									});
-								} else {
+								if(!code_stack[code_stack.length - 1].stat_recorded) {
 
 									code_stack[code_stack.length - 1].statements.push({
 										type: "op",
@@ -1459,35 +1423,22 @@
 										},
 									});
 								}
+							}
 
-								if(code_stack[code_stack.length - 1].status && (!code_stack[code_stack.length - 1].else)) {
+							if(code_stack[code_stack.length - 1].status && (!code_stack[code_stack.length - 1].else)) {
 
-									save_to_obj = assignValueToVar(save_to_obj, assign_param);
+								save_to_obj = assignValueToVar(save_to_obj, assign_param);
 
-									code_log.push({
-										type: "op",
-										op_info: {
-											save_to: save_to,
-											operation: op_operand,
-											var_1: var_1,
-											var_2: var_2,
-										},
-									});
-								} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
-
-									save_to_obj = assignValueToVar(save_to_obj, assign_param);
-
-									code_log.push({
-										type: "op",
-										op_info: {
-											save_to: save_to,
-											operation: op_operand,
-											var_1: var_1,
-											var_2: var_2,
-										},
-									});
-								}
-							} else {
+								code_log.push({
+									type: "op",
+									op_info: {
+										save_to: save_to,
+										operation: op_operand,
+										var_1: var_1,
+										var_2: var_2,
+									},
+								});
+							} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
 
 								save_to_obj = assignValueToVar(save_to_obj, assign_param);
 
@@ -1501,16 +1452,228 @@
 									},
 								});
 							}
-
-							// console.log(vrbls);
-
 						} else {
-							return opRes;
+
+							save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+							code_log.push({
+								type: "op",
+								op_info: {
+									save_to: save_to,
+									operation: op_operand,
+									var_1: var_1,
+									var_2: var_2,
+								},
+							});
 						}
 
+						// console.log(vrbls);
+
 					} else {
-						return {status: false, message: "variable does not exist"};
+						return op_result;
 					}
+					
+					// if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_1.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""))) {
+
+					// 	var var_1_obj = isVarExisting(var_1.replace(/\[[0-9]*\]/g, ""));
+					// 	var var_2_obj = isVarExisting(var_2.replace(/\[[0-9]*\]/g, ""));
+					// 	var save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+
+					// 	var var_1_value = "";
+					// 	var var_2_value = "";
+
+					// 	// console.log(var_1_obj);
+					// 	// console.log(var_2_obj);
+					// 	// console.log(save_to_obj);
+
+					// 	if(Array.isArray(var_1_obj.var_value)) {
+
+					// 		if(/\[[0-9]*\]/g.test(var_1)) {
+
+					// 			var arrIndex = getConditions(var_1, '[', ']');
+					// 			if(var_1_obj.var_value[arrIndex]) {
+									
+					// 				var_1_value = {dataType: var_1_obj.dataType.replace(/[\[\]]/g, ""), value: var_1_obj.var_value[arrIndex]};
+					// 			} else {
+					// 				return {status: false, message: "index out of range"};
+					// 			}
+
+					// 		} else {
+					// 			return {status: false, message: "indicate array index"};
+					// 		}
+					// 	} else {
+
+					// 		if(/\[[0-9]*\]/g.test(var_1)) {
+					// 			return {status: false, message: "variable is not an array"};
+					// 		} else {
+					// 			var_1_value = {dataType: var_1_obj.dataType, value: var_1_obj.var_value};
+					// 		}
+					// 	}
+
+					// 	if(Array.isArray(var_2_obj.var_value)) {
+
+					// 		if(/\[[0-9]*\]/g.test(var_2)) {
+
+					// 			var arrIndex = getConditions(var_2, '[', ']');
+					// 			if(var_2_obj.var_value[arrIndex]) {
+									
+					// 				var_2_value = {dataType: var_2_obj.dataType.replace(/[\[\]]/g, ""), value: var_2_obj.var_value[arrIndex]};
+					// 			} else {
+					// 				return {status: false, message: "index out of range"};
+					// 			}
+
+					// 		} else {
+					// 			return {status: false, message: "indicate array index"};
+					// 		}
+					// 	} else {
+
+					// 		if(/\[[0-9]*\]/g.test(var_2)) {
+					// 			return {status: false, message: "variable is not an array"};
+					// 		} else {
+					// 			var_2_value = {dataType: var_2_obj.dataType, value: var_2_obj.var_value};
+					// 		}
+					// 	}
+
+					// 	// console.log(var_1_value);
+					// 	// console.log(var_2_value);
+
+					// 	// console.log(doOperation(opp, var_1_value, var_2_value));
+					// 	var opRes = doOperation(opp, var_1_value, var_2_value);
+					// 	var assign_params = {};
+
+					// 	if(opRes.status) {
+
+					// 		if(Array.isArray(save_to_obj.var_value)) {
+
+					// 			if(/\[[0-9]*\]/g.test(save_to)) {
+
+					// 				var arrIndex = getConditions(save_to, '[', ']');
+					// 				if(save_to_obj.var_value[arrIndex]) {
+
+					// 						assign_param = {
+					// 							saveTo_index: arrIndex,
+					// 							dataType: opRes.dataType,
+					// 							value: opRes.value,
+					// 						};
+
+					// 						// save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+					// 				} else {
+					// 					return {status: false, message: "index out of range"};
+					// 				}
+
+					// 			} else {
+					// 				return {status: false, message: "variable is not an array"};
+					// 			}
+
+					// 		} else {
+
+					// 			if(/\[[0-9]*\]/g.test(save_to)) {
+					// 				return {status: false, message: "variable is not an array"};
+					// 			} else {
+									
+					// 				assign_param = {
+					// 					dataType: opRes.dataType,
+					// 					value: opRes.value,
+					// 				};
+
+					// 				// save_to_obj = assignValueToVar(save_to_obj, assign_param);
+					// 			}
+					// 		}
+
+					// 		// console.log(save_to_obj);
+
+					// 		var op_operand = "";
+
+					// 		if(opp[0] == "+")
+					// 			op_operand = "add";
+					// 		if(opp[0] == "-")
+					// 			op_operand = "subtract";
+					// 		if(opp[0] == "/")
+					// 			op_operand = "divide";
+					// 		if(opp[0] == "*")
+					// 			op_operand = "multiply";
+
+					// 		if(code_stack.length > 0) {
+
+					// 			if(code_stack[code_stack.length - 1].else) {
+
+					// 				code_stack[code_stack.length - 1].else.push({
+					// 					type: "op",
+					// 					op_info: {
+					// 						save_to: save_to,
+					// 						operation: op_operand,
+					// 						var_1: var_1,
+					// 						var_2: var_2,
+					// 					},
+					// 				});
+					// 			} else {
+
+					// 				if(!code_stack[code_stack.length - 1].stat_recorded) {
+
+					// 					code_stack[code_stack.length - 1].statements.push({
+					// 						type: "op",
+					// 						op_info: {
+					// 							save_to: save_to,
+					// 							operation: op_operand,
+					// 							var_1: var_1,
+					// 							var_2: var_2,
+					// 						},
+					// 					});
+					// 				}
+					// 			}
+
+					// 			if(code_stack[code_stack.length - 1].status && (!code_stack[code_stack.length - 1].else)) {
+
+					// 				save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+					// 				code_log.push({
+					// 					type: "op",
+					// 					op_info: {
+					// 						save_to: save_to,
+					// 						operation: op_operand,
+					// 						var_1: var_1,
+					// 						var_2: var_2,
+					// 					},
+					// 				});
+					// 			} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
+
+					// 				save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+					// 				code_log.push({
+					// 					type: "op",
+					// 					op_info: {
+					// 						save_to: save_to,
+					// 						operation: op_operand,
+					// 						var_1: var_1,
+					// 						var_2: var_2,
+					// 					},
+					// 				});
+					// 			}
+					// 		} else {
+
+					// 			save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+					// 			code_log.push({
+					// 				type: "op",
+					// 				op_info: {
+					// 					save_to: save_to,
+					// 					operation: op_operand,
+					// 					var_1: var_1,
+					// 					var_2: var_2,
+					// 				},
+					// 			});
+					// 		}
+
+					// 		// console.log(vrbls);
+
+					// 	} else {
+					// 		return opRes;
+					// 	}
+
+					// } else {
+					// 	return {status: false, message: "variable does not exist"};
+					// }
 
 				} else if(/^if\s*\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{$/g.test(cmdLine)) {
 					// console.log("used if statement");
@@ -1568,6 +1731,7 @@
 							start: commandNum,
 							log_id: code_log.length,
 							statements: [],
+							stat_recorded: false,
 						});
 
 						code_log.push({
@@ -1603,6 +1767,12 @@
 							}
 						} else if(curr_cmd.type == "loop-while") {
 
+							if(!curr_cmd.stat_recorded) {
+
+								code_log[curr_cmd.log_id].cmd_info.statements = curr_cmd.statements;
+								curr_cmd.stat_recorded = true;
+							}
+
 							code_log[curr_cmd.log_id].cmd_info.end = commandNum;
 
 							var cond_result = testCondition(curr_cmd.condition);
@@ -1611,6 +1781,8 @@
 
 								if(cond_result.result) {
 									cmdNum = curr_cmd.start;
+								} else {
+									var cmd_info = code_stack.pop();
 								}
 							} else {
 								return cond_result;
@@ -1834,6 +2006,7 @@
 
 												for(var ckey in code_log) {
 
+
 													if(code_log[ckey].type == answers.commands[cmdKey].type) {
 
 														if(code_log[ckey].type == "cmd-if") {
@@ -1983,6 +2156,88 @@
 																}
 															}
 
+														} else if(code_log[ckey].type == "cmd-loop-while") {
+															
+															var compareCondArr = [code_log[ckey].cmd_info.condition, answers.commands[cmdKey].condition];
+															var condCompObj = [];
+
+															// console.log(compareCondArr);
+
+															for(var ctr = 0; ctr < compareCondArr.length; ctr++) {
+
+																var condOp = /(==|!=|>=|<=|>|<)/i.exec(compareCondArr[ctr]);
+
+																var condVal = compareCondArr[ctr].split(condOp[0]);
+
+																var condObj = {
+																	op: condOp[0],
+																	values: condVal,
+																};
+
+																condCompObj.push(condObj);
+															}
+
+															// console.log(condCompObj);
+
+															var corrCondCtr = 0;
+
+															if((condCompObj[0].op == condCompObj[1].op)) {
+
+																for(var compKey1 in condCompObj[1].values) {
+
+																	for(var compKey0 in condCompObj[0].values) {
+
+																		if(condCompObj[1].values[compKey1] == condCompObj[0].values[compKey0]) {
+																			corrCondCtr++;
+																		}
+																	}	
+																}
+
+																// console.log(corrCondCtr);
+
+																if(corrCondCtr >= condCompObj[1].values.length) {
+
+																	var cmd_log_stat = code_log[ckey].cmd_info.statements;
+																	var cmd_ans_stat = answers.commands[cmdKey].statements;
+
+																	// console.log(cmd_log_stat);
+																	// console.log(cmd_ans_stat);
+
+																	var corrStatAnsCtr = 0;
+
+																	for(var statAnsKey in cmd_ans_stat) {
+
+																		for(var statLogKey in cmd_log_stat) {
+
+																			// console.log(cmd_ans_stat[statAnsKey]);
+																			// console.log(cmd_log_stat[statLogKey]);
+
+																			if(cmd_ans_stat[statAnsKey].type == cmd_log_stat[statLogKey].type) {
+
+																				if(cmd_ans_stat[statAnsKey].type == "print") {
+
+																					if(cmd_ans_stat[statAnsKey].txt == cmd_log_stat[statLogKey].print_info.param.replace(/\"/g, "")) {
+																						corrStatAnsCtr++;
+																					}
+																				} else if(cmd_ans_stat[statAnsKey].type == "op") {
+
+																					var checkRes = {};
+
+																					checkRes = check_operation(cmd_ans_stat[statAnsKey], cmd_log_stat[statLogKey].op_info);
+
+																					if(checkRes.status && checkRes.result) {
+																						corrStatAnsCtr++;
+																					}
+																				}
+																			}
+																		}
+																	}
+
+																	if(corrStatAnsCtr >= cmd_ans_stat.length) {
+																		correctAns++;
+																	}
+																}
+															}
 														}
 													}
 												}
@@ -2400,6 +2655,91 @@
 			}
 
 			return false;
+		}
+
+		extract_data = function(value) {
+
+			// console.log(value);
+
+			if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\')$/g.test(value)) {
+
+				var val_dataType = "";
+				var parse_result = {};
+
+				if(/\"[A-Za-z0-9_\W]*\"/g.test(value)) {
+					parse_result = parseValue("String", value);
+					val_dataType = "String";
+				} else if(/\-?[0-9]+/g.test(value)) {
+					parse_result = parseValue("int", value);
+					val_dataType = "int";
+				} else if(/[0-9]*\.[0-9]*/g.test(value)) {
+					parse_result = parseValue("double", value);
+					val_dataType = "double";
+				} else if(/\'[A-Za-z0-9]\'/g.test(value)) {
+					parse_result = parseValue("char", value);
+					val_dataType = "char";
+				}
+
+				// console.log(parse_result);
+
+				if(parse_result.status) {
+
+					var result_obj = {
+						status: true,
+						dataType: val_dataType,
+						value: parse_result.value,
+					};
+
+					// console.log(result_obj);
+
+					return result_obj;
+				} else {
+					return {status: false, message: "failed to extract value for operation"};
+				}
+
+
+			} else if(isVarExisting(value.replace(/[\[[0-9]*\]]/g, ""))) {
+
+				// console.log("variable");
+
+				var var_obj = isVarExisting(value.replace(/[\[[0-9]*\]]/g, ""));
+
+				if(/[\[[0-9]*\]]/g.test(value)) {
+
+					var arrIndex = getConditions(value, "[", "]");
+
+					if(Array.isArray(var_obj.var_value)) {
+
+						if(var_obj.var_value[arrIndex]) {
+							var result_obj = {
+								status: true,
+								dataType: var_obj.dataType.replace(/[\[\]]/g, ""),
+								value: var_obj.var_value[arrIndex],
+							};
+
+							return result_obj;
+						} else {
+							return {status: false, message: "index out of range"};
+						}
+					} else {
+						return {status: false, message: var_obj.var_identifier + " is not an array"};
+					}
+				} else {
+
+					if(!Array.isArray(var_obj.var_value)) {
+
+						var result_obj = {
+							status: true,
+							dataType: var_obj.dataType.replace(/[\[\]]/g, ""),
+							value: var_obj.var_value,
+						};
+
+						return result_obj;
+					} else {
+						return {status: false, message: "indicate array index of " + var_obj.var_identifier};
+					}
+				}
+			}
 		}
 
 		doOperation = function(operation, val1, val2) {
