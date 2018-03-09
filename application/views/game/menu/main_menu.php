@@ -61,7 +61,7 @@
 							<?php $exist = true ?>
 							<div class="row stages">
 							<?php foreach ($stage_list as $stage) { ?>
-								<?php if ($stage1 == true){$stage1 = false;$exist = true;} ?>
+								<?php  if ($stage1 == true){$stage1 = false;$exist = true;} ?>
 								<!-- <?php if ($exist == true){ ?> -->
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="popup unlocked-stage">
