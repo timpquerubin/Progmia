@@ -29,7 +29,7 @@
 					<?php } ?>
 							<div class="level col-xs-12 col-sm-6 col-md-3 col-lg-3">
 								<div class="level-info text-center">
-									<a href="<?php echo ($level_stages[0]['STG_NUM'] == 1)? base_url().'Game/play_basics/'.$level['LVL_ID'] : base_url().'Game/play/'.$level['LVL_ID'] ?>">
+									<a href="<?php echo ($level_stages[0]['STG_NUM'] != 4)? base_url().'Game/play_basics/'.$level['LVL_ID'] : base_url().'Game/play/'.$level['LVL_ID'] ?>">
 										<div class="level-link">
 											<h2>Level <?php echo $i+1; ?></h2>
 											<?php $score = 0; ?>
