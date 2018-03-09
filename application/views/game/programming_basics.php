@@ -675,20 +675,39 @@
 						}
 
 						console.log(display_txt);
-					} else if(/^\s*(\"[A-Za-z0-9_\W]*\"|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*$/g.test(cond)) {
+					} else if(/^\s*(\"[A-Za-z0-9_\W]*\"|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*$/g.test(cond)) {
 						
 						if(/^\"[A-Za-z0-9_\W]*\"$/g.test(cond)) {
 							display_txt = cond;
 							console.log(display_txt);
-						} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])$/g.test(cond)) {
+						} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])$/g.test(cond)) {
 
-							if(isVarExisting(cond.replace(/\[[0-9]+\]/g, ""))) {
+							if(isVarExisting(cond.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""))) {
 
-								var var_obj = isVarExisting(cond.replace(/\[[0-9]+\]/g, ""));
+								var var_obj = isVarExisting(cond.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""));
 
-								if(/\[[0-9]+\]/g.test(cond)) {
+								if(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g.test(cond)) {
 								
-									var arrIndex = getConditions(cond, "[", "]");
+									var arrCond = getConditions(cond, "[", "]");
+									var arrIndex = 0;
+
+									if(/^[A-Za-z][A-Za-z0-9_]*$/g.test(arrCond)) {
+
+										if(isVarExisting(arrCond)) {
+
+											var index_obj = isVarExisting(arrCond);
+
+											if(index_obj.dataType == "int") {
+												arrIndex = index_obj.var_value;
+											} else {
+												return {status: false, message: "invalid array index"};
+											}
+										} else {
+											return {status: false, message: "invalid array index"};
+										}
+									} else if(/[0-9]+/g.test(arrCond)) {
+										arrIndex = parseInt(arrCond);
+									}
 									
 									if(Array.isArray(var_obj.var_value)) {
 
@@ -1248,7 +1267,7 @@
 						// console.log(vrbls);
 
 
-				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\]);$/g.test(cmdLine)) {
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]);$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
 					var opLine = tempLine.split(/=/i);
@@ -1267,6 +1286,7 @@
 					for(var key in varList) {
 
 						var val_obj = extract_data(varList[key].trim());
+						// console.log(val_obj);
 
 						if(val_obj.status) {
 							val_list.push(val_obj);
@@ -2645,15 +2665,38 @@
 				}
 
 
-			} else if(isVarExisting(value.replace(/[\[[0-9]*\]]/g, ""))) {
+			} else if(isVarExisting(value.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""))) {
 
-				// console.log("variable");
+				// console.log(value);
 
-				var var_obj = isVarExisting(value.replace(/[\[[0-9]*\]]/g, ""));
+				var var_obj = isVarExisting(value.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""));
 
-				if(/[\[[0-9]*\]]/g.test(value)) {
+				if(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g.test(value)) {
 
-					var arrIndex = getConditions(value, "[", "]");
+					var arrCond = getConditions(value, "[", "]");
+					var arrIndex = 0;
+
+					// console.log(arrCond);
+
+					if(/^[A-Za-z][A-Za-z0-9_]*$/g.test(arrCond)) {
+
+						if(isVarExisting(arrCond.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""))) {
+
+							var index_obj = isVarExisting(arrCond.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""));
+
+							if(index_obj.dataType == "int") {
+								arrIndex = index_obj.var_value;
+							} else {
+								return {status: false, message: "invalid array index"};
+							}
+						} else {
+							return {status: false, message: "invalid array index"};
+						}
+					} else if(/[0-9]+/g.test(arrCond)) {
+						arrIndex = parseInt(value);
+					}
+
+					// console.log(arrIndex);
 
 					if(Array.isArray(var_obj.var_value)) {
 
@@ -3026,42 +3069,49 @@
 					
 					if(hpPerc >= Objective.list[key].task.health) {
 						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					} else {
 						Objective.list[key].status = false;
-						$("#" + Objective.list[key].id + "_status").removeAttr('checked');
+						// $("#" + Objective.list[key].id + "_status").removeAttr('checked');
+						$("#" + Objective.list[key].id + "_status").removeClass("checked");
 					}
 				} else if(objKey == 'collect_coins') {
 
 					if(collectedCoins == Objective.list[key].task.collect_coins) {
 						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					}
 				} else if(objKey == 'defeat_bullies') {
 
 					if(KilledBullies >= Objective.list[key].task.defeat_bullies) {
 						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					}
 				} else if(objKey == 'use_command') {
 
 					if(Objective.list[key].task.use_command == 'Loop') {
 						if(used_loop) {
 							Objective.list[key].status = true;
-							document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+							// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+							$("#" + Objective.list[key].id + "_status").addClass("checked");
 						}
 					}
 
 					if(Objective.list[key].task.use_command == 'If') {
 						if(used_if) {
 							Objective.list[key].status = true;
-							document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+							// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+							$("#" + Objective.list[key].id + "_status").addClass("checked");
 						}
 					}
 				} else if(objKey == 'finish') {
 					if(isFinished) {
 						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					}
 				}
 				
@@ -3107,6 +3157,7 @@
 					$("#star3").attr("checked", true);
 					$("#star3").addClass("s3");
 				} else {
+					$("#resultTitle").text("You Lost");
 					$("#star1").addClass("no-score u1");
 					$("#star2").addClass("no-score u2");
 					$("#star3").addClass("no-score u3");
@@ -4001,7 +4052,6 @@
 					Objective.computeScore();
 					Objective.recordScore();
 					$("#finish-modal").css("display", "block");
-					$("#resultTitle").text("You Lost");
 				}
 				// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
 			}
