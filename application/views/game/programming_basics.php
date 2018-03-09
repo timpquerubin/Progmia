@@ -1,43 +1,52 @@
 <div id="page">
 <div class="container-fluid">
-	<div class="margin-top">
 		<div class="row">
-			<div class="col-md-6 col-sm-12">
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+				<ul class="page-navigation">
+					<li>
+				<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a></li>
+					<li><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-chevron-left"></i></a></li>
+					<li><a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-home"></i></a></li>
+				</ul>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+	            <ul class="" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
+	            	<li><button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i></button></li>
+	                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
+	                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+	            </ul>
+	        </div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="canvas-container">
 					<div class="game-area">
-						<div class="hp-bar-container" style="">
-							<div class="player-status">
-								<div class="row">
-									<div class="col-xs-2 col-sm-2 col-md-3 col-lg-3">
-										<div class="avatar">
-											<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avatar['AVTR_THUMBNAIL_FILENAME']?>">
-										</div>
-									</div>
-									<!-- <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
-										<label class="hp-lbl">HP:</label>
-									</div> -->
-									<div class="col-sm-10 col-xs-10 col-md-9 col-lg-9" style="margin-left:-30px;">
-										<div class="row" style="display:flex;flex-direction: column;">
-											<?php $user = $this->session->userdata('username');?>
-											<label class="user"><?php echo $user;?></label>
-											<div class="progress" style="padding: 0px;">
-											 	<div class="progress-bar progress-bar-danger player-hp-bar" id="hp-bar" role="progressbar" style="width: 100%">
-											 	</div>
-											</div>
-										</div>
-										
-									</div>
-										
+						<div class="player-status">
+							<div class="avatar">
+								<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avatar['AVTR_THUMBNAIL_FILENAME']?>">
+							</div>
+							<div class="hp-bar">
+								<?php $user = $this->session->userdata('username');?>
+								<label class="user"><?php echo $user;?></label>
+								<div class="progress" style="padding: 0px;">
+								 	<div class="progress-bar progress-bar-danger player-hp-bar" id="hp-bar" role="progressbar" style="width: 100%">
+								 	</div>
 								</div>
 							</div>
 						</div>
-						<canvas id="ctx" height="200" width="500"></canvas>
+						<div class="game-ui">
+							<canvas id="ctx" height="200" width="500"></canvas>
+							<div class="dialog-container" id="dialog-container">
+							</div>							
+						</div>
 					</div>
-
-					<div class="dialog-container" id="dialog-container"></div>
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-12">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="code-area-container wrapper-1">
 					<div class="row"><h1 class="title">Type Here</h1></div>
 					<div class="row code_area">
@@ -45,156 +54,90 @@
 							<textarea rows="15" id="textarea1" disabled></textarea>
 						</div>
 						<div class="code-area-container border-custom col-md-11 col-sm-11 col-xs-11">
-							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" spellcheck="false" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 						</div>
 					</div>
 					<div class="row button-run-container">
 						<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-							<button class="btn btn-basic btn-block" onclick="runCode();">RUN</button>
+							<button class="btn btn-basic btn-block" onclick="runCode();">Execute Code</button>
 						</div>
 					</div>
 					<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 				</div>
 			</div>
 		</div>
-</div>
-
-	<div id="tutorial">
-		<div id="tutorial-modal" class="modal fade" style="display: none;"">
-			<div class="tutorial-container modal-content"></div>
-		</div>
-	</div>
-
-	<div id="finish-modal" class="modal" style="display: none;">
-		<div class="modal-content">
-			<h1>Finish</h1>
-
-			<ul style="display:flex;list-style: none;margin:0 auto !important;padding: 0px !important;justify-content: center;">
-				<li id="star1">
-					<label class="" for="star1" title="Good"><div></div></label>
-				</li>
-				<li id="star2">
-					<label class="" for="star1" title="Excellent"><div></div></label>
-				</li>
-				<li id="star3">
-					<label class="" for="star1" title="Perfect"><div></div></label>
-				</li>
-			</ul>
-			<div class="objectives container" style="margin-top: 30;">
-				<div class="goal">Goal</div>
-				<ul style="list-style-type: none;">
-					<?php foreach ($objectives_list as $obj): ?>
-						<li>
-							<div class="row">
-								<div class="obj-description col-md-8 col-sm-8 col-xs-8">
-									<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
-								</div>
-								<div class="obj-status col-md-4 col-sm-4 col-xs-4">
-									<!-- <label class="objective-container">
-									<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"></label> -->
-									<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status">
-								</div>
-							</div>
-						</li>	
-					<?php endforeach ?>
-				</ul>
-				<!-- <style type="text/css">
-					label.objective-container {
-					    display: block;
-					    position: relative;
-					    padding-left: 35px;
-					    margin-bottom: 12px;
-					    cursor: pointer;
-					    font-size: 22px;
-					    -webkit-user-select: none;
-					    -moz-user-select: none;
-					    -ms-user-select: none;
-					    user-select: none;
-					}
-
-					/* Hide the browser's default checkbox */
-					label.objective-container input {
-					    position: absolute;
-					    opacity: 0;
-					    cursor: pointer;
-					}
-
-					/* Create a custom checkbox */
-					.checkmark {
-					    position: absolute;
-					    top: 0;
-					    left: 0;
-					    height: 25px;
-					    width: 25px;
-					    background-color: #eee;
-					}
-
-					/* On mouse-over, add a grey background color */
-					.container:hover input ~ .checkmark {
-					    background-color: #ccc;
-					}
-
-					/* When the checkbox is checked, add a blue background */
-					.container input:checked ~ .checkmark {
-					    background-color: #2196F3;
-					}
-
-					/* Create the checkmark/indicator (hidden when not checked) */
-					.checkmark:after {
-					    content: "";
-					    position: absolute;
-					    display: none;
-					}
-
-					/* Show the checkmark when checked */
-					.container input:checked ~ .checkmark:after {
-					    display: block;
-					}
-
-					/* Style the checkmark/indicator */
-					.container .checkmark:after {
-					    left: 9px;
-					    top: 5px;
-					    width: 5px;
-					    height: 10px;
-					    border: solid white;
-					    border-width: 0 3px 3px 0;
-					    -webkit-transform: rotate(45deg);
-					    -ms-transform: rotate(45deg);
-					    transform: rotate(45deg);
-					}
-				</style> -->
-			</div>
-
-			<!-- <div class="stars" style="text-align: center;">
-				<fieldset class="stage-rating" style="display: inline-block;">
-					<input type="radio" name="rating_stage" id="star1" value="1" disabled><label class="" for="star1" title="Good"></label>
-					<input type="radio" name="rating_stage" id="star2" value="2" disabled><label class="" for="star2" title="Excellent"></label>
-					<input type="radio" name="rating_stage" id="star3" value="3" disabled><label class="" for="star3" title="Perfect"></label>
-				</fieldset>
-			</div> -->
-
-			<div class="button-container" style="text-align: center; padding-top: 20px;">
-				<div class="row">
-					<ul class="button" style="display:flex;justify-content: center;list-style: none;padding:0px !important;">
-						<li >
-							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
-						</li>
-						<li>
-							<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
-						</li>
-						<li>
-							<?php if(isset($next_level_info["LVL_ID"])) { ?>
-								<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
-							<?php } else { ?>
-								<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Stages">Stages</a>
-							<?php } ?>
-						</li>
-					</ul>
+		<div id="tutorial">
+			<div id="tutorial-modal" class="modal fade" style="display: none;">
+				<div class="tutorial-container">
 				</div>
 			</div>
 		</div>
-	</div>
+		<div id="finish-modal" class="modal" style="display: none;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<ul class="star">
+						<li id="star1">
+							<label class="" for="star1" title="Good"><div></div></label>
+						</li>
+						<li id="star2">
+							<label class="" for="star1" title="Excellent"><div></div></label>
+						</li>
+						<li id="star3">
+							<label class="" for="star1" title="Perfect"><div></div></label>
+						</li>
+					</ul>	
+					<div class="modal-header">
+						<h5 class="modal-title" id="resultTitle">Level Completed!!!</h5>
+					</div>
+					<div class="modal-body">
+						<div class="objectives">
+						<h3 class="goal">Goal</h3>
+							<ul class="objectives">
+								<?php foreach ($objectives_list as $obj): ?>
+									<li>
+												<!-- <label class="objective-container">
+												<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"></label> -->
+												<div id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="check"><i class="fa fa-check"></i></div>
+												<!-- <input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"> -->
+												<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+									</li>	
+								<?php endforeach ?>
+							</ul>
+							<div class="objective-progress">
+								<div class="progress" style="padding: 0px;">
+								 	<div class="progress-bar progress-bar-danger player-objective-bar" id="objective-bar" role="progressbar" style="width: 100%">
+								 	</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<div class="row">
+							<ul class="button" style="display:flex;justify-content: center;list-style: none;padding:0px !important;">
+								
+								<li>
+									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
+								</li>
+								<li>
+									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
+								</li>
+								<li>
+										<?php if(isset($next_level_info["LVL_ID"])) { ?>
+											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
+										<?php } else { ?>
+											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play/<?php echo $next_stage_info["STG_ID"];?>">Next Stage</a>
+											
+										<?php } ?>
+								</li>
+							</ul>
+						</div>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="repeat();">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<div id="lose-modal" class="modal" style="display: none;">
 		<div class="modal-content">
@@ -247,7 +190,7 @@
 				url: "<?php echo base_url();?>Game/load_tutorial",
 				data: data,
 				success: function(res){	
-					$(".tutorial-container").html(res);
+					$("#tutorial-modal").html(res);
 				},
 				error: function(res){
 					console.log(res);
@@ -321,11 +264,14 @@
 
 				startNewGame();
 				setInterval(update, 40);
+				setTimeout(function() 
+				{
+					$('#tutorial-modal').modal('show');
+					load_tutorial();
+				}, 1500);
 				// $('#tutorial-modal').modal('show');
 			};
-
 			var promise = new Promise(function(resolve, reject) {
-
 				return $.ajax({
 					type: 'post',
 					url: "<?php echo base_url(); ?>Game/get_level_info",
@@ -4003,6 +3949,9 @@
 		}
 
 		startNewGame = function() {
+			
+			document.getElementById('hp-bar').style.width = "100%";
+			document.getElementById('hp-bar').style.background = "rgb(103, 198, 54)";
 
 			// isPaused = false;
 
@@ -4051,6 +4000,7 @@
 					Objective.computeScore();
 					Objective.recordScore();
 					$("#finish-modal").css("display", "block");
+					$("#resultTitle").text("You Lost");
 				}
 				// ctx.drawImage(img.dialog,0,0,img.dialog.width,img.dialog.height, 10, 90,40,40);
 			}
