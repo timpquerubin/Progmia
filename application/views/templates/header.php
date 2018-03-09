@@ -20,7 +20,7 @@
       				<?php if (!($this->session->userdata('has_avatar'))){ ?>
   					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Avatar">GAME</a></li>
       				<?php } else { ?>
-  					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>
+  					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/MainMenu">Game</a></li>
   				<?php } endif; ?>
 			</ul>
 		</nav> -->
@@ -64,7 +64,7 @@
 	      				<?php if (!($this->session->userdata('has_avatar'))){ ?>
 	      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Avatar">GAME</a></li>
 	      				<?php } else { ?>
-      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/Stages">Game</a></li>
+      					<li><a class="hvr-reveal" href="<?php echo base_url(); ?>Game/MainMenu">Game</a></li>
       				<?php } endif; ?>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">

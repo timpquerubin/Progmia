@@ -34,7 +34,7 @@
 			$this->load->view('templates/menu_avatar_footer');
 		}
 
-		public function stages()
+		public function MainMenu()
 		{
 			$this->_init();
 			$this->isLoggedIn();
@@ -44,6 +44,7 @@
 			$user = $this->session->userdata('username');
 			$progress = $this->Game_model->get_progress(array('user' => $userID));
 			$stages = $this->Game_model->get_stages($user);
+			
 			$profile = $this->Game_model->get_profileprogress($userID);
 			$user1 = $this->session->userdata('username');
 			$userinfo = $this->Profile_model->get_user_info($userID);
@@ -71,10 +72,10 @@
 			$data['profileprogress'] = $profile;
 			// var_dump($profile);
 			// exit();
-			$this->load->view('templates/menu_stages_header', $data);
-			$this->load->view('templates/load_init_links');
-			$this->load->view('game/menu/menu_stages', $data);
-			$this->load->view('templates/menu_stages_footer');
+			$this->load->view('templates/main_menu_header', $data);
+			// $this->load->view('templates/load_init_links');
+			$this->load->view('game/menu/main_menu', $data);
+			$this->load->view('templates/main_menu_footer');
 		}
 		
 		public function levels($stage = null)
@@ -92,10 +93,10 @@
 				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
 				$lvl_max_pts = $this->Game_model->get_lvl_max_points();
 			}
-
+			$avatar = $this->Game_model->get_user_avatar($userID);
+			$data['avatar'] = $avatar[0];
 			// var_dump($level_stage);
 			// exit();
-
 	        $data['h']=$this->Game_model->get_user($user);
 			$data['level_list'] = $levels;
 			$data['level_stages'] = $level_stage;
@@ -103,7 +104,7 @@
 			$data['lvl_max_pts'] = $lvl_max_pts;
 
 			$this->load->view('templates/menu_levels_header');
-			$this->load->view('templates/load_init_links');
+			// $this->load->view('templates/load_init_links');
 			$this->load->view('game/menu/menu_levels', $data);
 			$this->load->view('templates/menu_levels_footer');
 		}
@@ -176,14 +177,20 @@
 			);
 
 			$level_info = $this->Game_model->get_level_details($level_params);
+
 			$objectives = $this->Game_model->get_objectives($level_params);
 
 			$next_level_params = array(
 				"STG_ID" => $level_info[0]["STG_ID"],
 				"LVL_NUM" => (((int) $level_info[0]["LVL_NUM"]) + 1),
 			);
-			
+			// $next_stage_params = array(
+			// 	"STG_ID" => $level_info[0]["STG_ID"],
+			// 	"STG_NUM" => (((int) $stage_info[0]["STG_NUM"]) + 1),
+			// );
+			// $next_stage_info = $this->Game_model->get_next_stage($next_stage_params);
 			$next_level_info = $this->Game_model->get_next_level($next_level_params);
+
 			// echo "<pre>";
 			// var_dump($next_level_info);
 			// echo "</pre>";
@@ -196,7 +203,30 @@
 			$data['avatar'] = $avatar[0];
 			$data['level_info'] = $level_info[0];
 			$data['objectives_list'] = $objectives;
-			$data['next_level_info'] = $next_level_info;
+			// if (sizeof($prev_stage_info) > 0)
+			// {
+			// 	$data['prev_stage_info'] = $prev_stage_info[0];
+			// }
+			// else
+			// {
+			// 	$data['prev_stage_info'] = array();
+			// }
+			if (sizeof($next_level_info) > 0)
+			{
+				$data['next_level_info'] = $next_level_info[0];
+			}
+			else
+			{
+				$data['next_level_info'] = array();
+				// if (sizeof($next_stage_info) > 0)
+				// {
+				// 	$data['next_stage_info'] = $next_stage_info[0];
+				// }
+				// else
+				// {
+				// 	$data['next_stage_info'] = array();
+				// }
+			}
 			$header_data['stgId'] = $level_info[0]['STG_ID'];
 			// $$this->Game_model->get_tutorial($level_params);
 			$this->load->view('templates/game_header',$header_data);

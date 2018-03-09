@@ -30,7 +30,7 @@
 		{
 			if($this->User_model->is_logged_in())
 			{
-				redirect('Game/Stages');
+				redirect('Game/MainMenu');
 			}
 
 		}

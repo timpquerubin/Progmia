@@ -50,13 +50,13 @@
               encode: true,
               success: function(res){
                 console.log(res);
-                window.location = "<?php echo base_url()?>Game/Stages";
+                window.location = "<?php echo base_url()?>Game/MainMenu";
                 },
                 error: function(err) {
                   console.log(err);
                 }
               });
-            // return window.location.href = "<?php echo base_url()?>Game/Stages";
+            // return window.location.href = "<?php echo base_url()?>Game/MainMenu";
           }
   }
 </script>

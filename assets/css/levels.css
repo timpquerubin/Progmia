@@ -1,31 +1,38 @@
-body{position:relative;background-image: url(../images/final-bg.png);background-repeat: repeat;background-size:40%;padding:30px 50px;}
-body:before{content:'';position:absolute;top:0;left:0;right:0;;bottom:0;width: 100%;height: 100%;/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+10,000000+50,000000+90&0.65+10,0+50,0.65+90 */
-background: -moz-linear-gradient(top, rgba(0,0,0,0.65) 10%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.65) 90%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, rgba(0,0,0,0.65) 10%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 90%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, rgba(0,0,0,0.65) 10%,rgba(0,0,0,0) 50%,rgba(0,0,0,0.65) 90%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */}
-nav {height:100px;}
+body{position: relative;background-image: url(../images/game-bg.png);background-repeat: repeat;background-position: center;}
+
+
+/*body:before{content:'';position:absolute;top:0;left:0;right:0;;bottom:0;width: 100%;height: 100%; Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+10,000000+50,000000+90&0.65+10,0+50,0.65+90 
+}*/
+nav {height:100px;max-width: 1600px;margin:0 auto;}
 label.finish-description {font-family: 'ArcadeClassic';font-size:20px;color:#eaffff;letter-spacing: 2px;}
-a.navbar-brand {width:199px;margin:0 auto !important;}
-div.game-level-menu-container {background-color:#00909e;}
-div.game-level-menu-container {position:relative;padding:130px 10px 10px 10px;border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 6px #eaffff;
+a.navbar-brand {width:199px;margin:0 auto !important;padding:0px;}
+div.game-level-menu-container {/*background-color:#00909e;*//*max-width:1600px;*/margin:0 auto;}
+div.game-level-menu-container {position:relative;padding:130px 10px 10px 10px;margin-bottom:20px;background-color:#00444382 !important;border-radius:10px;/*background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 6px #eaffff;*/
   -webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 div.game-level-menu-container h1{position:absolute;top:10px;left:0;right:0;margin:0 auto;animation:floating 10s infinite;font-family: 'ArcadeClassic';font-size: 60px;text-shadow:0px 0px 1px #444;word-spacing:20px;color:#ffce12;text-align: center;}
 
-div.level-row { max-width: 1000px; margin: 0px auto;}
+div.level-row { /*max-width: 1000px;*/ margin: 0px auto;}
 
 div.level {display: block; height: 200px;padding: 0px;margin-bottom: 20px;}
 
 div.level-info h2 {margin: 0px;padding: 0px;font-family: ArcadeClassic;font-size:42px;color:#ffff10;}
 div.level-info a{text-decoration: none;}
 
-div.level-info {background-color: #444;display: block;height: 100%;margin: 0px 10%;}
+div.level-info {display: block;margin: 0px 10%;}
+@media (min-width: 768px)
+{div.level-link{    max-width: 235px;
+    margin: 0 auto;
+}
+}
+/*div.level-info:hover ,div.level-info:hover h2{background-color: #aaa;color:#333;}*/
 
-div.level-info:hover ,div.level-info:hover h2{background-color: #aaa;color:#333;}
+div.level-link {margin:0 auto;background-color: #444;border-radius:25px;display: flex;text-align: center;
+    flex-direction: column;height: 100%;margin: 0px auto;padding: 0px;border-top:solid 10px #777;border-left:solid 10px #555;border-right:solid 10px #555;border-bottom:solid 10px #333;}
 
-div.level-link {height: 100%;margin: 0px;padding: 0px;border-top:solid 10px #777;border-left:solid 10px #555;border-right:solid 10px #555;border-bottom:solid 10px #333;}
-
-
+footer {padding:20px 0 10px 0;background-color: #00444382 !important;position: relative;bottom:0;left:0;right: 0;height:150px;}
+footer ul{display:flex;list-style: none;flex-wrap: wrap;justify-content: space-around;}
+footer div.avatar img{min-height:80px;border:outset 7px #eaffff;padding:7px;border-radius: 100%;margin:0 auto;-webkit-filter: drop-shadow(1px 1px 25px rgba(0,0,0,0.5));filter: url(#drop-shadow);-ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=1, Color='#444')";filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=1, Color='#444')";}
+footer ul button{position:relative;display:block;font-size:60px;padding:14px 28px;margin:0 auto;border-radius:25px;border-width: 5px;text-align: center;}
 @keyframes appear {
     0% { transform: scale(.6); opacity: .6;}
     100%   { transform: scale(1); opacity: 1;}

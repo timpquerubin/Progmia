@@ -10,6 +10,18 @@
 										<?php foreach($avatar as $avtr){ ?>
 											<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/THUMBNAIL/<?php echo $avtr['AVTR_THUMBNAIL_FILENAME'];?>">
 										<?php } ?>
+									<svg height="0">
+									    <filter id="drop-shadow">
+									        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+									        <feOffset dx="4" dy="4" result="offsetblur"/>
+									        <feFlood flood-color="rgba(0,0,0,0.5)"/>
+									        <feComposite in2="offsetblur" operator="in"/>
+									        <feMerge>
+									            <feMergeNode/>
+									            <feMergeNode in="SourceGraphic"/>
+									        </feMerge>
+									    </filter>
+									</svg>
 									</div>
 								</div>
 								<div class="row">
@@ -17,18 +29,6 @@
 										<h2><?php echo $this->session->userdata('username'); ?></h2>
 									</div>
 								</div>
-								<svg height="0">
-								    <filter id="drop-shadow">
-								        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
-								        <feOffset dx="4" dy="4" result="offsetblur"/>
-								        <feFlood flood-color="rgba(0,0,0,0.5)"/>
-								        <feComposite in2="offsetblur" operator="in"/>
-								        <feMerge>
-								            <feMergeNode/>
-								            <feMergeNode in="SourceGraphic"/>
-								        </feMerge>
-								    </filter>
-								</svg>
 							</div>
 							<div class="row">
 								<div class="menu-container">
@@ -48,7 +48,6 @@
 								            </li>
 											<li>
 												<button id="logout">Log Out</button>
-												<!-- <a class="logout" href="<?php echo base_url()?>users/logout">Log Out</a> -->
 											</li>
 								        </ul>
 								    </div>
@@ -110,8 +109,6 @@
 														<?php echo $progress['STG_DESCRIPTION'];?> LEVEL<?php echo $progress['LVL_NUM'];?>
 													</td>
 													<td>
-														<!-- <?php echo $progress['DATE_PLAYED']; ?> -->
-
 														<?php $newDate = date("d-m-Y", strtotime($progress['DATE_PLAYED']));?>
 														<?php echo $newDate;?>
 													</td>
@@ -206,10 +203,7 @@
 											<div class="badge">
 											<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME'];?>">
 											</div>
-										</div><!-- 
-										<div class="col-md-8">
-											<p class="bdg-desc"><?php echo $badges['BDG_DESCRIPTION']?></p>
-										</div> -->
+										</div>
 									<?php }?>
 									</div>
 								</div>
@@ -231,14 +225,11 @@
 			   });
 			$(function() {
 			   $("div.main-menu ul li:not(:last-child) button").click(function() {
-			      // remove classes from all
 			      $(".changing > div:first-child").removeClass("col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-xs-4 col-sm-4 col-md-4 col-lg-4");
 			      $(".changing > div:first-child").addClass("col-xs-4 col-sm-4 col-md-3 col-lg-3");
 			      $("button").removeClass("active");
-			      // add class to the one we clicked
 			      $(this).addClass("active");
 			   });
-			   /* */
 			   $("div.main-menu ul li button#play").click(function() {
 			    $('div#play').css({
 			   		'display':'block',

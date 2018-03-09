@@ -5,8 +5,6 @@
 			<img src="<?php echo $thumb;?>">
 			<label>BULLY: <?php echo $bully_name ?></label>
 		</div>
-		<p class="dialog">
-			<?php echo isset($dialog) ? $dialog : '' ?>
-		</p>
+		<p class="dialog line-1 anim-typewriter"><?php echo isset($dialog) ? $dialog : '' ?></p>
 		<div class="dialog-arrow"></div>
 </div>

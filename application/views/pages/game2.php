@@ -171,16 +171,16 @@
 
 	$(document).ready(function(){
 	
-	var bgmusic = new Audio();
-	bgmusic = new Audio();
-	bgmusic.src = "<?php echo base_url(); ?>assets/sounds/Tbone and friends.wav";
-	bgmusic.addEventListener('ended', function() {
-    	this.currentTime = 0;
-    	this.play();
-	}, false);
-	bgmusic.play();
+	// var bgmusic = new Audio();
+	// bgmusic = new Audio();
+	// bgmusic.src = "<?php echo base_url(); ?>assets/sounds/Tbone and friends.wav";
+	// bgmusic.addEventListener('ended', function() {
+ //    	this.currentTime = 0;
+ //    	this.play();
+	// }, false);
+	// bgmusic.play();
 	var success = new Audio();
-	success.src = "<?php echo base_url(); ?>assets/sounds/success.mp3";
+	success.src = "<?php echo base_url(); ?>assets/sounds/sfx/success.ogg";
 	var ctx = document.getElementById("ctx").getContext("2d");
 	var canvas = document.getElementById("ctx");
 	var code_area = document.getElementById('code_area');
@@ -248,9 +248,9 @@
 	var img = {};
 	img.player = new Image();
 	// img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/FINAL_SPRITE_BODY.png";
-	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/MINI-SPRITE-GIRL.png";
+	img.player.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/PLAYER-06.png";
 	img.bully = new Image();
-	img.bully.src = "<?php echo base_url(); ?>assets/images/bully.png";
+	img.bully.src = "<?php echo base_url(); ?>assets/images/avatars/sprites/bully-07.png";
 	img.map = new Image();
 	img.map.src = "<?php echo base_url(); ?>assets/images/levels/" + map_filename;
 	img.key = new Image();
@@ -1113,7 +1113,6 @@
 				directionMod = 3;
 
 			ctx.drawImage(self.img, 0, directionMod * frameHeight, self.img.width/4, self.img.height/4, x, y, self.width, self.height);
-
 			ctx.save();
 
 			var x = self.x;

@@ -1,0 +1,63 @@
+
+div#code-animation p.var-highlight-1 {
+    color: #00008b !important;
+}
+div#code-animation p.var-highlight-2 {
+    color: maroon;
+}
+div#code-animation h4.line-num {
+    background-color: #eeede5;
+    align-items: center;
+    border-right: 2px solid #ccc !important;
+    padding: 0 20px;
+    animation-delay: 1s;
+    height: 30px;
+    margin: 0 1em 0 0;
+}
+
+div#code-animation:after {
+	content: "|";
+	color: #000;
+	font-size:20px;
+	margin-left:-1em;
+	animation: blink 500ms infinite alternate;    -webkit-animation-timing-function: steps(2, end);
+    -moz-animation-timing-function: steps(2, end);
+    -ms-animation-timing-function: steps(2, end);
+    -o-animation-timing-function: steps(2, end);
+    animation-timing-function: steps(2, end);
+}
+
+@-webkit-keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@-moz-keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+div#code-animation > * {
+    display: none;
+    line-height: 1px;
+    font-size: 18px;
+}
+div#code-animation strong{color:#ffce12 !important;}
+div#code-animation p {
+    margin: 0 .5em;
+} 
+div#code-animation p.comment{color:#008e00;}
+div#code-animation{margin:0px;}
+div#code-animation{
+	font-family: 'Courier New';
+    background-color: #e7e7e7;}
+button.close{    background: #000;
+    border-radius: 25px;
+    padding: 2px 7px;}
+div.tutorialDescription p {background-color: transparent;margin:10px auto !important;}
+div.tutorialDescription strong{color:#ffce12;}

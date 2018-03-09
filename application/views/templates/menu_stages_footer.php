@@ -1,7 +1,0 @@
-
-	</body>
-	<footer>
-		<div class="container">
-		</div>
-	</footer>
-</html>

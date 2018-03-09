@@ -184,7 +184,7 @@
 
 				
 				if(isset($user_info->AVTR_ID)){
-				redirect('Game/Stages');
+				redirect('Game/MainMenu');
 				}
 				else{
 				redirect('Game/Avatar');

@@ -1,7 +1,7 @@
 <html>
 <head>
-	<title>Progmia | Game | Levels</title>
-	<link rel="stylesheet" href="https://bootswatch.com/cerulean/bootstrap.min.css" />
+	<title>Progmia | Game | Level Selection</title>
+		<link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/levels.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/stars.css">
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-3.2.1.min.js"></script>
@@ -12,10 +12,10 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/drag-on.js"></script>
 </head>
 <body>
-	<div class="container-fluid" style="position: relative;max-width:1555px;">
+	<div class="container-fluid">
 		<nav>
 			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
-			<a href="<?php echo base_url();?>Game/Stages"><i class="fa fa-long-arrow-left">Back</i></a>
+			<a href="<?php echo base_url();?>Game/MainMenu"><i class="fa fa-long-arrow-left">Back</i></a>
 		</nav>
 	</div>
 		<script>

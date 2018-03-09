@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>Progmia | Game</title>
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/typewriter.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/game.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/stars.css">
@@ -11,11 +12,20 @@
     	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/stars.css">
 	</head>
 	<body>
-        <div id="loading">
-            <div class="test">
-                <img src="<?php echo base_url();?>assets/images/loading-image-logo.png" style="text-align: center;display:block;margin:0 auto;">
-                <div class="loading-container">
-                    <div id="load" class="progress-bar load-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 0%">
+        <div id="loading" class="container-fluid"">
+            <div class="wrapper">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        
+                            <img class="img-responsive" src="<?php echo base_url();?>assets/images/loading-image-logo.png">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="loading-container">
+                                <div id="load" class="progress-bar load-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 0%">
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>  
@@ -28,7 +38,7 @@
                                 <li>
                                     <a class="font-1" href="<?php echo base_url();?>Game/Levels/<?php echo $stgId;?>"><i class="fa fa-arrow-left" style="font-size: 30px !important;padding-top:20px !important;"></i></a></li>
                                 <li>
-                                    <a class="navbar-brand" href="<?php echo base_url();?>Game/Stages">
+                                    <a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu">
                                         <img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
                                     </a>
                                 </li>
@@ -50,51 +60,45 @@
                     </div>
             </div>
         </nav>
-        <div id="settings-modal" class="modal fade" style="display: none;">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2><i class="fa fa-sliders"></i>  Volume Settings</h2>
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    <ul class="settings-content">
-                        <li>
-                            <h4>Music Volume</h4>
-                            <div id="bgmvolume" class="slider">
-                              <output class="slider-output">100</output>
-                              <div class="slider-track">
-                                <div class="slider-thumb"></div>
-                                <div class="slider-level"></div>
-                              </div>
-                              <input id="bgm_volumeslider" class="slider-input" type="range" value="100" min="0" max="100" />
-                            </div>
-                            <!-- <button id="bgm_playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button> -->
 
-                               <!-- <input id="bgm_volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1"> -->
-                        </li>
-                        <li>
-                            <h4>Sound Volume</h4>
-                            <div id="sfxvolume" class="slider">
-                              <output class="slider-output">100</output>
-                              <div class="slider-track">
-                                <div class="slider-thumb"></div>
-                                <div class="slider-level"></div>
-                              </div>
-                              <input id="sfx_volumeslider" class="slider-input" type="range" value="100" min="0" max="100" />
-                            </div>
-                            <!-- <button id="sfx_playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button> -->
-                            <!-- <input id="sfx_volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1"> -->
-                        </li>
-                        <li></li>
-                    </ul>
-                        
-                    </div>
-                </div>
+
+    <div id="settings-modal" class="modal fade" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <h2 class="modal-title"><i class="fa fa-sliders"></i>  Volume Settings</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <ul class="settings-content">
+                    <li>
+                        <h4>Music Volume</h4>
+                        <div id="bgmvolume" class="slider">
+                          <output class="slider-output">100</output>
+                          <div class="slider-track">
+                            <div class="slider-thumb"></div>
+                            <div class="slider-level"></div>
+                          </div>
+                          <input id="bgm_volumeslider" class="slider-input" type="range" value="100" min="0" max="100" />
+                        </div>
+                    </li>
+                    <li>
+                        <h4>Sound Volume</h4>
+                        <div id="sfxvolume" class="slider">
+                          <output class="slider-output">100</output>
+                          <div class="slider-track">
+                            <div class="slider-thumb"></div>
+                            <div class="slider-level"></div>
+                          </div>
+                          <input id="sfx_volumeslider" class="slider-input" type="range" value="100" min="0" max="100" />
+                        </div>
+                    </li>
+                    <li></li>
+                </ul>
             </div>
         </div>
+    </div>  
         <script>
             $("#tutorial").click(function() {
                 document.getElementById('tutorial-modal').style.display = "block";
