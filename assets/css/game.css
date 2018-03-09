@@ -102,7 +102,7 @@ nav {height: 110px;}
 nav ul {list-style: none;display:block;}
 /*nav ul li .logo a img{height: 50px;}*/
 /*.navbar-brand{padding: 0px !important;}*/
-.navbar-brand{height: 110px !important;margin-bottom:15px;}
+.navbar-brand{height: 110px !important;margin-bottom:15px;padding: 0px !important;margin-top:15px;}
 .navbar-brand img {height:94px;}
 .hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
 div.canvas-container {padding:10px 25px 50px 25px;background-color: #2a4646;border-radius: 40px;border: outset 7px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
@@ -123,8 +123,9 @@ div.code-area-container {padding-right: 0px;
 div.wrapper-1{margin: 0px; padding: 80px 20px 80px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 .wrapper-1 h1{position:absolute;top:20px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow:0px 0px 1px #444;word-spacing:20px;color:#ffce12;text-align: center;}
 div.code_area {font-family: "Courier New";padding: 0 15px !important;}
-ul.page-navigation{list-style: none;display: flex;justify-content: space-around;}
+ul.page-navigation{list-style: none;display: flex;justify-content: space-around;padding:0;}
 ul.page-navigation li i {font-size:30px;}
+ul.page-navigation li {flex-grow:1;}
 
 div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-right: 20px;position:relative;}
 div.line-number:after {content:'';position: absolute;top:0;left:0;right:0;border-top:solid 1px #b0b0b0;}

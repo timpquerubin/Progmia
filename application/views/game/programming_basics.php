@@ -2,12 +2,13 @@
 <div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-
 				<ul class="page-navigation">
 					<li>
-				<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a></li>
-					<li><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-chevron-left"></i></a></li>
-					<li><a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-home"></i></a></li>
+						<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
+					</li>
+					<li>
+						<a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-home"></i></a>
+					</li>
 				</ul>
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -3949,7 +3950,7 @@
 		}
 
 		startNewGame = function() {
-			
+
 			document.getElementById('hp-bar').style.width = "100%";
 			document.getElementById('hp-bar').style.background = "rgb(103, 198, 54)";
 
