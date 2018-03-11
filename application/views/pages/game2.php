@@ -244,6 +244,16 @@
 	var used_if = false;
 
 	var isFinished = false;
+	var isPaused = true;
+
+	var preloadProgCtr = 0;
+	var gameImgArr = [
+		"<?php echo base_url(); ?>assets/images/avatars/sprites/bully-07.png",
+		"<?php echo base_url(); ?>assets/images/levels/" + map_filename,
+		"<?php echo base_url(); ?>assets/images/key.png",
+		"<?php echo base_url(); ?>assets/images/coin_spritesheet.png",
+		"<?php echo base_url(); ?>assets/images/projectile.png",
+	];
 
 	var img = {};
 	img.player = new Image();
@@ -259,6 +269,79 @@
 	img.coin.src = "<?php echo base_url(); ?>assets/images/coin_spritesheet.png";
 	img.projectile = new Image();
 	img.projectile.src = "<?php echo base_url(); ?>assets/images/projectile.png";
+
+	updateLoadProgBar = function() {
+
+		var loadPercent = (preloadProgCtr/(gameImgArr.length))*100;
+		$(".load-bar").css("width", loadPercent + "%");
+	}
+
+	preloadGameData = function() {
+
+		var newImages = [];
+		var loadedImages = 0;
+
+		postAction = function() {
+			startNewGame();
+			setInterval(update, 40);
+			// setTimeout(function() 
+			// {
+			// 	$('#tutorial-modal').modal('show');
+			// 	load_tutorial();
+			// }, 1500);
+		}
+
+		imageLoadPost = function() {
+
+			loadedImages++;
+			preloadProgCtr++;
+			updateLoadProgBar();
+
+			console.log(preloadProgCtr);
+
+			if(loadedImages >= gameImgArr.length) {
+
+				function onReady(callback) {
+			    	var intervalID = window.setInterval(checkReady, 1000);
+					// window.addEventListener("load", draw, true);
+				    function checkReady() {
+				        if (document.getElementsByTagName('canvas')[0] !== undefined) {
+				            window.clearInterval(intervalID);
+				            callback.call(this);
+				        }
+				    }
+				}
+
+				function show(id, value) {
+					document.getElementById(id).style.transition = value ? '' : '.5s';
+				    document.getElementById(id).style.display = value ? 'block' : 'none';
+				}
+
+				onReady(function () {
+				    show('page', true);
+				    show('loading', false);
+				    isPaused = false;
+				});
+				
+				postAction();
+			}
+		}
+
+		for(var i = 0; i < gameImgArr.length; i++) {
+
+			newImages[i] = new Image();
+			newImages[i].src = gameImgArr[i];
+			
+			newImages[i].onload = function() {
+				imageLoadPost();
+			}
+
+			newImages[i].onerror = function()  {
+				imageLoadPost();
+				console.log("errorloading image");
+			}
+		}
+	}
 
 	$("#code_area").keyup(function(event) {
 	    // if (event.which == 13 || event.which == 8) {
@@ -1547,8 +1630,10 @@
 	// Objective('obj_1', false, 'Reach Checkpoint 1', {x: 155, y: 72});
 	// Objective('start_point', false, 'Level 1 start point', {x: 50, y: 72});
 
-	startNewGame();
-	setInterval(update,40);
+	// startNewGame();
+	// setInterval(update,40);
+
+	preloadGameData();
 
 	});
 	
