@@ -58,13 +58,13 @@
 							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 						</div>
 					</div>
-					<div class="console-container">
-						<textarea class="console_txt" id="console_txt" name="console_txt" rows="8" style="width: 100%; background-color: #000; color: #fff; resize: none;" disabled=""></textarea>
-					</div>
 					<div class="row button-run-container">
-						<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+						<div class="button-run col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
 							<button class="btn btn-basic btn-block" onclick="runCode();">Execute Code</button>
 						</div>
+					</div>
+					<div class="console-container">
+						<textarea class="console_txt" id="console_txt" name="console_txt" rows="8" style="width: 100%; background-color: #000; color: #fff; resize: none;" disabled=""></textarea>
 					</div>
 					<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 				</div>
@@ -118,8 +118,7 @@
 						<div class="badges-block" style="margin: 0px; padding: 0px; width: 100%;"></div>
 					</div>
 					<div class="modal-footer">
-						<div class="row">
-							<ul class="button" style="display:flex;justify-content: center;list-style: none;padding:0px !important;">
+							<ul class="finish-ul">
 								
 								<li>
 									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
@@ -136,9 +135,6 @@
 										<?php } ?>
 								</li>
 							</ul>
-						</div>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" onclick="repeat();">Save changes</button>
 					</div>
 				</div>
 			</div>

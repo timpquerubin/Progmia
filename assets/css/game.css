@@ -108,7 +108,7 @@ nav ul {list-style: none;display:block;}
 .navbar-brand{height: 110px !important;margin-bottom:15px;padding: 0px !important;margin-top:15px;}
 .navbar-brand img {height:94px;}
 .hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
-div.canvas-container {margin-top:20px;padding:10px 0px 50px 0px;background-color: #004443b8;border-radius: 20px;border: outset 3px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+div.canvas-container {padding:10px 0px 50px 0px;background-color: #004443b8;border-radius: 20px;border: outset 3px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 div.player-status {padding:5px 20px;display: flex;justify-content: flex-start;align-items: flex-start;}
 .player-status .progress-bar-danger{border-top-left-radius:7px !important;border-bottom-left-radius:7px !important;border-bottom-right-radius: 37px !important;border-top-right-radius: 8px !important;border-color:#000;background-color:#67c636;height:30px !important;}
 .player-status .progress {margin-top:-5px;margin-bottom:0px !important;background-color: #333;margin-right:50% !important;border:outset 2px #fff;border-radius:20px;border-bottom-right-radius:40px !important;height:30px !important;}
@@ -124,7 +124,7 @@ div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
 div.code-area-container {padding-right: 0px;background-color: #004443b8;}
 
 .wrapper-1{border-radius: 20px;border: outset 3px #eaffff36;}
-div.wrapper-1{margin: 0px;margin-top:20px; padding: 80px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+div.wrapper-1{margin: 0px; padding: 80px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 .wrapper-1 h1{position:absolute;top:40px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow: 0px 3px 0px #000;word-spacing:20px;color:#ffce12;text-align: center;}
 div.code_area {font-family: "Courier New";padding: 0 15px !important;}
 ul.page-navigation{list-style: none;display: flex;justify-content: space-around;padding:0;margin:0px !important;}
@@ -140,11 +140,9 @@ div.border-custom {border-left:solid 1px #b0b0b0;background-color:#dededd;}
 textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #000000;}
 textarea.code_area:focus {outline: none;}
 
-div.button-run-container {margin: 0px; padding: 0px; height:92px;}
 div.button-run-container .btn {font-size:2vw !important;margin:0 auto;font-family: 'ArcadeClassic';background:#d3c61e;border:solid 5px #0f0f0f;border-radius:0;transition: .3s;color:#ffce12;border-top-color:#ffce12;border-bottom-color:#ffce12;border-right-color:#dd7900;border-left-color:#dd7900;background-color: #111 !important;animation: grow infinite 2s;}
 div.bg{position: relative;padding: 10px 20px;margin: 20px auto;border-radius: 10px;background-color: #1f3a4f90;background-color: #006c7880;box-shadow: 0px 0px 5px #eaffff;border: solid 5px #eaffff;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
-div.button-run-container {margin: 0px; padding: 0px; }
-div.button-run-container div.button-run {padding: 20px 0px; }
+div.button-run-container {margin: 15px; padding: 0px; }
 
 div.game-ui{background-color:#000;/*border-radius: 25px 25px 10px 10px;*/padding-bottom: 15px;}
 div.box {position:relative;padding:5px 5px 15px 5px;margin:-45px 10px 0 10px;border-radius:10px;background-color:#1f3a4f90;background-color:#5d5d5d80;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
@@ -173,6 +171,11 @@ div.box .dialog-arrow:after{position: absolute;content: '\f078';font-size:1.5vw;
 
 #tutorial-modal .modal-title:before{content: "\f128" !important;font-family: 'FontAwesome';width:auto;height: auto;
     font-size: 2.5vw;margin-right: 10px;
+}
+
+div.console-container textarea{    font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+    padding: 20px;
+    border-radius: 10px;
 }
 .modal-header h5.modal-title{
   flex-grow: 1;font-size: 30px;text-align: center;
