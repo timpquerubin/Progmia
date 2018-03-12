@@ -16,8 +16,7 @@
             <div class="wrapper">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        
-                            <img class="img-responsive" src="<?php echo base_url();?>assets/images/loading-image-logo.png">
+                        <img class="img-responsive" src="<?php echo base_url();?>assets/images/loading-image-logo.png">
                     </div>
                 </div>
                 <div class="row">

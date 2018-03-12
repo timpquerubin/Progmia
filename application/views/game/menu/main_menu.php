@@ -61,7 +61,7 @@
 							<?php $exist = true ?>
 							<div class="row stages">
 							<?php foreach ($stage_list as $stage) { ?>
-								<?php  if ($stage1 == true){$stage1 = false;$exist = true;} ?>
+								<!-- <?php  if ($stage1 == true){$stage1 = false;$exist = true;} ?> -->
 								<!-- <?php if ($exist == true){ ?> -->
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="popup unlocked-stage">
@@ -86,20 +86,6 @@
 								<!-- <?php } ?> -->
 
 
-								<!-- <?php $exist = false; ?>
-								<?php  foreach ($maxlevel_list as $maxlevel) { ?>
-									<?php  if ($maxlevel['STG_ID'] == $stage['STG_ID']){ ?>
-										<?php  if ($exist == true){break;} ?>
-										<?php  foreach ($progress_list as $progress) {?>
-											<?php  if ($exist == true){break;} ?>
-												<?php  if($progress['LVL_ID'] == $maxlevel['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID) {
-												 $exist = true;
-												 break;} ?> 
-										<?php } ?>
-									<?php  } ?>
-									<?php  if ($exist == true){break;} ?>
-								<?php } ?>
- -->
 								<?php $ctr++;} ?>
 							</div>
 						</div>

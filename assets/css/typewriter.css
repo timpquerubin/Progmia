@@ -1,23 +1,28 @@
 
 div#code-animation p.var-highlight-1 {
-    color: #00008b !important;
+    color: #66d9ef !important;
 }
 div#code-animation p.var-highlight-2 {
-    color: maroon;
+    color: #ae739a !important;
 }
+div#code-animation p.var-highlight-3 {
+    color: #f92672 !important;
+}
+div#code-animation p {color: #f8f8f2;}
 div#code-animation h4.line-num {
-    background-color: #eeede5;
+    background-color: #11121a;
     align-items: center;
     border-right: 2px solid #ccc !important;
     padding: 0 20px;
     animation-delay: 1s;
     height: 30px;
     margin: 0 1em 0 0;
+    color: #cccccc;
 }
 
 div#code-animation:after {
 	content: "|";
-	color: #000;
+	color: #333333;
 	font-size:20px;
 	margin-left:-1em;
 	animation: blink 500ms infinite alternate;    -webkit-animation-timing-function: steps(2, end);
@@ -51,11 +56,11 @@ div#code-animation strong{color:#ffce12 !important;}
 div#code-animation p {
     margin: 0 .5em;
 } 
-div#code-animation p.comment{color:#008e00;}
+div#code-animation p.comment{color:#75715e;}
 div#code-animation{margin:0px;}
 div#code-animation{
-	font-family: 'Courier New';
-    background-color: #e7e7e7;}
+	font-family: 'Monospace';
+    background-color: #272822;}
 button.close{    background: #000;
     border-radius: 25px;
     padding: 2px 7px;}

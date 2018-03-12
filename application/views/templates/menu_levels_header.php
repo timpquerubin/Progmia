@@ -10,12 +10,19 @@
 	<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/drag-on.js"></script>
+	
 </head>
 <body>
 	<div class="container-fluid">
 		<nav>
-			<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
-			<a href="<?php echo base_url();?>Game/MainMenu"><i class="fa fa-long-arrow-left">Back</i></a>
+			<ul>
+				<li>
+					<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
+				</li>
+				<li>
+					<a href="<?php echo base_url();?>Game/MainMenu"><i class="fa fa-long-arrow-left">Back</i></a>
+				</li>
+			</ul>
 		</nav>
 	</div>
 		<script>

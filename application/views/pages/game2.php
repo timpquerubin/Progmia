@@ -1,5 +1,4 @@
 <div id="page">
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 	<div class="container-fluid">
 		<nav>
 			<ul>
@@ -19,83 +18,6 @@
 			</ul>
 		</nav>
 	</div>
-<div id="myModal" class="modal" style="display: block;">
-
-  <!-- Modal content -->
-	<div class="modal-content">
-		<div class="row">
-		    <span class="close" onclick="close()">&times;</span>
-		</div>
-
-		<div class="objectives container">
-			<h4>Objectives</h4>
-			<ul style="list-style-type: none;">
-				<?php foreach ($objectives_list as $obj): ?>
-					<li>
-						<div class="row">
-							<div class="obj-description col-md-8">
-								<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
-							</div>
-							<div class="obj-status col-md-4">
-								<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" type="checkbox" name="obj_status">
-							</div>
-						</div>
-					</li>	
-				<?php endforeach ?>
-			</ul>
-		</div>
-
-		<div class="stars container">
-			<fieldset class="stage-rating">
-				<input type="radio" name="rating_stage" id="star1" value="1" disabled><label class="" for="star1" title="Good"></label>
-				<input type="radio" name="rating_stage" id="star2" value="2" disabled><label class="" for="star2" title="Excellent"></label>
-				<input type="radio" name="rating_stage" id="star3" value="3" disabled><label class="" for="star3" title="Perfect"></label>
-			</fieldset>
-		</div>
-
-		<div class="row">
-			<h2>Points: XXXX</h2>
-		</div>
-	    <div class="row">
-		    <div class="col-md-4">
-		    	<button>Replay</button>
-		    </div>  
-		    <div class="col-md-4">
-		    	<button>Menu</button>
-		    </div>  
-		    <div class="col-md-4">
-		    	<?php $flag = false; ?>
-		    	<?php $stg; ?>
-				<?php foreach($level_list as $levels){ ?>
-			    	<?php if ($levels['STG_ID'] == $current_level->STG_ID) { ?>
-			    		<?php if ($current_level->LVL_NUM + 1 == $levels['LVL_NUM']){ ?>
-					    	<?php $flag = true; ?>
-					    	<button><a href="<?php echo base_url(); ?>Game/play/<?php echo $levels['LVL_ID'] ?>">NEXT LEVEL</a></button>
-			    		<?php }?>
-			    	<?php } ?>
-		    	<?php } ?>
-		    	<?php if ($flag == false){ ?>
-			    	<?php foreach($maxlevel_list as $max){ ?>
-				    	<?php if ($max['LVL_ID'] == $current_level->LVL_ID){ ?>
-				    		<?php foreach($stage_list as $stage){ ?>
-				    			<?php if ($flag == true){ ?>
-				    				<?php $stg = $stage['STG_ID']; ?>
-				    				<?php $flag = false; ?>
-				    			<?php } ?>
-				    			<?php if ($current_level->STG_ID == $stage['STG_ID']){?>
-							    	<?php $flag = true; ?>
-				    			<?php } ?>
-				    		<?php } ?>
-				    	<?php } ?>
-			    	<?php } ?>
-				<button><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $stg ?>">NEXT STAGE</a></button>
-		    	<?php } ?>
-
-		    </div>  
-	    </div>
-	</div>
-
-</div>
 
 <div id="obj_modal" class="modal" style="display: none;">
 	<div class="modal-content">
@@ -132,53 +54,132 @@
 	<input type="hidden" name="startPt" id="startPt" value="<?php echo $level[0]['LVL_STARTPOINT']?>">
 	<input type="hidden" name="map_filename" id="map_filename" value="<?php echo isset($level[0]['LVL_FILENAME']) ? $level[0]['LVL_FILENAME'] : '' ?>">
 	<input type="hidden" name="map_width" id="map_width" value="<?php echo isset($level[0]['LVL_NUMCOLS']) ? $level[0]['LVL_NUMCOLS'] : '' ?>">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<div class="game-canvas-container">
+				<div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
+					<div class="player-hp">
+						<label class="col-sm-1 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
+						<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
+						 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+						</div>
+					</div>
+				</div>
+				<center>
+					<div class="">
+					<canvas id="ctx" width="<?php echo $level[0]['LVL_IMGWIDTH']*1.25; ?>" height="<?php echo $level[0]['LVL_IMGHEIGHT']*1.25; ?>" style="border:1px solid #000000;"></canvas>
+					</div>
+				</center>
+			</div>
+		</div>
+			<!-- <div id="test" class="col-sm-2"></div> -->
+		
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">			
+			<div class="code-area-container">
+				<!-- <center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center> -->
+				<div class="row code_area">
+					<div class="line-number col-md-1 col-sm-1 col-xs-1">
+						<textarea rows="10" id="textarea1" disabled></textarea>
+					</div>
+					<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
+						<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+					</div>
+				</div>
+				<div class="row button-run-container">
+					<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+						<button class="btn btn-basic btn-block" onclick="executeCommand(0);">RUN</button>
+					</div>
+				</div>
+				<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
 
-	<div class="game-canvas-container">
-		<div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
-			<div class="player-hp">
-				<label class="col-sm-1 col-xs-2 col-md-2 col-lg-2" style="color: #FFF;">HP:</label>
-				<div class="progress col-sm-3 col-xs-5" style="padding: 0px;">
-				 	<div class="progress-bar progress-bar-danger player-hp-bar" role="progressbar" style="width: 100%"></div>
+		<div id="tutorial">
+			<div id="tutorial-modal" class="modal multi-step fade" style="display: none;">
+				<div class="tutorial-container">
 				</div>
 			</div>
 		</div>
-		<center>
-			<div class="">
-			<canvas id="ctx" width="<?php echo $level[0]['LVL_IMGWIDTH']*1.25; ?>" height="<?php echo $level[0]['LVL_IMGHEIGHT']*1.25; ?>" style="border:1px solid #000000;"></canvas>
-			</div>
-		</center>
-	</div>
-	<!-- <div id="test" class="col-sm-2"></div> -->
-	<div class="code-area-container">
-		<!-- <center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center> -->
-		<div class="row code_area">
-			<div class="line-number col-md-1 col-sm-1 col-xs-1">
-				<textarea rows="10" id="textarea1" disabled></textarea>
-			</div>
-			<div class="code-area-container col-md-11 col-sm-11 col-xs-11">
-				<textarea class="code_area" id="code_area" name="code_area" rows="10" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
+		<div id="finish-modal" class="modal" style="display: none;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<ul class="star">
+						<li id="star1">
+							<label class="" for="star1" title="Good"><div></div></label>
+						</li>
+						<li id="star2">
+							<label class="" for="star1" title="Excellent"><div></div></label>
+						</li>
+						<li id="star3">
+							<label class="" for="star1" title="Perfect"><div></div></label>
+						</li>
+					</ul>	
+					<div class="modal-header">
+						<h5 class="modal-title" id="resultTitle">Level Completed!!!</h5>
+					</div>
+					<div class="modal-body">
+						<div class="objectives">
+						<h3 class="goal">Goal</h3>
+							<ul class="objectives">
+								<?php foreach ($objectives_list as $obj): ?>
+									<li>
+												<!-- <label class="objective-container">
+												<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"></label> -->
+												<div id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="check"><i class="fa fa-check"></i></div>
+												<!-- <input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"> -->
+												<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+									</li>	
+								<?php endforeach ?>
+							</ul>
+							<div class="objective-progress">
+								<div class="progress" style="padding: 0px;">
+								 	<div class="progress-bar progress-bar-danger player-objective-bar" id="objective-bar" role="progressbar" style="width: 100%">
+								 	</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<div class="row">
+							<ul class="button" style="display:flex;justify-content: center;list-style: none;padding:0px !important;">
+								
+								<li>
+									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
+								</li>
+								<li>
+									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
+								</li>
+								<li>
+										<?php if(isset($next_level_info["LVL_ID"])) { ?>
+											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
+										<?php } else { ?>
+											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play/<?php echo $next_stage_info["STG_ID"];?>">Next Stage</a>
+											
+										<?php } ?>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="row button-run-container">
-			<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-				<button class="btn btn-basic btn-block" onclick="executeCommand(0);">RUN</button>
-			</div>
-		</div>
-		<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
 	</div>
-</div>
 <script type="text/javascript">
 
 	$(document).ready(function(){
 	
-	// var bgmusic = new Audio();
-	// bgmusic = new Audio();
-	// bgmusic.src = "<?php echo base_url(); ?>assets/sounds/Tbone and friends.wav";
-	// bgmusic.addEventListener('ended', function() {
- //    	this.currentTime = 0;
- //    	this.play();
-	// }, false);
-	// bgmusic.play();
+	var bgmusic = new Audio();
+	bgmusic = new Audio();
+	bgmusic.src = "<?php echo base_url(); ?>assets/sounds/Tbone and friends.wav";
+	bgmusic.addEventListener('ended', function() {
+    	this.currentTime = 0;
+    	this.play();
+	}, false);
+	bgmusic.play();
 	var success = new Audio();
 	success.src = "<?php echo base_url(); ?>assets/sounds/sfx/success.ogg";
 	var ctx = document.getElementById("ctx").getContext("2d");
@@ -697,26 +698,37 @@
 				
 				if(hpPerc >= Objective.list[key].task.health) {
 					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						console.log("#" + Objective.list[key].id + "_status");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 				}
 			} else if(objKey == 'collect_coins') {
 
 				if(collectedCoins == Objective.list[key].task.collect_coins) {
 					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+
+						console.log("#" + Objective.list[key].id + "_status");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 				}
 			} else if(objKey == 'defeat_bullies') {
 
 				if(KilledBullies >= Objective.list[key].task.defeat_bullies) {
 					Objective.list[key].status = true;
-					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+
+						console.log("#" + Objective.list[key].id + "_status");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 				}
 			} else if(objKey == 'use_command') {
 
 				if(Objective.list[key].task.use_command == 'Loop') {
 					if(used_loop) {
 						Objective.list[key].status = true;
-						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+						// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
+
+						console.log("#" + Objective.list[key].id + "_status");
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					}
 				}
 
@@ -756,16 +768,30 @@
 		console.log("Perfect Score: " + perfect_score + ", Your Score: " + totalScore + ", Score Percent: " + score_perc);
 
 		if(score_perc < 50 && score_perc > 0) {
-			$("#star1").attr("checked", true);
-		} else if(score_perc >= 50 && score_perc < 100) {
-			$("#star2").attr("checked", true);
-		} else if(score_perc == 100) {
-			$("#star3").attr("checked", true);
-		} else {
-			$("#star1").addClass("no-score");
-			$("#star2").addClass("no-score");
-			$("#star3").addClass("no-score");
-		}
+					$("#star1").attr("checked", true);
+					$("#star1").addClass("s1");
+					$("#star2").addClass("no-score u2");
+					$("#star3").addClass("no-score u3");
+				} else if(score_perc >= 50 && score_perc < 100) {
+					$("#star1").attr("checked", true);
+					$("#star1").addClass("s1");
+					$("#star2").attr("checked", true);
+					$("#star2").addClass("s2");
+					$("#star3").addClass("no-score u2");
+
+				} else if(score_perc == 100) {
+					$("#star1").attr("checked", true);
+					$("#star1").addClass("s1");
+					$("#star2").attr("checked", true);
+					$("#star2").addClass("s2");
+					$("#star3").attr("checked", true);
+					$("#star3").addClass("s3");
+				} else {
+					$("#resultTitle").text("You Lost");
+					$("#star1").addClass("no-score u1");
+					$("#star2").addClass("no-score u2");
+					$("#star3").addClass("no-score u3");
+				}
 
 		return totalScore;
 	}
@@ -840,6 +866,7 @@
 				// executeCommand(cmdNum);
 			}
 
+
 			self.updatePosition();
 			self.draw();
 		};
@@ -900,13 +927,13 @@
 
 					isFinished = true;
 					Objective.update();
-					console.log(Objective.list);
-					Objective.recordScore();
+					// console.log(Objective.list);
+					// Objective.recordScore();
 
 					bgmusic.pause();
 					success.play();
-    				modal.style.display = "block";
-					startNewGame();
+    				// modal.style.display = "block";
+					// startNewGame();
     			}
 			}
 
@@ -1572,6 +1599,7 @@
 		used_if = false;
 
 		isFinished = false;
+		isPaused = false;
 
 		var code_stack = [];
 		var code_var = [];
@@ -1611,15 +1639,25 @@
 
 	update = function()
 	{
-		ctx.clearRect(0,0,canvas.width,canvas.height);
-		Maps.current.update();
-		key.update();
-		Coin.update();
-		player.update();
-		Bully.update();
-		Dialog.update();
-		Projectile.update();
-		Objective.update();
+		if(!isPaused) {
+			ctx.clearRect(0,0,canvas.width,canvas.height);
+			Maps.current.update();
+			key.update();
+			Coin.update();
+			player.update();
+			Bully.update();
+			Dialog.update();
+			Projectile.update();
+			Objective.update();
+			
+			if (isFinished) { 
+					Objective.computeScore();
+					Objective.recordScore();
+					$("#finish-modal").css("display", "block");
+					isPaused = true;
+					console.log(isPaused);
+			}
+		}
 	}
 
 	start_point = JSON.parse(start_point);

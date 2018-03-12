@@ -2,7 +2,6 @@ html{height: auto;width:auto;}
 body{background-color: #4cabff !important;background-color:#1e8bc3 !important;height: 100%;}
 
 /* FONTS */
-
 @font-face {
     font-family: 'ArcadeClassic';
     src: url("../fonts/ARCADECLASSIC.ttf");
@@ -26,6 +25,11 @@ body{background-color: #4cabff !important;background-color:#1e8bc3 !important;he
     font-family: 'Barlow';
     src: url("../fonts/BarlowCondensed-Regular.ttf");
     src: url("../fonts/BarlowCondensed-Light.ttf");
+}
+@media (min-width: 1200px){
+  div.main-menu {
+    max-width: 320px;
+  }
 }
 
 /* FONTS */
@@ -222,7 +226,7 @@ div.main-menu ul li button a:hover{color:#ffce12;}
 div.main-menu ul li button:hover a{color:#ffce12;}
 div.main-menu ul li:first-child button{margin-top: 0px;}
 
-div.main-menu ul li button {transition: .3s;outline:0;border-radius:15px !important;/*outline: 0;*/position: relative;padding: 3px;min-width: 200px;margin-top: 20px;background-color: #111;box-shadow: 0px 0px 5px #121212;border-top: solid 5px #ccc;border-bottom: solid 5px #444;border-left: solid 5px #888;border-right: solid 5px #666;}
+div.main-menu ul li button {transition: .3s;outline:0;border-radius:15px !important;/*outline: 0;*/position: relative;padding: 3px;margin-top: 20px;background-color: #111;box-shadow: 0px 0px 5px #121212;border-top: solid 5px #ccc;border-bottom: solid 5px #444;border-left: solid 5px #888;border-right: solid 5px #666;}
 div.main-menu ul li button.active{border:outset 5px #ffce12;background-color:#111;color:#ffce12;/*border-top: solid 5px #fff;border-bottom: solid 5px #777;border-left: solid 5px #bbb;border-right: solid 5px #999;*/}
 div.main-menu ul li button.active a {color:#ffce12;}
 div.menu-container{position: relative;}
@@ -251,6 +255,21 @@ div.moving-2{animation-delay: 2s;position:absolute;overflow-x:hidden;bottom:0px;
 /* ANIMATION CONTAINERS */
 
 /* media query */
+
+
+@media (min-width: 768px){
+  div.main-menu ul li button {
+    min-width: 200px;
+  }
+
+}
+@media (min-width: 320px){
+  /*div.main-menu ul li button {
+    min-width: 150px;
+    font-size:20px;
+  }*/
+
+}
 
 @media only screen and  (min-width: 992px) {
   div.main-menu {

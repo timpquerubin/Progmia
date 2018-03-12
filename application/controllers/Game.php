@@ -136,6 +136,7 @@
 		{
 			$this->_init();
 			$this->isLoggedIn();
+			$userID = $this->session->userdata('user_id');
 			$level_params = array(
 				'LVL_ID' => $lvlId,
 			);
@@ -148,9 +149,13 @@
 			$objectives = $this->Game_model->get_objectives($level_params);
 			
 			$userinfo = $this->Profile_model->get_user_info($user1);
+			$avatar = $this->Game_model->get_user_avatar($userID);
+			$level_info = $this->Game_model->get_level_details($level_params);
 
 			// $mdetails[0]['MAP_GRID'] = json_decode($mdetails[0]['MAP_GRID'], true);
 			// $mdetails[0]['MAP_STARTPOINT'] = json_decode($mdetails[0]['MAP_STARTPOINT']);
+			$data['level_info'] = $level_info[0];
+			$data['avatar'] = $avatar[0];
 			$data['userinfo'] = $userinfo;
 			$data['stage_list'] = $stages;
 	        $data['maxlevel_list']=$this->Game_model->get_max_level();
@@ -234,9 +239,11 @@
 			$this->load->view('game/programming_basics.php', $data);
 			$this->load->view('templates/game_footer');
 		}
+		
 		public function load_tutorial(){
 			$this->load->view($_POST['link']);
 		}
+
 		public function get_level_info() {
 
 			$this->_init();

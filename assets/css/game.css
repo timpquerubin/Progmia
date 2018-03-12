@@ -9,6 +9,9 @@ body {
 body.modal-open{
   padding-right: -17px !important;
 }
+button.close{position:absolute;top:-5px;right:-5px;border-radius: 100%;opacity:1 !important;font-size:2vw;color:#777 !important;background-color:#eaffff !important;padding:2px 5px !important;}
+
+.modal-dialog {margin:2% auto;}
 
 /* FONTS */
 

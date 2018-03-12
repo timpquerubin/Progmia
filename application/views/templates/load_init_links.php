@@ -1,4 +1,6 @@
 
+	
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/multi-step-modal.js"></script>
 <!-- <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script> -->
 
 <script type="text/javascript">
