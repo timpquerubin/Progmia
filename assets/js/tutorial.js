@@ -76,7 +76,7 @@ var wizardLength = $("#tutorial-modal").find('section').length;
 
     labels: {
         cancel: "Cancel",
-        current: "Step ",
+        current: "Page ",
         pagination: "Pagination",
         finish: "Finish",
         next: "Next",

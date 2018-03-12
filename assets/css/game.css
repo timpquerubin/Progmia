@@ -108,25 +108,27 @@ nav ul {list-style: none;display:block;}
 .navbar-brand{height: 110px !important;margin-bottom:15px;padding: 0px !important;margin-top:15px;}
 .navbar-brand img {height:94px;}
 .hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
-div.canvas-container {padding:10px 25px 50px 25px;background-color: #2a4646;border-radius: 40px;border: outset 7px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
-div.player-status {padding:20px 5px;display: flex;justify-content: flex-start;align-items: flex-start;}
+div.canvas-container {margin-top:20px;padding:10px 0px 50px 0px;background-color: #004443b8;border-radius: 40px;border: outset 7px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+div.player-status {padding:5px 20px;display: flex;justify-content: flex-start;align-items: flex-start;}
 .player-status .progress-bar-danger{border-top-left-radius:7px !important;border-bottom-left-radius:7px !important;border-bottom-right-radius: 37px !important;border-top-right-radius: 8px !important;border-color:#000;background-color:#67c636;height:30px !important;}
 .player-status .progress {margin-top:-5px;margin-bottom:0px !important;background-color: #333;margin-right:50% !important;border:outset 2px #fff;border-radius:20px;border-bottom-right-radius:40px !important;height:30px !important;}
 .player-status {}
 label.user { font-family: 'ArcadeAlternate';font-size:24px;margin:0px 0px 10px 0px;color:#ffce12;letter-spacing: 3px;text-shadow:0 0 1px #111;}
-.avatar img {text-align:right;margin:0 auto;border: outset 4px #eaffff;border-radius:100%;padding:2px;background-color:#006c7880;height:80px;}
+.avatar img {text-align:right;margin:0 auto;height:auto;}
 #mainNav{background-color: #111212;display: none !important;}
 .margin-top{padding:20px;}
 .modal-content
+.modal-body{    padding: 15px 15px 25px 15px;}
 #ctx{background-color: #000;}
 div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;padding-bottom:30px;width: 100%; background-color: #17232b;background-color: #06151c;}
 div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
-div.code-area-container {padding-right: 0px;
-}
-div.wrapper-1{margin: 0px; padding: 80px 20px 80px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
-.wrapper-1 h1{position:absolute;top:20px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow:0px 0px 1px #444;word-spacing:20px;color:#ffce12;text-align: center;}
+div.code-area-container {padding-right: 0px;background-color: #004443b8;}
+
+.wrapper-1{border-radius: 25px;border: outset 7px #eaffff36;}
+div.wrapper-1{margin: 0px;margin-top:20px; padding: 80px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+.wrapper-1 h1{position:absolute;top:40px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow: 0px 3px 0px #000;word-spacing:20px;color:#ffce12;text-align: center;}
 div.code_area {font-family: "Courier New";padding: 0 15px !important;}
-ul.page-navigation{list-style: none;display: flex;justify-content: space-around;padding:0;}
+ul.page-navigation{list-style: none;display: flex;justify-content: space-around;padding:0;margin:0px !important;}
 ul.page-navigation li i {font-size:30px;}
 ul.page-navigation li {flex-grow:1;}
 
@@ -145,14 +147,17 @@ div.bg{position: relative;padding: 10px 20px;margin: 20px auto;border-radius: 10
 div.button-run-container {margin: 0px; padding: 0px; }
 div.button-run-container div.button-run {padding: 20px 0px; }
 
-div.game-ui{background-color:#000;border-radius: 25px 25px 10px 10px;padding-bottom: 15px;}
-div.box {position:relative;padding:10px 20px;margin:-45px 3px 0 3px;border-radius:10px;background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
+div.game-ui{background-color:#000;/*border-radius: 25px 25px 10px 10px;*/padding-bottom: 15px;}
+div.box {position:relative;padding:5px 5px 15px 5px;margin:-45px 3px 0 3px;border-radius:10px;background-color:#1f3a4f90;background-color:#5d5d5d80;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 div.box:before{position:absolute;content:'';top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #eaffff transparent transparent transparent;}
 div.box:after{position:absolute;content:'';bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #eaffff transparent;}
-div.box div.head{height:60px;position:relative;top:0;left:20px;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;font-size: 40px;/*animation:floating 10s infinite;*/}
+div.box div.head{height:60px;position:relative;top:0;left:20px;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;font-size: 40px;/*animation:floating 10s infinite;*/    margin-top: -5px;
+    margin-left: -5px;
+    display: block;
+    padding-top: 7px;}
 div.box div.head > img {height:50px;width:50px;background:#121212;border-radius: 50%;}
 div.box div.head > label {margin-left:20px;font-family:'ArcadeClassic';letter-spacing:2px;font-size:30px;color:#ffce12;}
-div.box p.dialog {position:relative;margin:0px auto;text-align:center;padding-top:20px;font-size:1.5vw;color:#eaffff;text-shadow: 1px 1px 1px #333;}
+div.box p.dialog {position:relative;margin:0px auto;text-align:center;padding-top:5px;font-size:1.5vw;color:#eaffff;text-shadow: 1px 1px 1px #333;}
 div.box .dialog-arrow{position: absolute;bottom:25px;right: 30px;}
 div.box .dialog-arrow:after{position: absolute;content: '\f078';font-size:1.5vw;font-family:'FontAwesome';animation: floating 8s infinite;color: #eaffff6b;}
 .line-1{position: relative;max-width: 100%;width: auto;text-align: center;overflow: hidden;overflow-wrap: break-word;}
@@ -195,7 +200,7 @@ div.title p {font-family: 'ArcadeAlternate';font-size:20px;color:#ffce12;}
 .objectives .checked{color:#ffce12;}
 .objectives .check i {background-color: #012e33;border-radius:5px;}
 #tutorial-modal,#finish-modal,#settings-modal{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAANklEQVQYV2Pk4uJqYMADGKEKzjIwMBgjqYPzQQp8oRIwBTBJMI3NBAwFMBNABqGbwgAzAaczAbSpC7s6lQtrAAAAAElFTkSuQmCC) repeat;
-padding:20px;}
+padding:35px 20px 20px 20px;}
 .tutorialDescription{color:#fff;font-size: 1.5vw;padding:0 20px;}
 #settings-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
 #settings-modal .modal-content{}

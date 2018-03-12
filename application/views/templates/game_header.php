@@ -31,32 +31,32 @@
         </div>
         <nav id="mainNav">
             <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <ul style="list-style: none;display: flex;align-items: center;">
-                                <li>
-                                    <a class="font-1" href="<?php echo base_url();?>Game/Levels/<?php echo $stgId;?>"><i class="fa fa-arrow-left" style="font-size: 30px !important;padding-top:20px !important;"></i></a></li>
-                                <li>
-                                    <a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu">
-                                        <img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <div class="title">
-                                <h1>Level X</h1>
-                                <p>Topic XXX</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <ul class="" style="display:flex;justify-content: space-around;padding:0px;font-size: 30px;padding-top:20px;">
-                                <li><button data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
-                                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
-                                <!-- <li><a class="logout" href="<?php echo base_url()?>users/logout"><i class="fa fa-sign-out"></i></a></li> -->
-                            </ul>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <ul style="list-style: none;display: flex;align-items: center;">
+                            <li>
+                                <a class="font-1" href="<?php echo base_url();?>Game/Levels/<?php echo $stgId;?>"><i class="fa fa-arrow-left" style="font-size: 30px !important;padding-top:20px !important;"></i></a></li>
+                            <li>
+                                <a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu">
+                                    <img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <div class="title">
+                            <h1>Level X</h1>
+                            <p>Topic XXX</p>
                         </div>
                     </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <ul class="" style="display:flex;justify-content: space-around;padding:0px;font-size: 30px;padding-top:20px;">
+                            <li><button data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
+                            <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </nav>
 
