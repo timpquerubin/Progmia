@@ -58,6 +58,9 @@
 							<textarea class="code_area" style="white-space: nowrap;" id="code_area" name="code_area" rows="15" onscroll="document.getElementById('textarea1').scrollTop = this.scrollTop;"></textarea>
 						</div>
 					</div>
+					<div class="console-container">
+						<textarea class="console_txt" id="console_txt" name="console_txt" rows="8" style="white-space: nowrap; width: 100%; background-color: #000; color: #fff;" disabled=""></textarea>
+					</div>
 					<div class="row button-run-container">
 						<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 							<button class="btn btn-basic btn-block" onclick="runCode();">Execute Code</button>
@@ -182,26 +185,32 @@
 	$(document).ready(function() {
 
 		load_tutorial = function(){
-			
-			var data = {
-				link:"<?php echo base_url(); ?>game/tutorial/" + "<?php echo $level_info['LVL_TUTORIAL'] ?>",
-			}
 
-			$.ajax({
-				type:"POST",
-				url: "<?php echo base_url();?>Game/load_tutorial",
-				data: data,
-				success: function(res){	
-					$("#tutorial-modal").html(res);
-				},
-				error: function(res){
-					console.log(res);
-				}	
-			});	
+			var tutorial_filename = "<?php echo isset($level_info['LVL_TUTORIAL']) ? $level_info['LVL_TUTORIAL'] : "" ?>";
+
+			if(tutorial_filename != "") {
+				
+				var data = {
+					link:"game/tutorial/" + "<?php echo $level_info['LVL_TUTORIAL'] ?>"
+				}
+
+				$.ajax({
+					type:"POST",
+					url: "<?php echo base_url();?>Game/load_tutorial",
+					data: data,
+					success: function(res){	
+						$("#tutorial-modal").html(res);
+					},
+					error: function(res){
+						console.log(res);
+					}	
+				});	
+			}
 		}
 				
-		// load_tutorial();
+		load_tutorial();
 
+		var console_txt = document.getElementById("console_txt");
 		var ctx = document.getElementById("ctx").getContext("2d");
 		var canvas = document.getElementById("ctx");
 		code_area = document.getElementById("code_area");
@@ -266,11 +275,11 @@
 
 				startNewGame();
 				setInterval(update, 40);
-				// setTimeout(function() 
-				// {
-				// 	$('#tutorial-modal').modal('show');
-				// 	load_tutorial();
-				// }, 1500);
+				setTimeout(function() 
+				{
+					$('#tutorial-modal').modal('show');
+					load_tutorial();
+				}, 1500);
 				// $('#tutorial-modal').modal('show');
 
 				// check_badges();
@@ -642,6 +651,10 @@
 				console.log("end of code");
 				return false;
 			}
+		}
+
+		print_to_console = function() {
+
 		}
 
 		executeCommand = function(commandNum) {
