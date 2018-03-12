@@ -182,32 +182,26 @@
 			);
 
 			$level_info = $this->Game_model->get_level_details($level_params);
-
 			$objectives = $this->Game_model->get_objectives($level_params);
 
 			$next_level_params = array(
 				"STG_ID" => $level_info[0]["STG_ID"],
 				"LVL_NUM" => (((int) $level_info[0]["LVL_NUM"]) + 1),
 			);
+
 			// $next_stage_params = array(
 			// 	"STG_ID" => $level_info[0]["STG_ID"],
 			// 	"STG_NUM" => (((int) $stage_info[0]["STG_NUM"]) + 1),
 			// );
 			// $next_stage_info = $this->Game_model->get_next_stage($next_stage_params);
-			$next_level_info = $this->Game_model->get_next_level($next_level_params);
 
-			// echo "<pre>";
-			// var_dump($next_level_info);
-			// echo "</pre>";
-			// exit();
+			$next_level_info = $this->Game_model->get_next_level($next_level_params);
 			$avatar = $this->Game_model->get_user_avatar($userID);
-			// echo "<pre>";
-			// var_dump($level_info[0]);
-			// echo "</pre>";
-			// exit();
+			
 			$data['avatar'] = $avatar[0];
 			$data['level_info'] = $level_info[0];
 			$data['objectives_list'] = $objectives;
+
 			// if (sizeof($prev_stage_info) > 0)
 			// {
 			// 	$data['prev_stage_info'] = $prev_stage_info[0];
@@ -216,6 +210,7 @@
 			// {
 			// 	$data['prev_stage_info'] = array();
 			// }
+
 			if (sizeof($next_level_info) > 0)
 			{
 				$data['next_level_info'] = $next_level_info[0];
@@ -232,8 +227,11 @@
 				// 	$data['next_stage_info'] = array();
 				// }
 			}
+
 			$header_data['stgId'] = $level_info[0]['STG_ID'];
+
 			// $$this->Game_model->get_tutorial($level_params);
+
 			$this->load->view('templates/game_header',$header_data);
 			$this->load->view('templates/load_init_links');
 			$this->load->view('game/programming_basics.php', $data);
@@ -380,6 +378,149 @@
 			} else {
 
 				echo json_encode(array("status" => false, "message" => "failed to record progress"));
+			}
+		}
+
+		public function testing() {
+
+			$this->_init();
+			$userID = $this->session->userdata('user_id');
+
+			$user_badge_params = array(
+				'user' => $userID,
+			);
+
+			$user_badge_list = $this->Game_model->get_user_badges($user_badge_params);
+			var_dump($user_badge_list);
+		}
+
+		public function check_badges() {
+
+			$this->_init();
+
+			if(isset($_POST)) {
+
+				$userID = $this->session->userdata('user_id');
+				$stage_id = $_POST['stage_id'];
+				$finishCtr = 0;
+				$perfectCtr = 0;
+				$achieved_badges = array();
+
+				$badge_params = array(
+					'stage_id' => $stage_id,
+				);
+
+				$badge_list = $this->Game_model->get_badges($badge_params);
+				// echo json_encode($badge_list);
+
+				$user_badge_params = array(
+					'user' => $userID,
+				);
+
+				$user_badge_list = $this->Game_model->get_user_badges($user_badge_params);
+				// echo json_encode($user_badge_list);
+
+				$prog_params = array(
+					'user' => $userID,
+					'stage' => $stage_id,
+					'type' => 'max_points',
+				);
+
+				$progress_list = $this->Game_model->get_progress($prog_params);
+				// echo json_encode($progress_list);
+
+				$level_list = $this->Game_model->get_levels(array('STG_ID' => $stage_id));
+				// echo json_encode($level_list);
+				foreach ($level_list as $lvl) {
+
+					foreach ($progress_list as $prog) {
+						
+						if($lvl['LVL_ID'] == $prog['LVL_ID']) {
+
+							$max_pts = $this->Game_model->get_lvl_max_points(array('level' => $lvl['LVL_ID']));
+
+							if($prog['BEST_SCORE'] >= $max_pts[0]['MAX_PTS']) {
+								$perfectCtr++;
+							}
+
+							if($prog['BEST_SCORE'] > 0) {
+								$finishCtr++;
+							}
+						}
+					}
+				}
+
+				// echo json_encode($scores);
+
+				if(count($level_list) == $perfectCtr) {
+
+					foreach ($badge_list as $bdg) {
+						
+						if($bdg['TYPE'] == "perfect") {
+							$achieved_badges['perfect_badge'] = $bdg;
+						}
+					}
+				}
+
+				if(count($level_list) == $finishCtr) {
+
+					foreach ($badge_list as $bdg) {
+						
+						if($bdg['TYPE'] == "finish") {
+							$achieved_badges['finish_badge'] = $bdg;
+						}
+					}
+				}
+
+				foreach ($achieved_badges as $ab_key => $ab_val) {
+					foreach ($user_badge_list as $ub) {
+						
+						if($ab_val['BDG_ID'] == $ub['BDG_ID']) {
+							unset($achieved_badges[$ab_key]);
+						}
+					}
+				}
+
+				// foreach ($achieved_badges as $b) {
+					
+				// 	$rec_badge_param = array(
+				// 		"USER_ID" => $userID,
+				// 		"BDG_ID" => $b["BDG_ID"],
+				// 	);
+
+				// 	$rec_result = $this->Game_model->record_user_badge($rec_badge_param);
+				// }
+
+				echo json_encode($achieved_badges);
+
+				// if(count($badge_list) > 0) {
+
+
+				// } else {
+				// 	echo json_encode(array("status" => false, "message" => "there are no badges for this stage"));
+				// }
+			} else {
+				echo json_encode(array("status" => false, "message" => "failed to check badges due to lack of parameters"));
+			}
+		}
+
+		public function load_badge_block() {
+
+			$this->_init();
+
+			if(isset($_POST)) {
+
+				if(isset($_POST["badge_list"])) {
+					if(count($_POST["badge_list"])) {
+						$data['achieved_badges'] = $_POST['badge_list'];
+					} else {
+						$data['achieved_badges'] = [];
+					}
+				} else {
+					$data['achieved_badges'] = array();
+				}
+
+				$this->load->view('game/badge_block.php', $data);
 			}
 		}
 	}

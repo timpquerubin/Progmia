@@ -27,10 +27,10 @@
 			$avatar = $this->db->query('SELECT `AVATAR`.*,`USER`.`USER_ID` FROM `USER`, `AVATAR` WHERE `USER`.`USER_ID`=\''.$user.'\' AND `AVATAR`.`AVTR_ID`=`USER`.`AVTR_ID`;');
 			return $avatar->result_array();
 		}
-		public function get_badges(){
-			$bdg = $this->db->query('SELECT * FROM BADGES ORDER BY BDG_ORDER;');
-			return $bdg->result_array();
-		}
+		// public function get_badges(){
+		// 	$bdg = $this->db->query('SELECT * FROM BADGES ORDER BY BDG_ORDER;');
+		// 	return $bdg->result_array();
+		// }
 
 		public function get_next_level($params) {
 
@@ -70,6 +70,12 @@
 		{
 			if($params === null) {
 				$progress = $this->db->query('SELECT * FROM PROGRESS');
+			}  else if(isset($params['user']) && isset($params['type']) && isset($params['stage'])) {
+
+				if($params['type'] == 'max_points') {
+					// $progress = $this->db->query('SELECT USER_ID, LVL_ID, MAX(GAME_SCORE) FROM PROGRESS WHERE USER_ID='.$params['user'].' GROUP BY LVL_ID');
+					$progress = $this->db->query('SELECT P.USER_ID, P.LVL_ID,L.STG_ID, MAX(P.GAME_SCORE) AS BEST_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID='.$params['user'].' AND L.STG_ID=\''.$params['stage'].'\' AND P.LVL_ID=L.LVL_ID GROUP BY LVL_ID');
+				}
 			} else if(isset($params['user']) && isset($params['stage'])) {
 				$progress = $this->db->query('SELECT P.PROG_ID, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID=\''.$params['user'].'\' AND L.STG_ID=\''.$params['stage'].'\' AND P.LVL_ID=L.LVL_ID;');
 			} else if(isset($params['user'])) {
@@ -80,6 +86,34 @@
 
 			return $progress->result_array();
 		}
+
+		public function get_badges($params = null) {
+
+			if($params === null) {
+				// $bdg = $this->db->query('SELECT * FROM BADGES ;');
+				$badges = $this->db->query('SELECT * FROM BADGES ORDER BY BDG_ORDER');
+			} else if(isset($params['stage_id'])) {
+				$badges = $this->db->query('SELECT * FROM BADGES WHERE STG_ID=\''.$params['stage_id'].'\'');
+			}
+
+			return $badges->result_array();
+		}
+
+		public function record_user_badge($params) {
+			return $this->db->insert('USER_BADGES', $params);
+		}
+
+		public function get_user_badges($params = null) {
+
+			if($params === null) {
+				$user_badges = $this->db->query('SELECT * FROM USER_BADGES ORDER BY AQUIRED_AT');
+			} else if(isset($params['user'])) {
+				$user_badges = $this->db->query('SELECT * FROM USER_BADGES WHERE USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
+			}
+
+			return $user_badges->result_array();
+		} 
+
 		public function get_profileprogress($user){
 			// if($user === null) {
 			// 	$profileprogress = $this->db->query('SELECT P.PROG_ID,L.LVL_NUM, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID=\''.$user.'\' AND P.LVL_ID=L.LVL_ID;');
@@ -183,8 +217,13 @@
 			return $objectives->num_rows();
 		}
 		
-		public function get_lvl_max_points() {
-			$lvl_max_pts = $this->db->query('SELECT LVL_ID, SUM(OBJ_POINTS) AS MAX_PTS FROM OBJECTIVE GROUP BY LVL_ID;');
+		public function get_lvl_max_points($params = null) {
+
+			if($params === null) {
+				$lvl_max_pts = $this->db->query('SELECT LVL_ID, SUM(OBJ_POINTS) AS MAX_PTS FROM OBJECTIVE GROUP BY LVL_ID;');
+			} else if(isset($params['level'])) {
+				$lvl_max_pts = $this->db->query('SELECT LVL_ID, SUM(OBJ_POINTS) AS MAX_PTS FROM OBJECTIVE WHERE LVL_ID=\''.$params['level'].'\' GROUP BY LVL_ID;');
+			}
 
 			return $lvl_max_pts->result_array();
 		}

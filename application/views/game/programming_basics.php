@@ -68,7 +68,7 @@
 			</div>
 		</div>
 		<div id="tutorial">
-			<div id="tutorial-modal" class="modal fade" style="display: none;">
+			<div id="tutorial-modal" class="modal fade multi-step" style="display: none;">
 				<div class="tutorial-container">
 				</div>
 			</div>
@@ -112,6 +112,7 @@
 							</div>
 						</div>
 
+						<div class="badges-block" style="margin: 0px; padding: 0px; width: 100%;"></div>
 					</div>
 					<div class="modal-footer">
 						<div class="row">
@@ -183,7 +184,7 @@
 		load_tutorial = function(){
 			
 			var data = {
-				link:"game/tutorial/variable_tutorial"
+				link:"<?php echo base_url(); ?>game/tutorial/" + "<?php echo $level_info['LVL_TUTORIAL'] ?>",
 			}
 
 			$.ajax({
@@ -199,7 +200,7 @@
 			});	
 		}
 				
-		load_tutorial();
+		// load_tutorial();
 
 		var ctx = document.getElementById("ctx").getContext("2d");
 		var canvas = document.getElementById("ctx");
@@ -265,13 +266,16 @@
 
 				startNewGame();
 				setInterval(update, 40);
-				setTimeout(function() 
-				{
-					$('#tutorial-modal').modal('show');
-					load_tutorial();
-				}, 1500);
+				// setTimeout(function() 
+				// {
+				// 	$('#tutorial-modal').modal('show');
+				// 	load_tutorial();
+				// }, 1500);
 				// $('#tutorial-modal').modal('show');
+
+				// check_badges();
 			};
+			
 			var promise = new Promise(function(resolve, reject) {
 				return $.ajax({
 					type: 'post',
@@ -528,7 +532,52 @@
 		// 	}
 		// }
 
-		
+		check_badges = function() {
+
+			var stage_id = "<?php echo $level_info['STG_ID'] ?>";
+
+			var promise = new Promise(function(resolve, reject) {
+
+				var badge_data = {
+					stage_id: stage_id,
+				};
+
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/check_badges",
+					data: badge_data,
+					dataType: 'json',
+					// success: function(res) {
+					// 	return res;
+					// },
+					error: function(err) {
+						console.log("failed to check badges due to connection error");
+					},
+					complete: function(comp) {
+						resolve(comp);
+					}
+				});
+			}).then(function(badge_list) {
+
+				var list = {
+					badge_list: badge_list,
+				}
+
+				console.log(badge_list);
+
+				$.ajax({
+					type: 'post',
+					url: "<?php echo base_url(); ?>Game/load_badge_block",
+					data: list,
+					success: function(badge_html) {
+						$(".badges-block").html(badge_html);
+					},
+					error: function(err) {
+						console.log("failed to load badges due to connection error");
+					}
+				});
+			});
+		}
 
 		document.getElementById('textarea1').value = '1';
 
@@ -3171,22 +3220,30 @@
 			var aquiredScore = Objective.computeScore();
 			var lvlId = "<?php echo $level_info['LVL_ID'] ?>";
 
-			var data = {
-				lvl_id: lvlId,
-				total_score: aquiredScore
-			}
+			var promise = new Promise(function(resolve, reject) {
 
-			$.ajax({
-				type: 'POST',
-				url: '<?php echo base_url(); ?>Game/record_progress',
-				data: data,
-				dataType: 'json',
-				success: function(res) {
-					console.log(res);
-				},
-				error: function(err) {
-					console.log(err);
+				var data = {
+					lvl_id: lvlId,
+					total_score: aquiredScore
 				}
+
+				$.ajax({
+					type: 'POST',
+					url: '<?php echo base_url(); ?>Game/record_progress',
+					data: data,
+					dataType: 'json',
+					success: function(res) {
+						console.log(res);
+					},
+					error: function(err) {
+						console.log(err);
+					},
+					complete: function(comp) {
+						resolve(comp);
+					}
+				});
+			}).then(function(record_status) {
+				check_badges();
 			});
 		}
 
@@ -4064,10 +4121,11 @@
 		var question = new Question();
 		var player = {};
 
-		preloadGameData().done(function(images) {
+		preloadGameData()
+		// .done(function(images) {
 
-			console.log("done preloading");
-		});
+		// 	console.log("done preloading");
+		// });
 
 		// preloadImages([
 		// 	"<?php echo base_url(); ?>assets/images/levels/<?php echo $level_info['LVL_FILENAME'] ?>",
