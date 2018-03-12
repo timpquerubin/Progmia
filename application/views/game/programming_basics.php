@@ -59,7 +59,7 @@
 						</div>
 					</div>
 					<div class="console-container">
-						<textarea class="console_txt" id="console_txt" name="console_txt" rows="8" style="white-space: nowrap; width: 100%; background-color: #000; color: #fff;" disabled=""></textarea>
+						<textarea class="console_txt" id="console_txt" name="console_txt" rows="8" style="width: 100%; background-color: #000; color: #fff; resize: none;" disabled=""></textarea>
 					</div>
 					<div class="row button-run-container">
 						<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
@@ -189,7 +189,7 @@
 			var tutorial_filename = "<?php echo isset($level_info['LVL_TUTORIAL']) ? $level_info['LVL_TUTORIAL'] : "" ?>";
 
 			if(tutorial_filename != "") {
-				
+
 				var data = {
 					link:"game/tutorial/" + "<?php echo $level_info['LVL_TUTORIAL'] ?>"
 				}
@@ -200,11 +200,16 @@
 					data: data,
 					success: function(res){	
 						$("#tutorial-modal").html(res);
+						setTimeout(function() 
+						{
+							$('#tutorial-modal').modal('show');
+							// load_tutorial();
+						}, 1500);
 					},
 					error: function(res){
 						console.log(res);
 					}	
-				});	
+				});
 			}
 		}
 				
@@ -275,11 +280,6 @@
 
 				startNewGame();
 				setInterval(update, 40);
-				setTimeout(function() 
-				{
-					$('#tutorial-modal').modal('show');
-					load_tutorial();
-				}, 1500);
 				// $('#tutorial-modal').modal('show');
 
 				// check_badges();
@@ -653,8 +653,10 @@
 			}
 		}
 
-		print_to_console = function() {
+		print_to_console = function(log_txt) {
 
+			console_txt.value += "progmia> " + log_txt + "\n";
+			
 		}
 
 		executeCommand = function(commandNum) {
@@ -832,6 +834,8 @@
 									param: cond,
 								}
 							});
+
+							print_to_console("print: " + display_txt.toString());
 						} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
 
 							code_log.push({
@@ -841,6 +845,8 @@
 									param: cond,
 								}
 							});
+
+							print_to_console("print: " + display_txt.toString());
 						}
 					} else {
 
@@ -851,6 +857,8 @@
 								param: cond,
 							}
 						});
+
+						print_to_console("print: " + display_txt.toString());
 					}
 
 				} else if(/^(int|double|char|String|Boolean)\s+[A-Za-z][A-Za-z0-9_]*\s*;$/g.test(cmdLine)) {
@@ -876,14 +884,6 @@
 							},
 						});
 
-						// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
-						// 	type: "dec-var",
-						// 	var_info: {
-						// 		dataType: declareLine[0],
-						// 		var_identifier: declareLine[1],
-						// 	},
-						// });
-
 						if(code_stack[code_stack.length - 1].status) {
 
 							code_log.push({
@@ -893,6 +893,8 @@
 									var_identifier: declareLine[1],
 								},
 							});
+
+							print_to_console("declare variable data type: " + varInfo.dataType + " identifier: " + varInfo.var_identifier);
 
 							vrbls.push(varInfo);
 						}
@@ -905,6 +907,8 @@
 								var_identifier: declareLine[1],
 							},
 						});
+
+						print_to_console("declare variable data type: " + varInfo.dataType + " identifier: " + varInfo.var_identifier);
 
 						vrbls.push(varInfo);
 					}
@@ -969,6 +973,8 @@
 										},
 									});
 
+									print_to_console("declare variable data type: " + varInfo.dataType + " identifier: " + varInfo.var_identifier + "value: " + varInfo.var_value);
+
 									vrbls.push(varInfo);
 								}
 
@@ -982,6 +988,8 @@
 										var_value: tempValue,
 									},
 								});
+
+								print_to_console("declare variable data type: " + varInfo.dataType + " identifier: " + varInfo.var_identifier + " value: " + varInfo.var_value);
 
 								vrbls.push(varInfo);
 							}
@@ -1017,14 +1025,6 @@
 							},
 						});
 
-						// code_log[code_stack[code_stack.length - 1].log_id].cmd_info.statements.push({
-						// 	type: "dec-arr",
-						// 	var_info: {
-						// 		dataType: declareLine[0],
-						// 		var_identifier: declareLine[1],
-						// 	},
-						// });
-
 						if(code_stack[code_stack.length - 1].status) {
 
 							code_log.push({
@@ -1034,6 +1034,8 @@
 									var_identifier: declareLine[1],
 								},
 							});
+
+							print_to_console("declare array data type: " + arrInfo.dataType + " identifier: " + arrInfo.var_identifier);
 
 							vrbls.push(arrInfo);
 						}
@@ -1046,6 +1048,8 @@
 								var_identifier: declareLine[1],
 							},
 						});
+
+						print_to_console("declare array data type: " + arrInfo.dataType + " identifier: " + arrInfo.var_identifier);
 
 						vrbls.push(arrInfo);
 					}
@@ -1139,6 +1143,8 @@
 										},
 									});
 
+									print_to_console("declare array data type: " + arrayInfo.dataType + " identifier: " + arrayInfo.var_identifier + " values: " + JSON.stringify(arrInfo.var_value));
+
 									vrbls.push(arrayInfo);
 								}
 							} else {
@@ -1151,6 +1157,8 @@
 										var_value: passToLog,
 									},
 								});
+
+								print_to_console("declare array data type: " + arrayInfo.dataType + " identifier: " + arrayInfo.var_identifier + " values: " + JSON.stringify(arrayInfo.var_value));
 
 								vrbls.push(arrayInfo);
 							}
@@ -1303,6 +1311,8 @@
 											var1_identifier: var1_identifier,
 										}
 									});
+
+									print_to_console("assign " + valToTrans.toString() + " to " + var1_identifier);
 								}
 							}
 						} else {
@@ -1321,6 +1331,8 @@
 										var1_identifier: var1_identifier,
 									}
 								});
+
+								print_to_console("assign " + valToTrans.toString() + " to " + var1_identifier);
 							}
 						}
 
@@ -1467,6 +1479,9 @@
 										var_2: var_2,
 									},
 								});
+								// console.log(val_list[0].value);
+								print_to_console("operation: " + op_operand + ", val_1: " + val_list[0].value.toString() + ", val_2: " + val_list[1].value.toString() + ", result: " + assign_param.value);
+
 							} else if(code_stack[code_stack.length - 1].else && (!code_stack[code_stack.length - 1].status)) {
 
 								save_to_obj = assignValueToVar(save_to_obj, assign_param);
@@ -1480,6 +1495,8 @@
 										var_2: var_2,
 									},
 								});
+								// console.log(val_list[0].value);
+								print_to_console("operation: " + op_operand + ", val_1: " + val_list[0].value.toString() + ", val_2: " + val_list[1].value.toString() + ", result: " + assign_param.value);
 							}
 						} else {
 
@@ -1494,6 +1511,8 @@
 									var_2: var_2,
 								},
 							});
+							// console.log(val_list[0].value);
+							print_to_console("operation: " + op_operand + ", val_1: " + val_list[0].value.toString() + ", val_2: " + val_list[1].value.toString() + ", result: " + assign_param.value);
 						}
 
 						// console.log(vrbls);
@@ -1734,6 +1753,8 @@
 							}
 						});
 
+						print_to_console("statement: if-statement, condition: " + if_condition + ", result: " + cond_result.result);
+
 						// console.log(code_stack);
 						// console.log(code_log);
 					} else {
@@ -1744,7 +1765,7 @@
 				} else if(/^}\s*else\s*{\s*$/g.test(cmdLine)) {
 
 					code_stack[code_stack.length - 1].else = [];
-					console.log("has else");
+					// console.log("has else");
 
 				} else if(/^while\s*\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{$/g.test(cmdLine)) {
 
@@ -1772,6 +1793,9 @@
 								statements: [],
 							},
 						});
+
+						print_to_console("statement: while loop-statement, condition: " + loop_condition + ", result: " + cond_result.result);
+
 					} else {
 						return cond_result;
 					}
@@ -1849,6 +1873,7 @@
 
 					if(!exec_status.status) {
 						console.log(exec_status.message);
+						print_to_console(exec_status.message);
 						hasErrors = true;
 						break;
 					} else {
@@ -2508,7 +2533,7 @@
 				// console.log(testVal_2);
 
 				if(testVal_1.status && testVal_2.status) {
-					console.log(compareValues(testVal_1.value, testVal_2.value, opp[0]));
+					// console.log(compareValues(testVal_1.value, testVal_2.value, opp[0]));
 					return compareValues(testVal_1.value, testVal_2.value, opp[0]);
 				} else {
 					return {status: false, message: "incomparable types"}
@@ -2564,7 +2589,7 @@
 				}
 
 			} catch(err) {
-				console.log({status: false, message: "bad operand types for binary operator " + op});
+				// console.log({status: false, message: "bad operand types for binary operator " + op});
 				return {status: false, message: "bad operand types for binary operator " + op};
 			}
 		}
@@ -2755,14 +2780,14 @@
 							return {status: false, message: "invalid array index"};
 						}
 					} else if(/[0-9]+/g.test(arrCond)) {
-						arrIndex = parseInt(value);
+						arrIndex = parseInt(arrCond);
 					}
 
 					// console.log(arrIndex);
 
 					if(Array.isArray(var_obj.var_value)) {
 
-						if(var_obj.var_value[arrIndex]) {
+						if((var_obj.var_value.length > arrIndex) && (arrIndex >= 0)) {
 							var result_obj = {
 								status: true,
 								dataType: var_obj.dataType.replace(/[\[\]]/g, ""),
@@ -2771,7 +2796,7 @@
 
 							return result_obj;
 						} else {
-							return {status: false, message: "index out of range"};
+							return {status: false, message: "index out of range here"};
 						}
 					} else {
 						return {status: false, message: var_obj.var_identifier + " is not an array"};

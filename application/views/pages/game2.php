@@ -500,7 +500,7 @@
 					cond_result: result
 				});
 				console.log(getConditions(cmdLine, "(", ")"));
-			} else if(/^System\.out\.println\([A-Za-z0-9"+()\s]*\);$/g) {
+			} else if(/^System\.out\.println\([A-Za-z0-9"+()\s]*\);$/g.test(cmdLine)) {
 				player.say("hello");
 			} else {
 				console.log('error: invalid command: ' + cmdLine);
@@ -668,9 +668,10 @@
 
 							taskObj = {defeat_bullies: parseInt(jsonObj['Defeat Bullies'])};
 
-						} else if(objKey[0] == 'Use command') {
+						} else if(objKey[0] == 'Use Command') {
 
-							taskObj = {use_command: jsonObj['Use command']};
+							taskObj = {use_command: jsonObj['Use Command']};
+							// console.log(taskObj);
 
 						} else if(objKey[0] == 'Collect Coins') {
 
