@@ -3,13 +3,11 @@ body {
   background-repeat:repeat;
   background-position: center;
 }
-body {
-  padding-right: -17px !important;
-}
 body.modal-open{
   padding-right: -17px !important;
 }
-button.close{position:absolute;top:-5px;right:-5px;border-radius: 100%;opacity:1 !important;font-size:2vw;color:#777 !important;background-color:#eaffff !important;padding:2px 5px !important;}
+.modal-header{padding:5px !important;}
+button.close{position:absolute;top:5px;margin-top:0px !important;right:5px;border-radius: 100%;opacity:1 !important;font-size:2vw;color:#0b444a !important;text-shadow:0px 0px 0px;padding:2px 5px !important;}
 
 .modal-dialog {margin:2% auto;}
 
@@ -23,7 +21,9 @@ button.close{position:absolute;top:-5px;right:-5px;border-radius: 100%;opacity:1
     font-family: 'ArcadeAlternate';
     src: url("../fonts/ArcadeAlternate.ttf");
 }
-
+div.badge-list ul{padding:0px;display: flex;list-style: none;}
+div.badge-list ul li{flex-grow: 1;margin:0 auto;}
+div.badge-list img{margin:0 auto;}
 @font-face {
     font-family: 'FontAwesome';
     src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
@@ -31,7 +31,7 @@ button.close{position:absolute;top:-5px;right:-5px;border-radius: 100%;opacity:1
     font-weight: normal;
     font-style: normal;
 }
-
+ul.star::before{position: absolute;top: 0;left: 0;right: 0;background-color: #006C6C;border-radius: 100%;content: '';width: 100%;z-index: 1;height: 70px;margin: 0 auto;border: 4px double #032222;}
 /* FONTS */
 
 
@@ -108,23 +108,22 @@ nav ul {list-style: none;display:block;}
 .navbar-brand{height: 110px !important;margin-bottom:15px;padding: 0px !important;margin-top:15px;}
 .navbar-brand img {height:94px;}
 .hp-lbl {font-family: 'ArcadeClassic';color:#fff;font-size:25px;letter-spacing: 3px;margin-top:-5px;}
-div.canvas-container {margin-top:20px;padding:10px 0px 50px 0px;background-color: #004443b8;border-radius: 40px;border: outset 7px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+div.canvas-container {margin-top:20px;padding:10px 0px 50px 0px;background-color: #004443b8;border-radius: 20px;border: outset 3px #eaffff36;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 div.player-status {padding:5px 20px;display: flex;justify-content: flex-start;align-items: flex-start;}
 .player-status .progress-bar-danger{border-top-left-radius:7px !important;border-bottom-left-radius:7px !important;border-bottom-right-radius: 37px !important;border-top-right-radius: 8px !important;border-color:#000;background-color:#67c636;height:30px !important;}
 .player-status .progress {margin-top:-5px;margin-bottom:0px !important;background-color: #333;margin-right:50% !important;border:outset 2px #fff;border-radius:20px;border-bottom-right-radius:40px !important;height:30px !important;}
 .player-status {}
-label.user { font-family: 'ArcadeAlternate';font-size:24px;margin:0px 0px 10px 0px;color:#ffce12;letter-spacing: 3px;text-shadow:0 0 1px #111;}
+label.user { font-family: 'ArcadeAlternate';font-size:24px;margin:0px 0px 10px 0px;color:#ffce12;letter-spacing: 3px;text-shadow:0 2px 0 #000000;}
 .avatar img {text-align:right;margin:0 auto;height:auto;}
 #mainNav{background-color: #111212;display: none !important;}
 .margin-top{padding:20px;}
-.modal-content
-.modal-body{    padding: 15px 15px 25px 15px;}
+div#tutorial .modal-body{    padding: 15px 15px 55px 15px;}
 #ctx{background-color: #000;}
 div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;padding-bottom:30px;width: 100%; background-color: #17232b;background-color: #06151c;}
 div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
 div.code-area-container {padding-right: 0px;background-color: #004443b8;}
 
-.wrapper-1{border-radius: 25px;border: outset 7px #eaffff36;}
+.wrapper-1{border-radius: 20px;border: outset 3px #eaffff36;}
 div.wrapper-1{margin: 0px;margin-top:20px; padding: 80px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 .wrapper-1 h1{position:absolute;top:40px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow: 0px 3px 0px #000;word-spacing:20px;color:#ffce12;text-align: center;}
 div.code_area {font-family: "Courier New";padding: 0 15px !important;}
@@ -148,7 +147,7 @@ div.button-run-container {margin: 0px; padding: 0px; }
 div.button-run-container div.button-run {padding: 20px 0px; }
 
 div.game-ui{background-color:#000;/*border-radius: 25px 25px 10px 10px;*/padding-bottom: 15px;}
-div.box {position:relative;padding:5px 5px 15px 5px;margin:-45px 3px 0 3px;border-radius:10px;background-color:#1f3a4f90;background-color:#5d5d5d80;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
+div.box {position:relative;padding:5px 5px 15px 5px;margin:-45px 10px 0 10px;border-radius:10px;background-color:#1f3a4f90;background-color:#5d5d5d80;box-shadow:0px 0px 5px #2f948f;border:solid 5px #eaffff;-webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 div.box:before{position:absolute;content:'';top:0px;left:0px;width: 0;height: 0;border-style: solid;border-width: 15px 15px 0 0;border-color: #eaffff transparent transparent transparent;}
 div.box:after{position:absolute;content:'';bottom:0px;right:0px;width: 0;height: 0;border-style: solid;border-width: 0 0 15px 15px;border-color: transparent transparent #eaffff transparent;}
 div.box div.head{height:60px;position:relative;top:0;left:20px;margin:0 auto;font-family: 'ArcadeClassic';color:#ffce12;font-size: 40px;/*animation:floating 10s infinite;*/    margin-top: -5px;
@@ -158,16 +157,11 @@ div.box div.head{height:60px;position:relative;top:0;left:20px;margin:0 auto;fon
 div.box div.head > img {height:50px;width:50px;background:#121212;border-radius: 50%;}
 div.box div.head > label {margin-left:20px;font-family:'ArcadeClassic';letter-spacing:2px;font-size:30px;color:#ffce12;}
 div.box p.dialog {position:relative;margin:0px auto;text-align:center;padding-top:5px;font-size:1.5vw;color:#eaffff;text-shadow: 1px 1px 1px #333;}
-div.box .dialog-arrow{position: absolute;bottom:25px;right: 30px;}
+div.box .dialog-arrow{position: absolute;bottom:25px;right: 30px;display: none;}
 div.box .dialog-arrow:after{position: absolute;content: '\f078';font-size:1.5vw;font-family:'FontAwesome';animation: floating 8s infinite;color: #eaffff6b;}
 .line-1{position: relative;max-width: 100%;width: auto;text-align: center;overflow: hidden;overflow-wrap: break-word;}
 .modal {overflow-y: auto !important;}
-.modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: 'ArcadeClassic';
-  text-shadow: 0px 2px 0px #000;color: #FFE804;font-family: 'ArcadeClassic';background: #006C6C;border-radius: 10px;border: double 3px #032222 !important;margin:0 -15px !important;letter-spacing: 2px;
+.modal-header {display: flex;align-items: center;justify-content: space-between;font-family: 'ArcadeClassic';text-shadow: 0px 2px 0px #000;color: #FFE804;font-family: 'ArcadeClassic';background: #006C6C;border-radius: 10px;border: double 3px #032222 !important;margin:-15px -15px 0 -15px !important;letter-spacing: 2px;
   word-spacing: 5px;
   position: relative;
   z-index: 4;
@@ -178,36 +172,51 @@ div.box .dialog-arrow:after{position: absolute;content: '\f078';font-size:1.5vw;
 .modal-header{position: relative;}
 
 #tutorial-modal .modal-title:before{content: "\f128" !important;font-family: 'FontAwesome';width:auto;height: auto;
-    font-size: 3vw;
+    font-size: 2.5vw;margin-right: 10px;
 }
 .modal-header h5.modal-title{
   flex-grow: 1;font-size: 30px;text-align: center;
 }
+ul.finish-ul li:first-child a {border-bottom-left-radius: 5px;}
+ul.finish-ul li:last-child a {border-bottom-right-radius: 5px;}
+ul.finish-ul li:first-child a:before{position:absolute;top:0px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #003f3e transparent transparent;}
+ul.finish-ul li:last-child a:before{position:absolute;top:0px;left: 0px;z-index: 999;width: 0;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #003e3d transparent transparent transparent;}
+
+ul.finish-ul li:not(:first-child):not(:last-child) a:before{position:absolute;top:0px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #003f3e transparent transparent;}
+ul.finish-ul li:not(:first-child):not(:last-child) a:after{position:absolute;top:0px;left: 0px;z-index: 999;width: 0;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #003e3d transparent transparent transparent;}
+
+
 .tutorial-container
 .anim-typewriter{animation: dialog 2s steps(44) 1s 1 normal both;}
 div.title{text-align: center;background-color: #ffffff36;padding: 10px;}
 div.title h1{font-family: 'ArcadeClassic';font-size:40px;color: #eaffff;}
 div.title p {font-family: 'ArcadeAlternate';font-size:20px;color:#ffce12;}
-
-.modal-content{animation:appear 1.2s 1;padding-top:5px;background-color:#004443e8 !important;border:double 3px #999999 !important;border: 3px solid #ffce12; width: 100%; }
-.goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';text-align: center;}
+div#finish-modal div.modal-footer{height: 52px !important;padding:0px !important;border:0px;}
+ul.finish-ul{position: absolute;width: 100%;bottom: 0;display:flex;justify-content: space-between;flex-basis:auto;list-style: none;padding:0px !important;margin:0 auto;font-family: 'ArcadeClassic';border:0px;}
+ul.finish-ul li {}
+ul.finish-ul li:hover {background-color: #006c6c !important;}
+ul.finish-ul li a:hover {background-color:#006c6c !important;color: #ffce12;transition: .2s;}
+ul.finish-ul li a{position:relative;flex-grow:1;text-shadow:0px 1px 0px #000;color:#6ab3b3;background-color:#005a59e8 !important;font-family: 'ArcadeClassic';width:100%;font-size: 2vw;padding: 10px;border:0px;border-radius: 0px;}
+.modal-content{animation:appear 1.2s 1;padding-top:5px;color:#021313;background-color:#004443e8 !important;border:double 3px #999999 !important;border: 3px solid #ffce12; width: 100%; }
+.goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';text-align: center;margin:0px;text-shadow: 0px 2px 0px #000;}
 
  ul.objectives{display: inline-flex;flex-direction: column;width: 80%;padding: 0;margin:0 10%;}
  ul.objectives li{    display: inline-flex;
     justify-content: space-around;margin-bottom:10px;}
     .objectives p {color:#fff;width: 80%}
-.objectives .check{width: 20%;text-align: center;font-size: 2vw;color:#4798a2;}
+.objectives .check{width: 20%;text-align: center;font-size: 2vw;color:#6e787973;}
 .objectives .checked{color:#ffce12;}
 .objectives .check i {background-color: #012e33;border-radius:5px;}
 #tutorial-modal,#finish-modal,#settings-modal{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAANklEQVQYV2Pk4uJqYMADGKEKzjIwMBgjqYPzQQp8oRIwBTBJMI3NBAwFMBNABqGbwgAzAaczAbSpC7s6lQtrAAAAAElFTkSuQmCC) repeat;
 padding:35px 20px 20px 20px;}
-.tutorialDescription{color:#fff;font-size: 1.5vw;padding:0 20px;}
+.tutorialDescription{color:#fff;font-size: 1.5vw;}
 #settings-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
 #settings-modal .modal-content{}
-#settings-modal .modal-content ul {padding: 30px;list-style: none;}
+#settings-modal .modal-body{    padding: 15px 15px 15px 15px;}
+#settings-modal .modal-content ul {padding: 0px 30px;list-style: none;margin-bottom:0px;}
 #settings-modal .modal-content ul li {padding:0 20px;}
 #settings-modal .modal-content ul li h4{font-family: 'ArcadeAlternate';margin:5px auto 30px auto;color:#ffffff;font-size:28px;text-align: center;text-shadow: 0px 2px 0px #000;}
-#settings-modal .modal-content {position: relative;border-radius:0px;background-color: #297780 !important;margin: 12% auto;border: solid 3px #00272b; width:46%; }
+#settings-modal .modal-content {position: relative;border-radius:0px;background-color: #297780 !important;margin: 12% auto;border: solid 3px #00272b; width:46%; background-color:#004443e8 !important;}
 #settings-modal .modal-header h2.modal-title{text-shadow:0px 2px 0px #000;color:#ffce12;font-family: 'ArcadeClassic'; margin:0 !important;font-size:30px;text-align: center;margin:0 !important;}
 #settings-modal .modal-header {margin-top:-10px !important;}
 div.player-status .hp-bar {flex-grow: 1;margin-left: 20px;}
@@ -332,17 +341,21 @@ div#finish-modal{
 }
 .slider-track {
   height: 0.5rem;
-  background-color: #0f5561;
+  background-color: #002125;
   border-radius: 0.25rem;
 }
 .slider-level {
   height: 0.5rem;
-  background-color: #00363c;
+  background-color: #ffce12;
   width: 100%;
   border-radius: 1rem;
 }
-
+div.objective-progress{display: none;}
 /* AUDIO SETTINGS */
+
+/* MEDIA QUERY */
+
+/* MEDIA QUERY */
 
 /* ANIMATION */
 @keyframes blur{

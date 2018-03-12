@@ -79,6 +79,9 @@ div.leaderboard tr.rank-1 td:first-child,tr.rank-2 td:first-child,tr.rank-3 td:f
 div.leaderboard tr.rank-1 td:first-child:after,tr.rank-2 td:first-child:after,tr.rank-3 td:first-child:after{font-family: 'FontAwesome';font-size:60px;content: "\f091";position:absolute;top:0;left:40%;right:0;z-index:0;display:block;text-shadow: 1px 2px 3px #000;-webkit-text-stroke: 1px #121212;}
 tbody>tr:nth-child(2n+5) td:first-child:after{content:'';z-index:-5;position: absolute;top:0;left:0;right: 0;width:100%;height: 100%;}
 
+.dataTables_length{padding:0 20px;}
+.dataTables_filter{padding:0 20px;}
+
 /*div.leaderboard table,div.profile table,div.badges table{    border-radius: 25px;
     border-collapse: unset;transition: .3s;    border: outset 7px #eaffff;
     border-radius: 25px;
@@ -91,7 +94,7 @@ tbody>tr:nth-child(2n+5) td:first-child:after{content:'';z-index:-5;position: ab
 .badges .badge-img{background-color:#050a0c; padding:5px;max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}
 .badges ul{list-style: none;margin: 0;padding: 0;display:flex;margin-top:80px;}
 div.profile,div.badges,div.leaderboard,div.play{    background-color: #38546d61;
-    padding: 20px;
+    padding: 20px 0px;
     border-radius: 40px;
     border-top: solid 1px #eaffff;
     border: double 4px #eaffff;}
@@ -240,7 +243,11 @@ div.play div.unlocked {position:absolute;top:10px;right: 10px;font-size:28px;col
 div.play,div.leaderboard,div.badges,div.profile{display:none;position:relative;/*background-color:#000000;*/border-bottom-right-radius: 40px;border-bottom-left-radius: 40px;}
 div.play .popup h2{font-family: 'ArcadeClassic';font-size:45px;color:#fff;}
 div.play .popup p {background-color:#33a6b1;padding:20px 0;font-size:16px;font-weight: 800;margin:0 0 20px 0!important;color:#002428;}
-
+div.play .popup button a{color:#ffffff;font-size:2vw;font-family: 'ArcadeClassic';}
+div.play .popup button{background-color: #121212;    border-top: #ffffff solid 5px;
+    border-right: solid 5px #b1b1b1;
+    border-bottom: solid 5px #404040;
+    border-left: solid 5px #b1b1b1;padding:2px 15px;}
 /* ANIMATION CONTAINERS */
 
 div.sky-bg{position: fixed;top:0;left:0;right:0;bottom:0px;content: '';width:100%;z-index:-1;height: 100%;}

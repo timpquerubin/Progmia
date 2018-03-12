@@ -13,17 +13,44 @@ div.username {    font-family: 'ArcadeAlternate';
     text-shadow: 0px 2px 0px #000000;
     font-size: 30px;
     color: #ffce12;}
+ul.nav-left{    list-style: none;
+    display: flex;padding:0px;justify-content: space-between;
+    align-items: center;}
+    li.music-control {
+    display: inline-flex;
+    align-items: center;
+}
+div.title-header{font-family: 'ArcadeClassic';text-shadow: 0px 2px 0px #000;color: #FFE804;font-family: 'ArcadeClassic';background: #006C6C;border-radius: 10px;border: double 3px #032222 !important;letter-spacing: 2px;word-spacing: 5px;position: relative;z-index: 4;height: 85px;margin: 0px -15px 50px -15px !important;}
+button#playpausebtn {position:relative;margin-right:20px;margin-top:10px;background: transparent;border:none;}
+button#playpausebtn:focus {/*outline: 0;*/}
+input#volumeslider {margin-top:10px;}
+input#volumeslider:focus {/*outline: 0;*/}
+button#playpausebtn i{color:#ffce12;font-size: 34px;}
+button.playpausebtn:before{content: '\f04c';font-family:'FontAwesome';color:#ffffff;padding:1px 4px;text-shadow:0px 0px 1px #000;font-size:14px;position: absolute; left:9px;bottom: -5px;}
+button.paused {position: relative;}
+button.paused i {color:#444 !important;}
+button.paused:before{content: '\f04b';font-family:'FontAwesome';color:#ffce12;text-shadow:0px 0px 1px #000;font-size:14px;position: absolute; left:9px;bottom: -5px;}
+button.active i{color:#333;font-size: 30px;}
+input.volumeslider{width: 70px !important;}
+input[type='range'] {-webkit-appearance: none !important;margin:0px;padding:0px;background: #000;height:13px;border-bottom:#333 1px solid;}
+input[type='range']::-ms-fill-lower  {background:#000;}
+input[type='range']::-ms-fill-upper  {background:#000;}
+input[type='range']::-moz-range-track {border:none;background: #000;}
+input[type='range']::-webkit-slider-thumb {-webkit-appearance: none !important;background: radial-gradient(#FFF, #333);height:11px;width:11px;border-radius:100%;cursor:pointer;}
+input[type='range']::-moz-range-thumb {background: radial-gradient(#FFF, #333);height:11px;width:11px;border-radius:100%;cursor:pointer;}
+input[type='range']::-ms-thumb {-webkit-appearance: none !important;background: radial-gradient(#FFF, #333);height:11px;width:11px;border-radius:100%;cursor:pointer;}
 
+div.level-link * {cursor: pointer;}
 /*body:before{content:'';position:absolute;top:0;left:0;right:0;;bottom:0;width: 100%;height: 100%; Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+10,000000+50,000000+90&0.65+10,0+50,0.65+90 
 }*/
 nav {height:100px;max-width: 1600px;margin:0 auto;}
 label.finish-description {font-family: 'ArcadeClassic';font-size:20px;color:#eaffff;letter-spacing: 2px;}
-nav ul {list-style: none;display: flex;align-items: center;margin:10px auto;}
+/*nav ul {list-style: none;display: flex;align-items: center;margin:10px auto;}*/
 nav ul li {}
 nav ul li a.navbar-brand {width:199px;margin:0 auto !important;padding:0px;}
 
 div.game-level-menu-container {/*background-color:#00909e;*//*max-width:1600px;*/margin:0 auto;}
-div.game-level-menu-container {position:relative;padding:130px 10px 10px 10px;margin-bottom:20px;background-color:#00444382 !important;border-radius:10px;/*background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 6px #eaffff;*/
+div.game-level-menu-container {margin-top: 10px;position:relative;padding:10px 10px 10px 10px;border: outset 3px #eaffff36;margin-bottom:20px;background-color:#00444382 !important;border-radius:10px;/*background-color:#1f3a4f90;background-color:#006c7880;box-shadow:0px 0px 5px #eaffff;border:solid 6px #eaffff;*/
   -webkit-animation: appear 2s; /* Safari, Chrome and Opera > 12.1 */-moz-animation: appear 2s; /* Firefox < 16 */-ms-animation: appear 2s; /* Internet Explorer */-o-animation: appear 2s; /* Opera < 12.1 */animation: appear 2s;}
 div.game-level-menu-container h1{    text-shadow: 0px 2px 0px #000 !important;position:absolute;top:10px;left:0;right:0;margin:0 auto;animation:floating 10s infinite;font-family: 'ArcadeClassic';font-size: 60px;text-shadow:0px 0px 1px #444;word-spacing:20px;color:#ffce12;text-align: center;}
 
@@ -54,7 +81,7 @@ div.level-info {display: block;margin: 0px 10%;}
 div.level-link {margin:0 auto;background-color: #444;border-radius:25px;display: flex;text-align: center;
     flex-direction: column;height: 100%;margin: 0px auto;padding: 0px;border-top:solid 10px #777;border-left:solid 10px #555;border-right:solid 10px #555;border-bottom:solid 10px #333;}
 
-footer {padding:20px 0 10px 0;background-color: #00444382 !important;position: relative;bottom:0;left:0;right: 0;height:150px;}
+footer {padding:20px 0 10px 0;position: relative;bottom:0;left:0;right: 0;height:150px;}
 footer ul{display:flex;list-style: none;flex-wrap: wrap;justify-content: space-around;}
 footer div.avatar img{    background: #000;min-height:80px;border:outset 7px #eaffff;padding:7px;border-radius: 100%;margin:0 auto;-webkit-filter: drop-shadow(1px 1px 25px rgba(0,0,0,0.5));filter: url(#drop-shadow);-ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=1, Color='#444')";filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=1, OffY=1, Color='#444')";}
 footer ul button{position:relative;display:block;font-size:60px;padding:14px 28px;margin:0 auto;border-radius:25px;border-width: 5px;text-align: center;}

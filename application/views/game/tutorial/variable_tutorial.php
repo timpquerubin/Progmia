@@ -19,7 +19,7 @@
 					    <section>
 							<div class="tutorialDescription">
 							    <h2>Java Variables</h2>
-								<p>A variable is a location in memory (storage area) to hold data. </p>
+								<p>A <strong><i>variable</i></strong> is a location in memory (storage area) to hold data. </p>
 								<p>To indicate the storage area, each variable should be given a unique name (identifier).</p>
 							</div>
 					    </section>
@@ -27,7 +27,7 @@
 					    <section>
 							<div class="tutorialDescription">
 							    <h2>Java Keywords</h2>
-								<p>Keywords are predefined, reserved words used in Java programming that have special meanings to the compiler. For example:<span class="sample">int score;</span></p>
+								<p><strong><i>Keywords</i></strong> are predefined, reserved words used in Java programming that have special meanings to the compiler. For example:<span class="sample">int score;</span></p>
 							</div>
 							<div class="tutorialDescription">
 								<p>Here, <span class="sample">int</span> is a keyword. It indicates that the variable score is of integer type (32-bit signed two's complement integer).</p>
@@ -43,7 +43,9 @@
 							<div id="clone-container">
 								<button id="restart-code-animation"><i class="fa fa-repeat"></i></button>
 								<div id="code-animation">
-								    <h4 class="line-num">1</h4><p class="var-highlight-1">int </p><p>test</p><p> = </p><p class="var-highlight-2">5</p><p>;</p>
+								    <h4 class="line-num">1</h4><p class="var-highlight-1">int </p><p>num1</p><p> = </p><p class="var-highlight-2">5</p><span>;</span><br>
+								    <h4 class="line-num">2</h4><p class="var-highlight-1">double </p><p>num2</p><p> = </p><p class="var-highlight-2">5.5</p><span>;</span><br>
+								    <h4 class="line-num">3</h4><p class="var-highlight-1">boolean </p><p>boolVar</p><p> = </p><p class="var-highlight-2">false</p><span>;</span>
 								</div>
 							</div>
 					    </section>

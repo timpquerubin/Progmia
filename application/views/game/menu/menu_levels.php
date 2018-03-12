@@ -17,9 +17,11 @@
 					<?php } ?>
 				</div> -->
 				<div class="row">
-					<?php foreach ($level_stages as $info) { ?>
-					<h1 id="title"><?php echo $info['STG_DESCRIPTION']; ?>
-					</h1><?php } ?>
+					<div class="title-header">
+						<?php foreach ($level_stages as $info) { ?>
+						<h1 id="title"><?php echo $info['STG_DESCRIPTION']; ?>
+						</h1><?php } ?>
+					</div>
 				</div>
 				<?php $array = array(); ?>
 				<?php $array = $level_list; ?>

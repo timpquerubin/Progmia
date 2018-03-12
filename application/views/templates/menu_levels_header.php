@@ -13,19 +13,39 @@
 	
 </head>
 <body>
-	<div class="container-fluid">
-		<nav>
-			<ul>
-				<li>
-					<a class="navbar-brand" href="<?php echo base_url(); ?>"><img class="img-responsive" src="<?php echo base_url(); ?>assets/images/PROGMIA LOGO SIZES-XS.png"></a>
-				</li>
-				<li>
-					<a href="<?php echo base_url();?>Game/MainMenu"><i class="fa fa-long-arrow-left">Back</i></a>
-				</li>
-			</ul>
-		</nav>
-	</div>
+	<nav id="primary-nav" class="primary-nav">
+		<div class="container-fluid">
+			<div class="row" style="display: flex;align-items: center;">
+				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4">
+					<div class="logo">
+						<img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-6 col-xs-4 col-sm-4">
+				</div>
+				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4">
+					<ul class="nav-left">
+						<li class="music-control">
+							<button id="playpausebtn" class="playpausebtn"><i class="fa fa-music"></i></button>
+							<input id="volumeslider" class="volumeslider" type="range" min="0" max="100" value="100" step="1">
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
 		<script>
+			$(document).ready(function(){
+		$("button.playpausebtn").click(function() {
+			if(jQuery('#playpausebtn').hasClass('paused')){
+			    $("button").removeClass("paused");
+			}
+			else
+			{
+			    $(this).addClass("paused");
+			}
+		   });
+});
 			var audio, playbtn, mutebtn, seekslider, volumeslider, seeking=false, seekto;
 			function initAudioPlayer(){
 				audio = new Audio();

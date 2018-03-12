@@ -1,4 +1,4 @@
-<div class="container-fluid">
+
 	<div class="badge-list">
 		<ul>
 			<?php foreach($achieved_badges as $ab) { ?>
@@ -8,4 +8,3 @@
 			<?php } ?>
 		</ul>
 	</div>
-</div>

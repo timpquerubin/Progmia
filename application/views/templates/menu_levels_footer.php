@@ -21,7 +21,7 @@
 								</svg>
 							</div>
 						</div>
-						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 							<div class="row">
 								<div class="username"><?php echo $this->session->userdata('username');?></div>
 							</div>
@@ -34,14 +34,6 @@
 							</div>
 					    </div>
 					</div>
-						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-							<ul>
-								<li><button data-toggle="modal" data-target="#leaderboard"><i class="fa fa-question"></i></button></li>
-								<li><button data-toggle="modal" data-target="#leaderboard"><i class="fa fa-question"></i></button></li>
-								<li><button data-toggle="modal" data-target="#leaderboard"><i class="fa fa-question"></i></button></li>
-								<li><button data-toggle="modal" data-target="#leaderboard"><i class="fa fa-question"></i></button></li>
-							</ul>
-						</div>
 				</div>
 			</div>
 		</nav>

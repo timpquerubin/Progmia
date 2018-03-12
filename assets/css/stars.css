@@ -16,18 +16,7 @@ div.u3 > img {background-image: url(../images/stars/stars-06.png);background-siz
 
 */
 ul.star{display:flex;list-style: none;margin:-45px auto -20px auto!important;padding: 0px !important;justify-content: center;position: relative;}
-ul.star::before{    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #006C6C;
-    border-radius: 100%;
-    content: '';
-    width: 100%;
-    z-index: 1;
-    height: 100px;
-    margin: 0 auto;
-    border: 4px double #032222;}
+
 ul.star li{z-index: 6;}
 ul.star li:nth-child(2){margin-top:-10px !important;}
 li.s1> label > div,li.s2> label > div,li.s3> label > div{animation:appear-1 2s infinite;}
