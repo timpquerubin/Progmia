@@ -735,12 +735,14 @@
 				if(Objective.list[key].task.use_command == 'If') {
 					if(used_if) {
 						Objective.list[key].status = true;
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 						document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 					}
 				}
 			} else if(objKey == 'finish') {
 				if(isFinished) {
 					Objective.list[key].status = true;
+						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 				}
 			}
