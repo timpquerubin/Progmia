@@ -7,7 +7,7 @@
 						<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
 					</li> -->
 					<li>
-						<a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a>
+						<button class="back"><a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a></button>
 					</li>
 				</ul>
 			</div>
