@@ -40,7 +40,7 @@
 
 													<?php foreach($lvl_max_pts as $max_pts) { ?>
 														<?php if($max_pts['LVL_ID'] == $level['LVL_ID']) { ?>
-															<?php $score = (int)($progress['GAME_SCORE']/$max_pts['MAX_PTS']*100); ?>
+															<?php $score = (int)($progress['BEST_SCORE']/$max_pts['MAX_PTS']*100); ?>
 														<?php } ?>
 													<?php } ?>
 													<!-- <?php //echo $progress['POINTS_SCORED']; ?> / <?php //echo $progress['MAX_POINTS']; ?> -->
@@ -129,7 +129,7 @@
 				$("#level_"+ i + "_star3").addClass("no-score u2");
 				level_desc = "Excellent!!";
 
-			} else if(level_score == 100) {
+			} else if(level_score >= 100) {
 				$("#level_"+ i + "_star1").attr("checked", true);
 				$("#level_"+ i + "_star1").addClass("s1");
 				$("#level_"+ i + "_star2").attr("checked", true);

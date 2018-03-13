@@ -1798,6 +1798,71 @@
 						return cond_result;
 					}
 
+				} else if(/^do\s*{\s*$/g.test(cmdLine)) {
+
+					code_stack.push({
+						type: "loop-do-while",
+						statements: [],
+						log_id: code_log.length,
+						stat_recorded: false,
+						start:commandNum,
+					});
+
+					code_log.push({
+						type: "cmd-loop-do-while",
+						cmd_info: {
+							start:commandNum,
+							statements: [],
+						}
+					});
+
+					print_to_console("statement: do-while loop-statement");
+
+				} else if(/^\s*}\s*while\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*;\s*$/g.test(cmdLine)) {
+
+					var loop_cond = getConditions(cmdLine, "(", ")");
+					var cond_result = testCondition(loop_cond);
+					// console.log(loop_cond);
+
+					if(code_stack.length > 0) {
+
+						var curr_cmd = code_stack[code_stack.length - 1];
+
+						if(curr_cmd.type == "loop-do-while") {
+
+							if(!curr_cmd.stat_recorded) {
+								
+								code_log[curr_cmd.log_id].cmd_info.statements = curr_cmd.statements;
+								curr_cmd.stat_recorded = true;
+							}
+
+							curr_cmd.condition = loop_cond;
+							curr_cmd.status = cond_result.result;
+
+							code_log[curr_cmd.log_id].cmd_info.end = commandNum;
+							code_log[curr_cmd.log_id].cmd_info.condition = loop_cond;
+
+							print_to_console("statement: do-while loop-statement, condition: " + loop_cond + ", result");
+
+
+							if(cond_result.status) {
+
+								if(cond_result.result) {
+									cmdNum = curr_cmd.start;
+								} else {
+									var cmd_info = code_stack.pop();
+								}
+							} else {
+								return cond_result;
+							}
+
+						} else {
+							return {status: false, message: "invalid do-while loop statement"};
+						}
+					} else {
+						return {status: false, message: "invalid do-while loop statement"};
+					}
+
 				} else if(/^\s*}\s*$/g.test(cmdLine)) {
 
 					if(code_stack.length > 0) {
@@ -1857,6 +1922,8 @@
 		runCode = function() {
 
 			vrbls = [];
+			code_log = [];
+			code_stack = [];
 			var hasErrors = false;
 
 			cmdNum = 0;
@@ -1871,7 +1938,7 @@
 
 					if(!exec_status.status) {
 						console.log(exec_status.message);
-						print_to_console(exec_status.message);
+						print_to_console("error: " + exec_status.message);
 						hasErrors = true;
 						break;
 					} else {
@@ -1882,6 +1949,7 @@
 
 				console.log(code_log);
 				console.log(vrbls);
+				console.log(code_stack);
 
 				for(var key in Question.list) {
 

@@ -97,9 +97,20 @@
 			} else {
 				$levels = $this->Game_model->get_levels(array('STG_ID' => $stage ));
 				$level_stage = $this->Game_model->get_level_stage($stage);
-				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage));
+				$progress = $this->Game_model->get_progress(array('user' => $userID, 'stage' => $stage, 'type' => 'max_points'));
 				$lvl_max_pts = $this->Game_model->get_lvl_max_points();
 			}
+
+			// echo "<pre>";
+			// var_dump($progress);
+			// echo "</pre>";
+			// exit();
+
+			// echo "<pre>";
+			// var_dump($lvl_max_pts);
+			// echo "</pre>";
+			// exit();
+
 			$avatar = $this->Game_model->get_user_avatar($userID);
 			$data['avatar'] = $avatar[0];
 			// var_dump($level_stage);
