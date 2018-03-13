@@ -16,10 +16,9 @@
 	<nav id="primary-nav" class="primary-nav">
 		<div class="container-fluid">
 			<div class="row" style="display: flex;align-items: center;">
-				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4">
-					<div class="logo">
-						<img src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png">
-					</div>
+				
+				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4" style="text-align: center;">
+					<button class="back"><a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a></button>
 				</div>
 				<div class="col-md-6 col-lg-6 col-xs-4 col-sm-4">
 				</div>

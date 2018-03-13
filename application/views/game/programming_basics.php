@@ -1,26 +1,28 @@
 <div id="page">
 <div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-				<ul class="page-navigation">
-					<!-- <li>
-						<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
-					</li> -->
-					<li>
-						<button class="back"><a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a></button>
-					</li>
-				</ul>
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+			<nav class="main-nav">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<ul class="page-navigation">
+						<!-- <li>
+							<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
+						</li> -->
+						<li>
+							<button class="back"><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-arrow-left"></i></a></button>
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 
-			</div>
-			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-	            <ul class="" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
-	            	<li><button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i></button></li>
-	                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
-	                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
-	            </ul>
-	        </div>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		            <ul class="settings-ul" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
+		            	<li><button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i></button></li>
+		                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
+		                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+		            </ul>
+		        </div>
+		    </nav>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

@@ -39,11 +39,12 @@ input[type='range']::-moz-range-track {border:none;background: #000;}
 input[type='range']::-webkit-slider-thumb {-webkit-appearance: none !important;background: radial-gradient(#FFF, #333);height:11px;width:11px;border-radius:100%;cursor:pointer;}
 input[type='range']::-moz-range-thumb {background: radial-gradient(#FFF, #333);height:11px;width:11px;border-radius:100%;cursor:pointer;}
 input[type='range']::-ms-thumb {-webkit-appearance: none !important;background: radial-gradient(#FFF, #333);height:11px;width:11px;border-radius:100%;cursor:pointer;}
-
+button.back{text-align: center;background:transparent;border:0px;}
+button.back a{color:#ffce12;font-size:30px;}
 div.level-link * {cursor: pointer;}
 /*body:before{content:'';position:absolute;top:0;left:0;right:0;;bottom:0;width: 100%;height: 100%; Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+10,000000+50,000000+90&0.65+10,0+50,0.65+90 
 }*/
-nav {height:100px;max-width: 1600px;margin:0 auto;}
+nav.primary-nav {background-color: #033635b5;height: 60px;border-bottom: solid #eaffff36 3px;margin-bottom: 20px;box-shadow: 0px 3px 5px #000000;}
 label.finish-description {font-family: 'ArcadeClassic';font-size:20px;color:#eaffff;letter-spacing: 2px;}
 /*nav ul {list-style: none;display: flex;align-items: center;margin:10px auto;}*/
 nav ul li {}

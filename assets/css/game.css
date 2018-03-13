@@ -122,7 +122,12 @@ div#tutorial .modal-body{    padding: 15px 15px 55px 15px;}
 div.game-canvas-container{position:relative;margin-top: 100px;margin-bottom:50px;margin:0 auto;padding-top:60px;padding-bottom:30px;width: 100%; background-color: #17232b;background-color: #06151c;}
 div.game-menu {position: absolute;top:10px;left:12%; width: 50%;}
 div.code-area-container {padding-right: 0px;background-color: #004443b8;}
-
+.main-nav{background-color: #033635b5;
+    height: 45px;
+    border-bottom: solid #eaffff36 3px;
+    margin-bottom: 20px;
+    box-shadow: 0px 3px 5px #000000;
+}
 .wrapper-1{border-radius: 20px;border: outset 3px #eaffff36;}
 div.wrapper-1{margin: 0px; padding: 80px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
 .wrapper-1 h1{position:absolute;top:40px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow: 0px 3px 0px #000;word-spacing:20px;color:#ffce12;text-align: center;}
@@ -130,12 +135,15 @@ div.code_area {font-family: "Courier New";padding: 0 15px !important;}
 ul.page-navigation{list-style: none;display: flex;justify-content: space-around;padding:0;margin:0px !important;}
 ul.page-navigation li i {font-size:30px;}
 ul.page-navigation li {flex-grow:1;}
-
+ul.page-navigation li button a{background-color: transparent;border:0px;color:#ffce12;}
+ul.page-navigation li button{background-color: transparent;border:0px;}
+ul.settings-ul li button a{background-color: transparent;border:0px;color:#ffce12 !important;}
+ul.settings-ul li button{background-color: transparent;border:0px;color:#ffce12 !important;}
 div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-right: 20px;position:relative;}
 div.line-number:after {content:'';position: absolute;top:0;left:0;right:0;border-top:solid 1px #b0b0b0;}
 div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #000000;text-align: right;border: none;}
 
-
+button.back{margin-top:3px;}
 div.border-custom {border-left:solid 1px #b0b0b0;background-color:#dededd;}
 textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #000000;}
 textarea.code_area:focus {outline: none;}
