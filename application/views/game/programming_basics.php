@@ -3,11 +3,11 @@
 		<div class="row">
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				<ul class="page-navigation">
-					<li>
+					<!-- <li>
 						<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
-					</li>
+					</li> -->
 					<li>
-						<a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-home"></i></a>
+						<a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a>
 					</li>
 				</ul>
 			</div>
