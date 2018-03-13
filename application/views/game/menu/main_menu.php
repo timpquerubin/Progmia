@@ -191,16 +191,37 @@
 									</ul>
 								</div>
 							</div>
-							<div class="row">
+							<!-- <div>
+								<input type="radio" id="all-badges" value="All Badges" checked="true" name="bdg">
+								<label for="all-badges">All Badges</label>
+								<input type="radio" id="aq-badges" value="aq_Badges" name="bdg">
+								<label for="aq-badges">Aquired Badges</label>
+							</div> -->
+							<div class="row badges-all" id="badges-all" style="display: block;">
 								<div class="wrapper">
 									<div class="row">
-									<?php foreach ($badges_list as $badges) {?>
-										<div class="col-md-6">
-											<div class="badge">
-											<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME'];?>">
+										<?php foreach ($badges_list as $badges) {?>
+											<div class="col-md-6">
+												<div class="badge">
+												<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME'];?>">
+												</div>
 											</div>
-										</div>
-									<?php }?>
+										<?php }?>
+									</div>
+								</div>
+							</div>
+							<div class="row badges-aquired" id="badges-aquired" style="display: none;">
+								<div class="wrapper">
+									<div class="row">
+										<?php if(isset($user_badges)) { ?>
+											<?php foreach($user_badges as $ub) { ?>
+												<div class="col-md-6">
+													<div class="badge">
+														<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $ub['BDG_IMG_FILENAME'];?>">
+													</div>
+												</div>
+											<?php } ?>
+										<?php } ?>
 									</div>
 								</div>
 							</div>
@@ -209,3 +230,22 @@
 				</div>
 	    	</div>
 		</div>
+
+		<script type="text/javascript">
+			
+			$(document).ready(function() {
+
+				$("#all-option").click(function() {
+
+					$("#badges-aquired").css("display", "none");
+					$("#badges-all").css("display", "block");
+				});
+
+				$("#acquired-option").click(function() {
+
+					$("#badges-all").css("display", "none");
+					$("#badges-aquired").css("display", "block");
+				});
+			});
+
+		</script>

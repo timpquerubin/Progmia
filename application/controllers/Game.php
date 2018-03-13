@@ -55,10 +55,17 @@
 			$badges = $this->Profile_model->get_badges($userID);
 			$avatar = $this->Game_model->get_user_avatar($userID);
 			$badges = $this->Game_model->get_badges();
+			$user_badges = $this->Game_model->get_user_badges(array("user" => $userID));
+
+			// echo "<pre>";
+			// var_dump($profile);
+			// echo "</pre>";
+			// exit();
 
 			$data['avatar'] = $avatar;
 			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
 			$data['badges_list'] = $badges;
+			$data['user_badges'] = $user_badges;
 			$data['user_info'] = $userinfo;
         	$data['total_points'] = $total_points;
 			$data['levels_list'] = $levels;
@@ -67,7 +74,7 @@
 	        $data['h']=$this->Game_model->get_user($user);
 	        $data['maxlevel_list']=$this->Game_model->get_max_level($user);
 			$data['stage_list'] = $stages;
-			$data['progress_list'] = $progress;
+			// $data['progress_list'] = $progress;
 
 			$data['profileprogress'] = $profile;
 			// var_dump($profile);
@@ -481,15 +488,15 @@
 					}
 				}
 
-				// foreach ($achieved_badges as $b) {
+				foreach ($achieved_badges as $b) {
 					
-				// 	$rec_badge_param = array(
-				// 		"USER_ID" => $userID,
-				// 		"BDG_ID" => $b["BDG_ID"],
-				// 	);
+					$rec_badge_param = array(
+						"USER_ID" => $userID,
+						"BDG_ID" => $b["BDG_ID"],
+					);
 
-				// 	$rec_result = $this->Game_model->record_user_badge($rec_badge_param);
-				// }
+					$rec_result = $this->Game_model->record_user_badge($rec_badge_param);
+				}
 
 				echo json_encode($achieved_badges);
 

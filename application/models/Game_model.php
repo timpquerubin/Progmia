@@ -108,7 +108,9 @@
 			if($params === null) {
 				$user_badges = $this->db->query('SELECT * FROM USER_BADGES ORDER BY AQUIRED_AT');
 			} else if(isset($params['user'])) {
-				$user_badges = $this->db->query('SELECT * FROM USER_BADGES WHERE USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
+				// $user_badges = $this->db->query('SELECT * FROM USER_BADGES WHERE USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
+				$user_badges = $this->db->query('SELECT U.USER_ID, U.BDG_ID, B.BDG_IMG_FILENAME, U.AQUIRED_AT FROM USER_BADGES U, BADGES B WHERE U.BDG_ID=B.BDG_ID AND USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
+				// SELECT U.USER_ID, U.BDG_ID, B.BDG_IMG_FILENAME, U.AQUIRED_AT FROM USER_BADGES U, BADGES B WHERE U.BDG_ID=B.BDG_ID
 			}
 
 			return $user_badges->result_array();
@@ -119,7 +121,7 @@
 			// 	$profileprogress = $this->db->query('SELECT P.PROG_ID,L.LVL_NUM, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID=\''.$user.'\' AND P.LVL_ID=L.LVL_ID;');
 			// }
 			// else if(isset($user)) {
-				$profileprogress = $this->db->query('SELECT P.PROG_ID,P.DATE_PLAYED,L.LVL_NUM,S.STG_DESCRIPTION, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L, STAGE S WHERE P.USER_ID=\''.$user.'\' AND P.LVL_ID=L.LVL_ID GROUP BY P.PROG_ID ORDER BY P.DATE_PLAYED DESC;');
+				$profileprogress = $this->db->query('SELECT P.PROG_ID,P.DATE_PLAYED,L.LVL_NUM,S.STG_DESCRIPTION, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L, STAGE S WHERE P.USER_ID=\''.$user.'\' AND P.LVL_ID=L.LVL_ID AND L.STG_ID=S.STG_ID GROUP BY P.PROG_ID ORDER BY P.DATE_PLAYED DESC;');
 			// }
 
 			return $profileprogress->result_array();
