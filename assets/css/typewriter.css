@@ -19,7 +19,7 @@ h3.title{margin-top:0px;}
 span.sample{font-family: 'Courier New';padding:0 5px;margin:0 5px;text-align:center;color:#fff;background-color: #006c6c;box-shadow: 0px 0px 3px #000000;}
 div.tutorialDescription h2{color:#ffce12 !important;font-size:2.5vw;margin-top:0px;}
 div#code-animation p {color: #000000;}
-div#code-animation h4.line-num {background-color: #eeede5;;color: #333333;align-items: center;border-right: 2px solid #ccc !important;padding: 0 20px;animation-delay: 1s;height: 30px;margin: 0 .1em 0 0;}
+div#code-animation h4.line-num {background-color: #eeede5;;color: #333333;max-width:50px;align-items: center;border-right: 2px solid #ccc !important;padding: 0 20px;animation-delay: 1s;height: 30px;margin: 0 .1em 0 0;}
 button#restart-code-animation{float: right;}
 div#code-animation:after {
 	content: "|";
