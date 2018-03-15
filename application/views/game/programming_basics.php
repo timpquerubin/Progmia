@@ -62,7 +62,7 @@
 					</div>
 					<div class="row button-run-container">
 						<div class="button-run col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
-							<button class="btn btn-basic btn-block" onclick="runCode();">Execute Code</button>
+							<button class="btn btn-basic btn-block" onclick="runCode();"><i class="fa fa-play" style="margin-right:10px;"></i>Execute</button>
 						</div>
 					</div>
 					<div class="console-container">

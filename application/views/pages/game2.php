@@ -1,8 +1,6 @@
 <div id="page">
 	<div class="container-fluid">
-
-
-	<div class="menu collapse in" id="menu">
+	<!-- <div class="menu collapse in" id="menu">
 	    <div class="row">
 	        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 	            <ul class="page-navigation">
@@ -27,22 +25,29 @@
 	            </ul>
 	        </div>
 	    </div>
+	</div> -->
+	<div class="menu collapse in" id="menu">
+		<div class="row">
+			<nav class="main-nav">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<ul class="page-navigation">
+						<li>
+							<button class="back"><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-arrow-left"></i></a></button>
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		            <ul class="settings-ul" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
+		                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
+		                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+		            </ul>
+		        </div>
+		    </nav>
+		</div>
 	</div>
-	<div class="menu-show" style="position: absolute;top:10px;right: 10px;z-index: 999;">
-		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#menu"><i class="fa fa-chevron-up"></i></button>
-	</div>
-		<script type="text/javascript">
-			$("div.menu-show button").click(function() {
-				if ($(".menu-show button i").hasClass("fa-chevron-down")) {
-			      $("button i").removeClass("fa-chevron-down");
-			      $("button i").addClass("fa-chevron-up");
-				}
-				else if ($(".menu-show button i").hasClass("fa-chevron-up")) {
-			      $("button i").removeClass("fa-chevron-up");
-			      $("button i").addClass("fa-chevron-down");
-				}
-		   });
-		</script>
 	<input type="hidden" name="mapId" id="mapId" value="<?php echo isset($level[0]['LVL_ID']) ? $level[0]['LVL_ID'] : '' ?>" />
 	<input type="hidden" name="mapGRID" id="mapGRID" value="<?php echo isset($level[0]['LVL_GRID']) ? $level[0]['LVL_GRID'] : '' ?>" />
 	<input type="hidden" name="startPt" id="startPt" value="<?php echo $level[0]['LVL_STARTPOINT']?>">
@@ -66,7 +71,7 @@
 								</div>
 							</div>
 							<div>
-								<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i></button>
+								<button onclick="startNewGame();" class="restart" id="restart"><i class="fa fa-repeat"></i></button>
 							</div>
 						</div>
 					</div>

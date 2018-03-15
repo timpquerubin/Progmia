@@ -8,10 +8,12 @@ body.modal-open{
 }
 .modal-header{padding:5px !important;}
 button.close{position:absolute;top:5px;margin-top:0px !important;right:5px;border-radius: 100%;opacity:1 !important;font-size:2vw;color:#0b444a !important;text-shadow:0px 0px 0px;padding:2px 5px !important;}
-
+.modal-dialog {margin-top:80px !important;}
 .modal-dialog {margin:2% auto;}
-
+div.page{margin-top:25px;position: relative;}
 /* FONTS */
+button.restart {border:0px;font-size:30px;background:transparent;}
+button.restart i{color:#ffce12;}
 
 @font-face {
 	font-family: 'ArcadeClassic';
