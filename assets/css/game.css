@@ -129,8 +129,8 @@ div.code-area-container {padding-right: 0px;background-color: #004443b8;}
     box-shadow: 0px 3px 5px #000000;
 }
 .wrapper-1{border-radius: 20px;border: outset 3px #eaffff36;}
-div.wrapper-1{margin: 0px; padding: 80px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
-.wrapper-1 h1{position:absolute;top:40px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow: 0px 3px 0px #000;word-spacing:20px;color:#ffce12;text-align: center;}
+div.wrapper-1{margin: 0px; padding: 60px 20px 10px 20px;-webkit-animation: appear 2s;-moz-animation: appear 2s;-ms-animation: appear 2s;-o-animation: appear 2s;animation: appear 2s;}
+.wrapper-1 h1{position:absolute;top:15px;left:0;right:0;margin:0 auto;animation:floating 8s infinite;font-family: 'ArcadeClassic';font-size: 40px;text-shadow: 0px 3px 0px #000;word-spacing:20px;color:#ffce12;text-align: center;}
 div.code_area {font-family: "Courier New";padding: 0 15px !important;}
 ul.page-navigation{list-style: none;display: flex;justify-content: space-around;padding:0;margin:0px !important;}
 ul.page-navigation li i {font-size:30px;}
@@ -181,7 +181,7 @@ div.box .dialog-arrow:after{position: absolute;content: '\f078';font-size:1.5vw;
     font-size: 2.5vw;margin-right: 10px;
 }
 
-div.console-container textarea{    font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+div.console-container textarea{font-size:11px;font-family: Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
     padding: 20px;
     border-radius: 10px;
 }
@@ -219,7 +219,7 @@ ul.finish-ul li a{position:relative;flex-grow:1;text-shadow:0px 1px 0px #000;col
 .objectives .checked{color:#ffce12;}
 .objectives .check i {background-color: #012e33;border-radius:5px;}
 #tutorial-modal,#finish-modal,#settings-modal{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAANklEQVQYV2Pk4uJqYMADGKEKzjIwMBgjqYPzQQp8oRIwBTBJMI3NBAwFMBNABqGbwgAzAaczAbSpC7s6lQtrAAAAAElFTkSuQmCC) repeat;
-padding:35px 20px 20px 20px;}
+padding:0px 20px 20px 20px;}
 .tutorialDescription{color:#fff;font-size: 1.5vw;}
 #settings-modal{position:absolute;top:0;left:0;right:0;bottom:0;padding:0;z-index: 99999;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAKUlEQVQYV2NkYGDwZUAFxoxogsYMDAxnkQXBAiBNMEG4AEywAaYCZjQACI0FugCrLMsAAAAASUVORK5CYII=) repeat;}
 #settings-modal .modal-content{}
