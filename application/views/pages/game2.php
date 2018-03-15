@@ -709,7 +709,7 @@
 				if(hpPerc >= Objective.list[key].task.health) {
 					Objective.list[key].status = true;
 					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
-						console.log("#" + Objective.list[key].id + "_status");
+						// console.log("#" + Objective.list[key].id + "_status");
 						$("#" + Objective.list[key].id + "_status").addClass("checked");
 				}
 			} else if(objKey == 'collect_coins') {
@@ -718,7 +718,7 @@
 					Objective.list[key].status = true;
 					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 
-						console.log("#" + Objective.list[key].id + "_status");
+						// console.log("#" + Objective.list[key].id + "_status");
 						$("#" + Objective.list[key].id + "_status").addClass("checked");
 				}
 			} else if(objKey == 'defeat_bullies') {
@@ -727,7 +727,7 @@
 					Objective.list[key].status = true;
 					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 
-						console.log("#" + Objective.list[key].id + "_status");
+						// console.log("#" + Objective.list[key].id + "_status");
 						$("#" + Objective.list[key].id + "_status").addClass("checked");
 				}
 			} else if(objKey == 'use_command') {
@@ -737,7 +737,7 @@
 						Objective.list[key].status = true;
 						// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 
-						console.log("#" + Objective.list[key].id + "_status");
+						// console.log("#" + Objective.list[key].id + "_status");
 						$("#" + Objective.list[key].id + "_status").addClass("checked");
 					}
 				}
@@ -752,7 +752,7 @@
 			} else if(objKey == 'finish') {
 				if(isFinished) {
 					Objective.list[key].status = true;
-						$("#" + Objective.list[key].id + "_status").addClass("checked");
+					$("#" + Objective.list[key].id + "_status").addClass("checked");
 					document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 				}
 			}
