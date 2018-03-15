@@ -1339,7 +1339,7 @@
 						// console.log(vrbls);
 
 
-				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]);$/g.test(cmdLine)) {
+				} else if(/^([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]);$/g.test(cmdLine)) {
 
 					var tempLine = cmdLine.replace(";", "");
 					var opLine = tempLine.split(/=/i);
@@ -1378,21 +1378,25 @@
 
 						var save_to_obj = {};
 
-						if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""))) {
-							save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+						if(isVarExisting(save_to.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""))) {
+							save_to_obj = isVarExisting(save_to.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""));
 						} else {
-							return {status: false, message: save_to.replace(/\[[0-9]*\]/g, "") + "is undefined"}
+							return {status: false, message: save_to.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, "") + "is undefined"}
 						}
 
 						if(Array.isArray(save_to_obj.var_value)) {
 
-							if(/\[[0-9]*\]/g.test(save_to)) {
+							if(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g.test(save_to)) {
 
-								var arrIndex = getConditions(save_to, '[', ']');
-								if(save_to_obj.var_value[arrIndex]) {
+								var arr_index_var = getConditions(save_to, '[', ']');
+								var arr_index_obj = extract_data(arr_index_var.replace(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g, ""));
+
+								// console.log(save_to_obj.var_value[arr_index_obj.value]);
+
+								if(save_to_obj.var_value.length > arr_index_obj.value && arr_index_obj.value >= 0) {
 
 										assign_param = {
-											saveTo_index: arrIndex,
+											saveTo_index: arr_index_obj.value,
 											dataType: op_result.dataType,
 											value: op_result.value,
 										};
@@ -1409,7 +1413,7 @@
 
 						} else {
 
-							if(/\[[0-9]*\]/g.test(save_to)) {
+							if(/\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\]/g.test(save_to)) {
 								return {status: false, message: save_to_obj.var_identifier + " is not an array"};
 							} else {
 								
@@ -1863,27 +1867,6 @@
 					}
 
 				} else if(/^for\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{\s*$/g.test(cmdLine)) {
-					console.log("for loop-statement");
-
-					// code_stack.push({
-					// 		type: "loop-while",
-					// 		condition: loop_condition,
-					// 		status: cond_result.result,
-					// 		start: commandNum,
-					// 		log_id: code_log.length,
-					// 		statements: [],
-					// 		stat_recorded: false,
-					// 	});
-
-					// 	code_log.push({
-					// 		type: "cmd-loop-while",
-					// 		cmd_info: {
-					// 			condition: loop_condition,
-					// 			status: cond_result.result,
-					// 			start: commandNum,
-					// 			statements: [],
-					// 		},
-					// 	});
 
 					var stack_obj = {
 						type: "loop-for",
@@ -2623,7 +2606,7 @@
 																}
 															}
 
-														} else if(code_log[ckey].type == "cmd-loop-while" || code_log[ckey].type == "cmd-loop-do-while" || code_log[ckey].type == "cmd-loop-for") {
+														} else if(code_log[ckey].type == "cmd-loop-while" || code_log[ckey].type == "cmd-loop-do-while") {
 															
 															var compareCondArr = [code_log[ckey].cmd_info.condition, answers.commands[cmdKey].condition];
 															var condCompObj = [];
@@ -2703,6 +2686,158 @@
 																	if(corrStatAnsCtr >= cmd_ans_stat.length) {
 																		correctAns++;
 																	}
+																}
+															}
+														} else if(code_log[ckey].type == "cmd-loop-for") {
+
+															var param_check_ctr = 0;
+
+															var ans_for_params = answers.commands[cmdKey].condition;
+															var ans_param_arr = ans_for_params.split(/;/g);
+
+															var dec_var_param = ans_param_arr[0].split(/=/i);
+															var cond_param = ans_param_arr[1];
+															var op_param = ans_param_arr[2];
+
+															var var_info_arr = dec_var_param[0].trim().split(/\s+/g);
+															var parse_result = parseValue(var_info_arr[0].replace(/[\[\]]/g, ""), dec_var_param[1].trim());
+
+															var ans_var_obj = {
+																dataType: var_info_arr[0],
+																var_identifier: var_info_arr[1].trim(),
+																var_value: parse_result.value,
+															};
+															
+															var log_var_obj = code_log[ckey].cmd_info.var_dec;
+															
+															if(ans_var_obj.dataType == log_var_obj.dataType && ans_var_obj.var_identifier == log_var_obj.var_identifier && ans_var_obj.var_value == log_var_obj.var_value) {
+
+																param_check_ctr++;
+															}
+
+															var compareCondArr = [code_log[ckey].cmd_info.condition, cond_param.trim()];
+															var condCompObj = [];
+
+															// console.log(param_check_ctr);
+															// console.log(compareCondArr);
+
+															for(var ctr = 0; ctr < compareCondArr.length; ctr++) {
+
+																var condOp = /(==|!=|>=|<=|>|<)/i.exec(compareCondArr[ctr]);
+
+																var condVal = compareCondArr[ctr].split(condOp[0]);
+
+																var condObj = {
+																	op: condOp[0],
+																	values: condVal,
+																};
+
+																condCompObj.push(condObj);
+															}
+
+															var corrCondCtr = 0;
+
+															if((condCompObj[0].op == condCompObj[1].op)) {
+
+																for(var compKey1 in condCompObj[1].values) {
+
+																	for(var compKey0 in condCompObj[0].values) {
+
+																		if(condCompObj[1].values[compKey1] == condCompObj[0].values[compKey0]) {
+																			corrCondCtr++;
+																		}
+																	}	
+																}
+															}
+
+															if(corrCondCtr >= condCompObj[1].values.length) {
+																param_check_ctr++;
+															}
+
+															var op_obj = op_param.split(/=/i);
+															var opp = /[\+\-*/]/g.exec(op_obj[1]);
+															var var_list = op_obj[1].split(/[\+\-*/]/g);
+
+															var op_operand = "";
+
+															if(opp[0] == "+")
+																op_operand = "add";
+															if(opp[0] == "-")
+																op_operand = "subtract";
+															if(opp[0] == "*")
+																op_operand = "multiply";
+															if(opp[0] == "/")
+																op_operand = "divide";
+
+															var ans_op_obj = {
+																operation: op_operand,
+																save_to: op_obj[0].trim(),
+																var_1: var_list[0].trim(),
+																var_2: var_list[1].trim(),
+															};
+
+															// console.log(ans_op_obj);
+															// console.log(param_check_ctr);
+
+															var log_op_obj = code_log[ckey].cmd_info.op;
+
+															if(ans_op_obj.operation == log_op_obj.operation && ans_op_obj.save_to == log_op_obj.save_to) {
+
+																if(ans_op_obj.operation == "add") {
+
+																	if((ans_op_obj.var_1 == log_op_obj.var_1 || ans_op_obj.var_1 == log_op_obj.var_2) && (ans_op_obj.var_2 == log_op_obj.var_1 || ans_op_obj.var_2 == log_op_obj.var_2)) {
+
+																		param_check_ctr++;
+																	}
+																} else {
+
+																	if(ans_op_obj.var_1 == log_op_obj.var_1 && ans_op_obj.var_2 == log_op_obj.var_2) {
+																		param_check_ctr++;
+																	}
+																}
+															}
+
+															// console.log(param_check_ctr);
+															if(param_check_ctr >= 3) {
+																
+																var cmd_log_stat = code_log[ckey].cmd_info.statements;
+																var cmd_ans_stat = answers.commands[cmdKey].statements;
+
+																// console.log(cmd_log_stat);
+																// console.log(cmd_ans_stat);
+
+																var corrStatAnsCtr = 0;
+
+																for(var statAnsKey in cmd_ans_stat) {
+
+																	for(var statLogKey in cmd_log_stat) {
+
+																		// console.log(cmd_ans_stat[statAnsKey]);
+																		// console.log(cmd_log_stat[statLogKey]);
+
+																		if(cmd_ans_stat[statAnsKey].type == cmd_log_stat[statLogKey].type) {
+
+																			if(cmd_ans_stat[statAnsKey].type == "print") {
+
+																				if(cmd_ans_stat[statAnsKey].txt == cmd_log_stat[statLogKey].print_info.param.replace(/\"/g, "")) {
+																					corrStatAnsCtr++;
+																				}
+																			} else if(cmd_ans_stat[statAnsKey].type == "op") {
+
+																				var checkRes = {};
+
+																				checkRes = check_operation(cmd_ans_stat[statAnsKey], cmd_log_stat[statLogKey].op_info);
+
+																				if(checkRes.status && checkRes.result) {
+																					corrStatAnsCtr++;
+																				}
+																			}
+																		}
+																	}
+																}
+
+																if(corrStatAnsCtr >= cmd_ans_stat.length) {
+																	correctAns++;
 																}
 															}
 														}
@@ -2819,7 +2954,7 @@
 				var cond_1 = cond_arr[0].trim();
 				var cond_2 = cond_arr[1].trim();
 
-				console.log(cond_1 + " - " + cond_2);
+				// console.log(cond_1 + " - " + cond_2);
 
 				var testVal_1 = 0;
 				var testVal_2 = 0;
