@@ -23,9 +23,6 @@
 <div class="wrapper">
 	<div class="container-fluid">
 		<div class="row">
-				
-		<div id="sticker" class="sticker">
-					
 			<div class="col-md-2 sidebar">
 				<div class="row top">
 					<div class="col-md-8"><a class="navbar-brand" href="<?php echo base_url(); ?>Dashboard/index"><img class="img-responsive logo" src="<?php echo base_url(); ?>assets/images/final_logo.png"></a></div>
@@ -82,7 +79,6 @@
 						<li><a href="#"></a></li>
 					</ul>
 				</div>
-			</div>
 
 		</div>
 		<script>

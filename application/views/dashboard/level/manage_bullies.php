@@ -203,6 +203,8 @@
 											<!-- <option value="none" selected>None</option> -->
 											<option value="cmd-if">If</option>
 											<option value="cmd-loop-while">While</option>
+											<option value="cmd-loop-do-while">do-While</option>
+											<option value="cmd-loop-for">for</option>
 										</select>
 									</div>
 								</div>
@@ -704,12 +706,14 @@
 			load_variables_block();
 
 			document.getElementById("cmd_cond").value = "";
+			document.getElementById("cmd_type").value = "cmd-if";
 			document.getElementById("cmd_stat_type").value = "if-statement";
 		}
 
 		append_print = function() {
 
 			var curr_codeType = code_type;
+			var cmd_type = document.getElementById("cmd_type").value;
 
 			var print_txt;
 			var stmnt_type = "";
@@ -718,7 +722,10 @@
 				print_txt = document.getElementById("print_txt").value;
 			} else if(curr_codeType == "cmd") {
 				print_txt = document.getElementById("cmdprint_txt").value;
-				stmnt_type = document.getElementById("cmd_stat_type").value;
+
+				if(cmd_type == "cmd-if") {
+					stmnt_type = document.getElementById("cmd_stat_type").value;
+				}
 			}
 
 			print_list[printCtr] = {
@@ -745,7 +752,8 @@
 
 		append_variable = function() {
 
-			var curr_codeType = code_type
+			var curr_codeType = code_type;
+			var cmd_type = document.getElementById("cmd_type").value;
 
 			var dataType;
 			var identifier;
@@ -762,7 +770,10 @@
 				dataType = document.getElementById("cmdvar_dataType").value;
 				identifier = document.getElementById("cmdvar_identifier").value;
 				value = document.getElementById("cmdvar_value").value;
-				stmnt_type = document.getElementById("cmd_stat_type").value;
+
+				if(cmd_type == "cmd-if") {
+					stmnt_type = document.getElementById("cmd_stat_type").value;
+				}
 			}
 
 			var checkVarVal = parseValue(dataType, value);
@@ -810,6 +821,7 @@
 		append_array = function() {
 
 			var curr_codeType = code_type;
+			var cmd_type = document.getElementById("cmd_type").value;
 			var isMismatch = false;
 
 			var dataType;
@@ -825,7 +837,10 @@
 				dataType = document.getElementById("cmdarr_dataType").value;
 				identifier = document.getElementById("cmdarr_identifier").value;
 				value = document.getElementById("cmdarr_value").value;
-				stmnt_type = document.getElementById("cmd_stat_type").value;
+
+				if(cmd_type == "cmd-if") {
+					stmnt_type = document.getElementById("cmd_stat_type").value;
+				}
 			}
 
 			value = value.replace(/\{/g, "[");
@@ -909,7 +924,10 @@
 				var_1 = document.getElementById("cmdopp_var1").value;
 				var_2 = document.getElementById("cmdopp_var2").value;
 				operation = document.getElementById("cmdopp_operation").value;
-				stmnt_type = document.getElementById("cmd_stat_type").value;
+
+				if(cmd_type == "cmd-if") {
+					stmnt_type = document.getElementById("cmd_stat_type").value;
+				}
 			}
 
 			operation_list[opCtr] = {

@@ -1372,7 +1372,7 @@
 
 					var op_result = doOperation(opp, val_list[0], val_list[1]);
 
-					var assign_params = {};
+					var assign_param = {};
 
 					if(op_result.status) {
 
@@ -1842,10 +1842,9 @@
 							code_log[curr_cmd.log_id].cmd_info.end = commandNum;
 							code_log[curr_cmd.log_id].cmd_info.condition = loop_cond;
 
-							print_to_console("statement: do-while loop-statement, condition: " + loop_cond + ", result");
-
-
 							if(cond_result.status) {
+
+								print_to_console("statement: do-while loop-statement, condition: " + loop_cond + ", result: " + cond_result.result);
 
 								if(cond_result.result) {
 									cmdNum = curr_cmd.start;
@@ -1863,6 +1862,272 @@
 						return {status: false, message: "invalid do-while loop statement"};
 					}
 
+				} else if(/^for\(\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*\)\s*{\s*$/g.test(cmdLine)) {
+					console.log("for loop-statement");
+
+					// code_stack.push({
+					// 		type: "loop-while",
+					// 		condition: loop_condition,
+					// 		status: cond_result.result,
+					// 		start: commandNum,
+					// 		log_id: code_log.length,
+					// 		statements: [],
+					// 		stat_recorded: false,
+					// 	});
+
+					// 	code_log.push({
+					// 		type: "cmd-loop-while",
+					// 		cmd_info: {
+					// 			condition: loop_condition,
+					// 			status: cond_result.result,
+					// 			start: commandNum,
+					// 			statements: [],
+					// 		},
+					// 	});
+
+					var stack_obj = {
+						type: "loop-for",
+						statements: [],
+						start: commandNum,
+						log_id: code_log.length,
+						stat_recorded: false,
+						var_dec: {},
+						condition: "",
+						op: {},
+					};
+
+					var log_obj = {
+						type: "cmd-loop-for",
+						cmd_info: {
+							start: commandNum,
+							statements: [],
+							var_dec: {},
+							condition: "",
+							op: {},
+						},
+					}
+
+					var loop_params = getConditions(cmdLine, "(", ")");
+					// console.log(loop_condition);
+
+					if(/^\s*int\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[0-9]+\s*;\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*;\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*$/g.test(loop_params)) {
+
+						var param_arr = loop_params.split(/;/g);
+
+						for(var key in param_arr) {
+							param_arr[key] = param_arr[key].trim();
+							
+							if(/^\s*int\s+[A-Za-z][A-Za-z0-9_]*\s*=\s*[0-9]+\s*$/g.test(param_arr[key])) {
+
+								var declare_arr = param_arr[key].split(/=/g);
+								var value = declare_arr[1].trim();
+								var var_info = declare_arr[0].split(/\s+/g);
+
+								var val_obj = parseValue(var_info[0].trim(), value);
+
+								if(val_obj.status) {
+
+									var varInfoObj = {
+										dataType: var_info[0].trim(),
+										var_identifier: var_info[1].trim(),
+										var_value: val_obj.value,
+										type: "for-loop-var",
+									};
+
+									log_obj.cmd_info.var_dec = {
+										dataType: var_info[0].trim(),
+										var_identifier: var_info[1].trim(),
+										var_value: val_obj.value,
+										type: "for-loop-var",
+									};
+
+									stack_obj.var_dec = {
+										dataType: var_info[0].trim(),
+										var_identifier: var_info[1].trim(),
+										var_value: val_obj.value,
+										type: "for-loop-var",
+									};
+
+									vrbls.push(varInfoObj);
+								} else {
+									return val_obj;
+								}
+							} else if(/^\s*([A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[[0-9]+\])\s*=\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*[\+\-*/]\s*(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\'|[A-Za-z][A-Za-z0-9_]*|[A-Za-z][A-Za-z0-9_]*\[([0-9]+|[A-Za-z][A-Za-z0-9_]*)\])\s*$/g.test(param_arr[key])) {
+
+								// stack_obj.op = param_arr[key];
+
+								var op_line = param_arr[key].split(/=/i);
+
+								var save_to = op_line[0].trim();
+								var opp = /[\+\-*/]/g.exec(op_line[1]);
+
+								var varList = op_line[1].split(/[\+\-*/]/g);
+
+								// console.log(varList);
+
+								var val_list = [];
+
+								for(var key in varList) {
+
+									var val_obj = extract_data(varList[key].trim());
+
+									if(val_obj.status) {
+										val_list.push(val_obj);
+									} else {
+										return val_obj;
+									}
+								}
+
+								var op_result = doOperation(opp, val_list[0], val_list[1]);
+
+								var assign_param = {};
+
+								if(op_result.status) {
+
+									// stack_obj.op = op_result;
+
+									var op_operand = "";
+
+									if(opp[0] == "+")
+										op_operand = "add";
+									if(opp[0] == "-")
+										op_operand = "subtract";
+									if(opp[0] == "/")
+										op_operand = "divide";
+									if(opp[0] == "*")
+										op_operand = "multiply";
+
+									log_obj.cmd_info.op = {
+										// type: "op",
+										// op_info: {
+										// 	save_to: save_to,
+										// 	operation: op_operand,
+										// 	var_1: varList[0],
+										// 	var_2: varList[1],
+										// },
+										save_to: save_to.trim(),
+										operation: op_operand,
+										var_1: varList[0].trim(),
+										var_2: varList[1].trim(),
+									};
+
+									stack_obj.op = {
+										save_to: save_to.trim(),
+										operation: op_operand,
+										var_1: varList[0].trim(),
+										var_2: varList[1].trim(),
+									};
+
+									code_log.push(log_obj);
+									code_stack.push(stack_obj);
+
+									// var save_to_obj = {};
+
+									// if(isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""))) {
+									// 	save_to_obj = isVarExisting(save_to.replace(/\[[0-9]*\]/g, ""));
+									// } else {
+									// 	return {status: false, message: save_to.replace(/\[[0-9]*\]/g, "") + "is undefined"}
+									// }
+
+									// if(/\[[0-9]*\]/g.test(save_to)) {
+
+									// 	var arrIndex = getConditions(save_to, '[', ']');
+
+									// 	if(Array.isArray(save_to_obj.var_value)) {
+
+									// 		if(save_to_obj.var_value[arrIndex]) {
+
+									// 			assign_param = {
+									// 				saveTo_index: arrIndex,
+									// 				dataType: op_result.dataType,
+									// 				value: op_result.value,
+									// 			};
+									// 		} else {
+									// 			return {status: false, message: "index out of range"};
+									// 		}
+
+									// 	} else {
+									// 		return {status: false, message: save_to_obj.var_identifier + " is not an array"};
+									// 	}
+									// } else {
+
+									// 	if(!Array.isArray(save_to_obj.var_value)) {
+
+									// 		assign_param = {
+									// 			dataType: op_result.dataType,
+									// 			value: op_result.value,
+									// 		};
+									// 	} else {
+									// 		return {status: false, message: "specify array index of " + save_to_obj.var_identifier};
+									// 	}
+									// }
+
+									// save_to_obj = assignValueToVar(save_to_obj, assign_param);
+
+									// var op_operand = "";
+
+									// if(opp[0] == "+")
+									// 	op_operand = "add";
+									// if(opp[0] == "-")
+									// 	op_operand = "subtract";
+									// if(opp[0] == "/")
+									// 	op_operand = "divide";
+									// if(opp[0] == "*")
+									// 	op_operand = "multiply";
+
+									// log_obj.cmd_info.op = {
+									// 	// type: "op",
+									// 	// op_info: {
+									// 	// 	save_to: save_to,
+									// 	// 	operation: op_operand,
+									// 	// 	var_1: varList[0],
+									// 	// 	var_2: varList[1],
+									// 	// },
+									// 	save_to: save_to,
+									// 	operation: op_operand,
+									// 	var_1: varList[0],
+									// 	var_2: varList[1],
+									// };
+
+									// stack_obj.op = {
+									// 	save_to: save_to,
+									// 	operation: op_operand,
+									// 	var_1: varList[0],
+									// 	var_2: varList[1],
+									// };
+
+									// code_log.push(log_obj);
+									// code_stack.push(stack_obj);
+
+
+								} else {
+									return op_result;
+								}
+							} else if(/^\s*[A-Za-z0-9=<>()\[\]\s\W]*\s*$/g.test(param_arr[key])) {
+								// console.log(param_arr[key]);
+								var cond_result = testCondition(param_arr[key]);
+								// console.log(cond_result);
+
+								if(cond_result.status) {
+
+									log_obj.cmd_info.condition = param_arr[key];
+									stack_obj.condition = param_arr[key];
+									stack_obj.status = cond_result.result;
+								} else {
+									return cond_result;
+								}
+							} else {
+								return {status: false, message: "invalid for loop-statement parameter"};
+							}
+						}
+
+						// console.log(param_arr);
+
+
+
+					} else {
+						return {status: false, message: "invalid for loop-statement parameter"};
+					}
 				} else if(/^\s*}\s*$/g.test(cmdLine)) {
 
 					if(code_stack.length > 0) {
@@ -1881,7 +2146,7 @@
 							if(cmd_info.else) {
 								code_log[cmd_info.log_id].cmd_info.else = cmd_info.else;
 							}
-						} else if(curr_cmd.type == "loop-while") {
+						} else if(curr_cmd.type == "loop-while" || curr_cmd.type == "loop-for") {
 
 							if(!curr_cmd.stat_recorded) {
 
@@ -1890,6 +2155,78 @@
 							}
 
 							code_log[curr_cmd.log_id].cmd_info.end = commandNum;
+
+							if(curr_cmd.type == "loop-for") {
+
+								var for_op = "";
+
+								if(curr_cmd.op.operation == "add")
+									for_op = "+";
+								if(curr_cmd.op.operation == "subtract")
+									for_op = "-";
+								if(curr_cmd.op.operation == "divide")
+									for_op = "/";
+								if(curr_cmd.op.operation == "multiply")
+									for_op = "*";
+
+								// var_1_val = extract_data(curr_cmd.op.var_1);
+								// var_2_val = extract_data(curr_cmd.op.var_2);
+
+								// console.log(var_1_val);
+								// console.log(var_2_val);
+								// console.log(for_op);
+
+								var op_result = doOperation(for_op, extract_data(curr_cmd.op.var_1), extract_data(curr_cmd.op.var_2));
+								// console.log(op_result);
+
+								if(op_result.status) {
+
+									var save_to_obj = {};
+
+									if(isVarExisting(curr_cmd.op.save_to.replace(/\[[0-9]*\]/g, ""))) {
+										save_to_obj = isVarExisting(curr_cmd.op.save_to.replace(/\[[0-9]*\]/g, ""));
+									} else {
+										return {status: false, message: curr_cmd.op.save_to.replace(/\[[0-9]*\]/g, "") + "is undefined"}
+									}
+
+									if(/\[[0-9]*\]/g.test(curr_cmd.op.save_to)) {
+
+										var arrIndex = getConditions(curr_cmd.op.save_to, '[', ']');
+
+										if(Array.isArray(save_to_obj.var_value)) {
+
+											if(save_to_obj.var_value[arrIndex]) {
+
+												assign_param = {
+													saveTo_index: arrIndex,
+													dataType: op_result.dataType,
+													value: op_result.value,
+												};
+											} else {
+												return {status: false, message: "index out of range"};
+											}
+
+										} else {
+											return {status: false, message: save_to_obj.var_identifier + " is not an array"};
+										}
+									} else {
+
+										if(!Array.isArray(save_to_obj.var_value)) {
+
+											assign_param = {
+												dataType: op_result.dataType,
+												value: op_result.value,
+											};
+										} else {
+											return {status: false, message: "specify array index of " + save_to_obj.var_identifier};
+										}
+									}
+
+									save_to_obj = assignValueToVar(save_to_obj, assign_param);
+								} else {
+									return op_result;
+								}
+							}
 
 							var cond_result = testCondition(curr_cmd.condition);
 
@@ -1904,6 +2241,16 @@
 								return cond_result;
 							}
 						}
+						//  else if(curr_cmd.type == "loop-for") {
+
+						// 	// if(!curr_cmd.stat_recorded) {
+
+						// 	// 	code_log[curr_cmd.log_id].cmd_info.statements = curr_cmd.statements;
+						// 	// 	curr_cmd.stat_recorded = true;
+						// 	// }
+
+						// 	// code_log[curr_cmd.log_id].cmd_info.end = commandNum;
+						// }
 					} else {
 						return {status: false, message: "unexpected '}'"};
 					}
@@ -2276,7 +2623,7 @@
 																}
 															}
 
-														} else if(code_log[ckey].type == "cmd-loop-while") {
+														} else if(code_log[ckey].type == "cmd-loop-while" || code_log[ckey].type == "cmd-loop-do-while" || code_log[ckey].type == "cmd-loop-for") {
 															
 															var compareCondArr = [code_log[ckey].cmd_info.condition, answers.commands[cmdKey].condition];
 															var condCompObj = [];
