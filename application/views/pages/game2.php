@@ -40,7 +40,7 @@
 
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-		            <ul class="settings-ul" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
+		            <ul class="settings-ul">
 		                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
 		                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
 		            </ul>

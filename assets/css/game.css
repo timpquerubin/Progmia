@@ -139,6 +139,9 @@ ul.page-navigation li i {font-size:30px;}
 ul.page-navigation li {flex-grow:1;}
 ul.page-navigation li button a{background-color: transparent;border:0px;color:#ffce12;}
 ul.page-navigation li button{background-color: transparent;border:0px;}
+
+ul.settings-ul{list-style:none;display:flex;justify-content: flex-end;margin-right:10px;padding:0px !important;font-size: 30px;padding-top:20px;}
+ul.settings-ul li{margin-right: 20px}
 ul.settings-ul li button a{background-color: transparent;border:0px;color:#ffce12 !important;}
 ul.settings-ul li button{background-color: transparent;border:0px;color:#ffce12 !important;}
 div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-right: 20px;position:relative;}
