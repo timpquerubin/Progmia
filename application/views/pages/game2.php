@@ -931,6 +931,8 @@
 				// startNewGame();
 				isPaused = true;
 				Objective.computeScore();
+				Objective.recordScore();
+				$("#resultTitle").html("You Lost");
 				$("#finish-modal").css("display", "block");
 			}
 
