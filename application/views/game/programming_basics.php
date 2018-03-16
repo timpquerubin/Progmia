@@ -2409,8 +2409,8 @@
 																// console.log(code_log[ckey].op_info.var_1 == answers.operations[okey].var_1);
 																// console.log(code_log[ckey].op_info.var_2 == answers.operations[okey].var_2);
 
-																if((code_log[ckey].op_info.var_1 == answers.operations[okey].var_1) && (code_log[ckey].op_info.var_2 == answers.operations[okey].var_2)) {
-																	// console.log("correct operation");
+																if((code_log[ckey].op_info.var_1 == answers.operations[okey].var_1 || code_log[ckey].op_info.var_1 == answers.operations[okey].var_2) && (code_log[ckey].op_info.var_2 == answers.operations[okey].var_2 || code_log[ckey].op_info.var_2 == answers.operations[okey].var_1)) {
+																	console.log("correct operation");
 
 																	correctAns++;
 																}
