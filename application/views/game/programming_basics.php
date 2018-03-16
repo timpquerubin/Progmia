@@ -98,7 +98,7 @@
 					<div class="modal-body">
 						<div class="objectives">
 						<h3 class="goal">Goal</h3>
-							<ul class="objectives">
+							<ul class="objectives" style="">
 								<?php foreach ($objectives_list as $obj): ?>
 									<li>
 												<!-- <label class="objective-container">
@@ -1180,9 +1180,12 @@
 					var valToTrans;
 					var assign_param = {};
 
+					// console.log("assign");
+
 					if(/^(\"[A-Za-z0-9_\W]*\"|[0-9]*\.[0-9]*|\-?[0-9]+|\'[A-Za-z0-9]\')$/g.test(assignLine[1].trim())) {
 
 						if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""))) {
+							// console.log("here");
 
 							var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
 							var parsedVal = parseValue(var1.dataType.replace(/[\[\]]/g, ""), assignLine[1].trim());
@@ -1219,11 +1222,14 @@
 									return {status: false, message: "specify array index of " + var1.var_identifier};
 								}
 							}
+						} else {
+							return {status: false, message: var1_identifier + " is undefined"};
 						}
 					} else if(isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, "")) && isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""))) {
 						
 						var1 = isVarExisting(var1_identifier.replace(/\[[0-9]*\]/g, ""));
 						var2 = isVarExisting(var2_identifier.replace(/\[[0-9]*\]/g, ""));
+						// console.log("here 2");
 
 						// var valToTrans;
 						// var assign_param = {};
@@ -3861,7 +3867,11 @@
 
 				if(self.hp <= 0) {
 					isPaused = true;
-					$("#lose-modal").css("display", "block");
+					// document.getElementById("").value = "You Lost";
+					$("#resultTitle").html("You Lost");
+					Objective.computeScore();
+					Objective.recordScore();
+					$("#finish-modal").css("display", "block");
 				}
 
 				if (self.pressingRight || self.pressingLeft || self.pressingDown || self.pressingUp) 
@@ -4661,7 +4671,7 @@
 			Bully.init();
 			Question.init();
 
-			player = new Player('myPlayer1', img.player, img.player.width/4, img.player.height/4, 56, 56, 10);
+			player = new Player('myPlayer1', img.player, img.player.width/4, img.player.height/4, 56, 56, gameData.question_list.question_list.length);
 
 
 			// cmdNum = 0;

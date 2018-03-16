@@ -181,6 +181,7 @@
 							</div>
 						</div>
 
+						<div class="badges-block" style="margin: 0px; padding: 0px; width: 100%;"></div>
 					</div>
 					<div class="modal-footer">
 						<div class="row">
@@ -356,6 +357,53 @@
 				console.log("errorloading image");
 			}
 		}
+	}
+
+	check_badges = function() {
+
+		var stage_id = "<?php echo $level_info['STG_ID'] ?>";
+
+		var promise = new Promise(function(resolve, reject) {
+
+			var badge_data = {
+				stage_id: stage_id,
+			};
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>Game/check_badges",
+				data: badge_data,
+				dataType: 'json',
+				// success: function(res) {
+				// 	return res;
+				// },
+				error: function(err) {
+					console.log("failed to check badges due to connection error");
+				},
+				complete: function(comp) {
+					resolve(comp);
+				}
+			});
+		}).then(function(badge_list) {
+
+			var list = {
+				badge_list: badge_list,
+			}
+
+			console.log(badge_list);
+
+			$.ajax({
+				type: 'post',
+				url: "<?php echo base_url(); ?>Game/load_badge_block",
+				data: list,
+				success: function(badge_html) {
+					$(".badges-block").html(badge_html);
+				},
+				error: function(err) {
+					console.log("failed to load badges due to connection error");
+				}
+			});
+		});
 	}
 
 	$("#code_area").keyup(function(event) {
@@ -716,6 +764,9 @@
 					// document.getElementById(Objective.list[key].id + "_status").setAttribute("checked", "true");
 						// console.log("#" + Objective.list[key].id + "_status");
 						$("#" + Objective.list[key].id + "_status").addClass("checked");
+				} else {
+					Objective.list[key].status = true;
+					$("#" + Objective.list[key].id + "_status").removeClass("checked");
 				}
 			} else if(objKey == 'collect_coins') {
 
@@ -817,22 +868,27 @@
 
 		var aquiredScore = Objective.computeScore();
 
-		var data = {
-			lvl_id: document.getElementById("mapId").value,
-			total_score: aquiredScore
-		}
+		var promise = new Promise(function(resolve, reject) {
 
-		$.ajax({
-			type: 'POST',
-			url: '<?php echo base_url(); ?>Game/record_progress',
-			data: data,
-			dataType: 'json',
-			success: function(res) {
-				console.log(res);
-			},
-			error: function(err) {
-				console.log(err);
+			var data = {
+				lvl_id: document.getElementById("mapId").value,
+				total_score: aquiredScore
 			}
+
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo base_url(); ?>Game/record_progress',
+				data: data,
+				dataType: 'json',
+				success: function(res) {
+					resolve(res);
+				},
+				error: function(err) {
+					console.log(err);
+				}
+			});
+		}).then(function(record_res) {
+			check_badges();
 		});
 	}
 
@@ -850,8 +906,8 @@
 			type: "player",
 			atkSpd: 5,
 			atkCtr: 100,
-			hp: 10,
-			hpMax: 10,
+			hp: 4,
+			hpMax: 4,
 		};
 
 		self.isPressingUp = false;
@@ -872,7 +928,10 @@
 			if(player.hp <= 0) {
 				// alert("error: player is dead");
 
-				startNewGame();
+				// startNewGame();
+				isPaused = true;
+				Objective.computeScore();
+				$("#finish-modal").css("display", "block");
 			}
 
 			if (self.isPressingRight || self.isPressingLeft || self.isPressingDown || self.isPressingUp) 
