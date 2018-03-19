@@ -2,7 +2,7 @@
 <div class="container-fluid">
 		<div class="row">
 			<nav class="main-nav">
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 					<ul class="page-navigation">
 						<!-- <li>
 							<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
@@ -15,9 +15,16 @@
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 
 				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-		            <ul class="settings-ul" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
-		                <li><button id="settings" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		            <ul class="settings-ul">
+		                <li>
+							<button data-toggle="modal" data-target="#goal-modal" id="goal"><i class="fa fa-check"></i>Goal</button>
+						</li>
+		                <li><button id="settings" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i>Settings</button>
+		                </li>
+						<li>
+						<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i>Restart</button>
+						</li>
 		            </ul>
 		        </div>
 		    </nav>
@@ -38,7 +45,6 @@
 								 	</div>
 								</div>
 							</div>
-							<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i>Restart</button>
 						</div>
 						<div class="game-ui">
 							<canvas id="ctx" height="200" width="500"></canvas>
@@ -107,7 +113,7 @@
 						    <section>
 								<div class="tutorialDescription">
 								    <?php foreach($goalarray as $goaldesc){?>
-								    <p><?php echo $goaldesc;?>.</p>
+								    <p style="display:inline-flex;align-items: center;"><i style="margin-right: 10px;" class="fa fa-check"></i><?php echo $goaldesc;?>.</p>
 								    <?php }?>
 								</div>
 						    </section>
@@ -115,27 +121,33 @@
 						    <section>
 								<div class="tutorialDescription">
 								    <h2>How to play</h2>
-												    <p>The bully tells you to code something:</p>
-												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/Screenshot-2018-3-18 Progmia Game.png" alt="dialog" />
-
-												    <p>Type the correct code on <span class="legend">Code Area</span> and then press <span class="button">Execute</span></p>
-												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/code-area.png" alt="dialog" />
-										    <p>Reach the checkpoint.</p>
-
+								    <ul>
+								    	<li>
+										    <p>The bully instructs you to code something:</p>
+										    <img class="img-responsive" src="<?php echo base_url();?>assets/images/Screenshot-2018-3-18 Progmia Game.png" alt="dialog" />
+										</li>
+								    	<li>
+										    <p>Type the correct code on <strong>Code Area</strong></p>
+										    <img class="img-responsive" src="<?php echo base_url();?>assets/images/code-area.png" alt="dialog" />
+								    	</li>
+								    </ul>
 								</div>
 							</section>
 						    <h3></h3>
 						    <section>
 								<div class="tutorialDescription">
 								    <h2>How to play (continuation...)</h2>
-
-												    <p>The bully tells you to code something:</p>
-												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/Screenshot-2018-3-18 Progmia Game.png" alt="dialog" />
-
-												    <p>Type the correct code on <span class="legend">Code Area</span> and then press <span class="button">Execute</span></p>
-												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/code-area.png" alt="dialog" />
-										    <p>Reach the checkpoint.</p>
-										</li>
+								    <ul>
+								    	<li>
+									    <p>After typing your code, hit Execute button to run code</p>
+									    <img class="img-responsive" src="<?php echo base_url();?>assets/images/execute button.png" alt="execute button" />
+								    	</li>
+								    	<li>
+									    <p>Defeat more bullies until you reach the checkpoint.</p>
+									    <img class="img-responsive" src="<?php echo base_url();?>assets/images/checkpoint.png" alt="execute button" />
+								    	</li>
+								    </ul>
+									    <p style="display:inline-flex;align-items: center;"><strong>Note: Always read the guide<img class="img-responsive" style="margin:0 10px;" src="<?php echo base_url();?>assets/images/guide button.png" alt="guide button" /> first before coding</strong></p>
 								</div>
 							</section>
 						</div>
@@ -163,18 +175,13 @@
 						<h5 class="modal-title" id="resultTitle">Level Completed!!!</h5>
 					</div>
 					<div class="modal-body">
-						<div class="objectives">
+						<div class="objectives" id="objectives">
 						<h3 class="goal">Goal</h3>
-							<ul class="objectives" style="">
-								<?php foreach ($objectives_list as $obj): ?>
-									<li>
-												<!-- <label class="objective-container">
-												<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"></label> -->
-												<div id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="check"><i class="fa fa-check"></i></div>
-												<!-- <input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"> -->
-												<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+							<ul class="objectives" id="objectives">
+								    <?php foreach($goalarray as $goaldesc){?>
+									<li><i style="margin-right: 10px;" class="fa fa-check"></i><p><?php echo $goaldesc;?>.</p></p>
 									</li>	
-								<?php endforeach ?>
+								    <?php }?>
 							</ul>
 							<div class="objective-progress">
 								<div class="progress" style="padding: 0px;">
@@ -198,9 +205,6 @@
 								<li>
 										<?php if(isset($next_level_info["LVL_ID"])) { ?>
 											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
-										<?php } else { ?>
-											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play/<?php echo $next_stage_info["STG_ID"];?>">Next Stage</a>
-											
 										<?php } ?>
 								</li>
 							</ul>
@@ -211,7 +215,7 @@
 
 	<div id="lose-modal" class="modal" style="display: none;">
 		<div class="modal-content">
-			<h1>You Lost</h1>
+			<h1>You Lose</h1>
 		</div>
 	</div>
 
@@ -277,6 +281,10 @@
 						console.log(res);
 					}	
 				});
+			}
+			else{
+
+				$("button#tutorial").hide();
 			}
 		}
 				
@@ -3869,7 +3877,11 @@
 					$("#star3").attr("checked", true);
 					$("#star3").addClass("s3");
 				} else {
-					$("#resultTitle").text("You Lost");
+					$("#resultTitle").text("You Lose");
+					$("ul#objectives").addClass("lose");
+					$("ul#objectives i").removeClass("fa-check");
+
+					$("ul#objectives i").addClass("fa-times");
 					$("#star1").addClass("no-score u1");
 					$("#star2").addClass("no-score u2");
 					$("#star3").addClass("no-score u3");
@@ -3939,7 +3951,7 @@
 				if(self.hp <= 0) {
 					isPaused = true;
 					// document.getElementById("").value = "You Lost";
-					$("#resultTitle").html("You Lost");
+					$("#resultTitle").html("You Lose");
 					Objective.computeScore();
 					Objective.recordScore();
 					$("#finish-modal").css("display", "block");
@@ -4726,6 +4738,7 @@
 
 		startNewGame = function() {
 
+			$('#console_txt').val('');
 								Question.closeDialog();
 			document.getElementById('hp-bar').style.width = "100%";
 			document.getElementById('hp-bar').style.background = "rgb(103, 198, 54)";

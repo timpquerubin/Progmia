@@ -19,8 +19,7 @@
 				<div class="row">
 					<div class="title-header">
 						<?php foreach ($level_stages as $info) { ?>
-						<h1 id="title"><?php echo $info['STG_DESCRIPTION']; ?>
-						</h1><?php } ?>
+						<h1 id="title"><?php echo $info['STG_DESCRIPTION']; ?></h1><?php } ?>
 					</div>
 				</div>
 				<?php $array = array(); ?>
@@ -75,9 +74,6 @@
 						<?php $rowCtr = 0; ?>
 					<?php } else { $rowCtr++; } ?>
 				<?php } ?>
-				<script type="text/javascript">
-					document.getElementById('title').innerHTML += <?php echo(json_encode($rowCtr)); ?>;
-				</script>
 			</div>
 		</div>
 	</div>

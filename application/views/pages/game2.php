@@ -29,7 +29,7 @@
 	<div class="menu collapse in" id="menu">
 		<div class="row">
 			<nav class="main-nav">
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 					<ul class="page-navigation">
 						<li>
 							<button class="back"><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-arrow-left"></i></a></button>
@@ -39,10 +39,16 @@
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 
 				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 		            <ul class="settings-ul">
-		                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
-		                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+		                <li>
+							<button data-toggle="modal" data-target="#goal-modal" id="goal"><i class="fa fa-check"></i>Goal</button>
+						</li>
+		                <li><button id="settings" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i>Settings</button>
+		                </li>
+						<li>
+						<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i>Restart</button>
+						</li>
 		            </ul>
 		        </div>
 		    </nav>
@@ -70,9 +76,6 @@
 								 	</div>
 								</div>
 							</div>
-							<div>
-								<button onclick="startNewGame();" class="restart" id="restart"><i class="fa fa-repeat"></i></button>
-							</div>
 						</div>
 					</div>
 					<!-- <div class="game-menu" style="height: <?php echo $level[0]['LVL_IMGHEIGHT']/2; ?>;">
@@ -92,6 +95,8 @@
 			
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">			
 				<div class="code-area-container wrapper-1">
+
+					<div class="row"><h1 class="title">Code Area</h1><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-book"></i></button></div>
 					<!-- <center><button class="btn btn-default" onclick="executeCommand(0);">RUN</button></center> -->
 					<div class="row code_area">
 						<div class="line-number col-lg-1 col-md-1 col-sm-1 col-xs-1">
@@ -102,8 +107,8 @@
 						</div>
 					</div>
 					<div class="row button-run-container">
-						<div class="button-run col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
-							<button class="btn btn-basic btn-block" onclick="executeCommand(0);">Execute Code</button>
+						<div class="button-run col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+							<button class="btn btn-basic btn-block" onclick="executeCommand(0);"><i class="fa fa-play" style="margin-right:10px;"></i>Execute</button>
 						</div>
 					</div>
 					<!-- <textarea onscroll="this.form.elements.textarea1.scrollTop = this.scrollTop;" name="textarea2" ></textarea> -->
@@ -111,7 +116,7 @@
 			</div>
 		</div>
 		<div id="tutorial">
-			<div id="tutorial-modal" class="modal fade" style="display: none;">
+			<div id="tutorial-modal" class="modal fade multi-step" style="display: none;">
 				<div class="tutorial-container">
 				</div>
 			</div>
@@ -142,6 +147,69 @@
 				
 			</div>
 		</div> -->
+
+		
+		<div id="goal-modal" class="modal fade multi-step" style="display: none;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Goal</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<i class="fa fa-close"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div id="steps">
+							<?php $goal = $level_info['LVL_DESC'];
+							$goalarray = explode(",", $goal);?>
+							<h3></h3>
+						    <section>
+								<div class="tutorialDescription">
+								    <?php foreach($goalarray as $goaldesc){?>
+								    <p style="display:inline-flex;align-items: center;"><i style="margin-right: 10px;" class="fa fa-check"></i><?php echo $goaldesc;?>.</p>
+								    <?php }?>
+								</div>
+						    </section>
+						    <h3></h3>
+						    <section>
+								<div class="tutorialDescription">
+								    <h2>How to play</h2>
+								    <ul>
+								    	<li>
+										    <p>The bully instructs you to code something:</p>
+										    <img class="img-responsive" src="<?php echo base_url();?>assets/images/Screenshot-2018-3-18 Progmia Game.png" alt="dialog" />
+										</li>
+								    	<li>
+										    <p>Type the correct code on <strong>Code Area</strong></p>
+										    <img class="img-responsive" src="<?php echo base_url();?>assets/images/code-area.png" alt="dialog" />
+								    	</li>
+								    </ul>
+								</div>
+							</section>
+						    <h3></h3>
+						    <section>
+								<div class="tutorialDescription">
+								    <h2>How to play (continuation...)</h2>
+								    <ul>
+								    	<li>
+									    <p>After typing your code, hit Execute button to run code</p>
+									    <img class="img-responsive" src="<?php echo base_url();?>assets/images/execute button.png" alt="execute button" />
+								    	</li>
+								    	<li>
+									    <p>Defeat more bullies until you reach the checkpoint.</p>
+									    <img class="img-responsive" src="<?php echo base_url();?>assets/images/checkpoint.png" alt="execute button" />
+								    	</li>
+								    </ul>
+									    <p style="display:inline-flex;align-items: center;">Tip: you can read the<img class="img-responsive" style="margin:0 10px;" src="<?php echo base_url();?>assets/images/guide button.png" alt="guide button" /> as guide for coding.</p>
+								</div>
+							</section>
+						</div>
+
+						<div class="badges-block" style="margin: 0px; padding: 0px; width: 100%;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="finish-modal" class="modal" style="display: none;">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -162,16 +230,11 @@
 					<div class="modal-body">
 						<div class="objectives">
 						<h3 class="goal">Goal</h3>
-							<ul class="objectives">
-								<?php foreach ($objectives_list as $obj): ?>
-									<li>
-										<!-- <label class="objective-container">
-										<input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"></label> -->
-										<div id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="check"><i class="fa fa-check"></i></div>
-										<!-- <input id="obj_<?php echo $obj['OBJ_NUM']; ?>_status" class="checkmark" type="checkbox" name="obj_status"> -->
-										<p><?php echo isset($obj['OBJ_DESC']) ? $obj['OBJ_DESC'] : "" ?></p>
+							<ul class="objectives" id="objectives">
+								    <?php foreach($goalarray as $goaldesc){?>
+									<li><i style="margin-right: 10px;" class="fa fa-check"></i><p><?php echo $goaldesc;?>.</p></p>
 									</li>	
-								<?php endforeach ?>
+								    <?php }?>
 							</ul>
 							<div class="objective-progress">
 								<div class="progress" style="padding: 0px;">
@@ -184,25 +247,22 @@
 						<div class="badges-block" style="margin: 0px; padding: 0px; width: 100%;"></div>
 					</div>
 					<div class="modal-footer">
-						<div class="row">
-							<ul class="button" style="display:flex;justify-content: center;list-style: none;padding:0px !important;">
+					<div class="modal-footer">
+							<ul class="finish-ul">
 								
 								<li>
 									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>">Level Menu</a>
 								</li>
 								<li>
-									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
+									<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $level_info['LVL_ID'] ?>">Repeat Level</a>
 								</li>
 								<li>
-										<?php if(isset($next_level_info["LVL_ID"])) { ?>
-											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
-										<?php } else { ?>
-											<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play/<?php echo $next_stage_info["STG_ID"];?>">Next Stage</a>
-											
-										<?php } ?>
+									<?php if(isset($next_level_info["LVL_ID"])) { ?>
+										<a class="btn btn-default" style="display: inline-block;" href="<?php echo base_url(); ?>Game/play_basics/<?php echo $next_level_info['LVL_ID'] ?>">Next Level</a>
+									<?php } ?>
 								</li>
 							</ul>
-						</div>
+					</div>
 					</div>
 				</div>
 			</div>
@@ -212,6 +272,45 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+
+
+
+		load_tutorial = function(){
+
+			var tutorial_filename = "<?php echo isset($level_info['LVL_TUTORIAL']) ? $level_info['LVL_TUTORIAL'] : "" ?>";
+
+			if(tutorial_filename != "") {
+
+				var data = {
+					link:"game/tutorial/" + "<?php echo $level_info['LVL_TUTORIAL'] ?>"
+				}
+
+				$.ajax({
+					type:"POST",
+					url: "<?php echo base_url();?>Game/load_tutorial",
+					data: data,
+					success: function(res){	
+						$("#tutorial-modal").html(res);
+                $('div#goal').appendTo('.tutorial-container #steps');
+						setTimeout(function()
+						{
+							// $('#tutorial-modal').modal('show');
+							// load_tutorial();
+						}, 1500);
+					},
+					error: function(res){
+						console.log(res);
+					}	
+				});
+			}
+			else{
+				
+				$("button#tutorial").hide();
+			}
+		}
+				
+		load_tutorial();
+
 	var success = new Audio();
 	success.src = "<?php echo base_url(); ?>assets/sounds/sfx/success.ogg";
 	var ctx = document.getElementById("ctx").getContext("2d");
@@ -312,6 +411,8 @@
 			loadedImages++;
 			preloadProgCtr++;
 			updateLoadProgBar();
+
+			$('#goal-modal').modal('show');
 
 			console.log(preloadProgCtr);
 
@@ -855,7 +956,9 @@
 					$("#star3").attr("checked", true);
 					$("#star3").addClass("s3");
 				} else {
-					$("#resultTitle").text("You Lost");
+					$("#resultTitle").text("You Lose");
+					$("ul#objectives").addClass("lose");
+					$("ul#objectives i").removeClass("fa-check");
 					$("#star1").addClass("no-score u1");
 					$("#star2").addClass("no-score u2");
 					$("#star3").addClass("no-score u3");
@@ -1067,8 +1170,14 @@
 
 			if(isError)
 			{
-				alert('error: Dead End');
-				startNewGame();
+				isPaused = true;
+                bgmAudio.pause();
+				Objective.computeScore();
+				Objective.recordScore();
+				$("#finish-modal").css("display", "block");
+				isPaused = true;
+				console.log(isPaused);
+				// alert('error: Dead End');
 			}
 			
 			// for(var key in Maps.current.objectives)

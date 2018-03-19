@@ -19,17 +19,21 @@
 					    <section>
 							<div class="tutorialDescription">
 							    <h2>Java Class</h2>
-								<p>Before you create objects in Java, you need to define a class.</p>
+								<p>Before you create objects in Java, you need to define a <strong>class</strong>.</p>
 								<p>A class is a blueprint for the object.</p>
 								<p>We can think of class as a sketch (prototype) of a house. It contains all the details about the floors, doors, windows etc. Based on these descriptions we build the house. House is the object.</p>
 								<p>Since, many houses can be made from the same description, we can create many objects from a class.</p>
-
+							</div>
+						</section>
+					    <h3></h3>
+					    <section>
+							<div class="tutorialDescription">
 							    <h2>How to define a class in Java?</h2>
 								<p>Here's how a class is defined in Java:</p>
-								<p>class <span style="color:#2b91af;">ClassName</span>{</p>
-								<p class="comment">// variables</p>
-								<p class="comment">// methods</p>
-								<p>}</p>
+<pre><samp>class <span style="color:#2b91af;">ClassName</span>{
+// variables
+// methods
+}</samp></pre>
 							</div>
 					    </section>
 					    <h3></h3>

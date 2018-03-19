@@ -34,13 +34,12 @@ div.badge-list img{margin:0 auto;}
     font-weight: normal;
     font-style: normal;
 }
-button#restart{color: #ffce12;font-family: 'ArcadeClassic';
-
+button#restart,button#goal{color: #ffce12;font-family: 'ArcadeClassic';
+border:0px;
 background: transparent;
+padding:0 5px;
 
-border: 0px;
-
-font-size: 25px;}
+font-size: 30px !important;}
 button#restart i {margin-right: 5px;}
 ul.star::before{position: absolute;top: 0;left: 0;right: 0;background-color: #006C6C;border-radius: 100%;content: '';width: 100%;z-index: 1;height: 70px;margin: 0 auto;border: 4px double #032222;}
 /* FONTS */
@@ -104,10 +103,11 @@ div.loading-container div#load {
   z-index: 1;
   border-radius:10px;
 }
-button#tutorial{    background-color: transparent;
+button#tutorial{background-color: transparent;
     border: 0px;
     color: #ffce12 !important;
-    font-size:30px;position: absolute;top:20px;left: 33px;}
+    font-size:30px;}
+.code-area-container button#tutorial{position: absolute;top:20px;left: 33px;}
 canvas#ctx {
   width:100%;
   margin: 0px auto !important;
@@ -153,12 +153,12 @@ ul.page-navigation li i {font-size:30px;}
 ul.page-navigation li {flex-grow:1;}
 ul.page-navigation li button a{background-color: transparent;border:0px;color:#ffce12;}
 ul.page-navigation li button{background-color: transparent;border:0px;}
-
 ul.settings-content input[type="range"]{opacity: 0 !important;}
+ul.settings-ul li:not(:last-child):after{content:'|';margin:0 10px;color:#365858;}
 ul.settings-ul{list-style:none;display:flex;justify-content: flex-end;margin-right:10px;padding:0px !important;font-size: 30px;padding-top:20px;}
 ul.settings-ul li{margin-right: 20px}
 ul.settings-ul li button a{background-color: transparent;border:0px;color:#ffce12 !important;color:#bdbdbd !important;}
-ul.settings-ul li button{background-color: transparent;border:0px;color:#ffce12 !important;color:#bdbdbd !important;}
+ul.settings-ul li button{background-color: transparent;border:0px;color:#bdbdbd !important;color:#ffce12 !important;}
 div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-right: 20px;position:relative;}
 div.line-number:after {content:'';position: absolute;top:0;left:0;right:0;border-top:solid 1px #b0b0b0;}
 div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #000000;text-align: right;border: none;}
@@ -166,7 +166,10 @@ div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;
 a.back{margin-top:3px;color:#bdbdbd;}
 a.back:hover{transition: .2s;color:#ffce12;}
 a.back:focus,button#settings:focus{color:#ffce12 !important;}
-button#settings:hover{transition: .2s;color:#ffce12 !important;}
+button#settings:hover,button#goal:hover{transition: .2s;color:#ffce12 !important;}
+
+button#settings{font-family: 'ArcadeClassic' !important;}
+button#settings i {margin-right: 5px;}
 div.border-custom {border-left:solid 1px #b0b0b0;background-color:#dededd;}
 textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #000000;}
 textarea.code_area:focus {outline: none;}
@@ -229,8 +232,7 @@ ul.finish-ul li:not(:first-child):not(:last-child) a:before{position:absolute;to
 ul.finish-ul li:not(:first-child):not(:last-child) a:after{position:absolute;top:0px;left: 0px;z-index: 999;width: 0;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #003e3d transparent transparent transparent;}
 
 
-.tutorial-container
-.anim-typewriter{animation: dialog 2s steps(44) 1s 1 normal both;}
+.tutorial-container .anim-typewriter{animation: dialog 2s steps(44) 1s 1 normal both;}
 div.title{text-align: center;background-color: #ffffff36;padding: 10px;}
 div.title h1{font-family: 'ArcadeClassic';font-size:40px;color: #eaffff;}
 div.title p {font-family: 'ArcadeAlternate';font-size:20px;color:#ffce12;}
@@ -243,11 +245,16 @@ ul.finish-ul li a{position:relative;flex-grow:1;text-shadow:0px 1px 0px #000;col
 .modal-content{animation:appear 1.2s 1;padding-top:5px;color:#021313;background-color:#004443e8 !important;border:double 3px #999999 !important;border: 3px solid #ffce12; width: 100%; }
 .goal {color:#ffff00;font-size:32px;font-family: 'ArcadeClassic';text-align: center;margin:0px;text-shadow: 0px 2px 0px #000;}
 
+ul#objectives .{}
  ul.objectives{display: inline-flex;flex-direction: column;width: 80%;padding: 0;margin:0 10%;}
- ul.objectives li{    display: inline-flex;
-    justify-content: space-around;margin-bottom:10px;}
-    .objectives p {color:#fff;width: 80%}
+ ul.objectives li{    display: inline-flex;margin-bottom:10px;}
+    .objectives p {color:#fff;}
+    #goal-modal i.fa-check {color:#aaa;font-size: 2vw;background-color: #012e33;border-radius:5px;;}
+    #goal-modal img{border:1px solid #eaffff; margin:5px auto; padding:5px;background:#000;}
 .objectives .check{width: 20%;text-align: center;font-size: 2vw;color:#6e787973;}
+.objectives i{width: 2vw;height:2vw;text-align: center;font-size: 2vw;color:#ffce12;background-color: #012e33;
+    border-radius: 5px;}
+.objectives .lose i{color:#fb5959 !important;}
 .objectives .checked{color:#ffce12;}
 .objectives .check i {background-color: #012e33;border-radius:5px;}
 #tutorial-modal,#finish-modal,#settings-modal{background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAANklEQVQYV2Pk4uJqYMADGKEKzjIwMBgjqYPzQQp8oRIwBTBJMI3NBAwFMBNABqGbwgAzAaczAbSpC7s6lQtrAAAAAElFTkSuQmCC) repeat;
