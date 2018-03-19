@@ -3954,6 +3954,9 @@
 					$("#resultTitle").html("You Lose");
 					Objective.computeScore();
 					Objective.recordScore();
+					sfxAudio.src = "<?php echo base_url();?>assets/sounds/sfx/success.ogg";
+					sfxAudio.play();
+                    bgmAudio.pause();
 					$("#finish-modal").css("display", "block");
 				}
 

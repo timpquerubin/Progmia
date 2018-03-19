@@ -37,10 +37,7 @@ div.badge-list img{margin:0 auto;}
 button#restart,button#goal{color: #ffce12;font-family: 'ArcadeClassic';
 border:0px;
 background: transparent;
-padding:0 5px;
-
 font-size: 30px !important;}
-button#restart i {margin-right: 5px;}
 ul.star::before{position: absolute;top: 0;left: 0;right: 0;background-color: #006C6C;border-radius: 100%;content: '';width: 100%;z-index: 1;height: 70px;margin: 0 auto;border: 4px double #032222;}
 /* FONTS */
 
@@ -141,7 +138,7 @@ div.code-area-container {padding-right: 0px;background-color: #004443b8;}
 .main-nav{background-color: #3b3c3cb5;background-color: #033635b5;
     height: 45px;
     border-bottom: solid #eaffff36 3px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     box-shadow: 0px 3px 5px #000000;
 }
 .wrapper-1{border-radius: 20px;border: outset 3px #eaffff36;}
@@ -159,6 +156,7 @@ ul.settings-ul{list-style:none;display:flex;justify-content: flex-end;margin-rig
 ul.settings-ul li{margin-right: 20px}
 ul.settings-ul li button a{background-color: transparent;border:0px;color:#ffce12 !important;color:#bdbdbd !important;}
 ul.settings-ul li button{background-color: transparent;border:0px;color:#bdbdbd !important;color:#ffce12 !important;}
+ul.settings-ul li button i {margin-right:10px;}
 div.line-number {background-color:#eeede5;margin: 0px; padding: 0px; padding-right: 20px;position:relative;}
 div.line-number:after {content:'';position: absolute;top:0;left:0;right:0;border-top:solid 1px #b0b0b0;}
 div.line-number textarea {margin: 0px;padding: 0px;overflow:hidden;resize: none;width: 100%;background-color: inherit;color: #000000;text-align: right;border: none;}
@@ -169,7 +167,6 @@ a.back:focus,button#settings:focus{color:#ffce12 !important;}
 button#settings:hover,button#goal:hover{transition: .2s;color:#ffce12 !important;}
 
 button#settings{font-family: 'ArcadeClassic' !important;}
-button#settings i {margin-right: 5px;}
 div.border-custom {border-left:solid 1px #b0b0b0;background-color:#dededd;}
 textarea.code_area {background-color: inherit;border: none;resize:none;width:100%;margin: 0;padding: 0;color: #000000;}
 textarea.code_area:focus {outline: none;}
@@ -228,7 +225,7 @@ ul.finish-ul li:last-child a {border-bottom-right-radius: 5px;}
 ul.finish-ul li:first-child a:before{position:absolute;top:0px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #003f3e transparent transparent;}
 ul.finish-ul li:last-child a:before{position:absolute;top:0px;left: 0px;z-index: 999;width: 0;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #003e3d transparent transparent transparent;}
 
-ul.finish-ul li:not(:first-child):not(:last-child) a:before{position:absolute;top:0px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #003f3e transparent transparent;}
+ul.finish-ul li:not(:first-child):not(:last-child) a:before{position:absolute;top:0px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #0a4746 transparent transparent;}
 ul.finish-ul li:not(:first-child):not(:last-child) a:after{position:absolute;top:0px;left: 0px;z-index: 999;width: 0;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #003e3d transparent transparent transparent;}
 
 

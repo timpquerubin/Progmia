@@ -41,6 +41,9 @@
 								            	<button id="profile">Profile</button>
 								            </li>
 								            <li>
+								            	<button id="progress-tab">Progress</button>
+								            </li>
+								            <li>
 								            	<button id="leaderboard">Leaderboard</button>
 								            </li>
 								            <li>
@@ -93,15 +96,46 @@
 
 						<div id="profile" class="profile">
 							<div class="row">
+								<h1>Profile</h1>
+							</div>
+							<div class="row profile-margin">
+									<div class="col-md-4">
+										<div class="avatar">
+										<?php foreach($avatar as $avtr){ ?>
+											<img class="img-responsive avtr-thumb" src="<?php echo base_url(); ?>assets/images/avatars/FRONTVIEW/<?php echo $avtr['AVTR_FRONTVIEW_FILENAME'];?>">
+										<?php } ?>
+										</div>
+										<div class="player-stats">
+											<?php $rank_num;?>
+											<?php foreach($rank_list as $rank){
+												if($rank['USER'] == $this->session->userdata('username'))
+												{
+													$rank_num = $rank['rank'];
+												}
+											}?>
+											<p>Rank: <?php echo $rank_num;?></p>
+											<p>Score: <?php if ($total_points == 0){ ?>0<?php } ?><?php echo $total_points; ?></p>
+											
+										</div>
+									</div>
+									<div class="col-md-8">
+										<p>Date Registered:</p>
+									</div>
+							</div>
+						</div>
+
+
+						<div id="progress-tab" class="progress-tab">
+							<div class="row">
 								<h1>PROGRESS</h1>
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<table class="table table-container" id="data-achievements">
+									<table class="table table-container" id="data-progress">
 										<thead>
-											<th>Achievements</th>
+											<th>Activity</th>
 											<th>Last Earned</th>
-											<th style="border-top-right-radius: 19px;">Score</th>
+											<th>Score</th>
 										</thead>
 										<tbody>
 											<?php if (isset($profileprogress[0])){?>
@@ -143,9 +177,9 @@
 								<div class="col-md-12">
 									<table class="table table-container" id="data-leaderboard">
 										<thead>
-										<th>Ranking</th>
-										<th>User</th>
-										<th>Total Score</th>
+										<th>Rank</th>
+										<th>Name</th>
+										<th>Score</th>
 										</thead>
 										<tbody>
 											<?php $ranking = 1; ?>
@@ -161,7 +195,7 @@
 															<?php 
 															break; } ?>>
 												<td><?php echo $ranking; ?></td>
-												<td><div style="display: inline-flex;align-items: flex-start;"><img style="height: 50px;width: 50px;margin-right: 10px;" src="<?php echo base_url();?>assets/images/avatars/THUMBNAIL/<?php echo $leaderboard['AVTR_THUMBNAIL_FILENAME'];?>"><h3 style="word-wrap: break-word;"><?php echo $leaderboard['USER']; ?></h3></div><div class="bg-td"></div></td>
+												<td><div style="display: inline-flex;"><img style="height: 4vw;margin-right: 10px;margin-top:1.5vh;" src="<?php echo base_url();?>assets/images/avatars/THUMBNAIL/<?php echo $leaderboard['AVTR_THUMBNAIL_FILENAME'];?>"><h3 style="word-wrap: break-word;"><?php echo $leaderboard['USER']; ?></h3></div><div class="bg-td"></div></td>
 												<td><?php echo $leaderboard['TOTAL GAME SCORE']; ?><div class="bg-td"></div></td>
 												<?php $ranking++; ?>
 											</tr>

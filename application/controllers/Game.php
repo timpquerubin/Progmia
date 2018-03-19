@@ -58,12 +58,13 @@
 			$user_badges = $this->Game_model->get_user_badges(array("user" => $userID));
 
 			// echo "<pre>";
-			// var_dump($profile);
+			// var_dump($this->Profile_model->get_rank());
 			// echo "</pre>";
 			// exit();
 
 			$data['avatar'] = $avatar;
 			$data['leaderboard_list'] = $this->Profile_model->get_leaderboard();
+			$data['rank_list'] = $this->Profile_model->get_rank();
 			$data['badges_list'] = $badges;
 			$data['user_badges'] = $user_badges;
 			$data['user_info'] = $userinfo;

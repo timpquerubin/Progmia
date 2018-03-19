@@ -52,7 +52,6 @@ $('.multiple-items').slick({
     // instead of a settings object
   ]
 });
-					
 		   $("div.main-menu ul li button").click(function() {
 		      $(".changing > div:first-child").removeClass("col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-xs-4 col-sm-4 col-md-4 col-lg-4");
 		      $(".changing > div:first-child").addClass("col-xs-4 col-sm-4 col-md-3 col-lg-3");
@@ -65,6 +64,10 @@ $('.multiple-items').slick({
 		   		'transition':'5s'
 		    });
 		    $('div#profile').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		    $('div#progress-tab').css({
 		   		'display':'none',
 		   		'transition':'5s'
 		    });
@@ -89,6 +92,35 @@ $('.multiple-items').slick({
 		   		'display':'block',
 		   		'transition':'5s'
 		    });
+		    $('div#progress-tab').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		    $('div#leaderboard').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		    $('div#badges').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		   });
+
+
+
+		   $("div.main-menu ul li button#progress-tab").click(function() {
+		    $('div#play').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		    $('div#profile').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		    $('div#progress-tab').css({
+		   		'display':'block',
+		   		'transition':'5s'
+		    });
 		    $('div#leaderboard').css({
 		   		'display':'none',
 		   		'transition':'5s'
@@ -109,6 +141,10 @@ $('.multiple-items').slick({
 		   		'display':'none',
 		   		'transition':'5s'
 		    });
+		    $('div#progress-tab').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
 		    $('div#leaderboard').css({
 		   		'display':'block',
 		   		'transition':'5s'
@@ -121,11 +157,16 @@ $('.multiple-items').slick({
 
 
 		   $("div.main-menu ul li button#badges").click(function() {
+			  $(window).trigger('resize');
 		    $('div#play').css({
 		   		'display':'none',
 		   		'transition':'5s'
 		    });
 		    $('div#profile').css({
+		   		'display':'none',
+		   		'transition':'5s'
+		    });
+		    $('div#progress-tab').css({
 		   		'display':'none',
 		   		'transition':'5s'
 		    });
@@ -144,10 +185,18 @@ $('.multiple-items').slick({
 	        "pagingType": "first_last_numbers",
 	        "pageLength": 5
 	    } ); 
+	    $('#data-progress').DataTable( {
+	        "pagingType": "first_last_numbers",
+	        "pageLength": 5
+	    } );
 	    $('#data-leaderboard').DataTable( {
 	        "pagingType": "first_last_numbers",
 	        "pageLength": 5
 	    } );
+	    $('.dataTables_filter input').attr("placeholder", "Search...");
+	    $(".dataTables_filter label").contents().filter(function(){
+		    return (this.nodeType == 3);
+		}).remove();
 	});
 
 

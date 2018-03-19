@@ -46,12 +46,12 @@ div#code-animation:after {
         #steps .actions ul li a:hover{background-color:#006c6c !important;color:#ffce12;transition: .2s;}
         #steps .steps li a{color:#012929;font-family: 'ArcadeClassic';font-size: 2vw;}
         #steps .actions ul {list-style: none;display:flex;justify-content: space-around;width: 100%;padding:0px;margin:0 auto;}
-        #steps .actions ul li:first-child{position: absolute;bottom: 3px;left: 0px;padding: 0;}
-        #steps .actions ul li:first-child:before{position:absolute;top:-4px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #054342 transparent transparent;}
+        #steps .actions ul li:first-child{position: absolute;bottom: 4px;left: 0px;padding: 0;}
+        #steps .actions ul li:first-child:before{position:absolute;top:-5px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #054342 transparent transparent;}
         #steps .title{display: none;}
         #steps .current{display: block;}
-        #steps .actions ul li:not(:first-child){position:absolute;bottom:3px;right: 0px;}
-        #steps .actions ul li:not(:first-child):before{position:absolute;top:-4px;left: 0px;width: 0;z-index: 999;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #054342 transparent transparent transparent;}
+        #steps .actions ul li:not(:first-child){position:absolute;bottom:4px;right: 0px;}
+        #steps .actions ul li:not(:first-child):before{position:absolute;top:-5px;left: 0px;width: 0;z-index: 999;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #003d3c transparent transparent transparent;}
         #steps .title{display: none;}
         #steps .current{display: block;}
         #steps .actions ul li:first-child a {border-bottom-left-radius: 4px;}

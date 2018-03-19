@@ -20,6 +20,13 @@
 
 			return $leaderboard->result_array();
 		}
+
+		public function get_rank()
+		{
+			$rank = $this->db->query('SELECT @rank:=@rank+1 \'rank\',U.USER_USERNAME as `USER`,SUM(M.MAX_SCORE) as `TOTAL GAME SCORE` FROM (SELECT USER_ID, LVL_ID, MAX(GAME_SCORE) AS MAX_SCORE FROM progress GROUP BY USER_ID, LVL_ID) AS M, USER AS U,(SELECT @rank:=0) r WHERE U.USER_ID=M.USER_ID GROUP BY M.USER_ID ORDER BY `TOTAL GAME SCORE` desc;');
+			return $rank->result_array();
+		}
+
 		public function get_stages($user = null)
 		{
 			$stages = $this->db->query('SELECT `stage`.* FROM `stage` order by STG_ID;');
