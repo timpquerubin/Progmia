@@ -1,3 +1,4 @@
+
 <html>
 	<head>
 		<title>Progmia | Game</title>
@@ -10,6 +11,7 @@
 		<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.min.js""></script>
 		<link rel="icon" href="<?php echo base_url(); ?>assets/images/icon_jFd_icon.ico">
     	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/stars.css">
+
 	</head>
 	<body>
         <div id="loading" class="container-fluid"">
@@ -65,9 +67,9 @@
         <div class="modal-content">
             <div class="modal-header">
                     <h2 class="modal-title"><i class="fa fa-sliders"></i>  Volume Settings</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
             </div>
             <div class="modal-body">
                 <ul class="settings-content">

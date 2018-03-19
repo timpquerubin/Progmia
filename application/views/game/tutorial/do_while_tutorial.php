@@ -30,8 +30,8 @@
 					    <section>
 					    	<div class="tutorialDescription">
 					    		<h2>How do...while loop works?</h2>
-					    		<p>The body of do...while loop is executed once (before checking the test expression). Only then, the test expression is checked.</p>
-					    		<p>If the test expression is evaluated to true, codes inside the body of the loop are executed, and the test expression is evaluated again. This process goes on until the test expression is evaluated to false.</p>
+					    		<p>The body of <strong>do...while</strong> loop is executed once (before checking the test expression). Only then, the test expression is checked.</p>
+					    		<p>If the test expression is evaluated to <strong>true</strong>, codes inside the body of the loop are executed, and the test expression is evaluated again. This process goes on until the test expression is evaluated to <strong>false</strong>.</p>
 					    		<p>When the test expression is false, the do..while loop terminates.</p>
 					    	</div>
 					    </section>

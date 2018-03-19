@@ -7,23 +7,23 @@
     font-style: normal;
 }
 div#code-animation p.var-highlight-1 {
-    color: #c800a4 !important;
+    color: rgba(102, 217, 238, 1) !important;
 }
 div#code-animation p.var-highlight-2 {
-    color: #3a00de !important;
+    color: rgba(174, 129, 221, 1) !important;
 }
 div#code-animation p.var-highlight-3 {
     color: #c800a4 !important;
 }
 h3.title{margin-top:0px;}
 span.sample{font-family: 'Courier New';padding:0 5px;margin:0 5px;text-align:center;color:#fff;background-color: #006c6c;box-shadow: 0px 0px 3px #000000;}
-div.tutorialDescription h2{color:#ffce12 !important;font-size:2.5vw;margin-top:0px;}
-div#code-animation p {color: #000000;}
-div#code-animation h4.line-num {background-color: #eeede5;;color: #333333;max-width:50px;align-items: center;border-right: 2px solid #ccc !important;padding: 0 20px;animation-delay: 1s;height: 30px;margin: 0 .1em 0 0;}
+div.tutorialDescription h2{font-size:2vw;margin-top:0px;}
+div#code-animation p {color: #ffffff;}
+div#code-animation h4.line-num {background-color: #272822;color: rgba(144, 144, 138, 1);max-width:50px;align-items: center;border-right: 1px solid rgba(70, 71, 65, 1) !important;padding: 0 20px;animation-delay: 1s;height: 30px;margin: 0 .1em 0 0;}
 button#restart-code-animation{float: right;}
 div#code-animation:after {
 	content: "|";
-	color: #333333;
+	color: #fff;
 	font-size:20px;
 	margin-left:-1em;
 	animation: blink 500ms infinite alternate;    -webkit-animation-timing-function: steps(2, end);
@@ -46,15 +46,22 @@ div#code-animation:after {
         #steps .actions ul li a:hover{background-color:#006c6c !important;color:#ffce12;transition: .2s;}
         #steps .steps li a{color:#012929;font-family: 'ArcadeClassic';font-size: 2vw;}
         #steps .actions ul {list-style: none;display:flex;justify-content: space-around;width: 100%;padding:0px;margin:0 auto;}
-        #steps .actions ul li:first-child{position:absolute;bottom:0px;left: 0px;background-color:#006c6c;padding: 5px 0;border-bottom-left-radius: 5px;}
-        #steps .actions ul li:first-child:before{position:absolute;top:0px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #003e3d transparent transparent;}
+        #steps .actions ul li:first-child{position: absolute;bottom: 3px;left: 0px;padding: 0;}
+        #steps .actions ul li:first-child:before{position:absolute;top:-4px;right: 0px;z-index:999;content:'';width: 0;height: 0;border-style: solid;border-width: 0 20px 20px 0;border-color: transparent #054342 transparent transparent;}
         #steps .title{display: none;}
         #steps .current{display: block;}
-        #steps .actions ul li:not(:first-child){position:absolute;bottom:0px;right: 0px;padding: 5px 0;background-color:#006c6c;border-bottom-right-radius: 5px;}
-        #steps .actions ul li:not(:first-child):before{position:absolute;top:0px;left: 0px;width: 0;z-index: 999;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #054342 transparent transparent transparent;}
+        #steps .actions ul li:not(:first-child){position:absolute;bottom:3px;right: 0px;}
+        #steps .actions ul li:not(:first-child):before{position:absolute;top:-4px;left: 0px;width: 0;z-index: 999;content:'';height: 0;border-style: solid;border-width: 20px 20px 0 0;border-color: #054342 transparent transparent transparent;}
         #steps .title{display: none;}
         #steps .current{display: block;}
-        #steps .actions ul li a{color:#6ab3b3;background-color:#004443aa !important;text-shadow:0px 1px 0px #000;font-family: 'ArcadeClassic';font-size: 2vw;padding: 10px 25px;}
+        #steps .actions ul li:first-child a {border-bottom-left-radius: 4px;}
+        #steps .actions ul li:not(:first-child) a {border-bottom-right-radius: 4px;}
+        #steps .actions ul li a{    color: #94e8dd;
+    background-color: #005a5a !important;
+    text-shadow: 0px 1px 0px #000;
+    font-family: 'ArcadeClassic';
+    font-size: 2vw;
+    padding: 10px 25px;}
 
 
 @-webkit-keyframes blink{
@@ -86,9 +93,9 @@ div#code-animation p.comment{color:#75715e;}
 div#code-animation{margin:0px;}
 div#code-animation{margin-bottom:20px;
 	font-family: 'Courier New';
-    background-color: #dededd;}
+    background-color: rgba(39, 40, 34, 1);color: #ffffff;}
 button.close{    background: #000;
     border-radius: 25px;
     padding: 2px 7px;}
-div.tutorialDescription p {background-color: transparent;margin:10px auto !important;}
-div.tutorialDescription strong{color:#ffce12;}
+div.tutorialDescription p {background-color: transparent;margin:10px auto 20px auto !important;}
+div.tutorialDescription strong{color:#f7d039;}

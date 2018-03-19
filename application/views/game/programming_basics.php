@@ -7,8 +7,8 @@
 						<!-- <li>
 							<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
 						</li> -->
-						<li>
-							<button class="back"><a href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-arrow-left"></i></a></button>
+						<li style="margin-top: 5px;">
+							<a class="back" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-arrow-left"></i></a>
 						</li>
 					</ul>
 				</div>
@@ -17,9 +17,7 @@
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 		            <ul class="settings-ul" style="list-style:none;display:flex;justify-content: space-around;padding:0px !important;font-size: 30px;padding-top:20px;">
-		            	<li><button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i></button></li>
-		                <li><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></li>
-		                <li><button data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
+		                <li><button id="settings" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i></button></li>
 		            </ul>
 		        </div>
 		    </nav>
@@ -40,6 +38,7 @@
 								 	</div>
 								</div>
 							</div>
+							<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i>Restart</button>
 						</div>
 						<div class="game-ui">
 							<canvas id="ctx" height="200" width="500"></canvas>
@@ -51,7 +50,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="code-area-container wrapper-1">
-					<div class="row"><h1 class="title">Type Here</h1></div>
+					<div class="row"><h1 class="title">Code Area</h1><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-book"></i></button></div>
 					<div class="row code_area">
 						<div class="line-number col-md-1 col-sm-1 col-xs-1">
 							<textarea rows="15" id="textarea1" disabled></textarea>
@@ -75,6 +74,74 @@
 		<div id="tutorial">
 			<div id="tutorial-modal" class="modal fade multi-step" style="display: none;">
 				<div class="tutorial-container">
+				</div>
+			</div>
+		</div>
+		<!-- <div id="goal">
+			<?php $goal = $level_info['LVL_DESC'];
+			$goalarray = explode(",", $goal);?>
+			<h3></h3>
+		    <section>
+				<div class="tutorialDescription">
+				    <?php foreach($goalarray as $goaldesc){?>
+				    <p><?php echo $goaldesc;?>.</p>
+				    <?php }?>
+				</div>
+		    </section>
+		</div> -->
+		
+		<div id="goal-modal" class="modal fade multi-step" style="display: none;">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Goal</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<i class="fa fa-close"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div id="steps">
+							<?php $goal = $level_info['LVL_DESC'];
+							$goalarray = explode(",", $goal);?>
+							<h3></h3>
+						    <section>
+								<div class="tutorialDescription">
+								    <?php foreach($goalarray as $goaldesc){?>
+								    <p><?php echo $goaldesc;?>.</p>
+								    <?php }?>
+								</div>
+						    </section>
+						    <h3></h3>
+						    <section>
+								<div class="tutorialDescription">
+								    <h2>How to play</h2>
+												    <p>The bully tells you to code something:</p>
+												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/Screenshot-2018-3-18 Progmia Game.png" alt="dialog" />
+
+												    <p>Type the correct code on <span class="legend">Code Area</span> and then press <span class="button">Execute</span></p>
+												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/code-area.png" alt="dialog" />
+										    <p>Reach the checkpoint.</p>
+
+								</div>
+							</section>
+						    <h3></h3>
+						    <section>
+								<div class="tutorialDescription">
+								    <h2>How to play (continuation...)</h2>
+
+												    <p>The bully tells you to code something:</p>
+												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/Screenshot-2018-3-18 Progmia Game.png" alt="dialog" />
+
+												    <p>Type the correct code on <span class="legend">Code Area</span> and then press <span class="button">Execute</span></p>
+												    <img class="img-responsive" src="<?php echo base_url();?>assets/images/code-area.png" alt="dialog" />
+										    <p>Reach the checkpoint.</p>
+										</li>
+								</div>
+							</section>
+						</div>
+
+						<div class="badges-block" style="margin: 0px; padding: 0px; width: 100%;"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -182,6 +249,7 @@
 
 	$(document).ready(function() {
 
+
 		load_tutorial = function(){
 
 			var tutorial_filename = "<?php echo isset($level_info['LVL_TUTORIAL']) ? $level_info['LVL_TUTORIAL'] : "" ?>";
@@ -198,9 +266,10 @@
 					data: data,
 					success: function(res){	
 						$("#tutorial-modal").html(res);
-						setTimeout(function() 
+                $('div#goal').appendTo('.tutorial-container #steps');
+						setTimeout(function()
 						{
-							$('#tutorial-modal').modal('show');
+							// $('#tutorial-modal').modal('show');
 							// load_tutorial();
 						}, 1500);
 					},
@@ -212,7 +281,6 @@
 		}
 				
 		load_tutorial();
-
 		var console_txt = document.getElementById("console_txt");
 		var ctx = document.getElementById("ctx").getContext("2d");
 		var canvas = document.getElementById("ctx");
@@ -278,6 +346,8 @@
 
 				startNewGame();
 				setInterval(update, 40);
+
+
 				// $('#tutorial-modal').modal('show');
 
 				// check_badges();
@@ -325,6 +395,7 @@
 						// console.log(preloadProgCtr/(gameImgArr.length + 4));
 						updateLoadProgBar();
 
+		$('#goal-modal').modal('show');
 						gameData.objectives_list = comp.responseJSON;
 						// console.log(gameData);
 
@@ -4655,8 +4726,10 @@
 
 		startNewGame = function() {
 
+								Question.closeDialog();
 			document.getElementById('hp-bar').style.width = "100%";
 			document.getElementById('hp-bar').style.background = "rgb(103, 198, 54)";
+
 
 			// isPaused = false;
 
@@ -4717,7 +4790,7 @@
 		var question = new Question();
 		var player = {};
 
-		preloadGameData()
+		preloadGameData();
 		// .done(function(images) {
 
 		// 	console.log("done preloading");

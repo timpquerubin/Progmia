@@ -52,42 +52,43 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9" style="position: relative;">
+
+					<div class="col-xs-8 col-sm-8 col-md-9 col-lg-9" style="position: relative;" >
 				    	<div id="play" class="play">
 							<h1>Stages</h1>
 							<?php $stage1 = true; ?>
 							<?php $i = 0; ?>
 							<?php $ctr = 1; ?>
 							<?php $exist = true ?>
-							<div class="row stages">
+							<div class="multiple-items">
 							<?php foreach ($stage_list as $stage) { ?>
 								<!-- <?php  if ($stage1 == true){$stage1 = false;$exist = true;} ?> -->
 								<!-- <?php if ($exist == true){ ?> -->
-								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+										<!-- <img src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>" alt="slide <?php echo $ctr;?>"> -->
+									
+								<div id="slide-<?php echo $ctr;?>">
 									<div class="popup unlocked-stage">
-										<div class="row">
 											<div class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></div>
-												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>">
-										</div>
-										<div class="row">
-											<button><a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>">Enter</a></button>
-										</div>
+												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>" alt="slide <?php echo $ctr;?>">
+												<div>
+											<a onkeydown="success()" onkeyup="success()" onfocus="success()" onclick="success()" href="<?php echo base_url(); ?>Game/Levels/<?php echo $stage['STG_ID'] ?>"><i class="fa fa-gamepad"></i></a>
+													
+												</div>
 									</div>
 								</div>
-								
 
 								<!-- <?php } else { ?> -->
-								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+								<!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="popup locked-stage">
 										<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
 												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>">
 									</div>
-								</div>
+								</div> -->
 								<!-- <?php } ?> -->
 
 
 								<?php $ctr++;} ?>
-							</div>
+								</div>
 						</div>
 
 						<div id="profile" class="profile">
@@ -176,7 +177,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-9">
+								<div class="col-md-12">
 									<ul>
 										<li>
 											<input type="radio" id="all-option" value="All" checked="true" name="badges">

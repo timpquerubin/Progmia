@@ -79,8 +79,8 @@ div.leaderboard tr.rank-1 td:first-child,tr.rank-2 td:first-child,tr.rank-3 td:f
 div.leaderboard tr.rank-1 td:first-child:after,tr.rank-2 td:first-child:after,tr.rank-3 td:first-child:after{font-family: 'FontAwesome';font-size:60px;content: "\f091";position:absolute;top:0;left:40%;right:0;z-index:0;display:block;text-shadow: 1px 2px 3px #000;-webkit-text-stroke: 1px #121212;}
 tbody>tr:nth-child(2n+5) td:first-child:after{content:'';z-index:-5;position: absolute;top:0;left:0;right: 0;width:100%;height: 100%;}
 
-.dataTables_length{padding:0 20px;}
-.dataTables_filter{padding:0 20px;}
+.dataTables_length{padding:0 20px;display: none;}
+.dataTables_filter{padding:0 20px;display: none;}
 
 /*div.leaderboard table,div.profile table,div.badges table{    border-radius: 25px;
     border-collapse: unset;transition: .3s;    border: outset 7px #eaffff;
@@ -92,7 +92,7 @@ tbody>tr:nth-child(2n+5) td:first-child:after{content:'';z-index:-5;position: ab
 /* TABLE */
 
 .badges .badge-img{background-color:#050a0c; padding:5px;max-height: 200px;margin:10px;border:solid 5px #898989; border-radius: 10px;}
-.badges ul{list-style: none;margin: 0;padding: 0;display:flex;margin-top:80px;}
+.badges ul{list-style: none;margin: 0;padding: 0;display:flex;margin-top:80px;margin: 80px 20% 0px 20%;}
 div.profile,div.badges,div.leaderboard,div.play{    background-color: #38546d61;
     padding: 20px 0px;
     border-radius: 40px;
@@ -206,11 +206,14 @@ div.badges img {background-color:#191919;padding:20px;border-radius:20px;width: 
 div.badges p.bdg-desc{font-family:'ArcadeAlternate';font-size: 27px;color:#cccccc;text-align: center;padding-top:12%;}
 #data tbody:nth-child(n+4) tr >td div.bg-td{border-bottom-right-radius: 35px;}
 th {font-family: 'ArcadeClassic';font-size:30px;color:#eaffff;letter-spacing: 2px;text-shadow: 0px 2px 1px #000;}
+#data-achievements tr td:first-child{font-size:1.2vw;}
+#data-achievements tr td:nth-child(2){font-size:1.2vw;}
+#data-achievements tr td:nth-child(3){font-size:1.2vw;}
 tr td:not(:first-child){position: relative !important;}
-tr td:first-child{font-family: 'ArcadeClassic';font-size:32px;width: 33%;padding:20px 10px 0px 10px !important;}
-tr td:nth-child(2){font-family:'ArcadeAlternate';font-size:32px;word-wrap: break-word;width: 34%;padding:20px 10px 0px 10px !important;}
+#data-leaderboard tr td:first-child{font-family: 'ArcadeClassic';font-size:32px;width: 33%;padding:20px 10px 0px 10px !important;}
+#data-leaderboard tr td:nth-child(2){font-family:'ArcadeAlternate';font-size:32px;word-wrap: break-word;width: 34%;padding:20px 10px 0px 10px !important;}
 tr td:nth-child(2) h3{margin:10px 0;}
-tr td:nth-child(3){font-family: 'ArcadeClassic';font-size:32px;width: 33%;padding:20px 10px 0 10px !important;}
+#data-leaderboard tr td:nth-child(3){font-family: 'ArcadeClassic';font-size:32px;width: 33%;padding:20px 10px 0 10px !important;}
 tr.rank-1 td:first-child,tr.rank-2 td:first-child,tr.rank-3 td:first-child,tr.rank-n td:first-child{text-align: center;position: relative;}
 tr.rank-1 {color:#eaffff;text-shadow: 0px 2px #000;}
 tr.rank-2 {color:#eaffff;text-shadow: 0px 2px #000;}
@@ -224,35 +227,56 @@ div.main-menu div.header h1{position:absolute;top:10px;left:0;right:0;margin:0 a
 div.main-menu ul {padding:0;display:block; list-style: none;font-family: 'ArcadeClassic';margin:10px auto !important;text-align: center;}
 div.main-menu ul li {width: auto;}
 div.main-menu ul li button:first-child {}
-div.main-menu ul li button {transition:.3s;font-size:23px;color:#dddddd;text-decoration: none;}
-div.main-menu ul li button a:hover{color:#ffce12;}
-div.main-menu ul li button:hover a{color:#ffce12;}
+div.main-menu ul li button {font-size:23px;color:#999;text-decoration: none;}
 div.main-menu ul li:first-child button{margin-top: 0px;}
 
 div.main-menu ul li button {transition: .3s;outline:0;border-radius:15px !important;/*outline: 0;*/position: relative;padding: 3px;margin-top: 20px;background-color: #111;box-shadow: 0px 0px 5px #121212;border-top: solid 5px #ccc;border-bottom: solid 5px #444;border-left: solid 5px #888;border-right: solid 5px #666;}
-div.main-menu ul li button.active{border:outset 5px #ffce12;background-color:#111;color:#ffce12;/*border-top: solid 5px #fff;border-bottom: solid 5px #777;border-left: solid 5px #bbb;border-right: solid 5px #999;*/}
-div.main-menu ul li button.active a {color:#ffce12;}
+div.main-menu ul li button.active{border:outset 5px #fff;background-color:#111;color:#fff;/*border-top: solid 5px #fff;border-bottom: solid 5px #777;border-left: solid 5px #bbb;border-right: solid 5px #999;*/}
+div.main-menu ul li button.active a {color:#fff;}
 div.menu-container{position: relative;}
-div.play {}
+div.play {padding:20px 50px;}
 .stages{padding-top:80px;padding-bottom:30px;}
 div.play h1,div.leaderboard h1,div.badges h1,div.profile h1{text-shadow:0px 2px #000;position:absolute;z-index:9999;height:40px;text-align: center;left: 0;right: 0;font-family: 'ArcadeClassic';color:#ffce12;font-size: 60px;animation:floating 10s infinite;}
 div.play .popup .show,.popup {position:relative;visibility: visible;-webkit-animation: fadeIn 1s;animation: fadeIn 1s;text-align: center;    margin: 20px 10%;    padding: 35px 0 10px 0;display: flex;flex-direction: column;}
 div.play .popup img{margin:0 auto;}
+.slick-prev, .slick-next {width: 4vw !important;height: 4vw !important;}
 
-div.play div.unlocked {position:absolute;top:10px;right: 10px;font-size:28px;color:#ffce12;    text-shadow: 0 2px 6px #000;}
+.slick-prev::before, .slick-next::before{font-size:4vw !important;font-family: 'FontAwesome' !important;}
+.slick-prev::before {
+    content: "\f137" !important;
+}
+.slick-next::before {
+    content: "\f138" !important;
+}
+.slick-track{
+/*width: 100% !important;*/
+}
+    .slick-slide{width:100%;}
+    .slick-slide img {
+      margin: 0 auto;
+    }
+    .slick-dotted.slick-slider {
+      margin-top:60px;
+    }
+
+div.play div.unlocked {position:absolute;top:10px;right: 10px;font-size:28px;color:#ffce12;text-shadow: 0 2px 0px #000;}
 div.play,div.leaderboard,div.badges,div.profile{display:none;position:relative;/*background-color:#000000;*/border-bottom-right-radius: 40px;border-bottom-left-radius: 40px;}
 div.play .popup h2{font-family: 'ArcadeClassic';font-size:45px;color:#fff;}
 div.play .popup p {background-color:#33a6b1;padding:20px 0;font-size:16px;font-weight: 800;margin:0 0 20px 0!important;color:#002428;}
-div.play .popup button a{color:#ffffff;font-size:2vw;font-family: 'ArcadeClassic';}
-div.play .popup button{background-color: #121212;    border-top: #ffffff solid 5px;
-    border-right: solid 5px #b1b1b1;
-    border-bottom: solid 5px #404040;
-    border-left: solid 5px #b1b1b1;padding:2px 15px;}
+div.play .popup a{color:#ffffff;font-size:2vw;font-family: 'ArcadeClassic';    padding: 2px 15px;
+    border-top: #ffffff solid 3px;
+    border-right: solid 3px #b1b1b1;
+    border-bottom: solid 3px #404040;
+    border-left: solid 3px #b1b1b1;
+    margin: 0 auto;
+    background: #000000;
+    border-radius: 15px;}
+div.play .popup button{margin:0;background-color: transparent;border:0px;}
 /* ANIMATION CONTAINERS */
 
 div.sky-bg{position: fixed;top:0;left:0;right:0;bottom:0px;content: '';width:100%;z-index:-1;height: 100%;}
 div.sky-bg:before{position: absolute;content:'';height:244px;height:428px;width:100%;bottom:-85px;left:0;content:'';z-index:-7;background-image: url(../images/bg-cloud-2.png);animation: animatedBackground 80s linear infinite;}
-div.sky-bg:after{position: absolute;content:'';height:100%;width:100%;bottom:0;right:0;left:0;top:0;z-index:-3;background:rgba(0, 0, 0, 0.3);}
+div.sky-bg:after{position: absolute;content:'';height:100%;width:100%;bottom:0;right:0;left:0;top:0;z-index:-3;background:rgba(0, 0, 0, 0.2);}
 div.land-bg{position:fixed;bottom:0;left:0;right:0;width:100%;height:100%;z-index: -6;}
 div.land-bg:before{position: absolute;content:'';height:102px;width:100%;bottom:0px;left:0;content:'';z-index:-4;background-image: url(../images/road-tree-wall-2.png);}
 div.land-bg:after{position: absolute;content:'';background-position:center;height:246px;width:100%;bottom:28px;left:0;content:'';z-index:-5;background-image: url(../images/building-4.png);}
