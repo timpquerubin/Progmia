@@ -28,6 +28,7 @@
 					<?php if($rowCtr == 0) { ?>
 						<div class="row level-row text-center">
 					<?php } ?>
+						<?php if($level['isUnlocked']){?>
 							<div class="level col-xs-12 col-sm-6 col-md-3 col-lg-3">
 								<div class="level-info text-center">
 									<a href="<?php echo ($level_stages[0]['STG_NUM'] != 4)? base_url().'Game/play_basics/'.$level['LVL_ID'] : base_url().'Game/play/'.$level['LVL_ID'] ?>">
@@ -68,6 +69,48 @@
 									</a>
 								</div>
 							</div>
+							<?php } else {?>
+							<div class="level col-xs-12 col-sm-6 col-md-3 col-lg-3 level-locked">
+								<div style="font-size:10vw;color:#777;text-shadow:0px 2px 0px #000;z-index: 999;top:20%;position: absolute;left:0;right: 0;"><i class="fa fa-lock"></i></div>
+									<div class="level-info text-center" style="filter:grayscale(100%);">
+										<div class="level-link">
+											<h2>Level <?php echo $i+1; ?></h2>
+											<?php $score = 0; ?>
+											<?php foreach ($progress_list as $progress) { ?>
+												<?php if($progress['LVL_ID'] == $level['LVL_ID'] && $progress['USER_ID'] == $h->USER_ID ) { ?>
+
+													<?php foreach($lvl_max_pts as $max_pts) { ?>
+														<?php if($max_pts['LVL_ID'] == $level['LVL_ID']) { ?>
+															<?php $score = (int)($progress['BEST_SCORE']/$max_pts['MAX_PTS']*100); ?>
+														<?php } ?>
+													<?php } ?>
+													<!-- <?php //echo $progress['POINTS_SCORED']; ?> / <?php //echo $progress['MAX_POINTS']; ?> -->
+													<!-- <?php //echo $score ?>% -->
+												<?php } ?>
+											<?php } ?>
+											<input type="hidden" name="level_<?php echo $i+1; ?>_score" id="level_<?php echo $i+1; ?>_score" value="<?php echo $score; ?>">
+											<ul style="display:inline-flex;list-style: none;margin:20px auto !important;padding: 0px !important;">
+												<!-- <?php // if($score == 0 || $score == null){ ?> -->
+												<li id="level_<?php echo $i+1; ?>_star1">
+													<label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"><div></div></label>
+													
+													<!-- <input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star1" value="1" disabled><label class="" for="level_<?php echo $i+1; ?>_star1" title="Good"></label> -->
+												</li>
+												<li id="level_<?php echo $i+1; ?>_star2">
+													<label class="" for="level_<?php echo $i+1; ?>_star1" title="Excellent"><div></div></label>
+													<!-- <input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star2" value="2" disabled><label class="" for="level_<?php echo $i+1; ?>_star2" title="Excellent"></label> -->
+												</li>
+												<li id="level_<?php echo $i+1; ?>_star3">
+													<label class="" for="level_<?php echo $i+1; ?>_star1" title="Perfect"><div></div></label>
+													<!-- <input type="radio" name="rating_stage<?php echo $i+1; ?>" id="level_<?php echo $i+1; ?>_star3" value="3" disabled><label class="" for="level_<?php echo $i+1; ?>_star3" title="Perfect"></label> -->
+												</li>
+											</ul>
+											<label class="finish-description" id="description-<?php echo $i+1; ?>"></label>
+										</div>
+								</div>
+							</div>
+							<?php } ?>
+
 					<?php $i++; ?>
 					<?php if($rowCtr == 3) { ?>
 						</div>

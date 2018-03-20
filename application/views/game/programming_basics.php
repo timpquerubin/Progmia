@@ -2,12 +2,12 @@
 <div class="container-fluid">
 		<div class="row">
 			<nav class="main-nav">
-				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				<div class="col-xs-1 col-sm-1 col-md-1 col-lg-2">
 					<ul class="page-navigation">
 						<!-- <li>
 							<a class="navbar-brand" href="<?php echo base_url();?>Game/MainMenu"><img class="img-responsive" src="<?php echo base_url();?>assets/images/PROGMIA LOGO SIZES-XXS.png"/></a>
 						</li> -->
-						<li style="margin-top: 5px;">
+						<li>
 							<a class="back" href="<?php echo base_url(); ?>Game/Levels/<?php echo $level_info['STG_ID'] ?>"><i class="fa fa-arrow-left"></i></a>
 						</li>
 					</ul>
@@ -15,15 +15,16 @@
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 
 				</div>
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="col-xs-7 col-sm-7 col-md-7 col-lg-6">
 		            <ul class="settings-ul">
 		                <li>
-							<button data-toggle="modal" data-target="#goal-modal" id="goal"><i class="fa fa-check"></i>Goal</button>
+							<button data-toggle="modal" data-target="#goal-modal" id="goal"><i class="fa fa-check"></i><div>Goal</div></button>
 						</li>
-		                <li><button id="settings" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i>Settings</button>
+		                <li>
+		                	<button id="settings" data-toggle="modal" data-target="#settings-modal"><i class="fa fa-sliders"></i><div>Settings<div></button>
 		                </li>
 						<li>
-						<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i>Restart</button>
+							<button onclick="startNewGame();" id="restart"><i class="fa fa-repeat"></i><div>Restart</div></button>
 						</li>
 		            </ul>
 		        </div>
@@ -42,6 +43,7 @@
 								<label class="user"><?php echo $user;?></label>
 								<div class="progress" style="padding: 0px;">
 								 	<div class="progress-bar progress-bar-danger player-hp-bar" id="hp-bar" role="progressbar" style="width: 100%">
+								 		<div class="life" style="position: absolute;top:0;left:0;right: 0;bottom:0;content:'';color:#000;font-size:20px;"></div>
 								 	</div>
 								</div>
 							</div>
@@ -56,7 +58,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="code-area-container wrapper-1">
-					<div class="row"><h1 class="title">Code Area</h1><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-book"></i></button></div>
+					<div class="row"><h1 class="title">Code Area</h1><button id="tutorial" data-toggle="modal" data-target="#tutorial-modal"><i class="fa fa-question"></i></button></div>
 					<div class="row code_area">
 						<div class="line-number col-md-1 col-sm-1 col-xs-1">
 							<textarea rows="15" id="textarea1" disabled></textarea>
@@ -113,7 +115,7 @@
 						    <section>
 								<div class="tutorialDescription">
 								    <?php foreach($goalarray as $goaldesc){?>
-								    <p style="display:inline-flex;align-items: center;"><i style="margin-right: 10px;" class="fa fa-check"></i><?php echo $goaldesc;?>.</p>
+								    <p style="display:inline-flex;align-items: center;"><i style="margin-right: 10px;" class="fa fa-check"></i><?php echo $goaldesc;?>.</p><br>
 								    <?php }?>
 								</div>
 						    </section>
@@ -179,7 +181,7 @@
 						<h3 class="goal">Goal</h3>
 							<ul class="objectives" id="objectives">
 								    <?php foreach($goalarray as $goaldesc){?>
-									<li><i style="margin-right: 10px;" class="fa fa-check"></i><p><?php echo $goaldesc;?>.</p></p>
+									<li><i style="margin-right: 10px;" class="fa fa-check"></i><p><?php echo $goaldesc;?>.</p>
 									</li>	
 								    <?php }?>
 							</ul>
@@ -252,8 +254,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-
-
 		load_tutorial = function(){
 
 			var tutorial_filename = "<?php echo isset($level_info['LVL_TUTORIAL']) ? $level_info['LVL_TUTORIAL'] : "" ?>";
@@ -4379,7 +4379,8 @@
 
 						}
 							document.getElementById('hp-bar').style.content = hpPercent + '%';
-						$(".player-hp-bar").css("width", hpPercent + "%");
+							$(".player-hp-bar").css("width", hpPercent + "%");
+							$("div.life").html(player.hp + "/" + player.hpMax);
 						// $(".player-hp-bar:after").css("content", hpPercent + "%");
 					}
 				}
@@ -4762,6 +4763,7 @@
 
 			player = new Player('myPlayer1', img.player, img.player.width/4, img.player.height/4, 56, 56, gameData.question_list.question_list.length);
 
+			$("div.life").html(player.hp + "/" + player.hpMax);
 
 			// cmdNum = 0;
 			// vrbls = [];

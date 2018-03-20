@@ -70,14 +70,19 @@
 		{
 			if($params === null) {
 				$progress = $this->db->query('SELECT * FROM PROGRESS');
-			}  else if(isset($params['user']) && isset($params['type']) && isset($params['stage'])) {
+			}  else if(isset($params['user']) && isset($params['type'])) {
 
-				if($params['type'] == 'max_points') {
+				if($params['type'] == 'max_points' && isset($params['stage'])) {
 					// $progress = $this->db->query('SELECT USER_ID, LVL_ID, MAX(GAME_SCORE) FROM PROGRESS WHERE USER_ID='.$params['user'].' GROUP BY LVL_ID');
 					$progress = $this->db->query('SELECT P.USER_ID, P.LVL_ID,L.STG_ID, MAX(P.GAME_SCORE) AS BEST_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID='.$params['user'].' AND L.STG_ID=\''.$params['stage'].'\' AND P.LVL_ID=L.LVL_ID GROUP BY LVL_ID');
+				} else if($params['type'] == 'max_points') {
+					// echo $params['user'];
+					$progress = $this->db->query('SELECT P.USER_ID, P.LVL_ID,L.STG_ID, MAX(P.GAME_SCORE) AS BEST_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID='.$params['user'].' AND P.LVL_ID=L.LVL_ID GROUP BY P.LVL_ID');
 				}
 			} else if(isset($params['user']) && isset($params['stage'])) {
 				$progress = $this->db->query('SELECT P.PROG_ID, P.USER_ID, P.LVL_ID, L.STG_ID, P.GAME_SCORE FROM PROGRESS P, LEVEL L WHERE P.USER_ID=\''.$params['user'].'\' AND L.STG_ID=\''.$params['stage'].'\' AND P.LVL_ID=L.LVL_ID;');
+			} else if(isset($params['user']) && isset($params['lvl'])) {
+				$progress = $this->db->query('SELECT PROG_ID, USER_ID, LVL_ID, MAX(GAME_SCORE) AS BEST_SCORE FROM PROGRESS WHERE USER_ID=\''.$params['user'].'\' AND LVL_ID=\''.$params['lvl'].'\'');
 			} else if(isset($params['user'])) {
 				$progress = $this->db->query('SELECT * FROM PROGRESS WHERE USER_ID=\''.$params['user'].'\';');
 			} else if(isset($params['stage'])) {
@@ -109,7 +114,7 @@
 				$user_badges = $this->db->query('SELECT * FROM USER_BADGES ORDER BY AQUIRED_AT');
 			} else if(isset($params['user'])) {
 				// $user_badges = $this->db->query('SELECT * FROM USER_BADGES WHERE USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
-				$user_badges = $this->db->query('SELECT U.USER_ID, U.BDG_ID, B.BDG_IMG_FILENAME, U.AQUIRED_AT FROM USER_BADGES U, BADGES B WHERE U.BDG_ID=B.BDG_ID AND USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
+				$user_badges = $this->db->query('SELECT U.USER_ID, U.BDG_ID, B.BDG_IMG_FILENAME, B.BDG_DESCRIPTION, U.AQUIRED_AT FROM USER_BADGES U, BADGES B WHERE U.BDG_ID=B.BDG_ID AND USER_ID=\''.$params['user'].'\' ORDER BY AQUIRED_AT');
 				// SELECT U.USER_ID, U.BDG_ID, B.BDG_IMG_FILENAME, U.AQUIRED_AT FROM USER_BADGES U, BADGES B WHERE U.BDG_ID=B.BDG_ID
 			}
 

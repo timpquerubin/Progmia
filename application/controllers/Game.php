@@ -42,13 +42,20 @@
 			$userID = $this->session->userdata('user_id');
 
 			$user = $this->session->userdata('username');
-			$progress = $this->Game_model->get_progress(array('user' => $userID));
+
+			$prog_params = array(
+				'user' => $userID,
+				'type' => 'max_points',
+			);
+
+			// $progress = $this->Game_model->get_progress(array('user' => $userID));
+			$progress = $this->Game_model->get_progress($prog_params);
 			$stages = $this->Game_model->get_stages($user);
 			
 			$profile = $this->Game_model->get_profileprogress($userID);
 			$user1 = $this->session->userdata('username');
 			$userinfo = $this->Profile_model->get_user_info($userID);
-			$progress = $this->Profile_model->get_progress($user1);
+			// $progress = $this->Profile_model->get_progress($user1);
 			$stages = $this->Profile_model->get_stages($user1);
 			$levels = $this->Profile_model->get_levels($user1);
 			$total_points = $this->Profile_model->get_total_points($userID);
@@ -57,8 +64,49 @@
 			$badges = $this->Game_model->get_badges();
 			$user_badges = $this->Game_model->get_user_badges(array("user" => $userID));
 
+			$stg_max_lvls = $this->Game_model->get_max_level();
 			// echo "<pre>";
-			// var_dump($this->Profile_model->get_rank());
+			// var_dump($this->Game_model->get_max_level());
+			// echo "</pre>";
+			// echo "<pre>";
+			// var_dump($stages);
+			// echo "</pre>";
+			// exit();
+
+			foreach ($stages as $stg_key => $stg_val) {
+				
+				foreach ($stg_max_lvls as $mlvl) {
+					
+					if($stages[$stg_key]['STG_ID'] == $mlvl['STG_ID'] && $stages[$stg_key]['STG_NUM'] != '1') {
+
+						// echo "<pre>";
+						// var_dump($this->Game_model->get_progress(array('user' => $userID, 'lvl' => $mlvl['LVL_ID'])));
+						// echo "</pre>";
+						// exit();
+
+						$stg_prog = $this->Game_model->get_progress(array('user' => $userID, 'lvl' => $mlvl['LVL_ID']));
+
+						if(count($stg_prog) > 0) {
+
+							$best_score = floatval($stg_prog[0]['BEST_SCORE']);
+							if($best_score > 0) {
+								$stages[$stg_key]['isLocked'] = false;
+								// echo $stg;
+								// var_dump($stg);
+							} else {
+								$stages[$stg_key]['isLocked'] = true;
+							}
+						} else {
+							$stages[$stg_key]['isLocked'] = true;
+						}
+					} else if($stages[$stg_key]['STG_NUM'] == '1') {
+						$stages[$stg_key]['isLocked'] = false;
+					}
+				}
+			}
+
+			// echo "<pre>";
+			// var_dump($stages);
 			// echo "</pre>";
 			// exit();
 
@@ -103,12 +151,33 @@
 			}
 
 			// echo "<pre>";
-			// var_dump($progress);
+			// var_dump($levels);
 			// echo "</pre>";
 			// exit();
 
 			// echo "<pre>";
 			// var_dump($lvl_max_pts);
+			// echo "</pre>";
+			// exit();
+
+			$next_lvl_isUnlocked = true;
+
+			foreach ($levels as $key_lvl => $lvl_val) {
+				// echo $key_lvl;
+
+				$levels[$key_lvl]['isUnlocked'] = $next_lvl_isUnlocked;
+
+				$lvl_prog = $this->Game_model->get_progress(array('user' => $userID, 'lvl' => $lvl_val['LVL_ID']));
+
+				if($lvl_prog[0]['PROG_ID']) {
+					$next_lvl_isUnlocked = true;
+				} else {
+					$next_lvl_isUnlocked = false;
+				}
+			}
+
+			// echo "<pre>";
+			// var_dump($levels);
 			// echo "</pre>";
 			// exit();
 

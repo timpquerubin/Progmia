@@ -18,7 +18,7 @@
 			<div class="row" style="display: flex;align-items: center;">
 				
 				<div class="col-md-3 col-lg-3 col-xs-4 col-sm-4" style="text-align: center;">
-					<button class="back"><a href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a></button>
+					<a class="back" href="<?php echo base_url(); ?>Game/MainMenu"><i class="fa fa-arrow-left"></i></a>
 				</div>
 				<div class="col-md-6 col-lg-6 col-xs-4 col-sm-4">
 				</div>
@@ -35,16 +35,20 @@
 	</nav>
 		<script>
 			$(document).ready(function(){
-		$("button.playpausebtn").click(function() {
-			if(jQuery('#playpausebtn').hasClass('paused')){
-			    $("button").removeClass("paused");
-			}
-			else
-			{
-			    $(this).addClass("paused");
-			}
-		   });
-});
+				$("button.playpausebtn").click(function() {
+					if(jQuery('#playpausebtn').hasClass('paused')){
+					    $("button").removeClass("paused");
+					}
+					else
+					{
+					    $(this).addClass("paused");
+					}
+				   });
+
+				$("button#back").click(function() {
+
+				   });
+			});
 			var audio, playbtn, mutebtn, seekslider, volumeslider, seeking=false, seekto;
 			function initAudioPlayer(){
 				audio = new Audio();
