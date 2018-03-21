@@ -61,7 +61,10 @@ $('.badges .badges-acquired .multiple-items').slick({
   infinite: false,
   slidesToShow: 1,
   dots: true
-});			
+});		
+		   $(document).on('click', "div.main-menu ul li button#play, div.main-menu ul li button#badges,#acquired-option,#all-option", function() {
+			    $(window).trigger("resize");
+			});	
 
 
 			$("#all-option").click(function() {
@@ -79,29 +82,21 @@ $('.badges .badges-acquired .multiple-items').slick({
 		      $("button").removeClass("active");
 		      $(this).addClass("active");
 		   });
-		   $(document).on('click', "div.main-menu ul li button#play, div.main-menu ul li button#badges,#acquired-option,#all-option", function() {
-			    $(window).trigger("resize");
-			});
 		   $("div.main-menu ul li button#play").click(function() {
 		    $('div#profile').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#badges').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#play').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
 		   });
 
@@ -109,24 +104,19 @@ $('.badges .badges-acquired .multiple-items').slick({
 		   $("div.main-menu ul li button#profile").click(function() {
 		   	$("#all-option").trigger("click");
 		    $('div#play').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#profile').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#badges').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		   });
 
@@ -157,50 +147,40 @@ $('.badges .badges-acquired .multiple-items').slick({
 
 		   $("div.main-menu ul li button#leaderboard").click(function() {
 		    $('div#play').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#profile').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
 		    $('div#badges').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		   });
 
 
 		   $("div.main-menu ul li button#badges").click(function() {
-
 		    $('div#play').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#profile').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#badges').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
+			$("div.main-menu ul li button#badges").trigger("click");
 		   });
 		});
 

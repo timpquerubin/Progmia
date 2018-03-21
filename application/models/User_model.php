@@ -26,7 +26,7 @@
 		
 		public function login($uname, $pass)
 		{
-			$query = $this->db->query('SELECT * FROM USER WHERE USER_USERNAME=\''.$uname.'\' AND USER_PASSWORD=\''.$pass.'\';');
+			$query = $this->db->query('SELECT * FROM USER WHERE BINARY USER_USERNAME=\''.$uname.'\' AND BINARY USER_PASSWORD=\''.$pass.'\';');
 			
 			if(empty($query->row_array()))
 			{

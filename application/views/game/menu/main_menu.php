@@ -65,10 +65,6 @@
 							<?php $exist = true ?>
 							<div class="multiple-items">
 							<?php foreach ($stage_list as $stage) { ?>
-								<!-- <?php  if ($stage1 == true){$stage1 = false;$exist = true;} ?> -->
-								<!-- <?php if ($exist == true){ ?> -->
-										<!-- <img src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>" alt="slide <?php echo $ctr;?>"> -->
-									
 								<div id="slide-<?php echo $ctr;?>">
 									<?php if (!($stage['isLocked'])) {?>
 									<div class="popup unlocked-stage">
@@ -86,17 +82,6 @@
 									</div>
 								<?php }?>
 								</div>
-
-								<!-- <?php // } else { ?> -->
-								<!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-									<div class="popup locked-stage">
-										<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
-												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>">
-									</div>
-								</div> -->
-								<!-- <?php } ?> -->
-
-
 								<?php $ctr++;} ?>
 							</div>
 						</div>
@@ -233,12 +218,6 @@
 									</ul>
 								</div>
 							</div>
-							<!-- <div>
-								<input type="radio" id="all-badges" value="All Badges" checked="true" name="bdg">
-								<label for="all-badges">All Badges</label>
-								<input type="radio" id="aq-badges" value="aq_Badges" name="bdg">
-								<label for="aq-badges">Aquired Badges</label>
-							</div> -->
 							<div class="row badges-all" id="badges-all" style="display: block;">
 								<div class="wrapper">
 									<div class="row">
@@ -266,7 +245,6 @@
 														<i class="fa fa-check" style="position: absolute;top:0;left:0;color:#ffce12;font-size:3vw;background-color:#777;padding:5px;border-radius:5px;"></i>
 													<div class="badge">
 														<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $ub['BDG_IMG_FILENAME'];?>"/>
-													<!-- <p style="clear:unset;color:#eaffff;font-size:1.5vw"><?php echo $ub['BDG_IMG_FILENAME'];?></p> -->
 													</div>
 													<p class="bdg-desc"><?php echo $ub['BDG_DESCRIPTION'];?></p>
 												</div>
