@@ -17,7 +17,7 @@
 		$(function() {
 			
 
-$('.play .multiple-items').slick({
+$('.multiple-items-1').slick({
   infinite: false,
   slidesToShow: 3,
   dots: true,
@@ -51,13 +51,13 @@ $('.play .multiple-items').slick({
     // instead of a settings object
   ]
 });
-$('.badges .badges-all .multiple-items').slick({
+$('.multiple-items-2').slick({
   infinite: false,
   slidesToShow: 1,
   dots: true
 });
 
-$('.badges .badges-acquired .multiple-items').slick({
+$('.multiple-items-3').slick({
   infinite: false,
   slidesToShow: 1,
   dots: true

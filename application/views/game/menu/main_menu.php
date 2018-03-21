@@ -63,7 +63,7 @@
 							<?php $i = 0; ?>
 							<?php $ctr = 1; ?>
 							<?php $exist = true ?>
-							<div class="multiple-items">
+							<div class="multiple-items-1">
 							<?php foreach ($stage_list as $stage) { ?>
 								<div id="slide-<?php echo $ctr;?>">
 									<?php if (!($stage['isLocked'])) {?>
@@ -221,7 +221,7 @@
 							<div class="row badges-all" id="badges-all" style="display: block;">
 								<div class="wrapper">
 									<div class="row">
-										<div class="multiple-items">
+										<div class="multiple-items-2">
 										<?php foreach ($badges_list as $badges) {?>
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:0 30px;display: inline-flex !important;align-items: center;">
 												<div class="badge">
@@ -237,8 +237,7 @@
 							<div class="row badges-acquired" id="badges-acquired" style="display: none;">
 								<div class="wrapper">
 									<div class="row">
-
-										<div class="multiple-items">
+										<div class="multiple-items-3">
 										<?php if(isset($user_badges)) { ?>
 											<?php foreach($user_badges as $ub) { ?>
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:295px;padding:0 30px;display: inline-flex;align-items: center;">
