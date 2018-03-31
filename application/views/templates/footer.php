@@ -108,7 +108,7 @@
 
 					$.ajax({
 						type: 'POST',
-						url: 'Users/register',
+						url: '<?php echo base_url(); ?>Users/register',
 						data: formData,
 						dataType: 'json',
 						encode: true,
@@ -123,7 +123,7 @@
 									$("#reg-" + key).append('<div class="error-msg">'+ res["errors"][key] +'</div>');
 								}
 							} else {
-								window.location = "Home";
+								window.location = "<?php echo base_url(); ?>home";
 							}
 
 						},

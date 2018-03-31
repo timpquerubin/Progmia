@@ -17,7 +17,7 @@
 		<div class="row button-select-container">
 			<div class="button-select col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 				<!--<button><a href="#" onclick="bad(document.querySelector('label.slick-active #avatar-input').value)">button</a></button>-->
-				<button id="btn" class="btn btn-basic btn-block"><a style="text-decoration:none;color:#ffce12;display:block;" onclick="insert_avatar();" class="hvr-reveal">SELECT</a></button>
+				<button id="btn" class="btn btn-basic btn-block avtr_btn"><a style="text-decoration:none;color:#ffce12;display:block;" class="hvr-reveal">SELECT</a></button>
 
         
 			</div>
@@ -31,34 +31,65 @@
   });
 </script>
 <script type="text/javascript">
-  document.getElementById("submit-avtr").onclick = function () { }
-    function insert_avatar(){
-          var test = {avatarId : document.querySelector('li.selected #avatar-input').value, userID : '<?php echo $userID; ?>'};
+  // document.getElementById("submit-avtr").onclick = function () { }
 
-          console.log(test);
+  $(".avtr_btn").click(function() {
+
+    var test = {avatarId : document.querySelector('li.selected #avatar-input').value, userID : '<?php echo $userID; ?>'};
+
+    console.log(test);
+    
+    if (test.avatarId == null){
+      alert("Please Select Avatar");
+    }
+    else
+    {
+
+      $.ajax({
+        type: 'POST',
+        url: '<?php echo base_url(); ?>Avatar/update',
+        data: test,
+        encode: true,
+        success: function(res){
+          console.log(res);
+          window.location = "<?php echo base_url()?>Game/MainMenu";
+          },
+          error: function(err) {
+            console.log(err);
+          }
+        });
+      // return window.location.href = "<?php echo base_url()?>Game/MainMenu";
+    }
+
+  });
+
+  //   function insert_avatar(){
+  //         var test = {avatarId : document.querySelector('li.selected #avatar-input').value, userID : '<?php echo $userID; ?>'};
+
+  //         console.log(test);
           
-          if (test.avatarId == null){
-            alert("Please Select Avatar");
-          }
-          else
-          {
+  //         if (test.avatarId == null){
+  //           alert("Please Select Avatar");
+  //         }
+  //         else
+  //         {
 
-            $.ajax({
-              type: 'POST',
-              url: '<?php echo base_url(); ?>Avatar/update',
-              data: test,
-              encode: true,
-              success: function(res){
-                console.log(res);
-                window.location = "<?php echo base_url()?>Game/MainMenu";
-                },
-                error: function(err) {
-                  console.log(err);
-                }
-              });
-            // return window.location.href = "<?php echo base_url()?>Game/MainMenu";
-          }
-  }
+  //           $.ajax({
+  //             type: 'POST',
+  //             url: '<?php echo base_url(); ?>Avatar/update',
+  //             data: test,
+  //             encode: true,
+  //             success: function(res){
+  //               console.log(res);
+  //               window.location = "<?php echo base_url()?>Game/MainMenu";
+  //               },
+  //               error: function(err) {
+  //                 console.log(err);
+  //               }
+  //             });
+  //           // return window.location.href = "<?php echo base_url()?>Game/MainMenu";
+  //         }
+  // }
 </script>
 <!-- <script type="text/javascript">
 	$(document).ready(function(){

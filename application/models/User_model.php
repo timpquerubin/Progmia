@@ -11,7 +11,7 @@
 			$data = array(
 				'user_id' => $id,
 				'user_username' => $this->input->post('username'),
-				'user_password' => $this->input->post('password'),
+				'user_password' => md5($this->input->post('password')),
 				'user_fname' => $this->input->post('firstname'),
 				'user_mname' => $this->input->post('mname'),
 				'user_lname' => $this->input->post('lastname'),

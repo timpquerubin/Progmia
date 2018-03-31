@@ -165,7 +165,7 @@
 			$data['title'] = 'Sign in';
 
 			$user = $this->input->post('username');
-			$pass = $this->input->post('password');
+			$pass = md5($this->input->post('password'));
 			
 			$user_info = $this->User_model->login($user,$pass);
 
