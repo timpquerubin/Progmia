@@ -5,7 +5,6 @@
 		window.location = base_url + "users/logout";
 	}
 	$(document).ready(function(){
-
 		$("button.playpausebtn").click(function() {
 			if(jQuery('#playpausebtn').hasClass('paused')){
 			    $("button").removeClass("paused");
@@ -18,7 +17,7 @@
 		$(function() {
 			
 
-$('.multiple-items').slick({
+$('.multiple-items-1').slick({
   infinite: false,
   slidesToShow: 3,
   dots: true,
@@ -52,6 +51,31 @@ $('.multiple-items').slick({
     // instead of a settings object
   ]
 });
+$('.multiple-items-2').slick({
+  infinite: false,
+  slidesToShow: 1,
+  dots: true
+});
+
+$('.multiple-items-3').slick({
+  infinite: false,
+  slidesToShow: 1,
+  dots: true
+});		
+		   $(document).on('click', "div.main-menu ul li button#play, div.main-menu ul li button#badges,#acquired-option,#all-option", function() {
+			    $(window).trigger("resize");
+			});	
+
+
+			$("#all-option").click(function() {
+				$("#badges-acquired").css("display", "none");
+				$("#badges-all").css("display", "block");
+			});
+
+			$("#acquired-option").click(function() {
+				$("#badges-all").css("display", "none");
+				$("#badges-acquired").css("display", "block");
+			});
 		   $("div.main-menu ul li button").click(function() {
 		      $(".changing > div:first-child").removeClass("col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-xs-4 col-sm-4 col-md-4 col-lg-4");
 		      $(".changing > div:first-child").addClass("col-xs-4 col-sm-4 col-md-3 col-lg-3");
@@ -59,50 +83,40 @@ $('.multiple-items').slick({
 		      $(this).addClass("active");
 		   });
 		   $("div.main-menu ul li button#play").click(function() {
-		    $('div#play').css({
-		   		'display':'block',
-		   		'transition':'5s'
-		    });
 		    $('div#profile').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#badges').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
-			  $(window).trigger('resize');
+		    $('div#play').css({
+		   		'display':'block'
+		    });
 		   });
 
 
 		   $("div.main-menu ul li button#profile").click(function() {
+		   	$("#all-option").trigger("click");
 		    $('div#play').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#profile').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#badges').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		   });
 
@@ -131,53 +145,42 @@ $('.multiple-items').slick({
 		    });
 		   });
 
-
 		   $("div.main-menu ul li button#leaderboard").click(function() {
 		    $('div#play').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#profile').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
 		    $('div#badges').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		   });
 
 
 		   $("div.main-menu ul li button#badges").click(function() {
-			  $(window).trigger('resize');
 		    $('div#play').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#profile').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#progress-tab').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#leaderboard').css({
-		   		'display':'none',
-		   		'transition':'5s'
+		   		'display':'none'
 		    });
 		    $('div#badges').css({
-		   		'display':'block',
-		   		'transition':'5s'
+		   		'display':'block'
 		    });
+			$("div.main-menu ul li button#badges").trigger("click");
 		   });
 		});
 

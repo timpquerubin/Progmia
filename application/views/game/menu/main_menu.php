@@ -63,13 +63,10 @@
 							<?php $i = 0; ?>
 							<?php $ctr = 1; ?>
 							<?php $exist = true ?>
-							<div class="multiple-items">
+							<div class="multiple-items-1">
 							<?php foreach ($stage_list as $stage) { ?>
-								<!-- <?php  if ($stage1 == true){$stage1 = false;$exist = true;} ?> -->
-								<!-- <?php if ($exist == true){ ?> -->
-										<!-- <img src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>" alt="slide <?php echo $ctr;?>"> -->
-									
 								<div id="slide-<?php echo $ctr;?>">
+									<?php if (!($stage['isLocked'])) {?>
 									<div class="popup unlocked-stage">
 											<div class="unlocked"><i class="fa fa-unlock" aria-hidden="true"></i></div>
 												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>" alt="slide <?php echo $ctr;?>">
@@ -78,20 +75,15 @@
 													
 												</div>
 									</div>
-								</div>
-
-								<!-- <?php } else { ?> -->
-								<!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+								<?php } else {?>
 									<div class="popup locked-stage">
-										<span class="locked"><i class="fa fa-lock" aria-hidden="true"></i></span>
-												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>">
+											<div class="locked"><i class="fa fa-lock" aria-hidden="true"></i></div>
+												<img class="img-responsive" src="<?php echo base_url();?>assets/images/stages/<?php echo $stage['STG_FILENAME'];?>" alt="slide <?php echo $ctr;?>">
 									</div>
-								</div> -->
-								<!-- <?php } ?> -->
-
-
-								<?php $ctr++;} ?>
+								<?php }?>
 								</div>
+								<?php $ctr++;} ?>
+							</div>
 						</div>
 
 						<div id="profile" class="profile">
@@ -212,7 +204,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<ul>
+									<ul class="badge-option">
 										<li>
 											<input type="radio" id="all-option" value="All" checked="true" name="badges">
 											<label for="all-option">All Badges</label>
@@ -226,37 +218,38 @@
 									</ul>
 								</div>
 							</div>
-							<!-- <div>
-								<input type="radio" id="all-badges" value="All Badges" checked="true" name="bdg">
-								<label for="all-badges">All Badges</label>
-								<input type="radio" id="aq-badges" value="aq_Badges" name="bdg">
-								<label for="aq-badges">Aquired Badges</label>
-							</div> -->
 							<div class="row badges-all" id="badges-all" style="display: block;">
 								<div class="wrapper">
 									<div class="row">
+										<div class="multiple-items-2">
 										<?php foreach ($badges_list as $badges) {?>
-											<div class="col-md-6">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:0 30px;display: inline-flex !important;align-items: center;">
 												<div class="badge">
-												<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME'];?>">
+												<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $badges['BDG_IMG_FILENAME'];?>"/>
 												</div>
+												<p class="bdg-desc"><?php echo $badges['BDG_DESCRIPTION'];?></p>
 											</div>
 										<?php }?>
+										</div>	
 									</div>
 								</div>
 							</div>
-							<div class="row badges-aquired" id="badges-aquired" style="display: none;">
+							<div class="row badges-acquired" id="badges-acquired" style="display: none;">
 								<div class="wrapper">
 									<div class="row">
+										<div class="multiple-items-3">
 										<?php if(isset($user_badges)) { ?>
 											<?php foreach($user_badges as $ub) { ?>
-												<div class="col-md-6">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:295px;padding:0 30px;display: inline-flex;align-items: center;">
+														<i class="fa fa-check" style="position: absolute;top:0;left:0;color:#ffce12;font-size:3vw;background-color:#777;padding:5px;border-radius:5px;"></i>
 													<div class="badge">
-														<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $ub['BDG_IMG_FILENAME'];?>">
+														<img class="img-responsive" src="<?php echo base_url()?>assets/images/badges/<?php echo $ub['BDG_IMG_FILENAME'];?>"/>
 													</div>
+													<p class="bdg-desc"><?php echo $ub['BDG_DESCRIPTION'];?></p>
 												</div>
 											<?php } ?>
 										<?php } ?>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -265,22 +258,3 @@
 				</div>
 	    	</div>
 		</div>
-
-		<script type="text/javascript">
-			
-			$(document).ready(function() {
-
-				$("#all-option").click(function() {
-
-					$("#badges-aquired").css("display", "none");
-					$("#badges-all").css("display", "block");
-				});
-
-				$("#acquired-option").click(function() {
-
-					$("#badges-all").css("display", "none");
-					$("#badges-aquired").css("display", "block");
-				});
-			});
-
-		</script>
