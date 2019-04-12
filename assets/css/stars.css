@@ -1,0 +1,38 @@
+.bottom-stars{position: absolute;left: 0;bottom: 0;right: 0;max-width:180px;margin:0 auto 10px auto;background:#5d4f3b;border:solid #bbb 3px;}
+fieldset label {margin: 0; padding: 0;}
+.stage-rating {border: none;}
+.stage-rating input {display: none;}
+.stage-rating label:before {margin: 5px; font-size: 3em; font-family: FontAwesome;text-shadow: 1px 1px 3px #222; display: inline-block; content: "\f005"; color: #FFD700;} /*FFD700*/ 
+.stage-rating input:checked ~ input:not(:checked) ~ label:before {color: #aaa;}
+input.no-score + label:before{ color: #aaa;}
+/*div.s1 > img {background-image: url(../images/stars/stars-01.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.s2 > img {background-image: url(../images/stars/stars-02.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.s3 > img {background-image: url(../images/stars/stars-03.png);background-size: 50px 50px;background-repeat: no-repeat;}
+
+
+div.u1 > img {background-image: url(../images/stars/stars-04.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.u2 > img {background-image: url(../images/stars/stars-05.png);background-size: 50px 50px;background-repeat: no-repeat;}
+div.u3 > img {background-image: url(../images/stars/stars-06.png);background-size: 50px 50px;background-repeat: no-repeat;}
+
+*/
+ul.star{display:flex;list-style: none;margin:-45px auto -20px auto!important;padding: 0px !important;justify-content: center;position: relative;}
+
+ul.star li{z-index: 6;}
+ul.star li:nth-child(2){margin-top:-10px !important;}
+li.s1> label > div,li.s2> label > div,li.s3> label > div{animation:appear-1 2s infinite;}
+
+@keyframes appear-1{
+
+    0%,100% { transform: scale(1); opacity: .9;display: block;}
+    50%{ transform: scale(1.1); opacity: 1;display: block;}
+}
+
+li.s1 > label > div {display:inline-flex;background-image: url(../images/stars/STARS-01.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.s2 > label > div {margin-top:-10px !important;display:inline-flex;background-image: url(../images/stars/STARS-02.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.s3 > label > div {display:inline-flex;background-image: url(../images/stars/STARS-03.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+
+
+li.u1 > label > div {display:inline-flex;background-image: url(../images/stars/STARS-04.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.u2 > label > div {margin-top:-10px !important;display:inline-flex;background-image: url(../images/stars/STARS-05.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+li.u3 > label > div {display:inline-flex;background-image: url(../images/stars/STARS-06.png);background-size:50px 50px;background-position:center;width:50px;height: 50px;}
+
