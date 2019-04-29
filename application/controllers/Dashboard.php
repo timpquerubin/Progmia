@@ -23,25 +23,46 @@
 
 
 			$header_data = array(
-
 				'title' => 'Dashboard',
-
 				'tab_active' => 'HOME',
-
 				'page' => 'dash-home',
-
 			);
 
-
-
 			$this->load->view('templates/dashboard_header', $header_data);
-
-			$this->load->view('templates/load_init_links');
-
+			// $this->load->view('templates/load_init_links');
 			$this->load->view('dashboard/index');
-
 			$this->load->view('templates/dashboard_footer');
 
+		}
+
+		public function get_player_activity() {
+
+			$this->__init();
+
+			$prog_params = array(
+				"limit" => array(
+					"start" => isset($_POST['start']) ? $_POST['start'] : 0,
+					"rows" => isset($_POST['rows']) ? $_POST['rows'] : 10,
+				),
+				"order-by" => "DATE_PLAYED"
+			);
+
+			// echo json_encode($prog_params);
+
+			$prog_list = $this->Game_model->get_progress($prog_params);
+
+			echo json_encode($prog_list);
+		}
+
+		public function load_progress_block() {
+
+			if(isset($_POST)) {
+				$data['progress'] = $_POST['progress'];
+			} else {
+				$data['progress'] = array();
+			}
+
+			$this->load->view('dashboard/player_activity_block', $data);
 		}
 
 
@@ -302,7 +323,7 @@
 
 		public function delete_goal() {
 
-			// array("BLY_ID" => $_POST['update_param']['BLY_ID'], "QSTN_NUM" => $_POST['update_param']['QSTN_NUM']), 
+			// array("BLY_ID" => $_POST['update_param']['BLY_ID'], "QSTN_NUM" => $_POST['update_param']['QSTN_NUM']),
 			// 		array("G_ID" => $_POST['update_param']['G_ID'])
 
 			$this->__init();
@@ -315,9 +336,9 @@
 				if(count($question_list) > 0) {
 
 					foreach ($question_list as $q) {
-						
+
 						$res = $this->Game_model->update_question_goal(
-							array("BLY_ID" => $q['BLY_ID'], "QSTN_NUM" => $q['QSTN_NUM']), 
+							array("BLY_ID" => $q['BLY_ID'], "QSTN_NUM" => $q['QSTN_NUM']),
 							array("G_ID" => null)
 						);
 					}
@@ -337,7 +358,7 @@
 						"status" => false,
 						"message" => "failed to delete goal",
 					));
-				} 
+				}
 
 				// echo json_encode($question_list);
 			}
@@ -375,7 +396,7 @@
 				// echo json_encode($_POST);
 
 				$res = $this->Game_model->update_question_goal(
-					array("BLY_ID" => $_POST['update_param']['BLY_ID'], "QSTN_NUM" => $_POST['update_param']['QSTN_NUM']), 
+					array("BLY_ID" => $_POST['update_param']['BLY_ID'], "QSTN_NUM" => $_POST['update_param']['QSTN_NUM']),
 					array("G_ID" => $_POST['update_param']['G_ID'])
 				);
 
@@ -631,7 +652,7 @@
 
 						);
 
-						
+
 
 						$bully_params = array(
 
@@ -925,7 +946,7 @@
 
 
 
-		public function load_objectives_block() 
+		public function load_objectives_block()
 
 		{
 
@@ -1228,7 +1249,7 @@
 
 				$config2['file_name'] = $avtrId;
 
-				
+
 
 				$this->load->library('upload', $config2);
 
@@ -1268,7 +1289,7 @@
 
 				$config3['file_name'] = $avtrId;
 
-				
+
 
 				$this->load->library('upload', $config3);
 
@@ -1340,11 +1361,11 @@
 
 		// 		$config['file_name'] = $avtrId;
 
-				
+
 
 		// 		$this->load->library('upload', $config);
 
-				
+
 
 		// 		if(!$this->upload->do_upload('imgSprite') && !$this->upload->do_upload('imgFront') && !$this->upload->do_upload('imgThumb') )
 
@@ -1434,7 +1455,7 @@
 
 			);
 
-			
+
 
 			if($_FILES['imgMap']['tmp_name'] != '')
 
@@ -1452,11 +1473,11 @@
 
 				$config['file_name'] = $lvlId;
 
-				
+
 
 				$this->load->library('upload', $config);
 
-				
+
 
 				if(!$this->upload->do_upload('imgMap'))
 
@@ -1512,7 +1533,7 @@
 
 			$this->__init();
 
-			
+
 
 			if(isset($_POST))
 
@@ -1552,7 +1573,7 @@
 
 			$this->__init();
 
-			
+
 
 			if(isset($_POST))
 
@@ -1578,7 +1599,7 @@
 
 			$this->__init();
 
-			if(isset($_POST)) 
+			if(isset($_POST))
 			{
 				$blyId = $_POST['bly_id'];
 
@@ -1677,7 +1698,7 @@
 
 					$jsonVal[$obj['type']] = $obj['value'];
 
-					
+
 
 					$obj_params = array(
 

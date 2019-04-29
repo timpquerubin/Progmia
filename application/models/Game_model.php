@@ -36,14 +36,14 @@
 		public function get_next_level($params) {
 
 			$level_info = $this->db->query('SELECT * FROM level WHERE STG_ID=\''.$params['STG_ID'].'\' AND LVL_NUM=\''.$params['LVL_NUM'].'\';');
-			
+
 			return $level_info->result_array();
 		}
 
 		public function get_current_level($lvl_ID)
 		{
 			$levels = $this->db->query('SELECT * FROM level WHERE LVL_ID=\''.$lvl_ID.'\';');
-	        return $result=$levels->row(0);	
+	        return $result=$levels->row(0);
 		}
 		public function get_level_stage($stage = null) {
 
@@ -71,6 +71,8 @@
 		{
 			if($params === null) {
 				$progress = $this->db->query('SELECT * FROM progress');
+               } else if(isset($params['limit']) && isset($params['order-by'])) {
+                    $progress =   $this->db->query('SELECT U.USER_USERNAME, U.AVTR_ID, S.STG_NAME, S.STG_DESCRIPTION, S.STG_FILENAME, L.LVL_ID, L.LVL_NUM, L.LVL_NAME, P.GAME_SCORE, P.DATE_PLAYED FROM user U, stage S, progress P, level L WHERE U.USER_ID=P.USER_ID AND P.LVL_ID=L.LVL_ID AND S.STG_ID=L.STG_ID ORDER BY '. $params['order-by'] .' DESC LIMIT '. $params['limit']['start'] .', '. $params['limit']['rows'] .';');
 			}  else if(isset($params['user']) && isset($params['type'])) {
 
 				if($params['type'] == 'max_points' && isset($params['stage'])) {
@@ -121,7 +123,7 @@
 			}
 
 			return $user_badges->result_array();
-		} 
+		}
 
 		public function get_profileprogress($user){
 			// if($user === null) {
@@ -235,7 +237,7 @@ FROM `stage`
 
 		public function delete_level($params)
 		{
-			
+
 			return $this->db->delete('level', $params);
 		}
 
@@ -260,7 +262,7 @@ FROM `stage`
 
 			return $objectives->num_rows();
 		}
-		
+
 		public function get_lvl_max_points($params = null) {
 
 			if($params === null) {
